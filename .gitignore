@@ -18,7 +18,14 @@ Thumbs.db
 *~
 
 # IDE and Editor Files
-.vscode/
+# VS Code - ignore personal settings, allow shared project config
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.vscode/settings.local.json
+
 .idea/
 *.swp
 *.swo
