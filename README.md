@@ -72,9 +72,6 @@ Api/
   - `commons-lang3` (3.17.0)
   - `commons-text` (1.12.0)
 
-- **Project Lombok** (1.18.30)
-  - Code generation and boilerplate reduction
-
 ### Testing
 - JUnit Jupiter (5.3.1)
 
