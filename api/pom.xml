@@ -8,9 +8,10 @@
 		<version>1.0.0.2-SNAPSHOT</version>
 	</parent>
 
-	<name>cg-api</name>
+	<name>CassandraGargoyle - API</name>
 	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>org-cassandragargoyle-api</artifactId>
+	<version>1.0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<properties>
 		<brandingToken>cassandragargoyle</brandingToken>
@@ -22,18 +23,6 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 	<dependencies>
 		<!-- NetBeans modules -->
 		<dependency>
@@ -87,4 +76,17 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

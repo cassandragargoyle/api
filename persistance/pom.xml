@@ -8,7 +8,7 @@
 		<version>1.0.0.2-SNAPSHOT</version>
 	</parent>
 
-	<name>cg-persistance</name>
+	<name>CassandraGargoyle - Persistance</name>
 	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>org-cassandragargoyle-persistance</artifactId>
 	<packaging>jar</packaging>

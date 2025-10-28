@@ -10,7 +10,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * Class DateUtil
- * @author splichal
+ * @author kurc
  */
 public class DateUtil
 {

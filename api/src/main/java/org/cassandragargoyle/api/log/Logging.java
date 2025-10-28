@@ -45,9 +45,9 @@ public class Logging
 
 	public static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance("dd/MM/yyyy HH:mm:ss.SSS");
 
-	private static final Formatter FORMATTER = new CustomFormatter();
+	public static final Formatter FORMATTER = new CustomFormatter();
 
-	private static final Filter FILTER = new DefaultLoggerFilter();
+	public static final Filter FILTER = new DefaultLoggerFilter();
 
 	private static String ROOT_LOG = "org.cassandragargoyle.dreem";
 
