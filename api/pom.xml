@@ -12,6 +12,15 @@
 	<groupId>org.cassandragargoyle.api</groupId>
 	<artifactId>org-cassandragargoyle-api</artifactId>
 	<packaging>jar</packaging>
+	<properties>
+		<brandingToken>cassandragargoyle</brandingToken>
+		<netbeans.version>RELEASE120-1</netbeans.version>
+		<junit.version>5.3.1</junit.version>
+		<spring.version>5.3.39</spring.version>
+		<maven.jar.plugin.version>3.4.2</maven.jar.plugin.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
 
 	<build>
 		<plugins>

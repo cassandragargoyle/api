@@ -18,6 +18,7 @@
 	</modules>
 
 	<properties>
+	
 		<java.version>21</java.version>
 		<netbeans.version>RELEASE120-1</netbeans.version>
 		<brandingToken>cassandragargoyle</brandingToken>
