@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "get_system_info",
+      "list_packages", 
+      "install_package",
+      "detect_project_type",
+      "portunix"
+    ]
+  }
+}

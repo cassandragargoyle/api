@@ -1,0 +1,132 @@
+# Api Development Instructions
+
+# CLAUDE.md (root)
+@.claude/roles/current.md
+
+## Project Information
+- **Gitea Repository**: git@gitea:CassandraGargoyle/Api
+- **GitHub Repository**: https://github.com/CassandraGargoyle/Api
+- **Project Name**: Api
+- **Primary Purpose**: Purpose to be defined
+- **Primary Language**: To be determined
+- **Platforms**: Linux, Windows (macOS development status TBD)
+
+## Security Guidelines
+- Never run destructive commands without confirmation
+- Always warn about potential data loss before executing risky operations
+- Require explicit confirmation for operations that could lose implemented code
+
+## Project Structure
+- `/docs/` - Documentation including contributing guidelines
+- `/scripts/` - Installation and setup scripts
+- `/templates/` - Project templates
+- `/config/` - Configuration files
+- `/tests/` - Tests and validation
+- `/utils/` - Helper utilities
+- `/.claude/` - AI assistant configuration and roles
+
+## Coding Guidelines & Development Instructions
+
+### Strict Rules
+- Code, code comments, and user messages must be in English (see [Multilingual Team Communication](docs/contributing/README.md#multilingual-team-communication))
+- Communication with team members can be in their preferred language, but documentation remains in English
+- When implementing new features, always check existing project structure first
+- Prefer editing existing files over creating new ones
+- Do not add "Generated with [Claude Code]" signatures to code or files
+See docs/contributing/CODE-STYLE-*.md for language-specific guidelines
+
+### General Principles
+- Follow existing conventions and styles in the project
+- Always explore existing code before creating new implementations
+- Maintain consistency with established patterns
+- All program text (messages, labels, constants) in English
+- Comments in English, written as phrases (no ending periods)
+- English is the official project language per multilingual team guidelines
+
+### TODO Management
+- Follow the established TODO format: `TODO:NNN [INITIALS]: description` (see [TODO Guidelines](docs/contributing/TODO-GUIDELINES.md))
+- Use per-file sequential numbering (001, 002, 003, etc.)
+- Refer to [docs/contributing/TODO-GUIDELINES.md](docs/contributing/TODO-GUIDELINES.md) for complete standards
+- Use `TODO:XXX` as temporary placeholder, then request proper numbering
+
+### Issue Tracking & Documentation
+- Issues are managed per project individually
+- May sync to GitHub repositories when applicable
+- Common issue types: Configuration issues, build problems, compatibility issues
+
+### Team Communication
+- English is the primary language for all project communication (see [Multilingual Team Communication](docs/contributing/README.md#multilingual-team-communication))
+- Use simple, clear English to accommodate non-native speakers
+- Avoid idioms, colloquialisms, and culture-specific references
+- Team initials assignment follows collision resolution (JS → JSm if JS exists) (see [Team Initials Assignment](docs/contributing/README.md#team-initials-assignment-and-collision-resolution))
+
+### AI Assistant Guidelines
+- Claude Code is the preferred AI assistant with pre-configured context
+- Alternative AI tools require users to prepare their own context materials
+- Follow established AI assistant best practices in [docs/contributing/AI-ASSISTANTS.md](docs/contributing/AI-ASSISTANTS.md)
+
+### Translation Workflow
+- Use `.translated/` directory structure for team member translations
+- Follow ISO 639-1 language codes (cs, de, fr, etc.)
+- Refer to [docs/contributing/TRANSLATION-WORKFLOW.md](docs/contributing/TRANSLATION-WORKFLOW.md) for complete process
+- Translations are temporary and can be regenerated as needed
+
+### Repository Management
+- Main branch is `main` (not `master`)
+- Issues tracked in project-specific locations
+- License: Proprietary - CassandraGargoyle team only
+- Gitea format: git@gitea:CassandraGargoyle/Api
+- GitHub format: https://github.com/CassandraGargoyle/Api
+
+### System Information Detection
+- **Always use** `portunix system info` for OS detection when Portunix is available
+- **Only if Portunix is not available**, then use manual detection methods
+- Don't write custom OS detection scripts when Portunix already provides this functionality
+
+## Development Setup
+
+### Prerequisites
+To be defined based on project requirements
+
+### Initial Setup
+```bash
+# Clone the repository
+git clone git@gitea:CassandraGargoyle/Api.git
+cd api
+
+# Add project-specific setup commands here
+```
+
+### Build Instructions
+```bash
+# Add build commands here
+```
+
+## Testing
+
+### Testing Framework
+- Framework: To be determined
+- Test command: `# Add test command here`
+- Coverage target: 80%
+
+### Running Tests
+```bash
+# Add test command here
+```
+
+## Project-Specific Information
+
+### Dependencies
+Dependencies to be documented
+
+### Architecture
+Architecture to be documented
+
+### Key Components
+Key components to be documented
+
+### Configuration
+Configuration to be documented
+
+### Deployment
+Deployment process to be documented
