@@ -9,7 +9,7 @@
 	</parent>
 
 	<name>cg-api</name>
-	<groupId>org.cassandragargoyle.api</groupId>
+	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>org-cassandragargoyle-api</artifactId>
 	<packaging>jar</packaging>
 	<properties>

@@ -15,6 +15,15 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 - **GitHub Repository**: https://github.com/CassandraGargoyle/Api
 - **Project Name**: Api
 
+## Maven Project Structure
+
+This project serves as the **parent POM for all Java projects** in the CassandraGargoyle community. The root `pom.xml` (`cassandragargoyle-parent`) provides:
+- Centralized dependency management for all CassandraGargoyle Java modules
+- Common build configuration and plugin management
+- Shared properties (Java version, library versions, encoding)
+- Consistent build standards across all projects
+
+Current modules:
 ```
 Api/
 ├── api/           # Core API module

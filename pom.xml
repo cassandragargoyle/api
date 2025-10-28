@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.cassandragargoyle</groupId>
-	<artifactId>cassandragargoyle-api-parent</artifactId>
+	<artifactId>cassandragargoyle-parent</artifactId>
 	<version>1.0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>CassandraGargoyle API Parent</name>
-	<description>Parent POM for CassandraGargoyle API modules</description>
+	<name>CassandraGargoyle Global Parent</name>
+	<description>Parent POM for CassandraGargoyle All Java modules</description>
 
 	<modules>
 		<module>api</module>

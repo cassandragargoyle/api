@@ -9,8 +9,8 @@
 	</parent>
 
 	<name>cg-persistance</name>
-	<groupId>org.cassandragargoyle.api</groupId>
-	<artifactId>org-cassandragargoyle-api-persistance</artifactId>
+	<groupId>org.cassandragargoyle</groupId>
+	<artifactId>org-cassandragargoyle-persistance</artifactId>
 	<packaging>jar</packaging>
 
 	<build>
