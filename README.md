@@ -12,6 +12,7 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 - **Java Version:** 21
 - **NetBeans Platform:** RELEASE120-1
 - **Build Tool:** Maven
+- **Gitea Repository**: git@gitea:CassandraGargoyle/Api
 - **GitHub Repository**: https://github.com/CassandraGargoyle/Api
 - **Project Name**: Api
 
