@@ -18,13 +18,15 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 ## Maven Project Structure
 
 This project serves as the **parent POM for all Java projects** in the CassandraGargoyle community. The root `pom.xml` (`cassandragargoyle-parent`) provides:
+
 - Centralized dependency management for all CassandraGargoyle Java modules
 - Common build configuration and plugin management
 - Shared properties (Java version, library versions, encoding)
 - Consistent build standards across all projects
 
 Current modules:
-```
+
+```text
 Api/
 ├── api/           # Core API module
 └── persistance/   # Persistence layer module
@@ -33,6 +35,7 @@ Api/
 ## Core Features
 
 ### Entity Management
+
 - Base entity abstractions and implementations
 - Version management
 - Platform-specific entity handling
@@ -40,6 +43,7 @@ Api/
 - Data container entities for data management
 
 ### Software Management
+
 - Software entity definitions
 - Code language support
 - Operating system type detection
@@ -47,6 +51,7 @@ Api/
 - Platform compatibility handling
 
 ### Utilities
+
 - **Date Utilities:** Date manipulation and formatting
 - **String Utilities:** String processing and manipulation
 - **System Utilities:** System-level operations
@@ -55,17 +60,20 @@ Api/
 - **OS Detection:** Operating system detection and identification
 
 ### Logging
+
 - Custom logging framework
 - Log factory pattern implementation
 - Exception handling for logging operations
 
 ### CLI Support
+
 - Command-line interface implementation
 - Apache Commons CLI integration
 
 ## Dependencies
 
 ### Core Dependencies
+
 - **NetBeans Platform Modules**
   - `org-openide-util`
   - `org-openide-util-ui`
@@ -82,6 +90,7 @@ Api/
   - `commons-text` (1.12.0)
 
 ### Testing
+
 - JUnit Jupiter (5.3.1)
 
 ## Building the Project
@@ -99,6 +108,7 @@ mvn test
 ## Development
 
 This project uses:
+
 - Maven for build management
 - Spring for dependency injection
 - NetBeans Platform for application framework
