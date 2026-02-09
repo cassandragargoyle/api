@@ -83,6 +83,27 @@ public class OsDetector
 		return Constants.PROP_UNKNOWN_OS;
 	}
 
+	/**
+	 * TODO: Function description
+	 * @return
+	 */
+	public static String getPlatformString()
+	{
+		String os = getOperatingSystemName();
+		String arch = System.getProperty("os.arch").toLowerCase();
+
+		if (os.contains("linux") && (arch.contains("amd64") || arch.contains("x86_64")))
+		{
+			return "linux-x86_64";
+		}
+		else if (os.contains("windows") && (arch.contains("amd64") || arch.contains("x86_64")))
+		{
+			return "windows-x86_64";
+		}
+
+		throw new UnsatisfiedLinkError("Unsupported platform: " + os + "/" + arch + ". Supported: linux-x86_64, windows-x86_64");
+	}
+
 	public static Properties getOSProperties()
 	{
 		Properties properties = null;
@@ -167,7 +188,7 @@ public class OsDetector
 	}
 
 	/**
-	 *
+	 * TODO: Where is used
 	 * @return
 	 */
 	public static Platform getPlatform()

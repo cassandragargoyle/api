@@ -11,7 +11,7 @@
 	<name>CassandraGargoyle - API</name>
 	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>org-cassandragargoyle-api</artifactId>
-	<version>1.0.0.2-SNAPSHOT</version>
+	<version>1.0.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<properties>
 		<!-- Java version -->
