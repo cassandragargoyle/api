@@ -78,7 +78,7 @@ public class LogFactory
 	}
 
 	/**
-	 * Logs the message with level FINE, when -J-Dtovek.debug=true and logCondition true
+	 * Logs the message with level FINE, when -J-Dcassandragargoyle.debug=true and logCondition true
 	 */
 	public static void logDebugWithTrace(String message, boolean logCondition)
 	{

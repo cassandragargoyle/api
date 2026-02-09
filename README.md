@@ -13,7 +13,7 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 - **NetBeans Platform:** RELEASE120-1
 - **Build Tool:** Maven
 - **Gitea Repository**: git@gitea:CassandraGargoyle/Api
-- **GitHub Repository**: https://github.com/CassandraGargoyle/Api
+- **GitHub Repository**: <https://github.com/CassandraGargoyle/Api>
 - **Project Name**: Api
 
 ## Maven Project Structure
