@@ -1,6 +1,6 @@
 # CassandraGargoyle API
 
-API module for the CassandraGargoyle project - a Java-based application framework built on NetBeans Platform.
+Core Java library providing shared entities, utilities, and base abstractions for CassandraGargoyle projects.
 
 ## Documentation
 
