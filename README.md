@@ -1,6 +1,6 @@
 # CassandraGargoyle API
 
-API module for the CassandraGargoyle project - a Java-based application framework built on NetBeans Platform.
+Core Java library providing shared entities, utilities, and base abstractions for CassandraGargoyle projects.
 
 ## Documentation
 
@@ -12,8 +12,8 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 - **Java Version:** 21
 - **NetBeans Platform:** RELEASE120-1
 - **Build Tool:** Maven
-- **Gitea Repository**: git@gitea:CassandraGargoyle/Api
-- **GitHub Repository**: https://github.com/CassandraGargoyle/Api
+- **Gitea Repository**: <git@gitea:CassandraGargoyle/Api>
+- **GitHub Repository**: <https://github.com/CassandraGargoyle/Api>
 - **Project Name**: Api
 
 ## Maven Project Structure
