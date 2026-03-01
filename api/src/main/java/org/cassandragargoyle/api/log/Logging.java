@@ -1,6 +1,6 @@
-/*
- *  This file is part of Tovek Forensic application.
- *  Licensed under the MIT License - see LICENSE file for details
+/**
+ * This file is part of CassandraGargoyle Community Project
+ * Licensed under the MIT License - see LICENSE file for details
  */
 package org.cassandragargoyle.api.log;
 
@@ -49,7 +49,7 @@ public class Logging
 
 	public static final Filter FILTER = new DefaultLoggerFilter();
 
-	private static String ROOT_LOG = "org.cassandragargoyle.dreem";
+	private static String ROOT_LOG = "org.cassandragargoyle.api";
 
 	private static NonCloseHandler fileHandler;
 
@@ -102,13 +102,6 @@ public class Logging
 			rootLog.setLevel(level);
 		}
 
-		Logger tovekLog = Logger.getLogger("com.tovek.tovektools");
-		if (tovekLog != null && tovekLog.getLevel() != level)
-		{
-			tovekLog.setLevel(level);
-		}
-
-		//Logger wsdlLog = Logger.getLogger("org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean");
 		Logger wsdlLog = Logger.getLogger("org.apache.cxf.wsdl.service.factory");
 		if (wsdlLog != null && wsdlLog.getLevel() != level)
 		{
@@ -439,7 +432,7 @@ public class Logging
 	}
 
 	/**
-	 * Modified formatter for use in TsHammer.
+	 * Custom log record formatter.
 	 */
 	private static final class CustomFormatter extends Formatter
 	{
@@ -649,30 +642,20 @@ public class Logging
 	}
 
 	/**
-	 * Default Logger Filter. Taken from TovekTools.
+	 * Default Logger Filter.
 	 */
 	private static final class DefaultLoggerFilter implements Filter
 	{
 		@Override
 		public boolean isLoggable(LogRecord record)
 		{
-			//TODO:ZK Toto sem asi už nepatří
 			if ("org.openide.util.SharedClassObject".equals(record.getLoggerName()))
 			{
-				if (record.getThrown() != null)
-				{
-					if ("Warning: multiple instances of shared class com.tovek.tshammer.core.ui.action.LookupSensitiveAction$BooleanStateActionImpl created.".equals(record.getThrown().getMessage()))
-					{
-						return false;
-					}
-				}
-				//TODO:ZK Toto sem asi nepatří
 				if ("(Run with -J-Dorg.openide.util.SharedClassObject.level=0 for more details.)".equals(record.getMessage()))
 				{
 					return false;
 				}
 			}
-			//TODO:ZK Toto sem asi nepatří
 			else if ("org.netbeans.TopSecurityManager".equals(record.getLoggerName()))
 			{
 				if (record.getThrown() != null && record.getThrown().getMessage() != null)

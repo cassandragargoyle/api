@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from github_config import (
     PRIVATE_FILES, SENSITIVE_PATTERNS, ALLOWED_EXCEPTIONS,
-    SCAN_EXTENSIONS, SKIP_PATHS, DOCS_EXAMPLE_PATHS,
+    SCAN_EXTENSIONS, SKIP_PATHS, SKIP_DIR_NAMES, DOCS_EXAMPLE_PATHS,
     Color, print_ok, print_warn, print_err, print_info, print_header,
 )
 
@@ -32,9 +32,24 @@ def should_skip(filepath: Path, target_dir: Path) -> bool:
     """Check if a file path should be skipped during scanning."""
     rel = filepath.relative_to(target_dir)
     rel_str = str(rel) + ("/" if filepath.is_dir() else "")
+
+    # Check explicit skip paths (prefix match)
     for skip in SKIP_PATHS:
         if rel_str.startswith(skip) or f"/{rel_str}".startswith(f"/{skip}"):
             return True
+
+    # Check skip directory names anywhere in the path
+    if SKIP_DIR_NAMES.intersection(rel.parts):
+        return True
+
+    # Skip files listed in PRIVATE_FILES (they won't be published)
+    for priv in PRIVATE_FILES:
+        if "*" in priv:
+            continue
+        priv_clean = priv.rstrip("/")
+        if rel_str == priv_clean or rel_str.startswith(priv_clean + "/"):
+            return True
+
     return False
 
 
@@ -88,7 +103,7 @@ def check_sensitive_content(target_dir: Path) -> int:
 
         for pattern in SENSITIVE_PATTERNS:
             # Skip non-critical patterns in documentation paths
-            non_critical = ("192.168.", "10.0.", "PRIVATE", "INTERNAL")
+            non_critical = (r"192\.168\.\d", r"10\.0\.\d", r"\bPRIVATE\b", r"\bINTERNAL\b")
             if pattern in non_critical and is_in_docs_example_path(filepath, target_dir):
                 continue
 
@@ -131,6 +146,8 @@ def check_binary_files(target_dir: Path) -> int:
             continue
         if ".git" in filepath.parts:
             continue
+        if should_skip(filepath, target_dir):
+            continue
         if filepath.suffix in BINARY_EXTENSIONS:
             found.append(filepath)
 
@@ -154,6 +171,8 @@ def check_large_files(target_dir: Path, max_size_mb: float = 1.0) -> int:
         if not filepath.is_file():
             continue
         if ".git" in filepath.parts:
+            continue
+        if should_skip(filepath, target_dir):
             continue
         try:
             size = filepath.stat().st_size

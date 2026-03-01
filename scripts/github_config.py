@@ -63,24 +63,41 @@ SENSITIVE_PATTERNS = [
     "git@gitea:",
     "gitea.cassandragargoyle",
     "cassandragargoyle.cz",
-    "192.168.",
-    "10.0.",
+    r"192\.168\.\d",
+    r"10\.0\.\d",
     r"password.*=.*['\"]",
     r"api_key.*=.*['\"]",
     r"secret.*=.*['\"]",
     r"token.*=.*['\"]",
-    "PRIVATE",
-    "INTERNAL",
+    r"\bPRIVATE\b",
+    r"\bINTERNAL\b",
     "DO NOT PUBLISH",
+    # Team member names that must not appear in published files
+    r"\btovek\b",
+    r"\bsplichal\b",
+    r"\bchaloupka\b",
 ]
 
 # Allowed exceptions (patterns that look sensitive but are OK)
 ALLOWED_EXCEPTIONS = [
     "github.com/CassandraGargoyle",
+    "github.com/cassandragargoyle",
     "ProductVersion",
     "internally",
     "Internal",
     "internal_type",
+    # Java keywords and common English usage in docs
+    "private ",
+    "private(",
+    "private:",
+    "Private Code",
+    "Private methods",
+    "Private functions",
+    "Private packages",
+    "PRIVATE_FILES",
+    "PRIVATE_FILE",
+    "internal development",
+    "internal/",
 ]
 
 # File extensions to scan for sensitive content
@@ -103,11 +120,15 @@ SKIP_PATHS = [
     "target/",
 ]
 
+# Directory names that should be skipped anywhere in the tree
+SKIP_DIR_NAMES = {"target", ".git"}
+
 # Paths where documentation examples are allowed
 DOCS_EXAMPLE_PATHS = [
     "docs/commands/",
     "docs/ai-assistants/",
     "docs/contributing/",
+    "docs/issues/",
 ]
 
 
