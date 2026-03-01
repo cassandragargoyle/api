@@ -33,6 +33,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Strip SNAPSHOT versions
+        run: find . -name pom.xml -exec sed -i 's/-SNAPSHOT//g' {} +
+
       - name: Publish to GitHub Packages
         run: mvn deploy -B -DskipTests
         env:
