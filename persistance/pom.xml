@@ -4,13 +4,13 @@
 
 	<parent>
 		<groupId>org.cassandragargoyle</groupId>
-		<artifactId>cassandragargoyle-api-parent</artifactId>
-		<version>1.0.0.2-SNAPSHOT</version>
+		<artifactId>cassandragargoyle-parent</artifactId>
+		<version>1.0.0.3</version>
 	</parent>
 
-	<name>cg-persistance</name>
-	<groupId>org.cassandragargoyle.api</groupId>
-	<artifactId>org-cassandragargoyle-api-persistance</artifactId>
+	<name>CassandraGargoyle - Persistance</name>
+	<groupId>org.cassandragargoyle</groupId>
+	<artifactId>org-cassandragargoyle-persistance</artifactId>
 	<packaging>jar</packaging>
 
 	<build>

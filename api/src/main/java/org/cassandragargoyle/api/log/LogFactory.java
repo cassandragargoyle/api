@@ -34,7 +34,7 @@ import org.openide.util.Exceptions;
  * appear in a pop-up dialog by default.</li>
  * </ul>
  *
- * @author splichal
+ * @author kurc
  */
 public class LogFactory
 {
@@ -43,17 +43,17 @@ public class LogFactory
 	/**
 	 * List of ignored logger.
 	 */
-	public static final String LOG_IGNOREDLOGGERS = "TovekTools/Log/IngoredLoggers/";
+	public static final String LOG_IGNOREDLOGGERS = "CassandraGargoyle/Log/IngoredLoggers/";
 
 	/**
 	 * List of forced messages.
 	 */
-	public static final String LOG_FORCEDMESSAGES = "TovekTools/Log/ForcedMessages/";
+	public static final String LOG_FORCEDMESSAGES = "CassandraGargoyle/Log/ForcedMessages/";
 
 	/**
 	 * List of shown messages that would by be minimised to status bar by default.
 	 */
-	public static final String LOG_SHOWNMESSAGES = "TovekTools/Log/ShownMessages/";
+	public static final String LOG_SHOWNMESSAGES = "CassandraGargoyle/Log/ShownMessages/";
 
 	/**
 	 * Creates a logger for the given class. Assumes that a resource bundle
@@ -78,11 +78,11 @@ public class LogFactory
 	}
 
 	/**
-	 * Logs the message with level FINE, when -J-Dtovek.debug=true and logCondition true
+	 * Logs the message with level FINE, when -J-Dcassandragargoyle.debug=true and logCondition true
 	 */
 	public static void logDebugWithTrace(String message, boolean logCondition)
 	{
-		if (logCondition && Boolean.getBoolean("tovek.debug"))
+		if (logCondition && Boolean.getBoolean("cassandragargoyle.debug"))
 		{
 			Logger log = Logger.getLogger(LogFactory.class.getName());
 			if (log.isLoggable(Level.FINE))
