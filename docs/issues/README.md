@@ -14,7 +14,7 @@ We use a dual numbering system to separate internal development tracking from pu
 | Internal | Public | Title | Status | Priority | Type | Labels |
 | -------- | ------ | ----- | ------ | -------- | ---- | ------ |
 | #001 | - | Github packages | 📋 Open | Medium | Feature | |
-| #002 | [GH#6](https://github.com/cassandragargoyle/api/issues/6) | GitHub Packages publishing workflow | 📋 Open | Medium | Feature | ci, maven, github |
+| #002 | [GH#6](https://github.com/cassandragargoyle/api/issues/6) | GitHub Packages publishing workflow | ✅ Implemented | Medium | Feature | ci, maven, github |
 
 ## Directory Structure
 
