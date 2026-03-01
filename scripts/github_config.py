@@ -200,6 +200,10 @@ def is_publishable(filepath: Path, source_dir: Path) -> bool:
     rel = filepath.relative_to(source_dir)
     rel_str = str(rel)
 
+    # Skip symlinks (could point outside the repository)
+    if filepath.is_symlink():
+        return False
+
     # Skip .git directory
     if ".git" in rel.parts:
         return False
@@ -254,7 +258,7 @@ def get_publishable_files(source_dir: Path) -> list[Path]:
         skip_prefixes.add(d.rstrip("/"))
 
     result: list[Path] = []
-    for root, dirs, files in os.walk(source_dir):
+    for root, dirs, files in os.walk(source_dir, followlinks=False):
         root_path = Path(root)
         rel_root = root_path.relative_to(source_dir)
 

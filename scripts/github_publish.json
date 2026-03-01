@@ -26,7 +26,8 @@
       "docs/adr/",
       "docs/notes/",
       "config/dev/",
-      "target/"
+      "target/",
+      "__pycache__/"
     ],
     "globs": [
       "*.class",
@@ -49,7 +50,8 @@
     "internal_docs": [
       "docs/contributing/GITEA-INTERNAL-METHODOLOGY.md",
       "docs/contributing/GITHUB-WORKFLOW.md",
-      "docs/contributing/README-DUAL-SYSTEM.md"
+      "docs/contributing/README-DUAL-SYSTEM.md",
+      "docs/contributing/CLAUDE-TEMPLATE.md"
     ]
   },
 
@@ -110,7 +112,7 @@
       ".md", ".json", ".py", ".sh", ".ps1", ".txt",
       ".gradle", ".kts"
     ],
-    "skip_dir_names": ["target", ".git"],
+    "skip_dir_names": ["target", ".git", "__pycache__"],
     "binary_extensions": [
       ".class", ".jar", ".war", ".ear", ".nar",
       ".exe", ".dll", ".so", ".dylib"
