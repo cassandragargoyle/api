@@ -10,7 +10,6 @@ Project: CassandraGargoyle Api
 import shutil
 import subprocess
 import sys
-from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -185,9 +184,8 @@ def create_final_commit(message: str) -> None:
 
     temp_dir = TEMP_DIR.resolve()
 
-    # Squash all commits into one
-    initial = git_output("rev-list", "--max-parents=0", "HEAD", cwd=str(temp_dir))
-    run_git("reset", "--soft", initial, cwd=str(temp_dir))
+    # Create orphan commit (no parent, clean history)
+    run_git("checkout", "--orphan", "release", cwd=str(temp_dir))
     run_git("commit", "-m", message, cwd=str(temp_dir))
 
     commit_line = git_output("log", "--oneline", "-1", "HEAD", cwd=str(temp_dir))
@@ -195,29 +193,22 @@ def create_final_commit(message: str) -> None:
     print(f"   Commit: {commit_line}")
 
 
-def publish_to_github() -> None:
-    print_step(6, "Publishing to GitHub")
+def show_push_instructions() -> None:
+    print_step(6, "Staging ready")
 
     temp_dir = TEMP_DIR.resolve()
+    commit_line = git_output("log", "--oneline", "-1", "HEAD", cwd=str(temp_dir))
 
-    print("Ready to publish to GitHub")
-    print(f"   Target: {GITHUB_REPO}")
-    print(f"   Branch: main")
+    print_ok("Staging directory prepared with clean orphan commit")
+    print(f"   Commit: {commit_line}")
+    print(f"   Staging: {temp_dir}")
     print()
-
-    if confirm("Proceed with publication?"):
-        print("Pushing to GitHub...")
-        run_git("push", GITHUB_REMOTE, "HEAD:main", "--force-with-lease",
-                capture=False, cwd=str(temp_dir))
-        print_ok("Successfully published to GitHub!")
-        print()
-        print(f"GitHub repository: {GITHUB_REPO}")
-        commit_line = git_output("log", "--oneline", "-1", "HEAD", cwd=str(temp_dir))
-        print(f"Latest commit: {commit_line}")
-    else:
-        print_warn("Publication cancelled")
-        print(f"   Staging directory preserved: {temp_dir}")
-        print("   You can review and push manually if needed")
+    print("To publish to GitHub, run from staging directory:")
+    print(f"   cd {temp_dir}")
+    print(f"   git push {GITHUB_REMOTE} HEAD:main --force-with-lease")
+    print()
+    print("If branch protection is enabled, disable the ruleset first:")
+    print(f"   https://github.com/CassandraGargoyle/api/settings/rules")
 
 
 def cleanup_staging() -> None:
@@ -245,10 +236,10 @@ def main() -> None:
     create_release_commit()
     message = prepare_release_message()
     create_final_commit(message)
-    publish_to_github()
+    show_push_instructions()
     cleanup_staging()
 
-    print(f"\n{Color.GREEN}GitHub publication workflow completed!{Color.NC}")
+    print(f"\n{Color.GREEN}GitHub publication staging completed!{Color.NC}")
 
 
 if __name__ == "__main__":
