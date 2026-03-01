@@ -7,7 +7,7 @@
 ## Project Information
 
 - **Gitea Repository**: git@gitea:CassandraGargoyle/Api
-- **GitHub Repository**: https://github.com/CassandraGargoyle/Api
+- **GitHub Repository**: <https://github.com/CassandraGargoyle/portunix-api>
 - **Project Name**: Api
 - **Primary Purpose**: Purpose to be defined
 - **Primary Language**: To be determined
@@ -39,6 +39,8 @@
 - Prefer editing existing files over creating new ones
 - Do not add "Generated with [Claude Code]" signatures to code or files
 See docs/contributing/CODE-STYLE-*.md for language-specific guidelines
+- Don't add "Generated with [Claude Code](https://claude.ai/code) Co-Authored-By: Claude <noreply@anthropic.com>" to code or other files
+- **NEVER add "Co-Authored-By: Claude <noreply@anthropic.com>" to code files or git commits** - attribution not required
 
 ### General Principles
 
@@ -88,7 +90,7 @@ See docs/contributing/CODE-STYLE-*.md for language-specific guidelines
 - Issues tracked in project-specific locations
 - License: Proprietary - CassandraGargoyle team only
 - Gitea format: git@gitea:CassandraGargoyle/Api
-- GitHub format: https://github.com/CassandraGargoyle/Api
+- GitHub format: <https://github.com/CassandraGargoyle/api>
 
 ### System Information Detection
 
