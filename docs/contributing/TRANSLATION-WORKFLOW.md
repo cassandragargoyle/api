@@ -1,11 +1,13 @@
 # Translation Workflow for Api
 
 ## Overview
+
 This document outlines the translation process for internationalizing Api.
 
 ## Supported Languages
 
 ### Primary Languages
+
 - **English (en)**: Default language, source for all translations
 - **Czech (cs)**: Czech localization
 - **German (de)**: German localization
@@ -13,6 +15,7 @@ This document outlines the translation process for internationalizing Api.
 - **Spanish (es)**: Spanish localization
 
 ### Language Codes
+
 Use ISO 639-1 language codes:
 - `en` - English
 - `cs` - Czech
@@ -22,7 +25,7 @@ Use ISO 639-1 language codes:
 
 ## Directory Structure
 
-```
+```text
 locales/
 ├── en/
 │   ├── common.json
@@ -40,6 +43,7 @@ locales/
 ## Translation Files
 
 ### JSON Format
+
 ```json
 {
   "welcome": "Welcome to Api",
@@ -56,6 +60,7 @@ locales/
 ```
 
 ### Key Naming Conventions
+
 - Use lowercase with dots: `user.profile.name`
 - Group related keys: `buttons.save`, `buttons.cancel`
 - Use descriptive names: `error.validation.email`
@@ -64,6 +69,7 @@ locales/
 ## Translation Process
 
 ### 1. Source Text Creation
+
 ```javascript
 // Mark text for translation
 t('welcome.message')
@@ -72,6 +78,7 @@ t('items.count', { count: itemCount })
 ```
 
 ### 2. Key Extraction
+
 ```bash
 # Extract translatable strings
 npm run extract-i18n
@@ -81,12 +88,14 @@ npm run generate-templates
 ```
 
 ### 3. Translation Assignment
+
 - Assign languages to translators
 - Provide context and screenshots
 - Set deadlines for completion
 - Share translation guidelines
 
 ### 4. Quality Assurance
+
 - Review translations for accuracy
 - Test in application context
 - Check for UI layout issues
@@ -95,6 +104,7 @@ npm run generate-templates
 ## Translation Guidelines
 
 ### General Rules
+
 - Maintain consistent tone and style
 - Consider cultural context
 - Keep text length similar to English
@@ -102,6 +112,7 @@ npm run generate-templates
 - Test with actual UI components
 
 ### Technical Considerations
+
 - **Pluralization**: Handle singular/plural forms
 - **Gender**: Consider grammatical gender
 - **RTL Languages**: Right-to-left text direction
@@ -109,6 +120,7 @@ npm run generate-templates
 - **Date/Time**: Locale-specific formatting
 
 ### Examples
+
 ```json
 {
   "items": {
@@ -127,6 +139,7 @@ npm run generate-templates
 ## Tools and Libraries
 
 ### i18next (Recommended)
+
 ```javascript
 import i18next from 'i18next';
 import Backend from 'i18next-http-backend';
@@ -145,6 +158,7 @@ i18next
 ```
 
 ### React Integration
+
 ```jsx
 import { useTranslation } from 'react-i18next';
 
@@ -165,6 +179,7 @@ function Welcome() {
 ## Automation
 
 ### CI/CD Integration
+
 ```yaml
 # .github/workflows/translations.yml
 name: Translation Check
@@ -182,6 +197,7 @@ jobs:
 ```
 
 ### Scripts
+
 ```bash
 #!/bin/bash
 # scripts/check-translations.sh
@@ -198,6 +214,7 @@ done
 ## Testing Translations
 
 ### Automated Tests
+
 ```javascript
 describe('Translations', () => {
   test('all keys exist in all languages', () => {
@@ -218,6 +235,7 @@ describe('Translations', () => {
 ```
 
 ### Manual Testing Checklist
+
 - [ ] Text displays correctly in UI
 - [ ] No text overflow or truncation
 - [ ] Placeholders are replaced
@@ -228,12 +246,14 @@ describe('Translations', () => {
 ## Collaboration Workflow
 
 ### Using Translation Services
+
 - **Crowdin**: Collaborative translation platform
 - **Lokalise**: Translation management system
 - **Weblate**: Free/open source translation tool
 - **Phrase**: Professional translation platform
 
 ### Version Control
+
 ```bash
 # Branch for translation updates
 git checkout -b translations/update-cs-locale
@@ -249,6 +269,7 @@ git push origin translations/update-cs-locale
 ## Maintenance
 
 ### Regular Tasks
+
 - Review and update translations
 - Add new languages as needed
 - Remove obsolete translation keys
@@ -256,6 +277,7 @@ git push origin translations/update-cs-locale
 - Monitor translation completeness
 
 ### Performance Considerations
+
 - Lazy load translation files
 - Cache translations appropriately
 - Minimize bundle size impact

@@ -1,11 +1,13 @@
 # Java Testing Guide for Api
 
 ## Overview
+
 Testing strategy and frameworks for Java development in Api.
 
 ## Testing Frameworks
 
 ### JUnit 5 (Recommended)
+
 ```java
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,7 @@ class CalculatorTest {
 ```
 
 ### Mockito for Mocking
+
 ```java
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -60,12 +63,14 @@ class UserServiceTest {
 ## Test Categories
 
 ### Unit Tests
+
 - Test individual components
 - Use mocks for dependencies
 - Fast execution
 - High coverage
 
 ### Integration Tests
+
 ```java
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -84,6 +89,7 @@ class UserControllerIntegrationTest {
 ```
 
 ## Running Tests
+
 ```bash
 # Maven
 mvn test
