@@ -7,7 +7,7 @@
 ## Project Information
 
 - **Gitea Repository**: git@gitea:CassandraGargoyle/Api
-- **GitHub Repository**: <https://github.com/CassandraGargoyle/portunix-api>
+- **GitHub Repository**: <https://github.com/CassandraGargoyle/api>
 - **Project Name**: Api
 - **Primary Purpose**: Purpose to be defined
 - **Primary Language**: To be determined

@@ -11,7 +11,7 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 - **Version:** 1.0.0.2-SNAPSHOT
 - **Java Version:** 21
 - **Build Tool:** Maven
-- **Repository**: <https://github.com/cassandragargoyle/portunix-api>
+- **Repository**: <https://github.com/cassandragargoyle/api>
 
 ## Maven Project Structure
 

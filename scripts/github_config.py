@@ -11,7 +11,7 @@ from pathlib import Path
 
 # GitHub configuration
 GITHUB_REMOTE = "github"
-GITHUB_REPO = "https://github.com/cassandragargoyle/portunix-api.git"
+GITHUB_REPO = "https://github.com/cassandragargoyle/api.git"
 PROJECT_NAME = "Api"
 
 # Files and directories that must not be published to GitHub
