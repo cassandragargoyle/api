@@ -1,138 +1,89 @@
 #!/usr/bin/env python3
 """Shared configuration and utilities for GitHub publishing scripts.
 
+Loads config from github_publish.json and provides shared functions
+for preflight checks and publish workflows.
+
 Project: CassandraGargoyle Api
 """
 
+import fnmatch
+import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-# GitHub configuration
-GITHUB_REMOTE = "github"
-GITHUB_REPO = "https://github.com/cassandragargoyle/api.git"
-PROJECT_NAME = "Api"
+# --- JSON config loading ---
 
-# Files and directories that must not be published to GitHub
-PRIVATE_FILES = [
-    "CLAUDE.md",
-    "CLAUDE.local.md",
-    "GEMINI.md",
-    "NOTES.md",
-    "TODO.md",
-    ".claude/",
-    ".vscode/",
-    ".translated/",
-    ".venv/",
-    "docs/private/",
-    "docs/issues/internal/",
-    "docs/adr/",
-    "config/dev/",
-    "docs/notes/",
-    # Publishing scripts themselves
-    "scripts/github_config.py",
-    "scripts/github_00_setup.py",
-    "scripts/github_01_preflight_check.py",
-    "scripts/github_02_quick_publish.py",
-    "scripts/github_02_sync_publish.py",
-    # Legacy bash scripts
-    "scripts/github-00-setup.sh",
-    "scripts/github-01-preflight-check.sh",
-    "scripts/github-02-quick-publish.sh",
-    "scripts/github-02-sync-publish.sh",
-    # Internal install scripts
-    "install-from-server.ps1",
-    "install-from-server.sh",
-    # Build artifacts
-    "target/",
-    "*.class",
-    "*.jar",
-    "*.war",
-    "*.ear",
-    # Internal docs
-    "docs/contributing/GITEA-INTERNAL-METHODOLOGY.md",
-    "docs/contributing/GITHUB-WORKFLOW.md",
-    "docs/contributing/README-DUAL-SYSTEM.md",
-    # Dual README system - GitHub version is renamed to README.md during publish
-    "README.github.md",
-]
-
-# Patterns in content that indicate sensitive data
-SENSITIVE_PATTERNS = [
-    "git@gitea:",
-    "gitea.cassandragargoyle",
-    "cassandragargoyle.cz",
-    r"192\.168\.\d",
-    r"10\.0\.\d",
-    r"password.*=.*['\"]",
-    r"api_key.*=.*['\"]",
-    r"secret.*=.*['\"]",
-    r"token.*=.*['\"]",
-    r"\bPRIVATE\b",
-    r"\bINTERNAL\b",
-    "DO NOT PUBLISH",
-    # Team member names that must not appear in published files
-    r"\btovek\b",
-    r"\bsplichal\b",
-    r"\bchaloupka\b",
-]
-
-# Allowed exceptions (patterns that look sensitive but are OK)
-ALLOWED_EXCEPTIONS = [
-    "github.com/CassandraGargoyle",
-    "github.com/cassandragargoyle",
-    "ProductVersion",
-    "internally",
-    "Internal",
-    "internal_type",
-    # Java keywords and common English usage in docs
-    "private ",
-    "private(",
-    "private:",
-    "Private Code",
-    "Private methods",
-    "Private functions",
-    "Private packages",
-    "PRIVATE_FILES",
-    "PRIVATE_FILE",
-    "internal development",
-    "internal/",
-]
-
-# File extensions to scan for sensitive content
-SCAN_EXTENSIONS = [
-    ".java", ".xml", ".properties", ".yml", ".yaml",
-    ".md", ".json", ".py", ".sh", ".ps1", ".txt",
-    ".gradle", ".kts",
-]
-
-# Paths to skip during content scanning
-SKIP_PATHS = [
-    ".claude/",
-    ".git/",
-    ".vscode/",
-    ".venv/",
-    ".translated/",
-    "docs/adr/",
-    "docs/issues/internal/",
-    "docs/private/",
-    "target/",
-]
-
-# Directory names that should be skipped anywhere in the tree
-SKIP_DIR_NAMES = {"target", ".git"}
-
-# Paths where documentation examples are allowed
-DOCS_EXAMPLE_PATHS = [
-    "docs/commands/",
-    "docs/ai-assistants/",
-    "docs/contributing/",
-    "docs/issues/",
-]
+_config_cache: dict | None = None
 
 
-# Terminal colors
+def _config_path() -> Path:
+    """Return path to the JSON config file."""
+    return Path(__file__).parent / "github_publish.json"
+
+
+def load_config() -> dict:
+    """Load and cache the JSON configuration."""
+    global _config_cache
+    if _config_cache is None:
+        path = _config_path()
+        if not path.exists():
+            print(f"ERROR: Config file not found: {path}", file=sys.stderr)
+            sys.exit(1)
+        with open(path) as f:
+            _config_cache = json.load(f)
+    return _config_cache
+
+
+# --- Backward-compatible constants derived from JSON ---
+
+def _build_private_files() -> list[str]:
+    """Build flat PRIVATE_FILES list from structured JSON config."""
+    cfg = load_config()
+    pf = cfg["private_files"]
+    result: list[str] = []
+    result.extend(pf.get("exact", []))
+    result.extend(pf.get("directories", []))
+    result.extend(pf.get("globs", []))
+    result.extend(pf.get("scripts", []))
+    result.extend(pf.get("internal_docs", []))
+    return result
+
+
+def _init_constants() -> None:
+    """Initialize module-level constants from JSON config."""
+    global GITHUB_REMOTE, GITHUB_REPO, PROJECT_NAME
+    global PRIVATE_FILES, SENSITIVE_PATTERNS, ALLOWED_EXCEPTIONS
+    global SCAN_EXTENSIONS, SKIP_DIR_NAMES, DOCS_EXAMPLE_PATHS
+
+    cfg = load_config()
+
+    gh = cfg["github"]
+    GITHUB_REMOTE = gh["remote_name"]
+    GITHUB_REPO = gh["repo_url"]
+    PROJECT_NAME = gh["project_name"]
+
+    PRIVATE_FILES = _build_private_files()
+
+    sc = cfg["sensitive_content"]
+    SENSITIVE_PATTERNS = sc["patterns"]
+    ALLOWED_EXCEPTIONS = sc["allowed_exceptions"]
+
+    scan = cfg["scanning"]
+    SCAN_EXTENSIONS = scan["extensions"]
+    SKIP_DIR_NAMES = set(scan["skip_dir_names"])
+    DOCS_EXAMPLE_PATHS = scan["docs_example_paths"]
+
+
+# Initialize constants at import time
+_init_constants()
+
+
+# --- Terminal colors and output helpers ---
+
 class Color:
     RED = "\033[0;31m"
     GREEN = "\033[0;32m"
@@ -169,6 +120,8 @@ def print_header(title: str) -> None:
     print(f"   {title}")
     print(f"{border}{Color.NC}\n")
 
+
+# --- Git helpers ---
 
 def run_git(*args: str, capture: bool = True, check: bool = True,
             cwd: str | None = None) -> subprocess.CompletedProcess:
@@ -232,3 +185,173 @@ def get_repo_root() -> Path:
     """Get the root directory of the current git repository."""
     root = git_output("rev-parse", "--show-toplevel")
     return Path(root)
+
+
+# --- Shared publish logic ---
+
+def is_publishable(filepath: Path, source_dir: Path) -> bool:
+    """Check if a single file would be published.
+
+    Returns False for files matching any private_files entry.
+    filepath must be a file (not directory).
+    """
+    cfg = load_config()
+    pf = cfg["private_files"]
+    rel = filepath.relative_to(source_dir)
+    rel_str = str(rel)
+
+    # Skip .git directory
+    if ".git" in rel.parts:
+        return False
+
+    # Skip directory names that should be excluded anywhere in tree
+    skip_dirs = set(cfg["scanning"]["skip_dir_names"])
+    if skip_dirs.intersection(rel.parts):
+        return False
+
+    # Check exact file matches
+    for exact in pf.get("exact", []):
+        if rel_str == exact:
+            return False
+
+    # Check directory matches (entry ends with /)
+    for d in pf.get("directories", []):
+        d_clean = d.rstrip("/")
+        if rel_str == d_clean or rel_str.startswith(d_clean + "/"):
+            return False
+
+    # Check script matches
+    for s in pf.get("scripts", []):
+        if rel_str == s:
+            return False
+
+    # Check internal docs
+    for doc in pf.get("internal_docs", []):
+        if rel_str == doc:
+            return False
+
+    # Check glob patterns using fnmatch against the filename
+    for pattern in pf.get("globs", []):
+        if fnmatch.fnmatch(rel.name, pattern):
+            return False
+
+    return True
+
+
+def get_publishable_files(source_dir: Path) -> list[Path]:
+    """Return sorted list of files that would be published from source_dir.
+
+    Walks the source directory, skipping private directories early,
+    and returns only files that pass is_publishable().
+    """
+    cfg = load_config()
+    pf = cfg["private_files"]
+    skip_dirs = set(cfg["scanning"]["skip_dir_names"])
+
+    # Build set of directory prefixes to skip during walk
+    skip_prefixes: set[str] = set()
+    for d in pf.get("directories", []):
+        skip_prefixes.add(d.rstrip("/"))
+
+    result: list[Path] = []
+    for root, dirs, files in os.walk(source_dir):
+        root_path = Path(root)
+        rel_root = root_path.relative_to(source_dir)
+
+        # Prune directories we never want to enter
+        dirs[:] = [
+            d for d in dirs
+            if d not in skip_dirs
+            and d != ".git"
+            and str(rel_root / d) not in skip_prefixes
+        ]
+
+        for fname in files:
+            fpath = root_path / fname
+            if is_publishable(fpath, source_dir):
+                result.append(fpath)
+
+    return sorted(result)
+
+
+def remove_private_files(target_dir: Path) -> int:
+    """Remove all private files and directories from a staging directory.
+
+    Returns count of items removed.
+    """
+    cfg = load_config()
+    pf = cfg["private_files"]
+    removed = 0
+
+    # Remove exact files
+    for name in pf.get("exact", []):
+        target = target_dir / name
+        if target.exists():
+            target.unlink()
+            removed += 1
+            print(f"   Removed: {name}")
+
+    # Remove directories
+    for d in pf.get("directories", []):
+        target = target_dir / d.rstrip("/")
+        if target.exists():
+            shutil.rmtree(target)
+            removed += 1
+            print(f"   Removed: {d}")
+
+    # Remove scripts
+    for s in pf.get("scripts", []):
+        target = target_dir / s
+        if target.exists():
+            target.unlink()
+            removed += 1
+            print(f"   Removed: {s}")
+
+    # Remove internal docs
+    for doc in pf.get("internal_docs", []):
+        target = target_dir / doc
+        if target.exists():
+            target.unlink()
+            removed += 1
+            print(f"   Removed: {doc}")
+
+    # Remove glob-matched files
+    for pattern in pf.get("globs", []):
+        for match in target_dir.rglob(pattern):
+            if match.is_file():
+                rel = match.relative_to(target_dir)
+                match.unlink()
+                removed += 1
+                print(f"   Removed: {rel} (glob: {pattern})")
+            elif match.is_dir():
+                rel = match.relative_to(target_dir)
+                shutil.rmtree(match)
+                removed += 1
+                print(f"   Removed: {rel}/ (glob: {pattern})")
+
+    return removed
+
+
+def apply_readme_dual_system(target_dir: Path) -> bool:
+    """Apply the dual README system: rename source to target.
+
+    Returns True if rename was performed.
+    """
+    cfg = load_config()
+    rds = cfg["readme_dual_system"]
+
+    if not rds.get("enabled", False):
+        return False
+
+    source = target_dir / rds["source_filename"]
+    target = target_dir / rds["target_filename"]
+
+    if not source.exists():
+        return False
+
+    print_info("Applying dual README system...")
+    if target.exists():
+        target.unlink()
+    source.rename(target)
+    print(f"   {rds['source_filename']} -> {rds['target_filename']}")
+    return True

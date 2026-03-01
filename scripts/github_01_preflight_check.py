@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Pre-flight check for sensitive data before GitHub publication.
 
-Scans the project for forbidden files, sensitive content patterns,
-binary files, and large files before publishing.
+Computes the publishable file set from JSON config, reports excluded files
+as informational, then scans only publishable files for sensitive content,
+binary files, and large files.
 
 Project: CassandraGargoyle Api
 """
@@ -16,81 +17,61 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from github_config import (
-    PRIVATE_FILES, SENSITIVE_PATTERNS, ALLOWED_EXCEPTIONS,
-    SCAN_EXTENSIONS, SKIP_PATHS, SKIP_DIR_NAMES, DOCS_EXAMPLE_PATHS,
+    load_config, get_publishable_files, is_publishable,
     Color, print_ok, print_warn, print_err, print_info, print_header,
 )
 
-# Binary file extensions to check for
-BINARY_EXTENSIONS = {
-    ".class", ".jar", ".war", ".ear", ".nar",
-    ".exe", ".dll", ".so", ".dylib",
-}
 
+def report_excluded_files(target_dir: Path, publishable: list[Path]) -> None:
+    """Report files that will be excluded from publication (informational)."""
+    print(f"{Color.YELLOW}Computing publishable file set...{Color.NC}")
 
-def should_skip(filepath: Path, target_dir: Path) -> bool:
-    """Check if a file path should be skipped during scanning."""
-    rel = filepath.relative_to(target_dir)
-    rel_str = str(rel) + ("/" if filepath.is_dir() else "")
+    publishable_set = set(publishable)
 
-    # Check explicit skip paths (prefix match)
-    for skip in SKIP_PATHS:
-        if rel_str.startswith(skip) or f"/{rel_str}".startswith(f"/{skip}"):
-            return True
+    # Collect all files in the directory
+    all_files = sorted(
+        f for f in target_dir.rglob("*")
+        if f.is_file() and ".git" not in f.parts
+    )
 
-    # Check skip directory names anywhere in the path
-    if SKIP_DIR_NAMES.intersection(rel.parts):
-        return True
+    excluded = [f for f in all_files if f not in publishable_set]
 
-    # Skip files listed in PRIVATE_FILES (they won't be published)
-    for priv in PRIVATE_FILES:
-        if "*" in priv:
-            continue
-        priv_clean = priv.rstrip("/")
-        if rel_str == priv_clean or rel_str.startswith(priv_clean + "/"):
-            return True
+    print_info(f"Total files: {len(all_files)}")
+    print_info(f"Publishable: {len(publishable)}")
+    print_info(f"Excluded: {len(excluded)}")
 
-    return False
+    if excluded:
+        print()
+        print_info("Excluded files (will NOT be published):")
+        for f in excluded[:30]:
+            print(f"      {f.relative_to(target_dir)}")
+        if len(excluded) > 30:
+            print(f"      ... and {len(excluded) - 30} more")
 
 
 def is_in_docs_example_path(filepath: Path, target_dir: Path) -> bool:
     """Check if file is in a documentation example path."""
+    cfg = load_config()
+    docs_paths = cfg["scanning"]["docs_example_paths"]
     rel_str = str(filepath.relative_to(target_dir))
-    return any(rel_str.startswith(p) for p in DOCS_EXAMPLE_PATHS)
+    return any(rel_str.startswith(p) for p in docs_paths)
 
 
-def check_forbidden_files(target_dir: Path) -> int:
-    """Check for files that must not be published."""
-    print(f"{Color.YELLOW}Checking for forbidden files...{Color.NC}")
-    found = 0
+def check_sensitive_content(target_dir: Path, publishable: list[Path]) -> int:
+    """Scan publishable file contents for sensitive data patterns."""
+    print(f"{Color.YELLOW}Scanning publishable files for sensitive patterns...{Color.NC}")
 
-    for pattern in PRIVATE_FILES:
-        # Skip glob patterns, check concrete paths
-        if "*" in pattern:
-            continue
-        path = target_dir / pattern.rstrip("/")
-        if path.exists():
-            print_err(f"FOUND: {pattern}")
-            found += 1
+    cfg = load_config()
+    sc = cfg["sensitive_content"]
+    patterns = sc["patterns"]
+    allowed = sc["allowed_exceptions"]
+    non_critical = set(sc.get("non_critical_in_docs", []))
+    scan_exts = set(cfg["scanning"]["extensions"])
 
-    if found == 0:
-        print_ok("No forbidden files found")
-    else:
-        print_err(f"Found {found} forbidden file(s)")
-    return found
-
-
-def check_sensitive_content(target_dir: Path) -> int:
-    """Scan file contents for sensitive data patterns."""
-    print(f"{Color.YELLOW}Scanning file contents for sensitive patterns...{Color.NC}")
     findings: list[tuple[str, str, str]] = []
 
-    # Collect all scannable files
-    files_to_scan: list[Path] = []
-    for ext in SCAN_EXTENSIONS:
-        for filepath in target_dir.rglob(f"*{ext}"):
-            if not should_skip(filepath, target_dir) and filepath.is_file():
-                files_to_scan.append(filepath)
+    # Filter to scannable extensions
+    files_to_scan = [f for f in publishable if f.suffix in scan_exts]
 
     for filepath in files_to_scan:
         try:
@@ -101,28 +82,24 @@ def check_sensitive_content(target_dir: Path) -> int:
         lines = content.splitlines()
         rel_path = str(filepath.relative_to(target_dir))
 
-        for pattern in SENSITIVE_PATTERNS:
+        for pattern in patterns:
             # Skip non-critical patterns in documentation paths
-            non_critical = (r"192\.168\.\d", r"10\.0\.\d", r"\bPRIVATE\b", r"\bINTERNAL\b")
             if pattern in non_critical and is_in_docs_example_path(filepath, target_dir):
                 continue
 
             try:
                 regex = re.compile(pattern, re.IGNORECASE)
             except re.error:
-                # Treat as literal string
                 regex = re.compile(re.escape(pattern), re.IGNORECASE)
 
             for line_num, line in enumerate(lines, 1):
                 if regex.search(line):
-                    # Check if line matches any allowed exception
-                    is_exception = any(exc in line for exc in ALLOWED_EXCEPTIONS)
+                    is_exception = any(exc in line for exc in allowed)
                     if not is_exception:
                         findings.append((rel_path, pattern, f"{line_num}: {line.strip()[:120]}"))
 
     if findings:
         print_err("Potentially sensitive content found:")
-        # Deduplicate by file+pattern
         seen: set[tuple[str, str]] = set()
         for fpath, pattern, detail in findings:
             key = (fpath, pattern)
@@ -136,19 +113,16 @@ def check_sensitive_content(target_dir: Path) -> int:
     return 0
 
 
-def check_binary_files(target_dir: Path) -> int:
-    """Check for binary files that should not be published."""
+def check_binary_files(target_dir: Path, publishable: list[Path]) -> int:
+    """Check for binary files among publishable files."""
     print(f"{Color.YELLOW}Checking for binary files...{Color.NC}")
-    found: list[Path] = []
 
-    for filepath in target_dir.rglob("*"):
-        if not filepath.is_file():
-            continue
-        if ".git" in filepath.parts:
-            continue
-        if should_skip(filepath, target_dir):
-            continue
-        if filepath.suffix in BINARY_EXTENSIONS:
+    cfg = load_config()
+    binary_exts = set(cfg["scanning"]["binary_extensions"])
+
+    found: list[Path] = []
+    for filepath in publishable:
+        if filepath.suffix in binary_exts:
             found.append(filepath)
 
     if found:
@@ -161,19 +135,16 @@ def check_binary_files(target_dir: Path) -> int:
     return 0
 
 
-def check_large_files(target_dir: Path, max_size_mb: float = 1.0) -> int:
-    """Check for files larger than the threshold."""
+def check_large_files(target_dir: Path, publishable: list[Path]) -> int:
+    """Check for files larger than the threshold among publishable files."""
+    cfg = load_config()
+    max_size_mb = cfg["scanning"]["max_file_size_mb"]
+
     print(f"{Color.YELLOW}Checking for large files (>{max_size_mb}MB)...{Color.NC}")
     max_bytes = int(max_size_mb * 1024 * 1024)
     found: list[tuple[Path, int]] = []
 
-    for filepath in target_dir.rglob("*"):
-        if not filepath.is_file():
-            continue
-        if ".git" in filepath.parts:
-            continue
-        if should_skip(filepath, target_dir):
-            continue
+    for filepath in publishable:
         try:
             size = filepath.stat().st_size
             if size > max_bytes:
@@ -225,7 +196,8 @@ def check_maven_compile(target_dir: Path) -> int:
     return 1
 
 
-def generate_report(target_dir: Path, report_file: Path | None = None) -> None:
+def generate_report(target_dir: Path, publishable: list[Path],
+                    report_file: Path | None = None) -> None:
     """Generate a pre-flight check report file."""
     if report_file is None:
         report_file = target_dir / "preflight-report.txt"
@@ -239,15 +211,11 @@ def generate_report(target_dir: Path, report_file: Path | None = None) -> None:
         "Files to be published:",
     ]
 
-    all_files = sorted(
-        f for f in target_dir.rglob("*")
-        if f.is_file() and ".git" not in f.parts
-    )
-    for f in all_files:
+    for f in publishable:
         lines.append(str(f.relative_to(target_dir)))
 
     lines.append("")
-    lines.append(f"Total files: {len(all_files)}")
+    lines.append(f"Total publishable files: {len(publishable)}")
 
     report_file.write_text("\n".join(lines))
     print_ok(f"Report saved to: {report_file}")
@@ -274,14 +242,18 @@ def main() -> None:
 
     print(f"Checking directory: {target_dir}\n")
 
+    # Compute publishable file set once
+    publishable = get_publishable_files(target_dir)
+
+    report_excluded_files(target_dir, publishable)
+    print()
+
     errors = 0
-    errors += min(check_forbidden_files(target_dir), 1)
+    errors += min(check_sensitive_content(target_dir, publishable), 1)
     print()
-    errors += min(check_sensitive_content(target_dir), 1)
+    errors += min(check_binary_files(target_dir, publishable), 1)
     print()
-    errors += min(check_binary_files(target_dir), 1)
-    print()
-    errors += min(check_large_files(target_dir), 1)
+    errors += min(check_large_files(target_dir, publishable), 1)
     print()
     errors += min(check_maven_compile(target_dir), 1)
     print()
@@ -296,7 +268,7 @@ def main() -> None:
         print()
         print(f"{Color.YELLOW}Options:{Color.NC}")
         print("   1. Fix the issues and run check again")
-        print("   2. Add false positives to ALLOWED_EXCEPTIONS in github_config.py")
+        print("   2. Add false positives to allowed_exceptions in github_publish.json")
         print("   3. Continue at your own risk")
         sys.exit(1)
 

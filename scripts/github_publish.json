@@ -1,0 +1,126 @@
+{
+  "github": {
+    "remote_name": "github",
+    "repo_url": "https://github.com/cassandragargoyle/api.git",
+    "project_name": "Api"
+  },
+
+  "private_files": {
+    "exact": [
+      "CLAUDE.md",
+      "CLAUDE.local.md",
+      "GEMINI.md",
+      "NOTES.md",
+      "TODO.md",
+      "README.github.md",
+      "install-from-server.ps1",
+      "install-from-server.sh"
+    ],
+    "directories": [
+      ".claude/",
+      ".vscode/",
+      ".translated/",
+      ".venv/",
+      "docs/private/",
+      "docs/issues/internal/",
+      "docs/adr/",
+      "docs/notes/",
+      "config/dev/",
+      "target/"
+    ],
+    "globs": [
+      "*.class",
+      "*.jar",
+      "*.war",
+      "*.ear"
+    ],
+    "scripts": [
+      "scripts/github_config.py",
+      "scripts/github_publish.json",
+      "scripts/github_00_setup.py",
+      "scripts/github_01_preflight_check.py",
+      "scripts/github_02_quick_publish.py",
+      "scripts/github_02_sync_publish.py",
+      "scripts/github-00-setup.sh",
+      "scripts/github-01-preflight-check.sh",
+      "scripts/github-02-quick-publish.sh",
+      "scripts/github-02-sync-publish.sh"
+    ],
+    "internal_docs": [
+      "docs/contributing/GITEA-INTERNAL-METHODOLOGY.md",
+      "docs/contributing/GITHUB-WORKFLOW.md",
+      "docs/contributing/README-DUAL-SYSTEM.md"
+    ]
+  },
+
+  "readme_dual_system": {
+    "enabled": true,
+    "source_filename": "README.github.md",
+    "target_filename": "README.md"
+  },
+
+  "sensitive_content": {
+    "patterns": [
+      "git@gitea:",
+      "gitea.cassandragargoyle",
+      "cassandragargoyle.cz",
+      "192\\.168\\.\\d",
+      "10\\.0\\.\\d",
+      "password.*=.*['\"]",
+      "api_key.*=.*['\"]",
+      "secret.*=.*['\"]",
+      "token.*=.*['\"]",
+      "\\bPRIVATE\\b",
+      "\\bINTERNAL\\b",
+      "DO NOT PUBLISH",
+      "\\btovek\\b",
+      "\\bsplichal\\b",
+      "\\bchaloupka\\b"
+    ],
+    "allowed_exceptions": [
+      "github.com/CassandraGargoyle",
+      "github.com/cassandragargoyle",
+      "ProductVersion",
+      "internally",
+      "Internal",
+      "internal_type",
+      "private ",
+      "private(",
+      "private:",
+      "Private Code",
+      "Private methods",
+      "Private functions",
+      "Private packages",
+      "PRIVATE_FILES",
+      "PRIVATE_FILE",
+      "internal development",
+      "internal/"
+    ],
+    "non_critical_in_docs": [
+      "192\\.168\\.\\d",
+      "10\\.0\\.\\d",
+      "\\bPRIVATE\\b",
+      "\\bINTERNAL\\b"
+    ]
+  },
+
+  "scanning": {
+    "extensions": [
+      ".java", ".xml", ".properties", ".yml", ".yaml",
+      ".md", ".json", ".py", ".sh", ".ps1", ".txt",
+      ".gradle", ".kts"
+    ],
+    "skip_dir_names": ["target", ".git"],
+    "binary_extensions": [
+      ".class", ".jar", ".war", ".ear", ".nar",
+      ".exe", ".dll", ".so", ".dylib"
+    ],
+    "docs_example_paths": [
+      "docs/commands/",
+      "docs/ai-assistants/",
+      "docs/contributing/",
+      "docs/issues/"
+    ],
+    "max_file_size_mb": 1.0
+  }
+}

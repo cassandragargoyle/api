@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from github_config import (
     GITHUB_REMOTE, GITHUB_REPO, PROJECT_NAME, PRIVATE_FILES,
+    load_config, is_publishable, remove_private_files, apply_readme_dual_system,
     Color, print_ok, print_warn, print_err, print_info,
     print_step, print_header,
     run_git, git_output, ensure_git_repo, has_remote, confirm,
@@ -79,20 +80,14 @@ def step2_analyze_changes(local_repo: Path) -> None:
     print(f"Files analysis:")
     print(f"   Total files: {total_files}")
 
-    # Estimate private files
-    private_count = 0
-    for pattern in PRIVATE_FILES:
-        if "*" in pattern:
-            private_count += sum(1 for _ in local_repo.rglob(pattern))
-        else:
-            target = local_repo / pattern.rstrip("/")
-            if target.exists():
-                if target.is_file():
-                    private_count += 1
-                else:
-                    private_count += sum(1 for f in target.rglob("*") if f.is_file())
+    # Estimate private files using is_publishable
+    publishable_count = sum(
+        1 for f in local_repo.rglob("*")
+        if f.is_file() and ".git" not in f.parts and is_publishable(f, local_repo)
+    )
+    private_count = total_files - publishable_count
     print(f"   Private files (will be excluded): ~{private_count}")
-    print(f"   Files to publish: ~{total_files - private_count}")
+    print(f"   Files to publish: ~{publishable_count}")
 
 
 def step3_create_branch(local_repo: Path) -> str:
@@ -157,6 +152,26 @@ def step3_create_branch(local_repo: Path) -> str:
     return branch_name
 
 
+def _build_rsync_excludes() -> list[str]:
+    """Build rsync --exclude arguments from JSON config."""
+    cfg = load_config()
+    pf = cfg["private_files"]
+    excludes: list[str] = ["--exclude=.git/"]
+
+    for name in pf.get("exact", []):
+        excludes.append(f"--exclude={name}")
+    for d in pf.get("directories", []):
+        excludes.append(f"--exclude={d}")
+    for g in pf.get("globs", []):
+        excludes.append(f"--exclude={g}")
+    for s in pf.get("scripts", []):
+        excludes.append(f"--exclude={s}")
+    for doc in pf.get("internal_docs", []):
+        excludes.append(f"--exclude={doc}")
+
+    return excludes
+
+
 def step4_sync_files(local_repo: Path) -> None:
     print_step(4, "Syncing files from local repository")
 
@@ -172,10 +187,8 @@ def step4_sync_files(local_repo: Path) -> None:
         else:
             item.unlink()
 
-    # Build rsync exclude arguments
-    exclude_args: list[str] = ["--exclude=.git/"]
-    for pattern in PRIVATE_FILES:
-        exclude_args.append(f"--exclude={pattern}")
+    # Build rsync exclude arguments from config
+    exclude_args = _build_rsync_excludes()
 
     print_info("Copying files from local repository...")
     try:
@@ -193,26 +206,14 @@ def step4_sync_files(local_repo: Path) -> None:
         print_err(f"Failed to sync files: {e.stderr}")
         sys.exit(1)
 
-    # Explicitly remove internal scripts (in case they were copied)
-    print_info("Removing internal scripts from publish...")
-    for pattern in PRIVATE_FILES:
-        if "*" not in pattern:
-            target = WORK_DIR / pattern.rstrip("/")
-            if target.exists():
-                if target.is_dir():
-                    shutil.rmtree(target)
-                else:
-                    target.unlink()
+    # Explicitly remove private files (in case rsync missed globs)
+    print_info("Verifying private files removed...")
+    removed = remove_private_files(WORK_DIR)
+    if removed > 0:
+        print_ok(f"Removed {removed} additional private files")
 
     # Dual README system
-    github_readme = WORK_DIR / "README.github.md"
-    if github_readme.exists():
-        print_info("Applying dual README system...")
-        readme = WORK_DIR / "README.md"
-        if readme.exists():
-            readme.unlink()
-        github_readme.rename(readme)
-        print("   README.github.md -> README.md")
+    apply_readme_dual_system(WORK_DIR)
 
     print_ok("Files synchronized")
 
@@ -231,36 +232,13 @@ def step4_sync_files(local_repo: Path) -> None:
 
 def _copy_files_fallback(src: Path, dst: Path) -> None:
     """Copy files manually when rsync is not available."""
-    private_set = set(p.rstrip("/") for p in PRIVATE_FILES if "*" not in p)
-    glob_patterns = [p for p in PRIVATE_FILES if "*" in p]
-
     for item in src.rglob("*"):
         if not item.is_file():
             continue
+        if not is_publishable(item, src):
+            continue
+
         rel = item.relative_to(src)
-
-        # Skip .git
-        if ".git" in rel.parts:
-            continue
-
-        # Skip private files
-        rel_str = str(rel)
-        skip = False
-        for priv in private_set:
-            if rel_str == priv or rel_str.startswith(priv + "/"):
-                skip = True
-                break
-        if skip:
-            continue
-
-        # Skip glob patterns
-        for pattern in glob_patterns:
-            if item.match(pattern):
-                skip = True
-                break
-        if skip:
-            continue
-
         target = dst / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(item, target)

@@ -16,7 +16,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from github_config import (
-    GITHUB_REMOTE, GITHUB_REPO, PROJECT_NAME, PRIVATE_FILES,
+    GITHUB_REMOTE, GITHUB_REPO, PROJECT_NAME,
+    remove_private_files, apply_readme_dual_system,
     Color, print_ok, print_warn, print_err, print_info,
     print_step, print_header,
     run_git, git_output, ensure_git_repo, has_remote, confirm,
@@ -106,26 +107,7 @@ def create_release_commit() -> None:
 
     # Remove private files in staging
     print("Cleaning private files...")
-    removed = 0
-    for pattern in PRIVATE_FILES:
-        if "*" in pattern:
-            # Handle glob patterns
-            for match in temp_dir.rglob(pattern):
-                if match.is_file():
-                    match.unlink()
-                    removed += 1
-                elif match.is_dir():
-                    shutil.rmtree(match)
-                    removed += 1
-        else:
-            target = temp_dir / pattern.rstrip("/")
-            if target.exists():
-                if target.is_dir():
-                    shutil.rmtree(target)
-                else:
-                    target.unlink()
-                removed += 1
-                print(f"   Removed: {pattern}")
+    removed = remove_private_files(temp_dir)
 
     if removed > 0:
         print_ok(f"Removed {removed} private files/directories")
@@ -133,14 +115,7 @@ def create_release_commit() -> None:
         print_warn("No private files found to remove")
 
     # Dual README system
-    github_readme = temp_dir / "README.github.md"
-    if github_readme.exists():
-        print_info("Applying dual README system...")
-        readme = temp_dir / "README.md"
-        if readme.exists():
-            readme.unlink()
-        github_readme.rename(readme)
-        print("   README.github.md -> README.md")
+    apply_readme_dual_system(temp_dir)
 
     # Check for changes and commit
     status = git_output("status", "--porcelain", cwd=str(temp_dir))
