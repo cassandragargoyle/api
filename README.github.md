@@ -1,0 +1,122 @@
+# CassandraGargoyle API
+
+Core Java library providing shared entities, utilities, and base abstractions for CassandraGargoyle projects.
+
+## Documentation
+
+See [docs/contributing/](docs/contributing/) for development guidelines.
+
+## Project Information
+
+- **Version:** 1.0.0.2-SNAPSHOT
+- **Java Version:** 21
+- **Build Tool:** Maven
+- **Repository**: <https://github.com/cassandragargoyle/portunix-api>
+
+## Maven Project Structure
+
+This project serves as the **parent POM for all Java projects** in the CassandraGargoyle community. The root `pom.xml` (`cassandragargoyle-parent`) provides:
+
+- Centralized dependency management for all CassandraGargoyle Java modules
+- Common build configuration and plugin management
+- Shared properties (Java version, library versions, encoding)
+- Consistent build standards across all projects
+
+Current modules:
+
+```text
+Api/
+├── api/           # Core API module
+└── persistance/   # Persistence layer module
+```
+
+## Core Features
+
+### Entity Management
+
+- Base entity abstractions and implementations
+- Version management
+- Platform-specific entity handling
+- Diagram, Node, and Edge entities for graph-like structures
+- Data container entities for data management
+
+### Software Management
+
+- Software entity definitions
+- Code language support
+- Operating system type detection
+- Software categorization and features
+- Platform compatibility handling
+
+### Utilities
+
+- **Date Utilities:** Date manipulation and formatting
+- **String Utilities:** String processing and manipulation
+- **System Utilities:** System-level operations
+- **Preferences Utilities:** Application preferences management
+- **Base64 Encoding:** Data encoding utilities
+- **OS Detection:** Operating system detection and identification
+
+### Logging
+
+- Custom logging framework
+- Log factory pattern implementation
+- Exception handling for logging operations
+
+### CLI Support
+
+- Command-line interface implementation
+- Apache Commons CLI integration
+
+## Dependencies
+
+### Core Dependencies
+
+- **NetBeans Platform Modules**
+  - `org-openide-util`
+  - `org-openide-util-ui`
+  - `org-openide-util-lookup`
+  - `org-openide-filesystems`
+  - `org-openide-modules`
+
+- **Spring Framework** (5.3.39)
+  - Dependency injection and component management
+
+- **Apache Commons**
+  - `commons-cli` (1.5.0)
+  - `commons-lang3` (3.17.0)
+  - `commons-text` (1.12.0)
+
+### Testing
+
+- JUnit Jupiter (5.3.1)
+
+## Building the Project
+
+```bash
+mvn clean install
+```
+
+## Running Tests
+
+```bash
+mvn test
+```
+
+## Development
+
+This project uses:
+
+- Maven for build management
+- Spring for dependency injection
+- NetBeans Platform for application framework
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+This software is developed and maintained by the CassandraGargoyle Community.
+
+## Contributing
+
+Contributions are welcome. Please see the [contributing guidelines](docs/contributing/) before submitting changes.

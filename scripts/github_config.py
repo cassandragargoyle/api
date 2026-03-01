@@ -54,10 +54,13 @@ PRIVATE_FILES = [
     "docs/contributing/GITEA-INTERNAL-METHODOLOGY.md",
     "docs/contributing/GITHUB-WORKFLOW.md",
     "docs/contributing/README-DUAL-SYSTEM.md",
+    # Dual README system - GitHub version is renamed to README.md during publish
+    "README.github.md",
 ]
 
 # Patterns in content that indicate sensitive data
 SENSITIVE_PATTERNS = [
+    "git@gitea:",
     "gitea.cassandragargoyle",
     "cassandragargoyle.cz",
     "192.168.",
