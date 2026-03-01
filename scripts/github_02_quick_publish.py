@@ -105,6 +105,11 @@ def create_release_commit() -> None:
     print(f"Creating staging area: {temp_dir}")
     run_git("clone", ".", str(temp_dir), "--quiet")
 
+    # Set origin to GitHub so push works from staging
+    run_git("remote", "set-url", "origin", GITHUB_REPO, cwd=str(temp_dir))
+    run_git("remote", "add", GITHUB_REMOTE, GITHUB_REPO, cwd=str(temp_dir))
+    print_ok(f"Staging remote set to {GITHUB_REPO}")
+
     # Remove private files in staging
     print("Cleaning private files...")
     removed = remove_private_files(temp_dir)
