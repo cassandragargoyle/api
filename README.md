@@ -100,11 +100,25 @@ Api/
 mvn clean install
 ```
 
+Or using Make:
+
+```bash
+make clean-install
+```
+
 ## Running Tests
 
 ```bash
 mvn test
 ```
+
+Or using Make:
+
+```bash
+make test
+```
+
+Run `make help` to see all available targets.
 
 ## Development
 
