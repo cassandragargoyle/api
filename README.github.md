@@ -8,7 +8,7 @@ See [docs/contributing/](docs/contributing/) for development guidelines.
 
 ## Project Information
 
-- **Version:** 1.0.0.2-SNAPSHOT
+- **Version:** 1.0.0.3
 - **Java Version:** 21
 - **Build Tool:** Maven
 - **Repository**: <https://github.com/cassandragargoyle/api>
