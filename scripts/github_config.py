@@ -281,14 +281,24 @@ def get_publishable_files(source_dir: Path) -> list[Path]:
 def remove_private_files(target_dir: Path) -> int:
     """Remove all private files and directories from a staging directory.
 
-    Returns count of items removed.
+    Applies dual README system first (rename before removal),
+    then removes all private files. Returns count of items removed.
     """
     cfg = load_config()
     pf = cfg["private_files"]
+    rds = cfg["readme_dual_system"]
     removed = 0
+
+    # Apply dual README BEFORE removing files (README.github.md is in exact list)
+    apply_readme_dual_system(target_dir)
+
+    # Files managed by dual README system - skip during removal
+    readme_source = rds["source_filename"] if rds.get("enabled") else None
 
     # Remove exact files
     for name in pf.get("exact", []):
+        if name == readme_source:
+            continue
         target = target_dir / name
         if target.exists():
             target.unlink()

@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from github_config import (
     GITHUB_REMOTE, GITHUB_REPO, PROJECT_NAME,
-    remove_private_files, apply_readme_dual_system,
+    remove_private_files,
     Color, print_ok, print_warn, print_err, print_info,
     print_step, print_header,
     run_git, git_output, ensure_git_repo, has_remote, confirm,
@@ -113,9 +113,6 @@ def create_release_commit() -> None:
         print_ok(f"Removed {removed} private files/directories")
     else:
         print_warn("No private files found to remove")
-
-    # Dual README system
-    apply_readme_dual_system(temp_dir)
 
     # Check for changes and commit
     status = git_output("status", "--porcelain", cwd=str(temp_dir))

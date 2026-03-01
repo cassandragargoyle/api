@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from github_config import (
     GITHUB_REMOTE, GITHUB_REPO, PROJECT_NAME, PRIVATE_FILES,
-    load_config, is_publishable, remove_private_files, apply_readme_dual_system,
+    load_config, is_publishable, remove_private_files,
     Color, print_ok, print_warn, print_err, print_info,
     print_step, print_header,
     run_git, git_output, ensure_git_repo, has_remote, confirm,
@@ -156,9 +156,15 @@ def _build_rsync_excludes() -> list[str]:
     """Build rsync --exclude arguments from JSON config."""
     cfg = load_config()
     pf = cfg["private_files"]
+    rds = cfg["readme_dual_system"]
     excludes: list[str] = ["--exclude=.git/"]
 
+    # File managed by dual README system must be copied (not excluded)
+    readme_source = rds["source_filename"] if rds.get("enabled") else None
+
     for name in pf.get("exact", []):
+        if name == readme_source:
+            continue
         excludes.append(f"--exclude={name}")
     for d in pf.get("directories", []):
         excludes.append(f"--exclude={d}")
@@ -211,9 +217,6 @@ def step4_sync_files(local_repo: Path) -> None:
     removed = remove_private_files(WORK_DIR)
     if removed > 0:
         print_ok(f"Removed {removed} additional private files")
-
-    # Dual README system
-    apply_readme_dual_system(WORK_DIR)
 
     print_ok("Files synchronized")
 
