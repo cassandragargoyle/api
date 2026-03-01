@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.cassandragargoyle</groupId>
-	<artifactId>cassandragargoyle-api-parent</artifactId>
-	<version>1.0.0.2-SNAPSHOT</version>
+	<artifactId>cassandragargoyle-parent</artifactId>
+	<version>1.0.0.3</version>
 	<packaging>pom</packaging>
 
-	<name>CassandraGargoyle API Parent</name>
-	<description>Parent POM for CassandraGargoyle API modules</description>
+	<name>CassandraGargoyle - Global Parent</name>
+	<description>Parent POM for CassandraGargoyle All Java modules</description>
 
 	<modules>
 		<module>api</module>
@@ -29,8 +29,8 @@
 		<commons.text.version>1.12.0</commons.text.version>
 		<maven.jar.plugin.version>3.4.2</maven.jar.plugin.version>
 		<maven.surefire.plugin.version>3.5.0</maven.surefire.plugin.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -119,8 +119,7 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.13.0</version>
 					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
+						<release>${java.version}</release>
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>

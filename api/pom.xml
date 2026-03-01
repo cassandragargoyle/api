@@ -4,27 +4,27 @@
 
 	<parent>
 		<groupId>org.cassandragargoyle</groupId>
-		<artifactId>cassandragargoyle-api-parent</artifactId>
-		<version>1.0.0.2-SNAPSHOT</version>
+		<artifactId>cassandragargoyle-parent</artifactId>
+		<version>1.0.0.3</version>
 	</parent>
 
-	<name>cg-api</name>
-	<groupId>org.cassandragargoyle.api</groupId>
+	<name>CassandraGargoyle - API</name>
+	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>org-cassandragargoyle-api</artifactId>
+	<version>1.0.0.3</version>
 	<packaging>jar</packaging>
+	<properties>
+		<!-- Java version -->
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+		<brandingToken>cassandragargoyle</brandingToken>
+		<netbeans.version>RELEASE120-1</netbeans.version>
+		<junit.version>5.3.1</junit.version>
+		<spring.version>5.3.39</spring.version>
+		<maven.jar.plugin.version>3.4.2</maven.jar.plugin.version>
+	</properties>
+
 	<dependencies>
 		<!-- NetBeans modules -->
 		<dependency>
@@ -78,4 +78,17 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
