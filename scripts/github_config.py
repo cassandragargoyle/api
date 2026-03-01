@@ -10,6 +10,7 @@ Project: CassandraGargoyle Api
 import fnmatch
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -343,6 +344,9 @@ def remove_private_files(target_dir: Path) -> int:
                 removed += 1
                 print(f"   Removed: {rel}/ (glob: {pattern})")
 
+    # Strip -SNAPSHOT from pom.xml versions for release
+    strip_snapshot_versions(target_dir)
+
     return removed
 
 
@@ -369,3 +373,24 @@ def apply_readme_dual_system(target_dir: Path) -> bool:
     source.rename(target)
     print(f"   {rds['source_filename']} -> {rds['target_filename']}")
     return True
+
+
+def strip_snapshot_versions(target_dir: Path) -> int:
+    """Strip -SNAPSHOT suffix from version tags in all pom.xml files.
+
+    Returns count of files modified.
+    """
+    modified = 0
+    for pom in target_dir.rglob("pom.xml"):
+        content = pom.read_text()
+        new_content = re.sub(
+            r"(<version>[^<]*)-SNAPSHOT(</version>)",
+            r"\1\2",
+            content,
+        )
+        if new_content != content:
+            pom.write_text(new_content)
+            rel = pom.relative_to(target_dir)
+            modified += 1
+            print(f"   Stripped -SNAPSHOT: {rel}")
+    return modified

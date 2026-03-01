@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.cassandragargoyle</groupId>
 		<artifactId>cassandragargoyle-parent</artifactId>
-		<version>1.0.0.2-SNAPSHOT</version>
+		<version>1.0.0.3-SNAPSHOT</version>
 	</parent>
 
 	<name>CassandraGargoyle - API</name>
