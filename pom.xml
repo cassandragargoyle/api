@@ -6,7 +6,7 @@
 
 	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>cassandragargoyle-parent</artifactId>
-	<version>1.0.0.3</version>
+	<version>1.0.0.4</version>
 	<packaging>pom</packaging>
 
 	<name>CassandraGargoyle - Global Parent</name>
@@ -14,7 +14,7 @@
 
 	<modules>
 		<module>api</module>
-		<module>persistance</module>
+		<module>persistence</module>
 	</modules>
 
 	<properties>

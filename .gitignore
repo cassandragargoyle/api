@@ -271,3 +271,4 @@ docker-compose.override.yml
 # Project Specific
 # Add project-specific ignores below
 # Add your project-specific ignores here
+CLAUDE.local.md

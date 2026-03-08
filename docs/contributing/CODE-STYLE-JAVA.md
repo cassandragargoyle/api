@@ -35,7 +35,7 @@ Use reverse domain notation with lowercase:
 ```java
 ✅ org.cassandragargoyle.api.entity
 ✅ org.cassandragargoyle.api.util
-✅ org.cassandragargoyle.persistance
+✅ org.cassandragargoyle.persistence
 ❌ org.cassandragargoyle.Api.entity
 ❌ org.cassandragargoyle.api.Entity
 ```
@@ -64,9 +64,9 @@ api/
 │       └── test/java/org/cassandragargoyle/api/
 │           └── util/
 │               └── OSDetectorTest.java
-└── persistance/
+└── persistence/
     └── src/
-        └── main/java/org/cassandragargoyle/persistance/
+        └── main/java/org/cassandragargoyle/persistence/
             └── EntityRepository.java
 ```
 
