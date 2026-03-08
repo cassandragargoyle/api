@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.cassandragargoyle</groupId>
 		<artifactId>cassandragargoyle-parent</artifactId>
-		<version>1.0.0.3</version>
+		<version>1.0.0.4</version>
 	</parent>
 
-	<name>CassandraGargoyle - Persistance</name>
+	<name>CassandraGargoyle - Persistence</name>
 	<groupId>org.cassandragargoyle</groupId>
-	<artifactId>org-cassandragargoyle-persistance</artifactId>
+	<artifactId>org-cassandragargoyle-persistence</artifactId>
 	<packaging>jar</packaging>
 
 	<build>

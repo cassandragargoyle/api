@@ -2,7 +2,7 @@
  *  This file is part of CassandraGargoyle Community Project
  *  Licensed under the MIT License - see LICENSE file for details
  */
-package org.cassandragargoyle.persistance;
+package org.cassandragargoyle.persistence;
 
 import java.util.List;
 import java.util.Optional;

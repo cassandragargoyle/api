@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.cassandragargoyle</groupId>
 		<artifactId>cassandragargoyle-parent</artifactId>
-		<version>1.0.0.3</version>
+		<version>1.0.0.4</version>
 	</parent>
 
 	<name>CassandraGargoyle - API</name>
 	<groupId>org.cassandragargoyle</groupId>
 	<artifactId>org-cassandragargoyle-api</artifactId>
-	<version>1.0.0.3</version>
+	<version>1.0.0.4</version>
 	<packaging>jar</packaging>
 	<properties>
 		<!-- Java version -->

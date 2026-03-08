@@ -27,7 +27,7 @@ Current modules:
 ```text
 Api/
 ├── api/           # Core API module
-└── persistance/   # Persistence layer module
+└── persistence/   # Persistence layer module
 ```
 
 ## Core Features

@@ -15,6 +15,7 @@ We use a dual numbering system to separate internal development tracking from pu
 | -------- | ------ | ----- | ------ | -------- | ---- | ------ |
 | #001 | - | Github packages | 📋 Open | Medium | Feature | |
 | #002 | [GH#6](https://github.com/cassandragargoyle/api/issues/6) | GitHub Packages publishing workflow | ✅ Implemented | Medium | Feature | ci, maven, github |
+| #003 | - | Fix "persistance" typo to "persistence" | ✅ Implemented | Low | Bug Fix | refactoring, naming |
 
 ## Directory Structure
 
