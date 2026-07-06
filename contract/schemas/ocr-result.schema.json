@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cassandragargoyle.org/schemas/ocr-result.schema.json",
+  "$version": "1.0.0",
+  "title": "OcrResult",
+  "description": "Standardized OCR result with text positioning for Unified AI Task Platform",
+  "type": "object",
+  "required": ["pages", "coordinate_system"],
+  "properties": {
+    "coordinate_system": {
+      "type": "string",
+      "enum": ["pixel_top_left", "pdf_bottom_left"],
+      "description": "Coordinate origin: pixel_top_left (images, origin at top-left in pixels) or pdf_bottom_left (PDF points, origin at bottom-left)"
+    },
+    "image_size": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "number"},
+        "height": {"type": "number"}
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcrPage"
+      }
+    }
+  },
+  "$defs": {
+    "OcrPage": {
+      "type": "object",
+      "required": ["page", "lines"],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-based page number"
+        },
+        "lines": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/OcrLine"}
+        }
+      }
+    },
+    "OcrLine": {
+      "type": "object",
+      "required": ["text", "bbox", "elements"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Full line text (concatenated elements)"
+        },
+        "bbox": {"$ref": "#/$defs/BoundingBox"},
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Average confidence across elements"
+        },
+        "label": {
+          "type": "string",
+          "description": "Sequential label (e.g. text_001)"
+        },
+        "elements": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/TextElement"}
+        }
+      }
+    },
+    "TextElement": {
+      "type": "object",
+      "required": ["text", "bbox"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Word or character group text"
+        },
+        "bbox": {"$ref": "#/$defs/BoundingBox"},
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "font_size": {
+          "type": "number",
+          "description": "Estimated font size in points (if detectable)"
+        },
+        "font_name": {
+          "type": "string",
+          "description": "Detected font name (if available)"
+        }
+      }
+    },
+    "BoundingBox": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {"type": "number", "description": "Left edge"},
+        "y": {"type": "number", "description": "Top edge (pixel) or bottom edge (PDF)"},
+        "width": {"type": "number", "minimum": 0},
+        "height": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}

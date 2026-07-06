@@ -1,28 +1,34 @@
 # C++ Code Style Guide for Api
 
 ## Overview
+
 This document defines the C++ coding standards for the Api project.
 
 ## Naming Conventions
 
 ### Classes and Structs
+
 - Use PascalCase: `MyClass`, `DataProcessor`
 - Interface classes should start with 'I': `IObserver`, `ISerializer`
 
 ### Functions and Methods
+
 - Use camelCase: `calculateTotal()`, `getUserName()`
 - Getters/setters: `getName()`, `setName()`
 
 ### Variables
+
 - Local variables: camelCase - `localVariable`
 - Member variables: m_ prefix with camelCase - `m_memberVariable`
 - Constants: UPPER_SNAKE_CASE - `MAX_BUFFER_SIZE`
 - Global variables (avoid): g_ prefix - `g_globalVariable`
 
 ### Namespaces
+
 - Use lowercase with underscores: `my_namespace`
 
 ### Files
+
 - Header files: `.h` or `.hpp`
 - Source files: `.cpp`
 - Use lowercase with underscores: `my_class.cpp`
@@ -30,10 +36,12 @@ This document defines the C++ coding standards for the Api project.
 ## Code Formatting
 
 ### Indentation
+
 - Use 4 spaces (no tabs)
 - Namespace content is not indented
 
 ### Braces
+
 ```cpp
 // Allman style (preferred)
 if (condition)
@@ -48,12 +56,14 @@ if (condition) {
 ```
 
 ### Line Length
-- Maximum 120 characters per line
+
+- Maximum 150 characters per line
 - Break long lines at logical points
 
 ## Comments
 
 ### File Headers
+
 ```cpp
 /**
  * @file my_class.cpp
@@ -64,6 +74,7 @@ if (condition) {
 ```
 
 ### Function Documentation
+
 ```cpp
 /**
  * @brief Calculate the sum of two numbers
@@ -75,6 +86,7 @@ int add(int a, int b);
 ```
 
 ### Inline Comments
+
 ```cpp
 // Single line comment
 int value = 42; // Trailing comment
@@ -86,8 +98,10 @@ int value = 42; // Trailing comment
 ## Best Practices
 
 ### Headers
+
 - Use include guards or `#pragma once`
 - Order includes: own headers, standard library, third-party
+
 ```cpp
 #pragma once
 
@@ -98,12 +112,14 @@ int value = 42; // Trailing comment
 ```
 
 ### Memory Management
+
 - Prefer RAII and smart pointers
 - Use `std::unique_ptr` for single ownership
 - Use `std::shared_ptr` for shared ownership
 - Avoid raw `new`/`delete`
 
 ### Modern C++ Features
+
 - Use `auto` for complex type declarations
 - Use range-based for loops
 - Use `nullptr` instead of `NULL`
@@ -111,6 +127,7 @@ int value = 42; // Trailing comment
 - Prefer `using` over `typedef`
 
 ### Error Handling
+
 - Use exceptions for exceptional conditions
 - Use error codes for expected failures
 - Always check return values
@@ -119,15 +136,18 @@ int value = 42; // Trailing comment
 ## Project-Specific Conventions
 
 ### Build System
+
 - CMake for build configuration
 - Separate src/, include/, test/ directories
 
 ### Testing
+
 - Unit tests with Google Test or Catch2
 - Test file naming: `test_<component>.cpp`
 - Minimum 80% code coverage
 
 ### Dependencies
+
 - Manage with vcpkg, Conan, or CMake FetchContent
 - Document all external dependencies
 
@@ -172,21 +192,25 @@ private:
 
 ## Tools and Automation
 
-### Code Formatting
+### Code Formatting Tools
+
 - Use clang-format with project `.clang-format` file
 - Format on save in IDE
 
 ### Static Analysis
+
 - Use clang-tidy
 - Run cppcheck regularly
 - Address all compiler warnings
 
 ### Continuous Integration
+
 - Build with multiple compilers (GCC, Clang, MSVC)
 - Run tests on all platforms
 - Enforce style checks in CI
 
 ## References
+
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 - Project-specific requirements in CONTRIBUTING.md

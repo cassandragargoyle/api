@@ -1,23 +1,28 @@
 # Bug Reporting Guidelines for Api
 
 ## Overview
+
 This guide helps you report bugs effectively to ensure quick resolution and improve Api.
 
 ## Before Reporting
 
 ### 1. Search Existing Issues
+
 - Check [existing issues](https://github.com/CassandraGargoyle/Api/issues) first
 - Search for similar problems or error messages
 - Review closed issues for workarounds
 
 ### 2. Verify the Bug
+
 - Reproduce the issue consistently
 - Test with the latest version
 - Try different environments if possible
 - Check if it's a configuration issue
 
 ### 3. Gather Information
+
 Collect all relevant details before creating the report:
+
 - Version information
 - Environment details
 - Steps to reproduce
@@ -27,11 +32,13 @@ Collect all relevant details before creating the report:
 ## Bug Report Template
 
 ### Title Format
-```
+
+```text
 [Component] Brief description of the issue
 ```
 
 Examples:
+
 - `[API] Authentication fails with valid credentials`
 - `[UI] Button not responsive on mobile devices`
 - `[Database] Connection timeout in production`
@@ -62,23 +69,29 @@ Describe what you expected to happen.
 Describe what actually happened.
 
 ## Error Messages/Logs
-```
+
+```text
 [Paste error messages, stack traces, or relevant logs here]
 ```
 
 ## Screenshots/Videos
+
 [If applicable, attach visual evidence]
 
 ## Additional Context
+
 Any other information that might be helpful:
+
 - Workarounds you've tried
 - Related issues or PRs
 - Impact on your workflow
 - Frequency of occurrence
 
 ## Possible Solution
+
 [Optional] If you have ideas for fixing the issue
-```
+
+```markdown
 
 ## Severity Levels
 
@@ -181,6 +194,7 @@ docker logs api-container
 ```
 
 ### Debug Information
+
 ```bash
 # Version information
 api --version
@@ -194,6 +208,7 @@ env | grep API
 ```
 
 ### Network Issues
+
 ```bash
 # Connection testing
 curl -v {{API_ENDPOINT}}/health
@@ -207,18 +222,21 @@ netstat -tulpn | grep {{PORT}}
 ## Common Issues
 
 ### Installation Problems
+
 - Check system requirements
 - Verify dependencies are installed
 - Review installation logs
 - Try clean installation
 
 ### Configuration Issues
+
 - Validate configuration syntax
 - Check file permissions
 - Verify environment variables
 - Review documentation
 
 ### Performance Problems
+
 - Monitor resource usage
 - Check for memory leaks
 - Profile slow operations
@@ -227,7 +245,8 @@ netstat -tulpn | grep {{PORT}}
 ## Example Bug Reports
 
 ### Good Bug Report
-```markdown
+
+````markdown
 ## Bug Description
 User authentication fails intermittently with "Invalid token" error
 
@@ -251,18 +270,21 @@ User should remain authenticated and access profile successfully
 Gets "Invalid token" error and is redirected to login page
 
 ## Error Messages/Logs
-```
+
+```text
 2024-01-15 10:30:45 ERROR: Token validation failed: jwt expired
 2024-01-15 10:30:45 DEBUG: Token issued at: 2024-01-15 10:25:30
 ```
 
 ## Additional Context
+
 - Issue started after v1.2.0 upgrade
 - Happens more frequently during peak hours
 - Clearing browser cache temporarily resolves the issue
-```
+````
 
 ### Poor Bug Report
+
 ```markdown
 Title: Login broken
 
@@ -274,16 +296,19 @@ Description: Can't login, please fix ASAP!!!
 ## Community Guidelines
 
 ### Be Respectful
+
 - Use professional language
 - Avoid demanding immediate fixes
 - Appreciate volunteer maintainers' time
 
 ### Provide Value
+
 - Include all requested information
 - Test thoroughly before reporting
 - Help others with similar issues
 
 ### Stay Engaged
+
 - Monitor your issue for updates
 - Participate in discussions
 - Test proposed solutions
@@ -291,7 +316,9 @@ Description: Can't login, please fix ASAP!!!
 ## Automation and Templates
 
 ### GitHub Issue Templates
+
 Create `.github/ISSUE_TEMPLATE/bug_report.md`:
+
 ```yaml
 ---
 name: Bug report
@@ -305,6 +332,7 @@ assignees: ''
 ```
 
 ### Automated Information Collection
+
 ```bash
 #!/bin/bash
 # scripts/collect-debug-info.sh
@@ -321,3 +349,5 @@ tail -50 /var/log/api/error.log
 **Remember**: Good bug reports help everyone. Take time to provide complete information, and you'll get faster, better help!
 
 *For security vulnerabilities, please follow our [Security Policy](SECURITY.md) and report privately first.*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*

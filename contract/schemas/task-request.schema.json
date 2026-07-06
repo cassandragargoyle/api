@@ -1,0 +1,55 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/task-request.schema.json",
+	"$version": "1.0.0",
+	"title": "TaskRequest",
+	"description": "Unified task request for Unified AI Task Platform",
+	"type": "object",
+	"required": ["task", "input"],
+	"properties": {
+		"task": {
+			"type": "string",
+			"description": "Task type identifier (e.g. 'image.resize', 'text.extract')"
+		},
+		"trace_id": {
+			"type": "string",
+			"description": "OpenTelemetry trace ID for distributed tracing"
+		},
+		"job_id": {
+			"type": "string",
+			"description": "Unique job identifier for tracking and deduplication"
+		},
+		"input": {
+			"type": "object",
+			"description": "Task-specific input parameters",
+			"additionalProperties": true
+		},
+		"config": {
+			"type": "object",
+			"description": "Task execution configuration overrides",
+			"additionalProperties": true
+		},
+		"context": {
+			"type": "object",
+			"description": "Execution context (caller info, environment, metadata)",
+			"properties": {
+				"caller": {
+					"type": "string",
+					"description": "Identifier of the calling service or user"
+				},
+				"priority": {
+					"type": "string",
+					"enum": ["low", "normal", "high", "critical"],
+					"default": "normal"
+				},
+				"timeout_ms": {
+					"type": "integer",
+					"description": "Maximum execution time in milliseconds",
+					"minimum": 0
+				}
+			},
+			"additionalProperties": true
+		}
+	},
+	"additionalProperties": false
+}

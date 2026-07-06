@@ -136,7 +136,7 @@ public class AbstractEntity extends BaseClass implements Entity
 ### Indentation and Spacing
 
 - Use tabs for indentation (not spaces)
-- Maximum line length: 120 characters
+- Maximum line length: 150 characters
 - Use blank lines to separate logical blocks
 
 ### Braces and Line Breaks
@@ -410,6 +410,7 @@ public class MyService
 Use Javadoc for all public APIs.
 
 > **TODO: PENDING VALIDATION** - The following Javadoc formatting styles need to be validated by authority:
+>
 > - `<p>` tag on separate line
 > - `<li>` tags without indentation inside `<ul>`
 
@@ -507,6 +508,7 @@ public void processEntity(String entityId)
 ### Lambda Expressions
 
 Use lambdas for functional interfaces:
+
 ```java
 // Comparators
 entities.sort((e1, e2) -> e1.getName().compareTo(e2.getName()));
@@ -741,7 +743,8 @@ The parent POM manages plugin versions centrally via `<pluginManagement>`:
 
 ---
 
-**Note**: These guidelines should be adapted based on specific project requirements and team preferences. Regular review and updates ensure alignment with evolving best practices.
+**Note**: These guidelines should be adapted based on specific project requirements and team preferences. Regular review and updates
+ensure alignment with evolving best practices.
 
 *Created: 2025-08-23*
 *Last updated: 2026-03-01*

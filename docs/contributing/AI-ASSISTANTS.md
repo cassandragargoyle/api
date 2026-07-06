@@ -1,21 +1,25 @@
 # AI Assistant Guidelines for Api
 
 ## Overview
+
 This document provides guidelines for effectively using AI assistants in the Api development process.
 
 ## Supported AI Assistants
 
 ### Claude (Recommended)
+
 - **Claude Code**: Preferred for development tasks with pre-configured context
 - **Claude Web**: Alternative for general queries and documentation
 - **Setup**: Use CLAUDE.md file for project context
 
 ### GitHub Copilot
+
 - **IDE Integration**: Available in VS Code, IntelliJ, etc.
 - **Best for**: Code completion and inline suggestions
 - **Configuration**: Configure in `.github/copilot` directory
 
 ### Alternative Assistants
+
 - **ChatGPT**: General purpose queries
 - **Gemini**: Code review and documentation
 - **Local LLMs**: For sensitive code (Ollama, LM Studio)
@@ -23,6 +27,7 @@ This document provides guidelines for effectively using AI assistants in the Api
 ## Best Practices
 
 ### 1. Context Preparation
+
 ```markdown
 # CLAUDE.md Template
 Project: Api
@@ -34,12 +39,14 @@ Key Requirements:
 ```
 
 ### 2. Effective Prompting
+
 - Be specific and provide context
 - Include relevant code snippets
 - Specify language and framework versions
 - Define expected output format
 
 ### 3. Code Generation Guidelines
+
 - Always review generated code
 - Test thoroughly before committing
 - Maintain project coding standards
@@ -48,6 +55,7 @@ Key Requirements:
 ## Use Cases
 
 ### Development Tasks
+
 - **Code Generation**: New features and modules
 - **Refactoring**: Improving existing code
 - **Bug Fixing**: Identifying and resolving issues
@@ -55,6 +63,7 @@ Key Requirements:
 - **Documentation**: Creating and updating docs
 
 ### Code Review
+
 ```markdown
 # AI Review Prompt Template
 Review this code for:
@@ -68,6 +77,7 @@ Review this code for:
 ```
 
 ### Documentation
+
 - API documentation generation
 - README files and guides
 - Code comments and docstrings
@@ -76,11 +86,13 @@ Review this code for:
 ## Security Considerations
 
 ### Sensitive Information
+
 - **Never share**: Passwords, API keys, tokens
 - **Sanitize**: Database connections, URLs
 - **Review**: Generated code for security issues
 
 ### Private Code
+
 - Use local LLMs for proprietary code
 - Configure `.gitignore` for AI config files
 - Review AI suggestions for data leaks
@@ -88,6 +100,7 @@ Review this code for:
 ## Integration Workflow
 
 ### 1. Development Cycle
+
 ```bash
 # 1. Prepare context
 cat CLAUDE.md
@@ -103,6 +116,7 @@ git commit -m "feat: add feature X (AI-assisted)"
 ```
 
 ### 2. Pull Request Process
+
 - Mark AI-generated code in PR description
 - Include prompts used for transparency
 - Ensure human review of all AI code
@@ -110,6 +124,7 @@ git commit -m "feat: add feature X (AI-assisted)"
 ## Tool-Specific Guidelines
 
 ### Claude Code
+
 ```bash
 # Initialize project context
 claude-code init
@@ -119,6 +134,7 @@ claude-code "implement user authentication"
 ```
 
 ### VS Code + Copilot
+
 ```json
 // .vscode/settings.json
 {
@@ -132,6 +148,7 @@ claude-code "implement user authentication"
 ```
 
 ### Custom Scripts
+
 ```bash
 #!/bin/bash
 # scripts/ai-review.sh
@@ -143,6 +160,7 @@ echo "Code prepared in review.txt"
 ## Quality Assurance
 
 ### Code Review Checklist
+
 - [ ] Code follows project style guide
 - [ ] No sensitive information exposed
 - [ ] Tests are included and passing
@@ -151,6 +169,7 @@ echo "Code prepared in review.txt"
 - [ ] Security implications reviewed
 
 ### Testing AI-Generated Code
+
 ```bash
 # Run comprehensive tests
 npm run test:unit
@@ -163,6 +182,7 @@ npm run security-check
 ## Common Pitfalls
 
 ### Avoid
+
 - Blindly accepting suggestions
 - Sharing production credentials
 - Ignoring project conventions
@@ -170,6 +190,7 @@ npm run security-check
 - Over-relying on AI without understanding
 
 ### Solutions
+
 - Always review and understand code
 - Use environment variables for secrets
 - Configure AI tools with project rules
@@ -179,7 +200,8 @@ npm run security-check
 ## Templates and Prompts
 
 ### Feature Implementation
-```
+
+```text
 Create a {{LANGUAGE}} function that:
 - Purpose: [description]
 - Input: [parameters]
@@ -189,7 +211,8 @@ Create a {{LANGUAGE}} function that:
 ```
 
 ### Bug Fix
-```
+
+```text
 Debug this issue:
 - Error message: [error]
 - Context: [when it occurs]
@@ -197,8 +220,9 @@ Debug this issue:
 - Expected behavior: [description]
 ```
 
-### Documentation
-```
+### Documentation Generation
+
+```text
 Generate documentation for:
 - Component: [name]
 - Purpose: [description]
@@ -210,12 +234,14 @@ Generate documentation for:
 ## Continuous Improvement
 
 ### Feedback Loop
+
 1. Track AI suggestion accuracy
 2. Document successful patterns
 3. Share prompts that work well
 4. Update guidelines based on experience
 
 ### Team Knowledge Sharing
+
 - Maintain prompt library
 - Share AI tips in team meetings
 - Document lessons learned
@@ -223,12 +249,14 @@ Generate documentation for:
 
 ## Resources
 
-### Documentation
+### Documentation Links
+
 - [Claude Documentation](https://docs.anthropic.com)
 - [GitHub Copilot Docs](https://docs.github.com/copilot)
 - Project-specific AI guides
 
 ### Tools
+
 - Context preparation scripts
 - Prompt templates
 - Review automation tools
@@ -237,12 +265,14 @@ Generate documentation for:
 ## Compliance and Ethics
 
 ### Usage Guidelines
+
 - Respect licensing of AI-generated code
 - Attribute AI assistance where required
 - Follow company AI usage policies
 - Consider ethical implications
 
 ### Audit Trail
+
 - Log AI tool usage
 - Document prompts and outputs
 - Track code generation sources
@@ -250,5 +280,6 @@ Generate documentation for:
 
 ---
 
-*Last updated: [Date]*
+*Follow this workflow to ...*
+*Last updated: 2026-04-03*
 *Maintained by: Api Team*

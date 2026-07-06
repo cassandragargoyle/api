@@ -1,0 +1,50 @@
+{
+	"task_type": "image.resize",
+	"title": "Image Resize",
+	"summary": "Resizes images to specified dimensions with optional format conversion",
+	"when_to_use": "When you need to resize, crop, or convert image formats. Supports JPEG, PNG, WebP, TIFF.",
+	"when_not_to_use": "Not suitable for video frames or animated GIFs. Use 'video.frame.extract' for video content.",
+	"tunable_parameters": [
+		{
+			"name": "width",
+			"type": "integer",
+			"description": "Target width in pixels",
+			"required": true
+		},
+		{
+			"name": "height",
+			"type": "integer",
+			"description": "Target height in pixels",
+			"required": true
+		},
+		{
+			"name": "format",
+			"type": "string",
+			"description": "Output format (jpeg, png, webp)",
+			"required": false,
+			"default": "jpeg"
+		},
+		{
+			"name": "quality",
+			"type": "integer",
+			"description": "Output quality (1-100, applicable to lossy formats)",
+			"required": false,
+			"default": 85
+		},
+		{
+			"name": "preserve_aspect_ratio",
+			"type": "boolean",
+			"description": "Maintain original aspect ratio (may adjust dimensions)",
+			"required": false,
+			"default": true
+		}
+	],
+	"expected_artifacts": [
+		{
+			"name": "resized_image",
+			"type": "image/*",
+			"description": "Resized image file at output_path"
+		}
+	],
+	"result_interpretation": "On success, result.output_path contains the resized image. Check result.width and result.height for actual dimensions (may differ from requested if preserve_aspect_ratio is true)."
+}

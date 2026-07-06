@@ -1,9 +1,11 @@
 # Go Code Style Guide for Api
 
 ## Overview
+
 This document defines the Go coding standards for the Api project.
 
 ## General Principles
+
 - Follow the official [Effective Go](https://golang.org/doc/effective_go.html) guidelines
 - Use `gofmt` for automatic formatting
 - Run `go vet` and `golint` regularly
@@ -12,37 +14,44 @@ This document defines the Go coding standards for the Api project.
 ## Naming Conventions
 
 ### Packages
+
 - Use lowercase, single-word names: `http`, `util`
 - Avoid underscores or mixedCaps
 - Package name should be short and clear
 - Avoid generic names like `util`, `common`, `misc` when possible
 
 ### Files
+
 - Use lowercase with underscores: `http_server.go`
 - Test files: `<name>_test.go`
 - Platform-specific: `<name>_linux.go`
 
 ### Variables and Functions
+
 - Use camelCase for private: `myVariable`
 - Use PascalCase for public: `MyFunction`
 - Short names for short scopes: `i`, `err`, `ctx`
 - Descriptive names for package-level declarations
 
 ### Constants
+
 - Use PascalCase or camelCase depending on visibility
+
 ```go
 const MaxRetries = 3        // Exported
 const defaultTimeout = 30   // Unexported
 ```
 
 ### Interfaces
+
 - Single-method interfaces: method name + "er" suffix: `Reader`, `Writer`
 - Multiple methods: descriptive name: `FileSystem`, `Database`
 
 ## Code Organization
 
 ### Package Structure
-```
+
+```text
 Api/
 ├── cmd/                    # Main applications
 │   └── app/
@@ -60,6 +69,7 @@ Api/
 ```
 
 ### Import Grouping
+
 ```go
 import (
     // Standard library
@@ -79,10 +89,12 @@ import (
 ## Code Formatting
 
 ### Line Length
+
 - No hard limit, but aim for readability
 - Break long lines at logical points
 
 ### Comments
+
 ```go
 // Package http provides HTTP client and server implementations.
 package http
@@ -107,6 +119,7 @@ func (s *Server) Start() error {
 ## Error Handling
 
 ### Error Messages
+
 - Start with lowercase
 - Don't end with punctuation
 - Be specific and actionable
@@ -120,6 +133,7 @@ return fmt.Errorf("Error opening file!")
 ```
 
 ### Error Checking
+
 ```go
 // Always check errors immediately
 result, err := doSomething()
@@ -137,7 +151,8 @@ defer func() {
 
 ## Best Practices
 
-### Interfaces
+### Interface Design
+
 - Accept interfaces, return structs
 - Keep interfaces small
 - Define interfaces where they're used
@@ -155,6 +170,7 @@ func ProcessData(s Storage) error {
 ```
 
 ### Concurrency
+
 - Don't communicate by sharing memory; share memory by communicating
 - Use channels for coordination
 - Protect shared state with mutexes
@@ -174,6 +190,7 @@ type Cache struct {
 ```
 
 ### Testing
+
 - Table-driven tests for multiple cases
 - Use subtests for better organization
 - Mock interfaces, not concrete types
@@ -205,6 +222,7 @@ func TestCalculate(t *testing.T) {
 ## Project-Specific Conventions
 
 ### Logging
+
 ```go
 // Use structured logging
 log.WithFields(log.Fields{
@@ -214,6 +232,7 @@ log.WithFields(log.Fields{
 ```
 
 ### Configuration
+
 - Use environment variables or config files
 - Validate configuration at startup
 - Use struct tags for parsing
@@ -226,6 +245,7 @@ type Config struct {
 ```
 
 ### HTTP Handlers
+
 ```go
 // Use http.HandlerFunc signature
 func HandleUser(w http.ResponseWriter, r *http.Request) {
@@ -246,6 +266,7 @@ func HandleUser(w http.ResponseWriter, r *http.Request) {
 ## Tools and Automation
 
 ### Linting and Formatting
+
 ```bash
 # Format code
 go fmt ./...
@@ -258,11 +279,13 @@ go test -cover ./...
 ```
 
 ### Pre-commit Hooks
+
 - Run `gofmt` and `goimports`
 - Run linters
 - Run tests
 
 ### Continuous Integration
+
 - Build for multiple platforms
 - Run all tests
 - Check code coverage (aim for >80%)
@@ -324,7 +347,14 @@ func (s *service) GetUser(ctx context.Context, id string) (*User, error) {
 ```
 
 ## References
+
 - [Effective Go](https://golang.org/doc/effective_go.html)
 - [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments)
 - [Go Proverbs](https://go-proverbs.github.io/)
 - Project-specific requirements in CONTRIBUTING.md
+
+---
+
+*Follow this workflow to ...*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*

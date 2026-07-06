@@ -17,6 +17,7 @@ This document outlines the translation process for internationalizing Api.
 ### Language Codes
 
 Use ISO 639-1 language codes:
+
 - `en` - English
 - `cs` - Czech
 - `de` - German
@@ -286,3 +287,5 @@ git push origin translations/update-cs-locale
 ---
 
 *Effective internationalization makes Api accessible to a global audience.*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*

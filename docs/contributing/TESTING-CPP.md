@@ -1,11 +1,13 @@
 # C++ Testing Guide for Api
 
 ## Overview
+
 Testing strategy and guidelines for C++ development in Api.
 
 ## Testing Frameworks
 
 ### Google Test (Recommended)
+
 ```cpp
 #include <gtest/gtest.h>
 
@@ -16,6 +18,7 @@ TEST(CalculatorTest, Addition) {
 ```
 
 ### Catch2 (Alternative)
+
 ```cpp
 #include <catch2/catch.hpp>
 
@@ -28,7 +31,8 @@ TEST_CASE("Calculator addition", "[calculator]") {
 ## Test Structure
 
 ### Directory Layout
-```
+
+```text
 tests/
 ├── unit/           # Unit tests
 ├── integration/    # Integration tests
@@ -38,6 +42,7 @@ tests/
 ```
 
 ### Test Naming
+
 - File: `test_<component>.cpp`
 - Class: `<Component>Test`
 - Method: `Test<Scenario><Expected>`
@@ -45,17 +50,20 @@ tests/
 ## Best Practices
 
 ### Unit Tests
+
 - Test single functionality
 - Use mocks for dependencies
 - Cover edge cases
 - Maintain 80%+ coverage
 
 ### Integration Tests
+
 - Test component interactions
 - Use real dependencies where possible
 - Focus on critical paths
 
 ### Performance Tests
+
 ```cpp
 TEST(PerformanceTest, LargeDataSet) {
     auto start = std::chrono::high_resolution_clock::now();
@@ -67,6 +75,7 @@ TEST(PerformanceTest, LargeDataSet) {
 ```
 
 ## Running Tests
+
 ```bash
 mkdir build && cd build
 cmake ..
@@ -76,3 +85,5 @@ make test
 ---
 
 *Comprehensive testing ensures code quality and reliability.*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*

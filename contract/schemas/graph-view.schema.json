@@ -1,0 +1,94 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/graph-view.schema.json",
+	"$version": "1.0.0",
+	"title": "GraphView",
+	"description": "Language-independent contract for the 3D force-directed node-graph viewer (graphlens). A domain-agnostic document of meta + nodes + links, consumed by the ptx-graphlens plugin (portunix-plugins #086) and the GraphLens3D React component (portunix-vscode #050). Files using this format use the '.glens.json' filename suffix. Distinct from the 2D Graph Canvas format (GraphFile: nodes + edges + metadata, '*.graph.json', portunix-vscode #030); this 3D format uses 'links' (not 'edges') and 'meta' (not 'metadata').",
+	"type": "object",
+	"required": ["nodes", "links"],
+	"properties": {
+		"version": {
+			"type": "string",
+			"description": "Optional document format version (semver), independent of the schema $version"
+		},
+		"meta": {
+			"type": "object",
+			"description": "Viewer metadata; 'title' is the known key, other keys are allowed",
+			"properties": {
+				"title": {
+					"type": "string",
+					"description": "Graph title shown by the viewer"
+				}
+			},
+			"additionalProperties": true
+		},
+		"nodes": {
+			"type": "array",
+			"description": "Node list",
+			"items": {
+				"type": "object",
+				"required": ["id", "type", "label"],
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Unique node id, referenced by link.source and link.target"
+					},
+					"type": {
+						"type": "string",
+						"description": "Node kind (e.g. 'tag', 'voice'); drives styling"
+					},
+					"label": {
+						"type": "string",
+						"description": "Display label"
+					},
+					"voice": {
+						"type": "string",
+						"description": "Voice category for voice nodes"
+					},
+					"title": {
+						"type": "string",
+						"description": "Detail-panel title"
+					},
+					"description": {
+						"type": "string",
+						"description": "Detail-panel body"
+					},
+					"meta": {
+						"type": "object",
+						"description": "Free-form extra metadata for the detail panel",
+						"additionalProperties": true
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"links": {
+			"type": "array",
+			"description": "Edge list referencing node ids",
+			"items": {
+				"type": "object",
+				"required": ["source", "target"],
+				"properties": {
+					"source": {
+						"type": "string",
+						"description": "Source node id (must match a node.id)"
+					},
+					"target": {
+						"type": "string",
+						"description": "Target node id (must match a node.id)"
+					},
+					"description": {
+						"type": "string",
+						"description": "Optional edge description"
+					},
+					"rel": {
+						"type": "string",
+						"description": "Relationship category for styling (e.g. 'related')"
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

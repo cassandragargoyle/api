@@ -1,0 +1,16 @@
+{
+	"status": "success",
+	"trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+	"job_id": "job-20260319-001",
+	"result": {
+		"output_path": "/data/images/photo_800x600.png",
+		"width": 800,
+		"height": 600,
+		"file_size_bytes": 245760
+	},
+	"meta": {
+		"duration_ms": 1250,
+		"plugin": "ptx-image-tools",
+		"plugin_version": "1.2.0"
+	}
+}

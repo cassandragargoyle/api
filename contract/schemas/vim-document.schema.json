@@ -1,0 +1,146 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/vim-document.schema.json",
+	"$version": "1.0.0",
+	"title": "VimDocument",
+	"description": "VIM v2.0 root document structure — universal result container for the Portunix ecosystem",
+	"type": "object",
+	"required": ["vim_version", "document", "layers"],
+	"properties": {
+		"vim_version": {
+			"type": "string",
+			"description": "VIM format version",
+			"enum": ["1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "2.0"]
+		},
+		"document": {
+			"type": "object",
+			"description": "Source document metadata",
+			"required": ["source"],
+			"properties": {
+				"source": {
+					"type": "string",
+					"description": "Original file name or document identifier"
+				},
+				"pages": {
+					"type": "integer",
+					"description": "Total page count (optional for image-based extraction)",
+					"minimum": 0
+				},
+				"sources": {
+					"type": "array",
+					"description": "Input sources (images, PDF pages, scans)",
+					"items": {
+						"$ref": "#/$defs/DocumentSource"
+					}
+				},
+				"metadata": {
+					"$ref": "#/$defs/DocumentMetadata"
+				}
+			},
+			"additionalProperties": false
+		},
+		"layers": {
+			"type": "object",
+			"description": "Extraction layers (all optional)",
+			"properties": {
+				"physical": {
+					"type": "object",
+					"description": "Layer 1 — raw data with coordinates (produced by vim-parser)",
+					"additionalProperties": true
+				},
+				"structural": {
+					"type": "object",
+					"description": "Layer 2 — logical grouping (produced by vim-parser)",
+					"additionalProperties": true
+				},
+				"semantic": {
+					"type": "object",
+					"description": "Layer 3 — interpreted meaning (produced by vim-parser)",
+					"additionalProperties": true
+				},
+				"toc": {
+					"type": "object",
+					"description": "Layer 4 — table of contents (produced by vim-parser)",
+					"additionalProperties": true
+				},
+				"extraction": {
+					"$ref": "vim-extraction.schema.json",
+					"description": "Layer 5 — structured extraction results (produced by reco)"
+				}
+			},
+			"additionalProperties": false
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"DocumentSource": {
+			"type": "object",
+			"description": "A single input source (image, PDF page, scan)",
+			"required": ["file", "type"],
+			"properties": {
+				"file": {
+					"type": "string",
+					"description": "Source file name or path"
+				},
+				"page": {
+					"type": "integer",
+					"description": "Page number (1-based) if source has pages",
+					"minimum": 1
+				},
+				"type": {
+					"type": "string",
+					"description": "Source type",
+					"enum": ["image", "pdf", "scan"]
+				},
+				"format": {
+					"type": "string",
+					"description": "MIME type (e.g. image/jpeg, application/pdf)"
+				},
+				"dimensions": {
+					"type": "object",
+					"properties": {
+						"width": { "type": "integer", "minimum": 1 },
+						"height": { "type": "integer", "minimum": 1 }
+					},
+					"required": ["width", "height"],
+					"additionalProperties": false
+				},
+				"size_bytes": {
+					"type": "integer",
+					"description": "File size in bytes",
+					"minimum": 0
+				},
+				"sha256": {
+					"type": "string",
+					"description": "SHA-256 hash for integrity verification"
+				}
+			},
+			"additionalProperties": false
+		},
+		"DocumentMetadata": {
+			"type": "object",
+			"description": "Document metadata (Schema.org vocabulary + VIM extensions)",
+			"properties": {
+				"title": { "type": "string" },
+				"creator": { "type": "string" },
+				"producer": {
+					"type": "string",
+					"description": "Tool that created the VIM (e.g. ptx-reco/0.1.0, vim-parser/0.1.5)"
+				},
+				"dateCreated": { "type": "string", "format": "date-time" },
+				"dateModified": { "type": "string", "format": "date-time" },
+				"extraction_date": {
+					"type": "string",
+					"format": "date-time",
+					"description": "ISO 8601 timestamp of VIM creation"
+				},
+				"encodingFormat": { "type": "string" },
+				"contentSize": { "type": "integer", "minimum": 0 },
+				"inLanguage": { "type": "string" },
+				"sha256": { "type": "string" },
+				"additionalProperties": { "type": "object" }
+			},
+			"additionalProperties": false
+		}
+	}
+}

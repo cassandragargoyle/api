@@ -1,0 +1,47 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/plugin-permissions.schema.json",
+	"$version": "1.0.0",
+	"title": "PluginPermissions",
+	"description": "Plugin permission model for the Unified AI Plugin Platform. Declares what system resources a plugin requires access to. Corresponds to PluginPermissions and PluginCapabilities messages in the core plugin.proto.",
+	"type": "object",
+	"properties": {
+		"level": {
+			"type": "string",
+			"enum": ["limited", "standard", "full"],
+			"description": "Overall permission level: limited (read-only, no network), standard (read/write local), full (all access including network and system)"
+		},
+		"filesystem": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["read", "write"]
+			},
+			"description": "Filesystem access permissions"
+		},
+		"network": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["connect", "listen", "outbound", "http"]
+			},
+			"description": "Network access permissions: connect (TCP client), listen (TCP server), outbound (general egress), http (HTTP client)"
+		},
+		"database": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["read", "write", "admin"]
+			},
+			"description": "Database access permissions"
+		},
+		"system": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "System capabilities required (e.g. 'process', 'accessibility', 'container')"
+		}
+	},
+	"additionalProperties": false
+}

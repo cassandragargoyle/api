@@ -271,4 +271,11 @@ docker-compose.override.yml
 # Project Specific
 # Add project-specific ignores below
 # Add your project-specific ignores here
+# The .NET-style [Ll]og/ rule above also matches our Java/Python/TypeScript log
+# packages — whitelist them explicitly.
+!python/src/cassandragargoyle/api/log/
+!java/src/main/java/org/cassandragargoyle/api/log/
+!typescript/src/log/
+!typescript/test/log/
+*.egg-info/
 CLAUDE.local.md

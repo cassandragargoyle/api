@@ -1,11 +1,13 @@
 # Python Testing Guide for Api
 
 ## Overview
+
 Testing frameworks and strategies for Python development in Api.
 
 ## Testing Frameworks
 
 ### pytest (Recommended)
+
 ```python
 import pytest
 from api.calculator import Calculator
@@ -30,6 +32,7 @@ def test_division_by_zero():
 ```
 
 ### unittest (Built-in)
+
 ```python
 import unittest
 from unittest.mock import Mock, patch
@@ -52,7 +55,8 @@ class TestCalculator(unittest.TestCase):
 ## Test Organization
 
 ### Directory Structure
-```
+
+```text
 tests/
 ├── unit/
 ├── integration/
@@ -62,6 +66,7 @@ tests/
 ```
 
 ### Fixtures
+
 ```python
 # conftest.py
 import pytest
@@ -82,6 +87,7 @@ def sample_user():
 ## Mocking
 
 ### Using unittest.mock
+
 ```python
 from unittest.mock import Mock, patch, MagicMock
 
@@ -93,6 +99,7 @@ def test_api_call():
 ```
 
 ### Using pytest-mock
+
 ```python
 def test_with_mocker(mocker):
     mock_method = mocker.patch('module.method')
@@ -103,6 +110,7 @@ def test_with_mocker(mocker):
 ```
 
 ## Testing Async Code
+
 ```python
 import pytest
 import asyncio
@@ -120,6 +128,7 @@ def event_loop():
 ```
 
 ## Running Tests
+
 ```bash
 # Run all tests
 pytest
@@ -140,6 +149,7 @@ pytest -k "test_add"
 ## Configuration
 
 ### pytest.ini
+
 ```ini
 [tool:pytest]
 testpaths = tests
@@ -166,3 +176,5 @@ markers =
 ---
 
 *Python's rich testing ecosystem supports comprehensive test strategies.*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*

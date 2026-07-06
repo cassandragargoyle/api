@@ -7,6 +7,7 @@ on:
 
 env:
   JAVA_VERSION: '21'
+  PYTHON_VERSION: '3.13'
 
 jobs:
   publish:
@@ -34,9 +35,38 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Strip SNAPSHOT versions
-        run: find . -name pom.xml -exec sed -i 's/-SNAPSHOT//g' {} +
+        run: sed -i 's/-SNAPSHOT//g' java/pom.xml
 
       - name: Publish to GitHub Packages
-        run: mvn deploy -B -DskipTests
+        run: mvn deploy -B -DskipTests -f java/pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-python:
+    name: Publish Python Package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: python/uv.lock
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Build wheel and sdist
+        working-directory: python
+        run: uv build
+
+      - name: Publish to PyPI
+        working-directory: python
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish

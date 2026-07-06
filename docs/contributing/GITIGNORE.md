@@ -1,7 +1,9 @@
 # .gitignore Template for CassandraGargoyle Projects
 
 ## Purpose
-This document provides standardized .gitignore templates for different types of CassandraGargoyle projects, ensuring consistent exclusion of files that should not be tracked in Git.
+
+This document provides standardized .gitignore templates for different types of CassandraGargoyle projects, ensuring consistent exclusion
+of files that should not be tracked in Git.
 
 ## Base Template (All Projects)
 
@@ -52,6 +54,7 @@ temp/
 ## Language-Specific Additions
 
 ### Go Projects
+
 ```gitignore
 # Go specific
 *.exe
@@ -70,6 +73,7 @@ dist/
 ```
 
 ### Node.js/JavaScript Projects
+
 ```gitignore
 # Dependencies
 node_modules/
@@ -104,6 +108,7 @@ coverage/
 ```
 
 ### Python Projects
+
 ```gitignore
 # Python specific
 __pycache__/
@@ -150,6 +155,7 @@ htmlcov/
 ```
 
 ### Rust Projects
+
 ```gitignore
 # Rust specific
 /target/
@@ -158,6 +164,7 @@ Cargo.lock
 ```
 
 ### .NET/C# Projects
+
 ```gitignore
 # .NET specific
 bin/
@@ -188,12 +195,14 @@ packages/
 ```
 
 ### Docker Projects
+
 ```gitignore
 # Docker specific
 .dockerignore
 ```
 
 ### Database Projects
+
 ```gitignore
 # Database files
 *.db
@@ -205,6 +214,7 @@ packages/
 ## Project-Specific Examples
 
 ### Complete Go CLI Project
+
 ```gitignore
 # Base template
 .claude/
@@ -243,6 +253,7 @@ GEMINI.md
 ```
 
 ### Complete Node.js Web App
+
 ```gitignore
 # Base template
 .claude/
@@ -283,12 +294,14 @@ public/uploads/
 ## Usage Instructions
 
 ### For New Projects
+
 1. **Copy base template** to your project root as `.gitignore`
 2. **Add language-specific sections** based on your tech stack
 3. **Add project-specific exclusions** as needed
 4. **Test the gitignore** with `git status` to ensure proper exclusions
 
 ### Common Project-Specific Additions
+
 ```gitignore
 # Configuration files with sensitive data
 config/production.yml
@@ -318,21 +331,25 @@ Thumbs.db
 ## Best Practices
 
 ### Security Considerations
+
 - Always exclude files containing API keys, passwords, or sensitive data
 - Exclude configuration files that contain environment-specific settings
 - Never commit database files or credentials
 
 ### Performance Considerations
+
 - Exclude large binary files
 - Exclude generated files that can be rebuilt
 - Exclude dependency directories (node_modules, vendor, etc.)
 
 ### Team Collaboration
+
 - Include common IDE configuration exclusions
 - Exclude personal development configuration files
 - Keep project-specific exclusions documented
 
 ### Maintenance
+
 - Review .gitignore quarterly for new exclusions
 - Update when adding new tools or dependencies
 - Ensure consistency across team projects
@@ -340,6 +357,7 @@ Thumbs.db
 ## Git Commands for .gitignore
 
 ### Apply .gitignore to Already Tracked Files
+
 ```bash
 # Remove all files from index (keeps local files)
 git rm -r --cached .
@@ -352,6 +370,7 @@ git commit -m "Apply updated .gitignore"
 ```
 
 ### Check What Would Be Ignored
+
 ```bash
 # Show files that would be ignored
 git status --ignored
@@ -365,4 +384,4 @@ git check-ignore -v filename
 **Note**: Always customize the .gitignore template based on your specific project needs while maintaining the base CassandraGargoyle standards.
 
 *Created: 2025-08-23*
-*Last updated: 2025-08-23*
+*Last updated: 2026-04-03*

@@ -1,0 +1,271 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/vim-extraction.schema.json",
+	"$version": "1.0.0",
+	"title": "VimExtraction",
+	"description": "VIM extraction layer — structured extraction results from form processing, zone extraction, and recognition workflows",
+	"type": "object",
+	"required": ["sources"],
+	"properties": {
+		"template_ref": {
+			"$ref": "#/$defs/TemplateRef"
+		},
+		"sources": {
+			"type": "array",
+			"description": "Per-source raw extraction results with provenance",
+			"items": {
+				"$ref": "vim-extraction-source.schema.json"
+			},
+			"minItems": 1
+		},
+		"document": {
+			"$ref": "#/$defs/ExtractionDocument"
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"TemplateRef": {
+			"type": "object",
+			"description": "Reference to external form template (not embedded in VIM)",
+			"required": ["template_id"],
+			"properties": {
+				"template_id": {
+					"type": "string",
+					"description": "Template identifier"
+				},
+				"template_version": {
+					"type": "string",
+					"description": "Template version"
+				},
+				"template_source": {
+					"type": "string",
+					"description": "System that manages the template (e.g. reco)"
+				}
+			},
+			"additionalProperties": false
+		},
+		"ExtractionDocument": {
+			"type": "object",
+			"description": "Merged logical document — final result after collection, merging, and aggregation",
+			"properties": {
+				"completeness": {
+					"type": "number",
+					"description": "Overall document completeness (0.0-1.0)",
+					"minimum": 0.0,
+					"maximum": 1.0
+				},
+				"field_count": {
+					"type": "integer",
+					"description": "Total number of extracted fields",
+					"minimum": 0
+				},
+				"fields": {
+					"type": "array",
+					"description": "Merged field values",
+					"items": {
+						"$ref": "#/$defs/DocumentField"
+					}
+				},
+				"tables": {
+					"type": "array",
+					"description": "Merged logical tables",
+					"items": {
+						"$ref": "#/$defs/DocumentTable"
+					}
+				},
+				"groups": {
+					"type": "array",
+					"description": "Repeating field groups",
+					"items": {
+						"$ref": "#/$defs/FieldGroup"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"DocumentField": {
+			"type": "object",
+			"description": "A final field value in the merged document",
+			"required": ["field_id", "value", "data_type", "collect_mode"],
+			"properties": {
+				"field_id": {
+					"type": "string",
+					"description": "Field identifier (from template)"
+				},
+				"label": {
+					"type": "string",
+					"description": "Human-readable field label"
+				},
+				"value": {
+					"description": "Final merged value (type depends on data_type)"
+				},
+				"data_type": {
+					"type": "string",
+					"description": "Value type",
+					"enum": ["string", "integer", "decimal", "date", "boolean", "enum", "array"]
+				},
+				"confidence": {
+					"type": "number",
+					"description": "Confidence of final value (0.0-1.0)",
+					"minimum": 0.0,
+					"maximum": 1.0
+				},
+				"collect_mode": {
+					"type": "string",
+					"description": "How this field was collected from sources",
+					"enum": ["single", "first", "last", "all", "concat", "sum", "majority", "highest_confidence"]
+				},
+				"source_refs": {
+					"type": "array",
+					"description": "References to source-level extractions",
+					"items": {
+						"$ref": "#/$defs/SourceRef"
+					}
+				},
+				"revisions": {
+					"type": "array",
+					"description": "Value change history (ordered by revision number)",
+					"items": {
+						"$ref": "vim-extraction-field.schema.json#/$defs/Revision"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"SourceRef": {
+			"type": "object",
+			"description": "Reference to a field in a specific extraction source",
+			"required": ["source_id", "field_id"],
+			"properties": {
+				"source_id": {
+					"type": "string",
+					"description": "Reference to ExtractionSource.source_id"
+				},
+				"field_id": {
+					"type": "string",
+					"description": "Reference to ExtractionField.field_id within that source"
+				}
+			},
+			"additionalProperties": false
+		},
+		"DocumentTable": {
+			"type": "object",
+			"description": "A merged logical table assembled from fragments across pages",
+			"required": ["table_id", "columns", "rows"],
+			"properties": {
+				"table_id": {
+					"type": "string",
+					"description": "Logical table identifier"
+				},
+				"label": {
+					"type": "string",
+					"description": "Human-readable table label"
+				},
+				"columns": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/ColumnDef" },
+					"minItems": 1
+				},
+				"rows": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/DocumentTableRow" }
+				},
+				"source_fragments": {
+					"type": "array",
+					"description": "List of source_id:table_id references",
+					"items": { "type": "string" }
+				},
+				"total_rows": {
+					"type": "integer",
+					"description": "Total data row count (excluding headers)",
+					"minimum": 0
+				},
+				"confidence": {
+					"type": "number",
+					"minimum": 0.0,
+					"maximum": 1.0
+				}
+			},
+			"additionalProperties": false
+		},
+		"ColumnDef": {
+			"type": "object",
+			"required": ["column_id"],
+			"properties": {
+				"column_id": { "type": "string" },
+				"label": { "type": "string" },
+				"data_type": { "type": "string" }
+			},
+			"additionalProperties": false
+		},
+		"DocumentTableRow": {
+			"type": "object",
+			"required": ["row_index", "cells"],
+			"properties": {
+				"row_index": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"cells": {
+					"type": "array",
+					"items": { "$ref": "vim-extraction-field.schema.json#/$defs/TableCell" }
+				},
+				"source_ref": {
+					"type": "object",
+					"description": "Origin of this row",
+					"properties": {
+						"source_id": { "type": "string" },
+						"table_id": { "type": "string" },
+						"row_index": { "type": "integer" }
+					},
+					"additionalProperties": false
+				}
+			},
+			"additionalProperties": false
+		},
+		"FieldGroup": {
+			"type": "object",
+			"description": "Repeating group of fields (e.g. per-page or per-item)",
+			"required": ["group_id", "repeat_mode", "instances"],
+			"properties": {
+				"group_id": {
+					"type": "string",
+					"description": "Group identifier"
+				},
+				"label": {
+					"type": "string",
+					"description": "Human-readable label"
+				},
+				"repeat_mode": {
+					"type": "string",
+					"description": "How instances repeat",
+					"enum": ["per_page", "per_item", "dynamic"]
+				},
+				"instances": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/GroupInstance" }
+				}
+			},
+			"additionalProperties": false
+		},
+		"GroupInstance": {
+			"type": "object",
+			"required": ["instance_index", "fields"],
+			"properties": {
+				"instance_index": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"source_id": {
+					"type": "string",
+					"description": "Source that produced this instance"
+				},
+				"fields": {
+					"type": "array",
+					"items": { "$ref": "#/$defs/DocumentField" }
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

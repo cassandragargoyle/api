@@ -1,15 +1,18 @@
 # Git Workflow for Api
 
 ## Overview
+
 This document describes the Git workflow and branching strategy for Api.
 
 ## Branch Structure
 
 ### Main Branches
+
 - `main` - Production-ready code
 - `develop` - Integration branch for features
 
 ### Supporting Branches
+
 - `feature/*` - New features
 - `hotfix/*` - Critical fixes
 - `release/*` - Release preparation
@@ -17,6 +20,7 @@ This document describes the Git workflow and branching strategy for Api.
 ## Workflow Process
 
 ### 1. Feature Development
+
 ```bash
 # Start new feature
 git checkout develop
@@ -32,6 +36,7 @@ git push origin feature/user-authentication
 ```
 
 ### 2. Release Process
+
 ```bash
 # Create release branch
 git checkout develop
@@ -49,6 +54,7 @@ git tag -a v1.2.0 -m "Release version 1.2.0"
 ```
 
 ### 3. Hotfix Process
+
 ```bash
 # Create hotfix from main
 git checkout main
@@ -67,7 +73,8 @@ git merge hotfix/critical-security-fix
 ## Commit Guidelines
 
 ### Message Format
-```
+
+```text
 <type>(<scope>): <description>
 
 <body>
@@ -76,6 +83,7 @@ git merge hotfix/critical-security-fix
 ```
 
 ### Types
+
 - `feat` - New feature
 - `fix` - Bug fix
 - `docs` - Documentation changes
@@ -85,6 +93,7 @@ git merge hotfix/critical-security-fix
 - `chore` - Maintenance tasks
 
 ### Examples
+
 ```bash
 git commit -m "feat(auth): add OAuth2 integration"
 git commit -m "fix(api): handle null values in user data"
@@ -94,6 +103,7 @@ git commit -m "docs: update API documentation"
 ## Pull Request Process
 
 ### Requirements
+
 - [ ] Feature branch is up to date with target branch
 - [ ] All tests pass
 - [ ] Code follows style guidelines
@@ -101,6 +111,7 @@ git commit -m "docs: update API documentation"
 - [ ] Changes are reviewed by at least one team member
 
 ### Template
+
 ```markdown
 ## Description
 Brief description of changes
@@ -125,12 +136,14 @@ Brief description of changes
 ## Git Configuration
 
 ### User Setup
+
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
 
 ### Aliases
+
 ```bash
 git config --global alias.st status
 git config --global alias.co checkout
@@ -140,6 +153,7 @@ git config --global alias.last 'log -1 HEAD'
 ```
 
 ### Hooks
+
 ```bash
 # Pre-commit hook
 #!/bin/bash
@@ -150,6 +164,7 @@ npm run test:unit
 ## Best Practices
 
 ### Do
+
 - Write clear commit messages
 - Keep commits atomic and focused
 - Rebase feature branches before merging
@@ -157,6 +172,7 @@ npm run test:unit
 - Review your own changes before requesting review
 
 ### Don't
+
 - Commit directly to main
 - Push broken code
 - Mix multiple features in one branch
@@ -166,6 +182,7 @@ npm run test:unit
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Undo last commit (keep changes)
 git reset --soft HEAD~1
@@ -186,3 +203,5 @@ git commit
 ---
 
 *Follow this workflow to maintain clean Git history and efficient collaboration.*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*

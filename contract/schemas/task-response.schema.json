@@ -1,0 +1,54 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/task-response.schema.json",
+	"$version": "1.0.0",
+	"title": "TaskResponse",
+	"description": "Unified task response for Unified AI Task Platform",
+	"type": "object",
+	"required": ["status"],
+	"properties": {
+		"status": {
+			"type": "string",
+			"enum": ["success", "error", "partial", "cancelled"],
+			"description": "Task execution result status"
+		},
+		"trace_id": {
+			"type": "string",
+			"description": "OpenTelemetry trace ID (echoed from request)"
+		},
+		"job_id": {
+			"type": "string",
+			"description": "Job identifier (echoed from request)"
+		},
+		"result": {
+			"type": "object",
+			"description": "Task-specific result payload",
+			"additionalProperties": true
+		},
+		"error": {
+			"$ref": "error.schema.json",
+			"description": "Structured error details (present when status is 'error' or 'partial')"
+		},
+		"meta": {
+			"type": "object",
+			"description": "Execution metadata",
+			"properties": {
+				"duration_ms": {
+					"type": "integer",
+					"description": "Task execution duration in milliseconds",
+					"minimum": 0
+				},
+				"plugin": {
+					"type": "string",
+					"description": "Plugin that executed the task"
+				},
+				"plugin_version": {
+					"type": "string",
+					"description": "Version of the executing plugin"
+				}
+			},
+			"additionalProperties": true
+		}
+	},
+	"additionalProperties": false
+}

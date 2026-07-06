@@ -1,0 +1,33 @@
+{
+	"name": "reco",
+	"version": "0.1.0",
+	"description": "Document recognition plugin - OCR, barcode detection, template matching",
+	"author": "CassandraGargoyle",
+	"license": "Proprietary",
+	"plugin": {
+		"type": "helper",
+		"binary": "ptx-reco",
+		"runtime": "python",
+		"python_min_version": "3.11"
+	},
+	"dependencies": {
+		"portunix_min_version": "2.0.0",
+		"os_support": ["linux", "windows", "darwin"],
+		"optional_tools": [
+			{"name": "tesseract", "reason": "OCR engine for printed text recognition"}
+		]
+	},
+	"permissions": {
+		"level": "limited",
+		"filesystem": ["read"],
+		"network": []
+	},
+	"commands": [
+		{
+			"name": "ptx-reco",
+			"description": "Document recognition - OCR, barcode detection, template matching",
+			"usage": "portunix reco <subcommand> [options]",
+			"subcommands": ["process", "batch", "task"]
+		}
+	]
+}

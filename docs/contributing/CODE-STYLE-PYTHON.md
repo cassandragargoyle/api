@@ -1,9 +1,11 @@
 # Python Code Style Guide for Api
 
 ## Overview
+
 This document defines the Python coding standards for the Api project.
 
 ## General Principles
+
 - Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) as the base style guide
 - Write Pythonic code - embrace Python idioms
 - Prioritize readability and simplicity
@@ -12,24 +14,29 @@ This document defines the Python coding standards for the Api project.
 ## Naming Conventions
 
 ### Modules and Packages
+
 - Use lowercase with underscores: `user_service.py`, `data_processor.py`
 - Keep names short and descriptive
 - Avoid using names that conflict with built-in modules
 
 ### Classes
+
 - Use PascalCase: `UserManager`, `DataProcessor`
 - Exception classes should end with "Error": `ValidationError`
 
 ### Functions and Variables
+
 - Use snake_case: `calculate_total()`, `user_name`
 - Private functions/methods: prefix with underscore: `_internal_method()`
 - "Really" private: double underscore: `__private_method()`
 
 ### Constants
+
 - Use UPPER_SNAKE_CASE: `MAX_CONNECTIONS`, `DEFAULT_TIMEOUT`
 - Define at module level
 
 ### Type Variables
+
 ```python
 from typing import TypeVar
 
@@ -40,6 +47,7 @@ UserType = TypeVar('UserType', bound='User')  # Bounded type
 ## Code Formatting
 
 ### Indentation
+
 - Use 4 spaces (no tabs)
 - Continuation lines should align with opening delimiter
 
@@ -57,11 +65,13 @@ def long_function_name(
 ```
 
 ### Line Length
+
 - Maximum 120 characters (relaxed from PEP 8's 79)
 - Break lines at logical points
 - Use parentheses for implicit line continuation
 
 ### Imports
+
 ```python
 # Standard library imports
 import os
@@ -81,6 +91,7 @@ from Api.utils.helpers import validate_email
 ```
 
 ### Whitespace
+
 ```python
 # Good
 spam(ham[1], {eggs: 2})
@@ -98,6 +109,7 @@ if x == 4 :
 ## Type Hints
 
 ### Basic Types
+
 ```python
 from typing import List, Dict, Optional, Union, Any, Tuple
 
@@ -112,6 +124,7 @@ def process_user(
 ```
 
 ### Complex Types
+
 ```python
 from typing import TypedDict, Protocol, Callable
 
@@ -130,6 +143,7 @@ ProcessorFunc = Callable[[str], str]
 ## Documentation
 
 ### Module Docstrings
+
 ```python
 """
 Module for handling user operations.
@@ -145,6 +159,7 @@ Examples:
 ```
 
 ### Function/Method Docstrings
+
 ```python
 def calculate_discount(
     price: float,
@@ -182,6 +197,7 @@ def calculate_discount(
 ```
 
 ### Class Docstrings
+
 ```python
 class UserService:
     """
@@ -213,7 +229,7 @@ class UserService:
 
 ## Project Structure
 
-```
+```text
 Api/
 ├── src/
 │   └── api/
@@ -248,6 +264,7 @@ Api/
 ## Best Practices
 
 ### Error Handling
+
 ```python
 # Be specific with exceptions
 try:
@@ -272,6 +289,7 @@ class UserNotFoundError(Exception):
 ```
 
 ### Context Managers
+
 ```python
 from contextlib import contextmanager
 from typing import Generator
@@ -291,6 +309,7 @@ with database_connection() as conn:
 ```
 
 ### Decorators
+
 ```python
 from functools import wraps
 from typing import Callable, Any
@@ -319,6 +338,7 @@ def fetch_data(url: str) -> Dict[str, Any]:
 ```
 
 ### List Comprehensions and Generators
+
 ```python
 # Good - list comprehension for simple transformations
 squares = [x**2 for x in range(10) if x % 2 == 0]
@@ -344,6 +364,7 @@ for item in items:
 ## Testing
 
 ### Test Structure
+
 ```python
 import pytest
 from unittest.mock import Mock, patch
@@ -395,6 +416,7 @@ class TestUserService:
 ## Modern Python Features
 
 ### Dataclasses
+
 ```python
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -416,6 +438,7 @@ class User:
 ```
 
 ### Async/Await
+
 ```python
 import asyncio
 from typing import List
@@ -434,6 +457,7 @@ async def fetch_multiple_users(user_ids: List[str]) -> List[User]:
 ```
 
 ### Pattern Matching (Python 3.10+)
+
 ```python
 def process_command(command: dict) -> str:
     """Process command using pattern matching."""
@@ -585,6 +609,7 @@ class UserService:
 ## Tools and Automation
 
 ### Linting and Formatting
+
 ```bash
 # Format with black
 black src/ tests/
@@ -603,6 +628,7 @@ pre-commit run --all-files
 ```
 
 ### Pre-commit Configuration
+
 ```yaml
 # .pre-commit-config.yaml
 repos:
@@ -625,6 +651,7 @@ repos:
 ```
 
 ### Testing Commands
+
 ```bash
 # Run all tests
 pytest
@@ -643,8 +670,13 @@ pytest -m "unit"
 ```
 
 ## References
+
 - [PEP 8 - Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
 - [PEP 484 - Type Hints](https://www.python.org/dev/peps/pep-0484/)
 - [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 - [The Hitchhiker's Guide to Python](https://docs.python-guide.org/)
 - Project-specific requirements in CONTRIBUTING.md
+
+*Follow this workflow to ....*
+*Last updated: 2026-04-03*
+*Maintained by: Api Team*
