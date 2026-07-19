@@ -1,4 +1,4 @@
-# Issue #013: User preferences storage — TypeScript first implementation
+# Issue #13: User preferences storage — TypeScript first implementation
 
 **Type**: Feature
 **Priority**: Medium
@@ -7,6 +7,7 @@
 **Labels**: feature, typescript, react, preferences, settings, multi-language
 **Repository**: Api
 **Related**: ADR-004 (User Preferences Storage Interface), Issue #012 (TypeScript `log` module)
+**GitHub**: #13
 
 ## Summary
 

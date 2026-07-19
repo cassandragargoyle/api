@@ -1,4 +1,4 @@
-# Issue #007: Remove persistence module
+# Issue #24: Remove persistence module
 
 **Type**: Feature
 **Priority**: Medium
@@ -7,6 +7,7 @@
 **Labels**: architecture, cleanup, unified-platform
 **Related**: ADR-003 (Remove Persistence Module), ADR-002 (Unified AI Platform Transition)
 **Repository**: Api
+**GitHub**: #24
 
 ## Problem
 

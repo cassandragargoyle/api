@@ -1,4 +1,4 @@
-# Issue #009: Plugin Platform Contract Schemas
+# Issue #26: Plugin Platform Contract Schemas
 
 **Type**: Feature
 **Priority**: High
@@ -6,6 +6,7 @@
 **Created**: 2026-03-21
 **Labels**: architecture, contract, plugin-platform
 **Related**: portunix-architecture ADR-001 (Unified AI Plugin & Task Platform), API ADR-002
+**GitHub**: #26
 
 ## Summary
 

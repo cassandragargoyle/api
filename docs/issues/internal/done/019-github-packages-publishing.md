@@ -1,4 +1,4 @@
-# Issue #002: GitHub Packages publishing workflow
+# Issue #19: GitHub Packages publishing workflow
 
 **Type**: Feature
 **Priority**: Medium
@@ -6,13 +6,14 @@
 **Closed**: 2026-03-01
 **Created**: 2026-03-01
 **Labels**: ci, maven, github
-**Related**: #001
+**Related**: #18
 **GitHub Issue**: [cassandragargoyle/api#6](https://github.com/cassandragargoyle/api/issues/6)
 **Repository**: Api
+**GitHub**: #19
 
 ## Description
 
-Implement GitHub Packages publishing for CassandraGargoyle API artifacts. This is the concrete implementation task derived from the architecture decisions in #001.
+Implement GitHub Packages publishing for CassandraGargoyle API artifacts. This is the concrete implementation task derived from the architecture decisions in #18.
 
 ## Tasks
 

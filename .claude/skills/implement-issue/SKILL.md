@@ -80,17 +80,23 @@ Povolené typy: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`
 
 **STOP** - Zeptej se mě na potvrzení commit message před commitnutím.
 
-## KROK 6: Push a PR (volitelný)
+## KROK 6: Push a PR
 
-Pokud má issue propojený GitHub issue:
+`origin` je GitHub (`cassandragargoyle/api`). Číslo issue = číslo GitHub issue.
 
-1. Push branch na Gitea: `git push origin <branch>`
-2. Nabídni přípravu pro GitHub PR přes publish skripty (`scripts/github_02_sync_publish.py`)
-3. Připrav PR popis ve formátu:
-   - Název: stručný popis změny
-   - Tělo: summary, test plan, odkaz na GitHub issue (`Closes #N`)
+1. Push branch: `git push -u origin <branch>`
+2. Otevři PR přes `gh` a propoj issue přes `Closes #N`:
 
-Pokud issue nemá GitHub propojení, stačí push na Gitea.
+   ```bash
+   gh pr create --repo cassandragargoyle/api \
+     --title "<type>(#N): <krátké shrnutí>" \
+     --body "Summary …
+
+   Test plan …
+
+   Closes #N"
+   ```
+3. Alternativa bez PR: merge přímo do `main` po review (viz Další kroky).
 
 ---
 
@@ -98,7 +104,11 @@ Pokud issue nemá GitHub propojení, stačí push na Gitea.
 
 Po dokončení implementace:
 
-- Merge branch do main: `git checkout main && git merge <branch>`
+- Sloučení: přes merge PR na GitHubu, nebo lokálně
+  `git checkout main && git merge <branch> && git push origin main`
 - Smazání feature branch: `git branch -d <branch>`
-- Aktualizuj stav issue v `docs/issues/internal/` na `Status: Implemented`
-- Aktualizuj tabulku v `docs/issues/README.md` na ✅ Implemented
+- Uzavři issue: `gh issue close N` (nebo automaticky přes `Closes #N` v PR)
+- Archivuj detailní soubor:
+  `git mv docs/issues/internal/N-*.md docs/issues/internal/done/`
+
+Seznam issues je na GitHubu — **žádné přehledové tabulky se needitují.**

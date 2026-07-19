@@ -1,4 +1,4 @@
-# Issue #008: Python build and publish pipeline
+# Issue #25: Python build and publish pipeline
 
 **Type**: Feature
 **Priority**: Medium
@@ -6,8 +6,9 @@
 **Created**: 2026-03-19
 **Closed**: 2026-03-19
 **Labels**: python, ci, build, distribution
-**Related**: Issue #005 (Python TelemetryProvider), Issue #006 (Restructure)
+**Related**: Issue #22 (Python TelemetryProvider), Issue #23 (Restructure)
 **Repository**: Api
+**GitHub**: #25
 
 ## Problem
 

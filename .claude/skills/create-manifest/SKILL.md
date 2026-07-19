@@ -1,41 +1,41 @@
 ---
 name: create-manifest
-description: Vytvoří software manifest podle metodiky projektu. Použij, když chce uživatel vytvořit manifest pro software, nástroj nebo technologii.
+description: Create a software manifest following the project methodology. Use when the user wants to create a manifest for a piece of software, a tool, or a technology.
 ---
 
-# Vytvoření software manifestu
+# Create a software manifest
 
-Tvým úkolem je vytvořit software manifest pro zadanou položku (název software, nástroje nebo technologie).
+Your task is to create a software manifest for the given item (a software, tool, or technology name).
 
-## KROK 1: Zjisti položku
+## STEP 1: Determine the item
 
-Pokud uživatel nezadal položku, zeptej se česky:
+If the user did not provide an item, ask:
 
-> Pro jaký software, nástroj nebo technologii chceš vytvořit manifest?
+> What software, tool, or technology do you want to create a manifest for?
 
-Počkej na odpověď uživatele a poté pokračuj.
+Wait for the user's answer, then continue.
 
-## KROK 2: Nastuduj metodiku
+## STEP 2: Study the methodology
 
-Přečti si `docs/manifests/README.md` pro pochopení struktury a konvencí manifestů.
+Read `docs/manifests/README.md` to understand the structure and conventions of manifests.
 
-## KROK 3: Prozkoumej existující manifesty
+## STEP 3: Review existing manifests
 
-Podívej se na existující manifesty v `docs/manifests/` pro inspiraci formátem a obsahem (např. `manifest-docker.md`, `manifest-go.md`).
+Look at existing manifests in `docs/manifests/` for inspiration on format and content (e.g. `manifest-docker.md`, `manifest-go.md`).
 
-## KROK 4: Vyhledej informace
+## STEP 4: Research the information
 
-Použij web search pro získání aktuálních informací o:
+Use web search to gather up-to-date information about:
 
-- Aktuální verze a release date
-- Oficiální dokumentace a website
-- Licenční podmínky
+- Current version and release date
+- Official documentation and website
+- License terms
 - System requirements
-- Hlavní use cases
+- Main use cases
 
-## KROK 5: Vytvoř manifest
+## STEP 5: Create the manifest
 
-Vytvoř soubor `docs/manifests/manifest-{název}.md` obsahující:
+Create the file `docs/manifests/manifest-{name}.md` containing:
 
 - Basic Information (name, category, license, version, maintainer, investment type)
 - Installation Details
@@ -43,17 +43,17 @@ Vytvoř soubor `docs/manifests/manifest-{název}.md` obsahující:
 - Dependencies
 - Portunix Integration
 - Verification commands
-- Best Use Cases (✅ doporučené, ⚠️ nedoporučené)
+- Best Use Cases (✅ recommended, ⚠️ not recommended)
 - Community & Metrics
 - Learning Resources
 
-## KROK 6: Aktualizuj README
+## STEP 6: Update the README
 
-Přidej nový manifest do seznamu v `docs/manifests/README.md` na správné místo podle kategorie.
+Add the new manifest to the list in `docs/manifests/README.md` in the correct place by category.
 
-## Konvence
+## Conventions
 
-- Použij ikony podle typu investice: 📈 (veřejně obchodovaná), 🔒 (privátní), 🆓 (open-source)
-- Použij ✅ pro doporučené use cases a ⚠️ pro případy kdy zvážit alternativy
-- Dodržuj anglický jazyk v obsahu manifestu (projekt má anglickou dokumentaci)
-- Název souboru: `manifest-{kebab-case-název}.md`
+- Use icons by investment type: 📈 (publicly traded), 🔒 (private), 🆓 (open-source)
+- Use ✅ for recommended use cases and ⚠️ for cases where alternatives should be considered
+- Keep the manifest content in English (the project uses English documentation)
+- Filename: `manifest-{kebab-case-name}.md`

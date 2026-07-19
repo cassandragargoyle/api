@@ -1,4 +1,4 @@
-# Issue #006: Restructure project layout for multi-language platform and first MVP adjustments
+# Issue #23: Restructure project layout for multi-language platform and first MVP adjustments
 
 **Type**: Feature
 **Priority**: High
@@ -7,6 +7,7 @@
 **Labels**: architecture, restructuring, mvp, unified-platform
 **Related**: ADR-002 (Unified AI Platform Transition), portunix-architecture ADR-001
 **Repository**: Api
+**GitHub**: #23
 
 ## Problem
 
@@ -83,7 +84,7 @@ api/                              # Repo root (parent POM)
 - [ ] **1.8** Update documentation
   - `README.md` - update project structure section
   - `CLAUDE.md` - update any path references
-  - Issue #005 - note that file paths have changed (add migration note)
+  - Issue #22 - note that file paths have changed (add migration note)
 - [ ] **1.9** Clean up `.egg-info` and `__pycache__` artifacts left in old location
 
 ### Phase 2: Add contract directory (MVP foundation)

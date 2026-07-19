@@ -1,16 +1,17 @@
-# Issue #005: Python TelemetryProvider shared module
+# Issue #22: Python TelemetryProvider shared module
 
 **Type**: Feature
 **Priority**: Medium
 **Status**: ✅ Implemented
 **Created**: 2026-03-19
 **Labels**: feature, observability, opentelemetry, tracing, logging, python
-**Related**: API#004 (Java TelemetryProvider), portunix-reco#INT-002
+**Related**: API#21 (Java TelemetryProvider), portunix-reco#INT-002
 **Repository**: Api
+**GitHub**: #22
 
 ## Description
 
-Create a shared Python `TelemetryProvider` module in the API project (`cassandragargoyle.api.telemetry`) that mirrors the functionality of the existing Java `TelemetryProvider` (Issue #004). Additionally, provide standard logging utilities (`cassandragargoyle.api.log`) mirroring the Java `LogFactory` and `Logging` classes. These modules will be used by all Python-based Portunix components (starting with portunix-reco) to provide centralized OpenTelemetry TracerProvider initialization and unified logging.
+Create a shared Python `TelemetryProvider` module in the API project (`cassandragargoyle.api.telemetry`) that mirrors the functionality of the existing Java `TelemetryProvider` (Issue #21). Additionally, provide standard logging utilities (`cassandragargoyle.api.log`) mirroring the Java `LogFactory` and `Logging` classes. These modules will be used by all Python-based Portunix components (starting with portunix-reco) to provide centralized OpenTelemetry TracerProvider initialization and unified logging.
 
 This is a prerequisite for portunix-reco Issue INT-002 (OpenTelemetry tracing).
 
@@ -241,7 +242,7 @@ dd/MM/yyyy HH:mm:ss.SSS LEVEL [logger.name]: message
 
 ### 5. Design principles
 
-- **1:1 parity with Java TelemetryProvider** (Issue #004) - same builder pattern, same ExporterType enum, same behavior
+- **1:1 parity with Java TelemetryProvider** (Issue #21) - same builder pattern, same ExporterType enum, same behavior
 - **Zero overhead when disabled**: `no_op()` returns OTel NoOp tracer, no SDK initialization
 - **Thread-safe**: singleton-safe TracerProvider
 - **Standard OTel env vars**: `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_SERVICE_NAME`, `OTEL_TRACES_SAMPLER`, `OTEL_TRACES_EXPORTER` override programmatic config
@@ -257,7 +258,7 @@ dd/MM/yyyy HH:mm:ss.SSS LEVEL [logger.name]: message
 5. `shutdown()` flushes pending spans before application exit
 6. Unit tests cover all three modes (NoOp, Console, OTLP)
 7. Package is installable via pip (editable mode at minimum)
-8. API surface mirrors Java TelemetryProvider (#004) for cross-language consistency
+8. API surface mirrors Java TelemetryProvider (#21) for cross-language consistency
 9. `LogFactory.get_logger()` returns a properly named `logging.Logger`
 10. `Logging.initialize()` configures console and/or file handlers with custom formatter
 11. `Logging.set_log_level()` accepts string aliases (TRACE/DEBUG/INFO/WARNING/ERROR and shorthand T/D/I/W/E and numeric 0-4)
@@ -283,6 +284,6 @@ dd/MM/yyyy HH:mm:ss.SSS LEVEL [logger.name]: message
 
 ## References
 
-- [Issue #004: Java TelemetryProvider](004-opentelemetry-telemetry-provider.md) - reference implementation
+- [Issue #21: Java TelemetryProvider](021-opentelemetry-telemetry-provider.md) - reference implementation
 - [OpenTelemetry Python SDK](https://opentelemetry.io/docs/languages/python/)
 - [OpenTelemetry Python API Reference](https://opentelemetry-python.readthedocs.io/)
