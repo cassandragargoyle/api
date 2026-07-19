@@ -1,0 +1,48 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/estimation.schema.json",
+	"$version": "2.0.0",
+	"title": "Estimation",
+	"description": "Planning-poker estimation history for a use-case (Opportunity Management v2). v2 change vs #014 opportunity-estimation: subjectRef points to a use-case id (not an opportunity), because story points are estimated against a product-bound use-case, not a product-agnostic idea. The latest entry in estimations[] is the rollup surfaced as use-case.storyPoints. '<slug>.estimation.json' sits beside its use-case in the venture 'records/' pool.",
+	"type": "object",
+	"required": ["subjectRef", "estimations"],
+	"properties": {
+		"schemaVersion": {
+			"type": "string",
+			"description": "Contract version this document was authored against (e.g. '2.0.0')."
+		},
+		"subjectRef": {
+			"type": "string",
+			"description": "Id of the use-case (use-case.schema.json) being estimated."
+		},
+		"estimations": {
+			"type": "array",
+			"description": "Chronological planning-poker rounds; the latest sets the use-case storyPoints rollup.",
+			"items": {
+				"type": "object",
+				"required": ["estimator", "storyPoints", "timestamp"],
+				"properties": {
+					"estimator": {
+						"type": "string",
+						"description": "Who produced this estimate."
+					},
+					"argumentation": {
+						"type": "string",
+						"description": "Rationale behind the estimate."
+					},
+					"storyPoints": {
+						"type": "number",
+						"description": "Estimated story points for this round."
+					},
+					"timestamp": {
+						"type": "string",
+						"format": "date-time",
+						"description": "When the estimate was made (ISO 8601)."
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

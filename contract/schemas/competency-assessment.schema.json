@@ -1,0 +1,55 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-assessment.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyAssessment",
+	"description": "An assessment of a person against a competency. Carries the two individual dimensions — proficiency (0-5) and AI enablement — which are independent: how well someone performs a competency vs. how much AI is woven into how they perform it. Used inline on a 'has_competency' relation, or promoted to a standalone node when it needs its own id and provenance. When used as a node, set 'id', 'person' and 'competency'.",
+	"type": "object",
+	"required": ["proficiency", "aiEnablement"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Optional assessment identifier (node form only). Grammar: 'assessment:' prefix + dot-separated slug levels, each matching [a-z0-9-].",
+			"pattern": "^assessment:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"person": {
+			"type": "string",
+			"description": "Person node id being assessed (node form only)",
+			"pattern": "^person:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"competency": {
+			"type": "string",
+			"description": "Competency node id being assessed (node form only)",
+			"pattern": "^competency:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"proficiency": {
+			"type": "integer",
+			"description": "Individual proficiency level on the 0-5 scale (0 = none, 5 = expert). See dimensions.md for scale criteria.",
+			"minimum": 0,
+			"maximum": 5
+		},
+		"aiEnablement": {
+			"type": "string",
+			"description": "How AI is woven into the way the person performs this competency; independent of proficiency",
+			"enum": ["NONE", "ASSISTED", "INTEGRATED", "AI_NATIVE"]
+		},
+		"assessedOn": {
+			"type": "string",
+			"format": "date",
+			"description": "ISO 8601 date (YYYY-MM-DD) the assessment was made"
+		},
+		"assessor": {
+			"type": "string",
+			"description": "Who performed the assessment (person id, team, or 'self')"
+		},
+		"notes": {
+			"type": "string",
+			"description": "Optional free-form notes about the assessment"
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this assessment"
+		}
+	},
+	"additionalProperties": false
+}

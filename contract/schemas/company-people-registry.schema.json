@@ -1,0 +1,141 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/company-people-registry.schema.json",
+	"$version": "1.0.0",
+	"title": "CompanyPeopleRegistry",
+	"description": "Company-wide people registry kept in the main repository (root users.json). Presence in 'users' means the person is CURRENTLY ACTIVE and cooperating with the company — when the cooperation ends the record is removed (archived), not flagged. Same master-data shape as the delivery-project shared registry (people-registry.schema.json) plus 'relation' describing how the person relates to the company. Scope is firm-wide (statutory bodies, shareholders, employees, advisors, suppliers), independent of any delivery project. This is a SEPARATE registry from the delivery-project one: project layers 2/3 ref the delivery-project registry (projects/users.json), NOT this file. A person who is both an active cooperator and on a delivery project is listed in both, keyed by the same id.",
+	"type": "object",
+	"required": ["version", "updated", "users"],
+	"properties": {
+		"version": {
+			"type": "integer",
+			"const": 1,
+			"description": "Schema version of this file (currently 1)."
+		},
+		"updated": {
+			"type": "string",
+			"format": "date",
+			"description": "Date of the last edit (YYYY-MM-DD)."
+		},
+		"comment": {
+			"type": "string",
+			"description": "Free-form explanation of the file's purpose — presence = active cooperation, and the add / remove rules."
+		},
+		"users": {
+			"type": "array",
+			"description": "People who currently actively cooperate with the company. Presence here is the active-cooperation signal; remove the entry when cooperation ends.",
+			"items": {"$ref": "#/$defs/person"}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"person": {
+			"type": "object",
+			"required": ["id", "name", "relation", "createdAt", "updatedAt"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Unique person identifier — typically the e-mail, or a 'jmeno.prijmeni' slug. The same id is reused for this person in the delivery-project registry when they also appear there."
+				},
+				"name": {
+					"type": "string",
+					"description": "Full name."
+				},
+				"title": {
+					"type": "string",
+					"description": "Company position at their employer (e.g. 'CTO'); independent of the relation to our company."
+				},
+				"employer": {
+					"type": "string",
+					"description": "Optional employer / organization. Use the company's own name for internal staff; omit for statutory bodies / shareholders with no relevant employer."
+				},
+				"relation": {
+					"type": "array",
+					"description": "How the person relates to the company — one or more roles at once (e.g. a person may be both 'jednatel' and 'společník'). Values: e.g. 'jednatel', 'společník', 'zaměstnanec', 'dodavatel', 'poradce', 'účetní', 'advokát'.",
+					"items": {"type": "string"},
+					"minItems": 1
+				},
+				"since": {
+					"type": "string",
+					"format": "date",
+					"description": "Optional — active cooperation since (YYYY-MM-DD)."
+				},
+				"email": {
+					"type": "string",
+					"format": "email",
+					"description": "E-mail."
+				},
+				"phone": {
+					"type": "string",
+					"description": "Phone number (landline)."
+				},
+				"mobile": {
+					"type": "string",
+					"description": "Mobile phone number."
+				},
+				"fax": {
+					"type": "string",
+					"description": "Fax number."
+				},
+				"website": {
+					"type": "string",
+					"description": "Website URL of the person or their practice/organization."
+				},
+				"address": {
+					"type": "string",
+					"description": "Postal / office address."
+				},
+				"barId": {
+					"type": "string",
+					"description": "Bar association registration number, for lawyers (in CZ: ev. č. ČAK)."
+				},
+				"registrationId": {
+					"type": "string",
+					"description": "Business registration number of the person's practice / organization (in CZ: IČO)."
+				},
+				"bankAccount": {
+					"type": "string",
+					"description": "Bank account number for invoicing / payments."
+				},
+				"note": {
+					"type": "string",
+					"description": "Free-form context — scope of cooperation, who delegates to whom, etc."
+				},
+				"represents": {
+					"type": "array",
+					"description": "Standing representations: people this person is authorized to represent — e.g. on the basis of a power of attorney (plná moc), or as the designated common representative of a joint share (společný zástupce společného podílu). This is a STANDING arrangement, not a one-off representation at a single meeting.",
+					"items": {
+						"type": "object",
+						"required": ["ref", "basis"],
+						"properties": {
+							"ref": {
+								"type": "string",
+								"description": "id of the represented person in this registry."
+							},
+							"as": {
+								"type": "string",
+								"description": "Capacity in which they are represented (e.g. 'společník')."
+							},
+							"basis": {
+								"type": "string",
+								"description": "Legal basis of the representation (e.g. 'plná moc')."
+							}
+						},
+						"additionalProperties": false
+					}
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time",
+					"description": "When the record was created (ISO 8601 with timezone)."
+				},
+				"updatedAt": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last modification (ISO 8601 with timezone)."
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

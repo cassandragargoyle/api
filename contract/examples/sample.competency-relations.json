@@ -1,0 +1,61 @@
+{
+	"relations": [
+		{
+			"type": "classified_in",
+			"from": "competency:rag-knowledge-retrieval",
+			"to": "area:llm-foundations",
+			"primary": true,
+			"verification": {
+				"status": "documented",
+				"source": "competency-catalog",
+				"lastChecked": "2026-07-16"
+			}
+		},
+		{
+			"type": "has_competency",
+			"from": "person:jane-doe",
+			"to": "competency:rag-knowledge-retrieval",
+			"assessment": {
+				"proficiency": 4,
+				"aiEnablement": "INTEGRATED",
+				"assessedOn": "2026-07-16",
+				"assessor": "self"
+			},
+			"verification": {
+				"status": "tested",
+				"source": "person:jane-doe",
+				"lastChecked": "2026-07-16"
+			}
+		},
+		{
+			"type": "backed_by",
+			"from": "competency:rag-knowledge-retrieval",
+			"to": "resource:langchain",
+			"verification": {
+				"status": "production",
+				"source": "evidence:acme-rag-pilot",
+				"lastChecked": "2026-07-16"
+			}
+		},
+		{
+			"type": "applied_in",
+			"from": "competency:rag-knowledge-retrieval",
+			"to": "sector:water",
+			"verification": {
+				"status": "production",
+				"source": "evidence:acme-rag-pilot",
+				"lastChecked": "2026-07-16"
+			}
+		},
+		{
+			"type": "evidenced_by",
+			"from": "competency:rag-knowledge-retrieval",
+			"to": "evidence:acme-rag-pilot",
+			"verification": {
+				"status": "production",
+				"source": "person:jane-doe",
+				"lastChecked": "2026-07-16"
+			}
+		}
+	]
+}

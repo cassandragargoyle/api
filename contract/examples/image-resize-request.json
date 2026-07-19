@@ -1,0 +1,20 @@
+{
+	"task": "image.resize",
+	"trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+	"job_id": "job-20260319-001",
+	"input": {
+		"source_path": "/data/images/photo.jpg",
+		"width": 800,
+		"height": 600,
+		"format": "png"
+	},
+	"config": {
+		"quality": 90,
+		"preserve_aspect_ratio": true
+	},
+	"context": {
+		"caller": "ptx-media-pipeline",
+		"priority": "normal",
+		"timeout_ms": 30000
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"name": "text-extractor",
+	"version": "1.0.8",
+	"description": "Advanced text extraction plugin using Apache Tika",
+	"author": "CassandraGargoyle Team",
+	"license": "Apache-2.0",
+	"plugin": {
+		"type": "helper",
+		"binary": "text-extractor-1.0.8.jar",
+		"runtime": "java",
+		"runtime_version": ">=21",
+		"jvm_args": ["-Xmx512m", "-Xms128m"]
+	},
+	"dependencies": {
+		"portunix_min_version": "1.10.0",
+		"os_support": ["linux", "windows", "darwin"],
+		"optional_tools": [
+			{"name": "tesseract", "reason": "OCR for scanned documents"},
+			{"name": "exiftool", "reason": "Enhanced metadata extraction"}
+		]
+	},
+	"permissions": {
+		"level": "limited",
+		"filesystem": ["read"],
+		"network": ["outbound"]
+	},
+	"ai_integration": {
+		"mcp_tools": [
+			{"name": "extract_document_text", "description": "Extract text from documents (PDF, Office, etc.)"},
+			{"name": "analyze_document_content", "description": "Analyze document content and metadata"},
+			{"name": "extract_structured_data", "description": "Extract tables and structured data from documents"}
+		]
+	},
+	"commands": [
+		{
+			"name": "extract",
+			"description": "Text extraction commands",
+			"subcommands": ["text", "tables", "metadata", "batch"]
+		}
+	]
+}

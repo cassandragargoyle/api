@@ -1,0 +1,121 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/help-ai.schema.json",
+	"$version": "1.0.0",
+	"title": "HelpAI",
+	"description": "Machine-readable help emitted by a Portunix plugin when invoked with --help-ai. Describes the tool identity and its commands (parameters, examples) so AI harnesses and consumers such as the portunix-vscode extension can discover plugin capabilities without parsing human-readable help text. Plugin-agnostic and additive: new optional fields (e.g. per-command supported_extensions / supported_mime_types) may be added without breaking older plugin outputs.",
+	"type": "object",
+	"required": ["tool", "version", "description", "commands"],
+	"properties": {
+		"tool": {
+			"type": "string",
+			"description": "Tool identifier as invoked on the CLI (e.g. 'text-extractor', 'ptx-redmine')."
+		},
+		"version": {
+			"type": "string",
+			"description": "Plugin version string (e.g. '1.1.10', '1.1.10-SNAPSHOT'). Free-form to allow pre-release/build suffixes."
+		},
+		"description": {
+			"type": "string",
+			"description": "Human-readable description of what the plugin does."
+		},
+		"commands": {
+			"type": "array",
+			"description": "Commands provided by the plugin.",
+			"items": {
+				"type": "object",
+				"required": ["name"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Command name as typed on the CLI, possibly multi-word (e.g. 'convert', 'extract text')."
+					},
+					"brief": {
+						"type": "string",
+						"description": "Short one-line summary of the command."
+					},
+					"description": {
+						"type": "string",
+						"description": "Full human-readable description of the command."
+					},
+					"parameters": {
+						"type": "array",
+						"description": "Command parameters and flags.",
+						"items": {
+							"type": "object",
+							"required": ["name", "type", "description"],
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "Parameter name. May be a positional name (e.g. 'file') or a flag (e.g. '--last-hours')."
+								},
+								"type": {
+									"type": "string",
+									"description": "Parameter value type. Free-form to accommodate per-plugin conventions (e.g. 'string', 'boolean', 'integer', 'int', 'bool')."
+								},
+								"required": {
+									"type": "boolean",
+									"description": "Whether the parameter is mandatory.",
+									"default": false
+								},
+								"description": {
+									"type": "string",
+									"description": "What the parameter does."
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"examples": {
+						"type": "array",
+						"description": "Example invocations of the command.",
+						"items": {"type": "string"}
+					},
+					"supported_extensions": {
+						"type": "array",
+						"description": "Optional (added v1.0.0, #091). Input file extensions this command accepts, lowercase with a leading dot (e.g. '.pdf', '.docx'). Plugin-agnostic: any command that consumes files may declare it so consumers can filter inputs without parsing description text.",
+						"items": {
+							"type": "string",
+							"pattern": "^\\.[a-z0-9]+$"
+						},
+						"uniqueItems": true
+					},
+					"supported_mime_types": {
+						"type": "array",
+						"description": "Optional (added v1.0.0, #091). MIME types this command accepts (e.g. 'application/pdf', 'audio/mpeg'). Complements supported_extensions where a MIME-based match is more precise.",
+						"items": {
+							"type": "string",
+							"pattern": "^[a-z]+/[A-Za-z0-9.+-]+$"
+						},
+						"uniqueItems": true
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"global_flags": {
+			"type": "array",
+			"description": "Optional. Flags accepted by every command of the plugin (e.g. '--verbose', '--config'). Emitted by plugins such as ptx-redmine (#060).",
+			"items": {
+				"type": "object",
+				"required": ["name"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Flag name (e.g. '--instance')."
+					},
+					"type": {
+						"type": "string",
+						"description": "Flag value type. Free-form (e.g. 'string', 'bool')."
+					},
+					"description": {
+						"type": "string",
+						"description": "What the flag does."
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

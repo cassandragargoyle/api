@@ -1,0 +1,44 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-evidence.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyEvidence",
+	"description": "An Evidence node — organizational proof of a competency: a project, reference, certification, repository, methodology or benchmark. Connected to competencies via the 'evidenced_by' relation. Derived organizational maturity (competency-maturity.schema.json) is grounded in these nodes.",
+	"type": "object",
+	"required": ["id", "title", "kind"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Evidence identifier. Grammar: 'evidence:' prefix + dot-separated slug levels, each matching [a-z0-9-] (e.g. 'evidence:acme-rag-pilot').",
+			"pattern": "^evidence:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"title": {
+			"type": "string",
+			"description": "Human-readable title of the evidence"
+		},
+		"kind": {
+			"type": "string",
+			"description": "Nature of the evidence",
+			"enum": ["project", "reference", "certification", "repository", "methodology", "benchmark"]
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional longer description of the evidence"
+		},
+		"url": {
+			"type": "string",
+			"format": "uri",
+			"description": "Optional link to the evidence (repository, certificate, document, benchmark result)"
+		},
+		"date": {
+			"type": "string",
+			"format": "date",
+			"description": "Optional ISO 8601 date (YYYY-MM-DD) the evidence was produced or issued"
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this node"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,29 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-area.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyArea",
+	"description": "A CompetencyArea node — a classification grouping related competencies (e.g. area:llm-foundations). Pure classification: people, resources, sectors and evidence attach to competencies, not to areas. Answers WHAT the organization can do; the parallel WHERE taxonomy is competency-sector.schema.json.",
+	"type": "object",
+	"required": ["id", "name"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Area identifier. Grammar: 'area:' prefix + dot-separated slug levels, each matching [a-z0-9-] (e.g. 'area:llm-foundations').",
+			"pattern": "^area:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable area name in English per the competency catalog (e.g. 'LLM Foundations')"
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional longer description of the area's scope"
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this node"
+		}
+	},
+	"additionalProperties": false
+}

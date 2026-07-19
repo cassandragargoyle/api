@@ -1,0 +1,17 @@
+{
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "uc-onboarding-checklist",
+	"slug": "onboarding-checklist",
+	"title": "Surface the onboarding checklist in chat",
+	"actor": "New hire",
+	"goal": "Get the correct onboarding checklist without searching the portal.",
+	"status": "in-progress",
+	"storyPoints": 8,
+	"productRef": "prd-hr-portal",
+	"implementsIdeaRefs": ["idea-onboarding-assistant"],
+	"ucDocRef": "UC-HRPORTAL-014",
+	"tags": ["onboarding", "chat"],
+	"createdAt": "2026-07-10T08:30:00Z",
+	"updatedAt": "2026-07-10T09:20:00Z"
+}

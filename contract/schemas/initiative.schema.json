@@ -1,0 +1,83 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/initiative.schema.json",
+	"$version": "1.0.0",
+	"title": "Initiative",
+	"description": "Strategic intent inside a venture (Opportunity Management v2 discovery spine: Venture -> Initiative -> Idea). An initiative is time-boxed and references the stable ideas it pursues via ideaRefs[] (M:N). Following the linking principle, the volatile initiative points to stable idea assets; ideas never point back.",
+	"type": "object",
+	"required": ["id", "slug", "title"],
+	"properties": {
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique initiative id."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.initiative.json' filename stem."
+		},
+		"title": {
+			"type": "string",
+			"description": "Human-readable initiative title."
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional description of the strategic intent."
+		},
+		"approach": {
+			"type": "string",
+			"enum": ["iso16355", "ai-funnel", "mixed"],
+			"description": "Discovery method driving this initiative."
+		},
+		"status": {
+			"type": "string",
+			"enum": ["active", "closed", "archived"],
+			"description": "Lifecycle state of the initiative."
+		},
+		"period": {
+			"type": "object",
+			"description": "Optional time box for the initiative.",
+			"properties": {
+				"start": {
+					"type": ["string", "null"],
+					"format": "date",
+					"description": "Start date (ISO 8601, YYYY-MM-DD) or null if open."
+				},
+				"end": {
+					"type": ["string", "null"],
+					"format": "date",
+					"description": "End date (ISO 8601, YYYY-MM-DD) or null if open."
+				}
+			},
+			"additionalProperties": false
+		},
+		"owner": {
+			"type": "string",
+			"description": "Person accountable for the initiative."
+		},
+		"ideaRefs": {
+			"type": "array",
+			"description": "Ids of the ideas (opportunity.schema.json) this initiative pursues (M:N). Points volatile -> stable.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,85 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/backlog.schema.json",
+	"$version": "1.0.0",
+	"title": "Backlog",
+	"description": "First-class backlog inside a venture (Opportunity Management v2.1). 'backlogs/' sits at the SAME level as 'teams/'; a backlog is not owned by a team but may reference one via teamRef (N:1, optional -> may be shared or team-less). A 'discovery' backlog collects ideas; a 'delivery' backlog collects epics/use-cases. This schema holds the backlog's own metadata + membership; the node/link graph projection is a derived GraphView document (graph-view.schema.json, '*.glens.json', #011) pointed to by graphRef.",
+	"type": "object",
+	"required": ["id", "slug", "name", "kind"],
+	"properties": {
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique backlog id."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.backlog.json' filename stem."
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable backlog name."
+		},
+		"kind": {
+			"type": "string",
+			"enum": ["discovery", "delivery"],
+			"description": "Backlog kind. 'discovery' members are ideas; 'delivery' members are epics/use-cases."
+		},
+		"teamRef": {
+			"type": ["string", "null"],
+			"description": "Optional id of the owning team (team.schema.json, N:1). Null when the backlog is shared or team-less; a team is reached indirectly (epic -> backlog -> team)."
+		},
+		"memberRefs": {
+			"type": "array",
+			"description": "Ids of the entities that belong to this backlog: ideas for a 'discovery' backlog; epics and/or use-cases for a 'delivery' backlog.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"relations": {
+			"type": "array",
+			"description": "Relations between members, mirrored into the derived GraphView projection. 'rel' reuses the GraphView relation vocabulary plus 'implements' (use-case -> idea).",
+			"items": {
+				"type": "object",
+				"required": ["source", "target", "rel"],
+				"properties": {
+					"source": {
+						"type": "string",
+						"description": "Source member id."
+					},
+					"target": {
+						"type": "string",
+						"description": "Target member id."
+					},
+					"rel": {
+						"type": "string",
+						"enum": ["inspired-by", "duplicate", "split-into", "merged-with", "implements"],
+						"description": "Relation kind (GraphView link.rel vocabulary extended with 'implements')."
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"graphRef": {
+			"type": ["string", "null"],
+			"description": "Optional relative path to the derived GraphView projection ('<slug>.glens.json') for this backlog."
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

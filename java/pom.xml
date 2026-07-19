@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.cassandragargoyle</groupId>
+	<artifactId>org-cassandragargoyle-api</artifactId>
+	<version>1.0.0.9-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>CassandraGargoyle - API</name>
+	<description>Core Java library providing shared entities, utilities, and base abstractions for CassandraGargoyle projects</description>
+
+	<properties>
+		<java.version>21</java.version>
+		<netbeans.version>RELEASE120-1</netbeans.version>
+		<brandingToken>cassandragargoyle</brandingToken>
+		<junit.version>6.0.3</junit.version>
+		<spring.version>5.3.39</spring.version>
+		<lombok.version>1.18.30</lombok.version>
+		<commons.cli.version>1.11.0</commons.cli.version>
+		<commons.lang3.version>3.20.0</commons.lang3.version>
+		<commons.text.version>1.15.0</commons.text.version>
+		<opentelemetry.version>1.40.0</opentelemetry.version>
+		<maven.jar.plugin.version>3.5.0</maven.jar.plugin.version>
+		<maven.surefire.plugin.version>3.5.5</maven.surefire.plugin.version>
+		<checkstyle.plugin.version>3.6.0</checkstyle.plugin.version>
+		<checkstyle.version>10.21.4</checkstyle.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.release>21</maven.compiler.release>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- OpenTelemetry BOM -->
+			<dependency>
+				<groupId>io.opentelemetry</groupId>
+				<artifactId>opentelemetry-bom</artifactId>
+				<version>${opentelemetry.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- NetBeans modules -->
+		<dependency>
+			<groupId>org.netbeans.api</groupId>
+			<artifactId>org-openide-util</artifactId>
+			<version>${netbeans.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.netbeans.api</groupId>
+			<artifactId>org-openide-util-ui</artifactId>
+			<version>${netbeans.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.netbeans.api</groupId>
+			<artifactId>org-openide-util-lookup</artifactId>
+			<version>${netbeans.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.netbeans.api</groupId>
+			<artifactId>org-openide-filesystems</artifactId>
+			<version>${netbeans.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.netbeans.api</groupId>
+			<artifactId>org-openide-modules</artifactId>
+			<version>${netbeans.version}</version>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>${commons.cli.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>${commons.text.version}</version>
+		</dependency>
+
+		<!-- Spring Context for @Component and Dependency Injection -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- OpenTelemetry -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk-extension-autoconfigure</artifactId>
+		</dependency>
+	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/cassandragargoyle/api</url>
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.15.0</version>
+				<configuration>
+					<release>${java.version}</release>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven.jar.plugin.version}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+					<consoleOutput>true</consoleOutput>
+					<failOnViolation>false</failOnViolation>
+					<sourceDirectories>${project.build.sourceDirectory}</sourceDirectories>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.plugin.version}</version>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

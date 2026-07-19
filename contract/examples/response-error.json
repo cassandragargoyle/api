@@ -1,0 +1,19 @@
+{
+	"status": "error",
+	"trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+	"job_id": "job-20260319-001",
+	"error": {
+		"code": "INVALID_INPUT",
+		"message": "Source file not found: /data/images/missing.jpg",
+		"details": {
+			"field": "input.source_path",
+			"provided_value": "/data/images/missing.jpg"
+		},
+		"retryable": false
+	},
+	"meta": {
+		"duration_ms": 15,
+		"plugin": "ptx-image-tools",
+		"plugin_version": "1.2.0"
+	}
+}

@@ -1,0 +1,79 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/use-case.schema.json",
+	"$version": "1.0.0",
+	"title": "UseCase",
+	"description": "Time-boxed delivery unit (Opportunity Management v2 delivery spine: Team/Project -> Epic -> Use-Case). A use-case is bound to exactly one product (productRef, N:1), implements one or more ideas (implementsIdeaRefs[], M:N, usually one), and is where real story points live. This is a lightweight entity that may optionally reference a formal UC-<COMPONENT>-<NNN> document via ucDocRef (per #015 open question 2). Following the linking principle, the volatile use-case points to stable product/idea assets; they never point back.",
+	"type": "object",
+	"required": ["id", "slug", "title", "productRef"],
+	"properties": {
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique use-case id."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.usecase.json' filename stem."
+		},
+		"title": {
+			"type": "string",
+			"description": "Human-readable use-case title."
+		},
+		"actor": {
+			"type": "string",
+			"description": "Primary actor / role the use-case serves."
+		},
+		"goal": {
+			"type": "string",
+			"description": "Goal the actor achieves through this use-case."
+		},
+		"status": {
+			"type": "string",
+			"enum": ["new", "ready", "in-progress", "done", "rejected"],
+			"description": "Delivery lifecycle state."
+		},
+		"storyPoints": {
+			"type": ["number", "null"],
+			"description": "Rollup story points = the latest estimation for this use-case (see estimation.schema.json). Null until estimated."
+		},
+		"productRef": {
+			"type": "string",
+			"description": "Id of the product (product.schema.json) this use-case is bound to (N:1). Required: a use-case cannot be estimated without a target product."
+		},
+		"implementsIdeaRefs": {
+			"type": "array",
+			"description": "Ids of the ideas (opportunity.schema.json) this use-case implements (M:N, usually one). Drives the GraphView 'implements' edge (use-case -> idea).",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"ucDocRef": {
+			"type": ["string", "null"],
+			"description": "Optional reference to a formal UC-<COMPONENT>-<NNN> use-case document (USE-CASE-METHODOLOGY). Null when the use-case is standalone."
+		},
+		"tags": {
+			"type": "array",
+			"description": "Free-form tags.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

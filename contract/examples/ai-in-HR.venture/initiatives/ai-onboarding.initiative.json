@@ -1,0 +1,18 @@
+{
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "ini-ai-onboarding",
+	"slug": "ai-onboarding",
+	"title": "AI-assisted onboarding",
+	"description": "Reduce time-to-productivity for new hires with AI assistance across onboarding touchpoints.",
+	"approach": "mixed",
+	"status": "active",
+	"period": {
+		"start": "2026-07-01",
+		"end": "2026-12-31"
+	},
+	"owner": "j.novak",
+	"ideaRefs": ["idea-onboarding-assistant", "idea-leave-request-bot"],
+	"createdAt": "2026-07-10T08:10:00Z",
+	"updatedAt": "2026-07-10T09:00:00Z"
+}

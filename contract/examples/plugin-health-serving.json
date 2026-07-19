@@ -1,0 +1,18 @@
+{
+	"status": "serving",
+	"healthy": true,
+	"message": "All checks passed",
+	"uptime_seconds": 3600,
+	"plugin": "fulltext",
+	"plugin_version": "1.0.0",
+	"metrics": {
+		"indexed_documents": "15234",
+		"memory_used_mb": "256",
+		"requests_total": "8921"
+	},
+	"checks": [
+		{"name": "lucene_index", "status": "pass", "message": "Index healthy, 15234 documents"},
+		{"name": "grpc_server", "status": "pass", "message": "Listening on port 9010"},
+		{"name": "disk_space", "status": "pass", "message": "2.1 GB free"}
+	]
+}

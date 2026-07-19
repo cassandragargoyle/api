@@ -1,0 +1,28 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.project.sourcePaths": [
+        "api/src/main/java"
+    ],
+    "java.project.outputPath": "api/target/classes",
+    "java.project.referencedLibraries": [
+        "api/target/**/*.jar"
+    ],
+    "maven.executable.path": "mvn",
+    "maven.terminal.useJavaHome": true,
+    "maven.terminal.customEnv": [],
+    "files.exclude": {
+        "**/target": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "java.saveActions.organizeImports": true,
+    "editor.formatOnSave": false,
+    "java.format.enabled": true,
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m",
+    "[java]": {
+        "editor.suggest.snippetsPreventQuickSuggestions": false
+    }
+}

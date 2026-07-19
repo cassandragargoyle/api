@@ -1,0 +1,29 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-sector.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencySector",
+	"description": "A Sector node — a field of application (e.g. sector:water, sector:energy, sector:finance). Connected to competencies via the 'applied_in' relation. Answers WHERE a competency is applied; independent of the WHAT taxonomy (competency-area.schema.json), so the same competency can be shown across sectors without duplication.",
+	"type": "object",
+	"required": ["id", "name"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Sector identifier. Grammar: 'sector:' prefix + dot-separated slug levels, each matching [a-z0-9-] (e.g. 'sector:water').",
+			"pattern": "^sector:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable sector name (e.g. 'Water', 'Energy', 'Finance')"
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional longer description of the sector"
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this node"
+		}
+	},
+	"additionalProperties": false
+}

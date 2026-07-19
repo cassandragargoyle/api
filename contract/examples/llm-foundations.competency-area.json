@@ -1,0 +1,10 @@
+{
+	"id": "area:llm-foundations",
+	"name": "LLM Foundations",
+	"description": "Core large-language-model skills: prompting, context engineering, model selection and evaluation",
+	"verification": {
+		"status": "documented",
+		"source": "competency-catalog",
+		"lastChecked": "2026-07-16"
+	}
+}

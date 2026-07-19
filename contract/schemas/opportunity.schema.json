@@ -1,0 +1,153 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/opportunity.schema.json",
+	"$version": "2.0.0",
+	"title": "Opportunity",
+	"description": "A single Idea in the Opportunity Management v2 discovery spine (Venture -> Initiative -> Idea). An idea is a stable, product-agnostic demand asset. v2 change vs #014: it carries a coarse t-shirt 'complexity' instead of 'estimate.storyPoints' (story points cannot be estimated without a target product; they live on use-cases). '<slug>.opportunity.json' files sit in the venture 'records/' pool. SaaS-ready: tenantId / workspaceId are reserved and carry no behavior in the file-based store.",
+	"type": "object",
+	"required": ["id", "slug", "title"],
+	"properties": {
+		"schemaVersion": {
+			"type": "string",
+			"description": "Contract version this document was authored against (e.g. '2.0.0')."
+		},
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique idea id (asset identity; use-cases reference it via implementsIdeaRefs)."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.opportunity.json' filename stem."
+		},
+		"title": {
+			"type": "string",
+			"description": "Human-readable idea title."
+		},
+		"origin": {
+			"type": "string",
+			"enum": ["ai-funnel", "iso16355"],
+			"description": "How the idea entered the funnel."
+		},
+		"status": {
+			"type": "string",
+			"enum": ["new", "ready", "evaluated", "poc", "done", "rejected"],
+			"description": "Discovery lifecycle state."
+		},
+		"problem": {
+			"type": "string",
+			"description": "The problem the idea addresses."
+		},
+		"benefit": {
+			"type": "string",
+			"description": "Expected benefit if pursued."
+		},
+		"aiSolution": {
+			"type": "string",
+			"description": "Proposed AI-oriented solution sketch (product-agnostic)."
+		},
+		"solutionVariants": {
+			"type": "array",
+			"description": "Candidate solution approaches.",
+			"items": {
+				"type": "object",
+				"required": ["type", "desc"],
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": ["ai", "automation", "process-change", "training"],
+						"description": "Kind of solution."
+					},
+					"desc": {
+						"type": "string",
+						"description": "Description of the variant."
+					},
+					"selected": {
+						"type": "boolean",
+						"description": "Whether this variant is the chosen one.",
+						"default": false
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"scores": {
+			"type": "object",
+			"description": "Coarse evaluation scores, each an integer 1-5 or null when not yet scored.",
+			"properties": {
+				"businessValue": {"type": ["integer", "null"], "minimum": 1, "maximum": 5},
+				"feasibility": {"type": ["integer", "null"], "minimum": 1, "maximum": 5},
+				"dataAvailability": {"type": ["integer", "null"], "minimum": 1, "maximum": 5},
+				"risk": {"type": ["integer", "null"], "minimum": 1, "maximum": 5},
+				"pocSpeed": {"type": ["integer", "null"], "minimum": 1, "maximum": 5}
+			},
+			"additionalProperties": false
+		},
+		"complexity": {
+			"type": ["string", "null"],
+			"enum": ["xs", "s", "m", "l", "xl", null],
+			"description": "Coarse, product-agnostic t-shirt complexity (replaces v1 estimate.storyPoints, #015 open question 1). Deliberately non-numeric so it stays visually distinct from real story points, which live on use-cases. Null until assessed."
+		},
+		"interest": {
+			"type": "object",
+			"description": "Demand signal ('I want this', hearts).",
+			"properties": {
+				"count": {"type": "integer", "minimum": 0, "description": "Number of interested people."},
+				"voters": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "description": "Voter identifiers."}
+			},
+			"additionalProperties": false
+		},
+		"volunteers": {
+			"type": "object",
+			"description": "Supply signal ('I would work on this', hammers).",
+			"properties": {
+				"count": {"type": "integer", "minimum": 0, "description": "Number of volunteers."},
+				"people": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "description": "Volunteer identifiers."}
+			},
+			"additionalProperties": false
+		},
+		"aiAmbassador": {
+			"type": ["object", "null"],
+			"description": "Optional AI persona championing the idea.",
+			"properties": {
+				"name": {"type": "string"},
+				"persona": {"type": "string"},
+				"avatar": {"type": "string"},
+				"assignedAt": {"type": "string", "format": "date-time"}
+			},
+			"additionalProperties": false
+		},
+		"tags": {
+			"type": "array",
+			"description": "Free-form tags.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"domain": {
+			"type": "string",
+			"description": "Business domain the idea belongs to (e.g. 'hr')."
+		},
+		"author": {
+			"type": "string",
+			"description": "Who authored the idea."
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,69 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/plugin-health.schema.json",
+	"$version": "1.0.0",
+	"title": "PluginHealth",
+	"description": "Plugin health check response for the Unified AI Plugin Platform. Corresponds to the HealthResponse message in the core plugin.proto and the HealthCheckResponse in the Go plugin template.",
+	"type": "object",
+	"required": ["status"],
+	"properties": {
+		"status": {
+			"type": "string",
+			"enum": ["serving", "not_serving", "unknown"],
+			"description": "Plugin health status: serving (healthy and ready), not_serving (unhealthy or starting), unknown (status cannot be determined)"
+		},
+		"healthy": {
+			"type": "boolean",
+			"description": "Simple healthy flag (true when status is 'serving')"
+		},
+		"message": {
+			"type": "string",
+			"description": "Human-readable status message or error description"
+		},
+		"uptime_seconds": {
+			"type": "integer",
+			"description": "Plugin uptime in seconds since initialization",
+			"minimum": 0
+		},
+		"plugin": {
+			"type": "string",
+			"description": "Plugin name"
+		},
+		"plugin_version": {
+			"type": "string",
+			"description": "Plugin version"
+		},
+		"metrics": {
+			"type": "object",
+			"description": "Key-value health metrics (e.g. memory usage, request count, queue depth)",
+			"additionalProperties": {
+				"type": "string"
+			}
+		},
+		"checks": {
+			"type": "array",
+			"description": "Individual health check results for sub-components",
+			"items": {
+				"type": "object",
+				"required": ["name", "status"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Check name (e.g. 'database', 'grpc_connection', 'model_loaded')"
+					},
+					"status": {
+						"type": "string",
+						"enum": ["pass", "fail", "warn"],
+						"description": "Individual check result"
+					},
+					"message": {
+						"type": "string",
+						"description": "Check-specific message"
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

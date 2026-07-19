@@ -1,0 +1,181 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/discussion.schema.json",
+	"$version": "3.0.0",
+	"title": "Discussion",
+	"description": "A structured, multi-actor discussion thread attachable to any Opportunity Management v2 entity. subjectRef + subjectKind identify what the thread is about. '<slug>.discussion.json' sits beside whatever entity it belongs to in the venture 'records/' pool. v3.0.0 (breaking vs #015 v2.0.0): the 2-party role chat becomes a typed, threaded, multi-actor model with provenance. Migration is mechanical (role -> actor.kind); see schemas/README.md.",
+	"type": "object",
+	"required": ["subjectRef", "subjectKind", "messages"],
+	"properties": {
+		"schemaVersion": {
+			"type": "string",
+			"description": "Contract version this document was authored against (e.g. '3.0.0')."
+		},
+		"subjectRef": {
+			"type": "string",
+			"description": "Id of the entity this thread discusses."
+		},
+		"subjectKind": {
+			"type": "string",
+			"enum": ["idea", "use-case", "initiative", "epic"],
+			"description": "Kind of entity subjectRef points to."
+		},
+		"status": {
+			"type": "string",
+			"enum": ["open", "resolved", "archived"],
+			"description": "Lifecycle state of the thread."
+		},
+		"participants": {
+			"type": "array",
+			"description": "Actors known to take part in this thread (humans, AI agents/personas, the system).",
+			"items": {
+				"type": "object",
+				"required": ["kind", "id", "displayName"],
+				"properties": {
+					"kind": {
+						"type": "string",
+						"enum": ["user", "ai_agent", "system"],
+						"description": "Actor category."
+					},
+					"id": {
+						"type": "string",
+						"description": "Stable actor id (person handle, persona id or 'system')."
+					},
+					"displayName": {
+						"type": "string",
+						"description": "Human-readable actor name."
+					},
+					"avatarUrl": {
+						"type": "string",
+						"description": "Optional avatar image URL."
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"messages": {
+			"type": "array",
+			"description": "Ordered thread messages. Replies form a tree via parentId (unbounded depth).",
+			"items": {
+				"type": "object",
+				"required": ["id", "actor", "type", "text", "timestamp"],
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Stable message id (unique within the thread)."
+					},
+					"parentId": {
+						"type": "string",
+						"description": "Id of the parent message; absent = top-level message."
+					},
+					"actor": {
+						"type": "object",
+						"description": "Who authored the message (replaces v2 role/author).",
+						"required": ["kind", "id", "displayName"],
+						"properties": {
+							"kind": {
+								"type": "string",
+								"enum": ["user", "ai_agent", "system"],
+								"description": "Actor category."
+							},
+							"id": {
+								"type": "string",
+								"description": "Stable actor id (person handle, persona id or 'system')."
+							},
+							"displayName": {
+								"type": "string",
+								"description": "Human-readable actor name."
+							}
+						},
+						"additionalProperties": false
+					},
+					"type": {
+						"type": "string",
+						"enum": ["comment", "question", "proposal", "decision", "ai_summary", "system"],
+						"description": "Message kind; drives how the UI renders it (bubble vs. decision/proposal/summary card)."
+					},
+					"text": {
+						"type": "string",
+						"description": "Message body (markdown)."
+					},
+					"reactions": {
+						"type": "array",
+						"description": "Emoji reactions grouped by emoji.",
+						"items": {
+							"type": "object",
+							"required": ["emoji", "actorIds"],
+							"properties": {
+								"emoji": {
+									"type": "string",
+									"description": "Reaction emoji."
+								},
+								"actorIds": {
+									"type": "array",
+									"description": "Ids of actors who reacted with this emoji.",
+									"items": { "type": "string" }
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"mentions": {
+						"type": "array",
+						"description": "Actor ids referenced (@mentioned) in the text.",
+						"items": { "type": "string" }
+					},
+					"attachments": {
+						"type": "array",
+						"description": "Files or links attached to the message.",
+						"items": {
+							"type": "object",
+							"required": ["kind", "ref"],
+							"properties": {
+								"kind": {
+									"type": "string",
+									"enum": ["file", "link"],
+									"description": "Attachment category."
+								},
+								"ref": {
+									"type": "string",
+									"description": "Dereferenceable reference (path or URL)."
+								},
+								"label": {
+									"type": "string",
+									"description": "Optional human-readable label."
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"produced": {
+						"type": "array",
+						"description": "Structured objects this message produced (provenance); each ref is dereferenceable.",
+						"items": {
+							"type": "object",
+							"required": ["kind", "ref"],
+							"properties": {
+								"kind": {
+									"type": "string",
+									"enum": ["idea", "use-case", "initiative", "epic", "decision", "risk"],
+									"description": "Kind of produced object."
+								},
+								"ref": {
+									"type": "string",
+									"description": "Id/path of the produced object."
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"timestamp": {
+						"type": "string",
+						"format": "date-time",
+						"description": "When the message was posted (ISO 8601)."
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

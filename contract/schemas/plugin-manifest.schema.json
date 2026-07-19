@@ -1,0 +1,257 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/plugin-manifest.schema.json",
+	"$version": "1.1.0",
+	"title": "PluginManifest",
+	"description": "Plugin registration manifest for the Unified AI Plugin Platform. Describes plugin identity, runtime requirements, capabilities, commands, AI integration, and optional supported_platforms declaration (v1.1.0+) used by hosting platforms such as Portunix Synapse to discover and embed extension plugins. This is the JSON Schema equivalent of the core PluginService.GetInfo gRPC response (portunix/src/app/plugins/proto/plugin.proto).",
+	"type": "object",
+	"required": ["name", "version", "description", "plugin"],
+	"properties": {
+		"name": {
+			"type": "string",
+			"description": "Plugin identifier used in CLI (e.g. 'reco', 'scraper', 'vox'). Must be unique across the ecosystem.",
+			"pattern": "^[a-z][a-z0-9-]*$"
+		},
+		"version": {
+			"type": "string",
+			"description": "Semantic version of the plugin (e.g. '1.0.0')",
+			"pattern": "^\\d+\\.\\d+\\.\\d+"
+		},
+		"description": {
+			"type": "string",
+			"description": "Human-readable description of the plugin"
+		},
+		"author": {
+			"type": "string",
+			"description": "Author or team name"
+		},
+		"license": {
+			"type": "string",
+			"description": "License identifier (e.g. 'MIT', 'Apache-2.0', 'Proprietary')"
+		},
+		"plugin": {
+			"type": "object",
+			"description": "Plugin runtime configuration",
+			"required": ["type", "binary", "runtime"],
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": ["helper", "grpc", "executable"],
+					"description": "Plugin execution model: helper (CLI dispatch), grpc (long-running service), executable (standalone)"
+				},
+				"binary": {
+					"type": "string",
+					"description": "Path to binary, JAR, or entry point (e.g. 'ptx-reco', 'fulltext-1.0.8.jar')"
+				},
+				"runtime": {
+					"type": "string",
+					"enum": ["native", "java", "python"],
+					"description": "Runtime environment required"
+				},
+				"runtime_version": {
+					"type": "string",
+					"description": "Minimum runtime version (e.g. '>=21' for Java, '>=3.11' for Python)"
+				},
+				"python_min_version": {
+					"type": "string",
+					"description": "Minimum Python version (shorthand for runtime_version when runtime is python)"
+				},
+				"python_version": {
+					"type": "string",
+					"description": "Exact Python interpreter minor the plugin was built for, e.g. '3.13'. Required for bytecode-only wheels whose .pyc is tied to a specific minor. When set, the host provisions this exact interpreter (via uv) for the plugin venv; distinct from python_min_version, which is only a compatibility floor."
+				},
+				"jvm_args": {
+					"type": "array",
+					"items": {"type": "string"},
+					"description": "JVM arguments for Java plugins (e.g. ['-Xmx512m', '-Xms128m'])"
+				},
+				"mode": {
+					"type": "string",
+					"enum": ["helper", "service"],
+					"description": "Execution mode: helper (run and exit) or service (long-running)"
+				},
+				"port": {
+					"type": "integer",
+					"description": "gRPC service port (for type=grpc plugins)",
+					"minimum": 1,
+					"maximum": 65535
+				},
+				"health_check_interval": {
+					"type": "integer",
+					"description": "Health check interval in nanoseconds (for service mode)",
+					"minimum": 0
+				},
+				"interfaces": {
+					"type": "array",
+					"description": "Exposed interfaces. A plugin can combine multiple (e.g. ['cli','grpc'] for dual-mode plugins). When omitted, inferred from type/mode for backward compatibility.",
+					"items": {
+						"type": "string",
+						"enum": ["cli", "grpc"]
+					},
+					"uniqueItems": true,
+					"minItems": 1,
+					"examples": [["cli"], ["grpc"], ["cli", "grpc"]]
+				}
+			},
+			"additionalProperties": false
+		},
+		"dependencies": {
+			"type": "object",
+			"description": "Plugin dependency requirements",
+			"properties": {
+				"portunix_min_version": {
+					"type": "string",
+					"description": "Minimum Portunix CLI version (e.g. '2.0.0')"
+				},
+				"os_support": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": ["linux", "windows", "darwin"]
+					},
+					"description": "Supported operating systems"
+				},
+				"optional_tools": {
+					"type": "array",
+					"description": "External tools that enhance plugin functionality",
+					"items": {
+						"type": "object",
+						"required": ["name", "reason"],
+						"properties": {
+							"name": {"type": "string"},
+							"reason": {"type": "string"}
+						},
+						"additionalProperties": false
+					}
+				},
+				"external_services": {
+					"type": "array",
+					"description": "External service dependencies",
+					"items": {"type": "string"}
+				}
+			},
+			"additionalProperties": false
+		},
+		"permissions": {
+			"$ref": "plugin-permissions.schema.json",
+			"description": "Plugin permission requirements"
+		},
+		"ai_integration": {
+			"type": "object",
+			"description": "AI assistant integration configuration",
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "Integration type (e.g. 'mcp-server')"
+				},
+				"transport": {
+					"type": "string",
+					"description": "Transport mechanism (e.g. 'stdio', 'http', 'websocket')"
+				},
+				"mcp_tools": {
+					"type": "array",
+					"description": "MCP tools exposed by this plugin",
+					"items": {
+						"type": "object",
+						"required": ["name", "description"],
+						"properties": {
+							"name": {"type": "string"},
+							"description": {"type": "string"}
+						},
+						"additionalProperties": false
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"commands": {
+			"type": "array",
+			"description": "CLI commands provided by this plugin",
+			"items": {
+				"type": "object",
+				"required": ["name", "description"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Command name (e.g. 'ptx-reco', 'extract')"
+					},
+					"description": {
+						"type": "string",
+						"description": "What the command does"
+					},
+					"usage": {
+						"type": "string",
+						"description": "Usage pattern (e.g. 'portunix reco <subcommand> [options]')"
+					},
+					"subcommands": {
+						"type": "array",
+						"items": {"type": "string"},
+						"description": "Available subcommands"
+					},
+					"parameters": {
+						"type": "array",
+						"description": "Command parameters",
+						"items": {
+							"type": "object",
+							"required": ["name", "type", "description"],
+							"properties": {
+								"name": {"type": "string"},
+								"type": {"type": "string"},
+								"description": {"type": "string"},
+								"required": {"type": "boolean", "default": false},
+								"default_value": {"type": "string"}
+							},
+							"additionalProperties": false
+						}
+					},
+					"examples": {
+						"type": "array",
+						"items": {"type": "string"},
+						"description": "Usage examples"
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"supported_platforms": {
+			"type": "array",
+			"description": "Declaration of hosting platforms this plugin extends (e.g. 'synapse', 'pack', 'agent'). Added in schema v1.1.0. Omit for plugins that do not extend a higher-level platform. Consumers (platforms) query ptx plugin list --platform=<name> and receive matching plugins together with their platform_payload for embedding. Portunix validates the shape of each entry but treats platform_payload as opaque — its content is owned and validated by the target platform.",
+			"items": {
+				"type": "object",
+				"required": ["name"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Canonical platform identifier this plugin targets (e.g. 'synapse', 'pack', 'agent'). Lowercase, short token.",
+						"pattern": "^[a-z][a-z0-9_-]*$"
+					},
+					"min_version": {
+						"type": "string",
+						"description": "Minimum platform SemVer this plugin is compatible with (inclusive). Omit for no lower bound. Format: '<major>.<minor>.<patch>' (pre-release suffixes accepted).",
+						"pattern": "^\\d+\\.\\d+\\.\\d+"
+					},
+					"max_version": {
+						"type": "string",
+						"description": "Maximum platform SemVer this plugin is compatible with (inclusive). Omit for no upper bound. Format: '<major>.<minor>.<patch>' (pre-release suffixes accepted).",
+						"pattern": "^\\d+\\.\\d+\\.\\d+"
+					},
+					"features": {
+						"type": "array",
+						"description": "Short capability tokens used for capability negotiation without parsing platform_payload. Consumers may filter plugins with --feature=<token> (AND-filter). Examples: 'connector.command', 'assistant.chat'.",
+						"items": {
+							"type": "string",
+							"pattern": "^[a-z][a-z0-9._-]*$"
+						},
+						"uniqueItems": true
+					},
+					"platform_payload": {
+						"type": "object",
+						"description": "Opaque, platform-specific registration payload. Portunix validates only that this is a JSON object and stores it byte-identical for round-trip delivery to the platform. Content validation is the platform owner's responsibility (e.g. Synapse validates against synapse-extension-manifest.schema.json). Keep plugin-sensitive data out of this field — it is visible to any caller that queries by platform."
+					}
+				},
+				"additionalProperties": false
+			}
+		}
+	},
+	"additionalProperties": false
+}

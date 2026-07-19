@@ -1,0 +1,39 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-resource.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyResource",
+	"description": "A Resource node — the underpinning of a competency: a technology, tool, framework, method or standard. Connected to competencies via the 'backed_by' relation. Answers what a competency relies on.",
+	"type": "object",
+	"required": ["id", "name", "kind"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Resource identifier. Grammar: 'resource:' prefix + dot-separated slug levels, each matching [a-z0-9-] (e.g. 'resource:langchain').",
+			"pattern": "^resource:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable resource name (e.g. 'LangChain', 'ISO 42001')"
+		},
+		"kind": {
+			"type": "string",
+			"description": "Nature of the resource",
+			"enum": ["technology", "tool", "framework", "method", "standard"]
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional longer description of the resource"
+		},
+		"url": {
+			"type": "string",
+			"format": "uri",
+			"description": "Optional link to documentation, homepage, or specification"
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this node"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,55 @@
+{
+	"version": "1.0.0",
+	"meta": {
+		"title": "HR delivery backlog"
+	},
+	"nodes": [
+		{
+			"id": "epic-onboarding",
+			"type": "epic",
+			"label": "Onboarding experience"
+		},
+		{
+			"id": "uc-onboarding-checklist",
+			"type": "use-case",
+			"label": "Surface the onboarding checklist in chat"
+		},
+		{
+			"id": "uc-leave-request-chat",
+			"type": "use-case",
+			"label": "File a leave request from chat"
+		},
+		{
+			"id": "idea-onboarding-assistant",
+			"type": "idea",
+			"label": "AI onboarding assistant"
+		},
+		{
+			"id": "idea-leave-request-bot",
+			"type": "idea",
+			"label": "Leave request bot"
+		}
+	],
+	"links": [
+		{
+			"source": "epic-onboarding",
+			"target": "uc-onboarding-checklist",
+			"rel": "contains"
+		},
+		{
+			"source": "epic-onboarding",
+			"target": "uc-leave-request-chat",
+			"rel": "contains"
+		},
+		{
+			"source": "uc-onboarding-checklist",
+			"target": "idea-onboarding-assistant",
+			"rel": "implements"
+		},
+		{
+			"source": "uc-leave-request-chat",
+			"target": "idea-leave-request-bot",
+			"rel": "implements"
+		}
+	]
+}

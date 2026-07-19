@@ -1,0 +1,42 @@
+{
+	"schemaVersion": "2.0.0",
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "idea-leave-request-bot",
+	"slug": "leave-request-bot",
+	"title": "Leave request bot",
+	"origin": "iso16355",
+	"status": "ready",
+	"problem": "Submitting and approving leave requests is a slow, form-heavy process.",
+	"benefit": "Employees request leave conversationally; approvals happen faster.",
+	"aiSolution": "A chat flow that collects leave details and files the request automatically.",
+	"solutionVariants": [
+		{
+			"type": "automation",
+			"desc": "Automate the leave request form submission from a chat flow.",
+			"selected": true
+		}
+	],
+	"scores": {
+		"businessValue": 3,
+		"feasibility": 4,
+		"dataAvailability": 4,
+		"risk": 2,
+		"pocSpeed": 5
+	},
+	"complexity": "s",
+	"interest": {
+		"count": 1,
+		"voters": ["m.dvorak"]
+	},
+	"volunteers": {
+		"count": 0,
+		"people": []
+	},
+	"aiAmbassador": null,
+	"tags": ["leave", "automation"],
+	"domain": "hr",
+	"author": "m.dvorak",
+	"createdAt": "2026-07-10T08:25:00Z",
+	"updatedAt": "2026-07-10T08:40:00Z"
+}

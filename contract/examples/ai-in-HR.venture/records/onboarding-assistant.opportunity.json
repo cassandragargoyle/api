@@ -1,0 +1,52 @@
+{
+	"schemaVersion": "2.0.0",
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "idea-onboarding-assistant",
+	"slug": "onboarding-assistant",
+	"title": "AI onboarding assistant",
+	"origin": "ai-funnel",
+	"status": "evaluated",
+	"problem": "New hires struggle to find onboarding information scattered across systems.",
+	"benefit": "Faster onboarding and fewer HR support tickets in the first weeks.",
+	"aiSolution": "A conversational assistant that answers onboarding questions and surfaces the right checklist.",
+	"solutionVariants": [
+		{
+			"type": "ai",
+			"desc": "Retrieval-augmented chat over HR documents.",
+			"selected": true
+		},
+		{
+			"type": "process-change",
+			"desc": "Restructure the HR portal navigation only.",
+			"selected": false
+		}
+	],
+	"scores": {
+		"businessValue": 4,
+		"feasibility": 4,
+		"dataAvailability": 3,
+		"risk": 2,
+		"pocSpeed": 4
+	},
+	"complexity": "m",
+	"interest": {
+		"count": 2,
+		"voters": ["a.svoboda", "m.dvorak"]
+	},
+	"volunteers": {
+		"count": 1,
+		"people": ["j.novak"]
+	},
+	"aiAmbassador": {
+		"name": "Ava",
+		"persona": "Friendly HR onboarding guide",
+		"avatar": "ava-hr.png",
+		"assignedAt": "2026-07-10T08:20:00Z"
+	},
+	"tags": ["onboarding", "chat"],
+	"domain": "hr",
+	"author": "j.novak",
+	"createdAt": "2026-07-10T08:15:00Z",
+	"updatedAt": "2026-07-10T09:10:00Z"
+}

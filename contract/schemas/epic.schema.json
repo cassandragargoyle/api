@@ -1,0 +1,67 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/epic.schema.json",
+	"$version": "1.0.0",
+	"title": "Epic",
+	"description": "Delivery grouping inside a venture (Opportunity Management v2 delivery spine: Team/Project -> Epic -> Use-Case). An epic lives in a backlog (backlogRef, N:1; the team is reached indirectly via the backlog), links up to strategic initiatives (initiativeRefs[], M:N) and down to the use-cases it groups (useCaseRefs[]). storyPoints is derived (Sigma of referenced use-cases); it may be omitted (computed on read) or stored as a cached rollup (#015 open question 3).",
+	"type": "object",
+	"required": ["id", "slug", "title", "backlogRef"],
+	"properties": {
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique epic id."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.epic.json' filename stem."
+		},
+		"title": {
+			"type": "string",
+			"description": "Human-readable epic title."
+		},
+		"status": {
+			"type": "string",
+			"enum": ["new", "ready", "in-progress", "done", "rejected"],
+			"description": "Delivery lifecycle state."
+		},
+		"backlogRef": {
+			"type": "string",
+			"description": "Id of the backlog (backlog.schema.json) this epic lives in (N:1). The team is reached indirectly (epic -> backlog -> team)."
+		},
+		"initiativeRefs": {
+			"type": "array",
+			"description": "Ids of the strategic initiatives (initiative.schema.json) this epic serves (M:N). Points volatile -> stable.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"useCaseRefs": {
+			"type": "array",
+			"description": "Ids of the use-cases (use-case.schema.json) grouped by this epic.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"storyPoints": {
+			"type": ["number", "null"],
+			"description": "Optional cached rollup = Sigma of the referenced use-cases' storyPoints. Omit or null to compute on read."
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

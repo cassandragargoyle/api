@@ -1,0 +1,25 @@
+{
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "bkl-hr-delivery",
+	"slug": "hr-delivery",
+	"name": "HR delivery backlog",
+	"kind": "delivery",
+	"teamRef": "tea-hr-ai",
+	"memberRefs": ["epic-onboarding", "uc-onboarding-checklist", "uc-leave-request-chat"],
+	"relations": [
+		{
+			"source": "uc-onboarding-checklist",
+			"target": "idea-onboarding-assistant",
+			"rel": "implements"
+		},
+		{
+			"source": "uc-leave-request-chat",
+			"target": "idea-leave-request-bot",
+			"rel": "implements"
+		}
+	],
+	"graphRef": "hr-delivery.glens.json",
+	"createdAt": "2026-07-10T08:40:00Z",
+	"updatedAt": "2026-07-10T09:25:00Z"
+}

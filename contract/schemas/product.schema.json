@@ -1,0 +1,58 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/product.schema.json",
+	"$version": "1.1.0",
+	"title": "Product",
+	"description": "A product registered inside a venture (Opportunity Management v2). A stable asset referenced by its id from use-cases (productRef) and teams (productRefs[]). Product id is intended to be stable across the venture so a future federation / SaaS layer can join a cross-venture product catalog on it (see #015 open question 4).",
+	"type": "object",
+	"required": ["id", "slug", "name"],
+	"properties": {
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique product id (asset identity; future federation joins on this)."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.product.json' filename stem."
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable product name."
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional product description."
+		},
+		"repo": {
+			"type": "string",
+			"description": "Optional source repository (URL or 'org/name') the product is built from."
+		},
+		"component": {
+			"type": "string",
+			"description": "Optional component identifier within the repo (e.g. used in UC-<COMPONENT>-<NNN> document ids)."
+		},
+		"vendorRef": {
+			"type": ["string", "null"],
+			"description": "Optional id of the organization that owns/produces this product. Resolved by the consumer's organization/subject registry. Null when unknown or not applicable."
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

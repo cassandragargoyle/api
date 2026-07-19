@@ -1,0 +1,209 @@
+syntax = "proto3";
+
+package portunix.platform.v1;
+
+option go_package = "portunix.cz/api/platform/v1";
+option java_package = "cz.portunix.api.platform.v1";
+option java_multiple_files = true;
+
+// TaskPlatformService is the universal gRPC interface for the Unified AI Task
+// Platform. Every plugin that supports task execution implements this service
+// alongside its domain-specific gRPC services.
+//
+// This service provides:
+//   - Runtime task discovery (what can this plugin do?)
+//   - Unified task execution (run a task with standard request/response)
+//   - Task status tracking for async execution
+//
+// The message types mirror the JSON contract schemas in api/contract/schemas/
+// (task-manifest.schema.json, task-request.schema.json, task-response.schema.json).
+//
+// Flow:
+//   1. Client calls `portunix service start <plugin>` → gets gRPC endpoint
+//   2. Client calls ListTasks() → discovers available tasks
+//   3. Client calls GetTaskManifest() → gets parameter details for a task
+//   4. Client calls ExecuteTask() → runs the task
+//   5. For long tasks: ExecuteTaskAsync() + GetTaskStatus()
+service TaskPlatformService {
+    // List all tasks this plugin supports
+    // Returns task manifests with title, summary, parameters, artifacts
+    rpc ListTasks(ListTasksRequest) returns (ListTasksResponse);
+
+    // Get detailed manifest for a specific task type
+    rpc GetTaskManifest(GetTaskManifestRequest) returns (TaskManifest);
+
+    // Execute a task synchronously
+    // For short-running tasks (< 30s typically)
+    rpc ExecuteTask(TaskRequest) returns (TaskResponse);
+
+    // Execute a task asynchronously — returns immediately with job_id
+    // For long-running tasks (batch processing, full document extraction)
+    rpc ExecuteTaskAsync(TaskRequest) returns (TaskAccepted);
+
+    // Get status of an async task
+    rpc GetTaskStatus(GetTaskStatusRequest) returns (TaskStatusResponse);
+
+    // Cancel a running async task
+    rpc CancelTask(CancelTaskRequest) returns (CancelTaskResponse);
+
+    // Stream task execution — returns progress updates and final result
+    // For tasks where the client wants real-time progress
+    rpc ExecuteTaskStream(TaskRequest) returns (stream TaskProgressEvent);
+}
+
+// ─── Task Discovery ─────────────────────────────────────────────────────
+
+message ListTasksRequest {
+    // Optional filter: only return tasks matching this category
+    // e.g. "reco.ocr", "reco.pipeline" — prefix match
+    string category_filter = 1;
+}
+
+message ListTasksResponse {
+    // Plugin identity
+    string plugin_name = 1;
+    string plugin_version = 2;
+
+    // Available tasks
+    repeated TaskManifestSummary tasks = 3;
+}
+
+// Compact task summary for list views (sidebars, menus)
+message TaskManifestSummary {
+    string task_type = 1;       // e.g. "reco.ocr.printed"
+    string title = 2;           // "Printed Text OCR"
+    string summary = 3;         // "Extract printed text from image using Tesseract/EasyOCR"
+    string category = 4;        // "reco.ocr" — for grouping in UI
+    string icon = 5;            // Optional icon identifier for UI
+    bool requires_input_file = 6;  // Whether the task needs a file as primary input
+}
+
+message GetTaskManifestRequest {
+    string task_type = 1;
+}
+
+// Full task manifest — mirrors task-manifest.schema.json
+message TaskManifest {
+    string task_type = 1;
+    string title = 2;
+    string summary = 3;
+    string when_to_use = 4;
+    string when_not_to_use = 5;
+    string category = 6;
+    string icon = 7;
+    repeated TunableParameter tunable_parameters = 8;
+    repeated ExpectedArtifact expected_artifacts = 9;
+    string result_interpretation = 10;
+    bool requires_input_file = 11;
+    // Input schema as JSON string (JSON Schema for the input object)
+    string input_schema_json = 12;
+}
+
+message TunableParameter {
+    string name = 1;
+    string type = 2;            // "string", "integer", "number", "boolean", "object", "array"
+    string description = 3;
+    bool required = 4;
+    string default_value = 5;   // JSON-encoded default value
+    // For enum-like parameters: list of allowed values
+    repeated string allowed_values = 6;
+}
+
+message ExpectedArtifact {
+    string name = 1;
+    string type = 2;            // MIME type or artifact category
+    string description = 3;
+}
+
+// ─── Task Execution ─────────────────────────────────────────────────────
+
+// Mirrors task-request.schema.json
+message TaskRequest {
+    string task = 1;            // Task type identifier
+    string trace_id = 2;       // OpenTelemetry trace ID
+    string job_id = 3;         // Unique job identifier
+    // Task-specific input — JSON-encoded object
+    string input_json = 4;
+    // Task execution configuration — JSON-encoded object
+    string config_json = 5;
+    // Execution context
+    TaskContext context = 6;
+}
+
+message TaskContext {
+    string caller = 1;          // e.g. "vscode-extension", "cli", "mcp-server"
+    string priority = 2;        // "low", "normal", "high", "critical"
+    int32 timeout_ms = 3;       // Maximum execution time
+}
+
+// Mirrors task-response.schema.json
+message TaskResponse {
+    string status = 1;          // "success", "error", "partial", "cancelled"
+    string trace_id = 2;
+    string job_id = 3;
+    // Task-specific result — JSON-encoded object
+    string result_json = 4;
+    // Structured error (present when status is "error" or "partial")
+    TaskError error = 5;
+    // Execution metadata
+    TaskMeta meta = 6;
+}
+
+message TaskError {
+    string code = 1;            // e.g. "INVALID_INPUT", "BACKEND_UNAVAILABLE"
+    string message = 2;
+    string details = 3;         // JSON-encoded details
+    bool retryable = 4;
+}
+
+message TaskMeta {
+    int64 duration_ms = 1;
+    string plugin = 2;
+    string plugin_version = 3;
+}
+
+// ─── Async Execution ────────────────────────────────────────────────────
+
+message TaskAccepted {
+    string job_id = 1;
+    string status = 2;          // "accepted"
+    string trace_id = 3;
+}
+
+message GetTaskStatusRequest {
+    string job_id = 1;
+}
+
+message TaskStatusResponse {
+    string job_id = 1;
+    string status = 2;          // "pending", "running", "success", "error", "cancelled"
+    // Progress 0.0-1.0 (if available)
+    float progress = 3;
+    string progress_message = 4;
+    // Present when status is "success" or "error"
+    TaskResponse result = 5;
+}
+
+message CancelTaskRequest {
+    string job_id = 1;
+}
+
+message CancelTaskResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// ─── Streaming Execution ────────────────────────────────────────────────
+
+message TaskProgressEvent {
+    string job_id = 1;
+    string event_type = 2;      // "progress", "log", "result"
+    // For event_type = "progress"
+    float progress = 3;         // 0.0-1.0
+    string progress_message = 4;
+    // For event_type = "log"
+    string log_message = 5;
+    string log_level = 6;       // "debug", "info", "warn", "error"
+    // For event_type = "result" — final result
+    TaskResponse result = 7;
+}

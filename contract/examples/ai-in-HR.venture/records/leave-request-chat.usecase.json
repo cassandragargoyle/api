@@ -1,0 +1,17 @@
+{
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "uc-leave-request-chat",
+	"slug": "leave-request-chat",
+	"title": "File a leave request from chat",
+	"actor": "Employee",
+	"goal": "Submit a leave request conversationally and get it routed for approval.",
+	"status": "ready",
+	"storyPoints": null,
+	"productRef": "prd-hr-portal",
+	"implementsIdeaRefs": ["idea-leave-request-bot"],
+	"ucDocRef": null,
+	"tags": ["leave", "automation"],
+	"createdAt": "2026-07-10T08:35:00Z",
+	"updatedAt": "2026-07-10T08:45:00Z"
+}

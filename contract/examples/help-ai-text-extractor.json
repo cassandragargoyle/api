@@ -1,0 +1,82 @@
+{
+  "tool": "text-extractor",
+  "version": "1.1.10",
+  "description": "Advanced text extraction and document conversion plugin. Extracts text from PDF, DOCX, XLSX, PPTX and converts documents to Markdown format.",
+  "commands": [
+    {
+      "name": "extract text",
+      "brief": "Extract plain text from document",
+      "description": "Extract plain text content from various document formats including PDF, DOCX, XLSX, PPTX, TXT, RTF. Supports OCR for scanned documents. Default output is raw text only (pipeline-friendly). Use --verbose for progress info or --stats for statistics.",
+      "parameters": [
+        {"name": "file", "type": "string", "required": true, "description": "Path to the document file"},
+        {"name": "lang", "type": "string", "required": false, "description": "OCR language code (ces, eng, deu, ...)"},
+        {"name": "verbose", "type": "boolean", "required": false, "description": "Show progress info and statistics (to stderr)"},
+        {"name": "stats", "type": "boolean", "required": false, "description": "Show extraction statistics (to stderr)"}
+      ],
+      "examples": [
+        "text-extractor extract text document.pdf",
+        "text-extractor extract text document.pdf > output.txt",
+        "text-extractor extract text --verbose document.pdf",
+        "text-extractor extract text --stats document.pdf",
+        "text-extractor extract text --lang ces scanned.pdf"
+      ]
+    },
+    {
+      "name": "convert",
+      "brief": "Convert document to Markdown format",
+      "description": "Convert documents (PDF, XLSX, XLS, ODS, DOCX, PPTX, EML, MSG), calendar invites (ICS) and audio recordings (MP3, WAV, M4A, OGG, FLAC) to Markdown format with support for heading detection, tracked changes, comments, sheet selection, slide-as-chapter presentations, email header formatting, calendar event metadata frontmatter, and offline speech-to-text (via the vox plugin).",
+      "supported_extensions": [".xlsx", ".xls", ".ods", ".docx", ".pptx", ".eml", ".msg", ".ics", ".pdf", ".mp3", ".wav", ".m4a", ".ogg", ".flac"],
+      "supported_mime_types": ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "message/rfc822", "application/vnd.ms-outlook", "text/calendar", "application/pdf", "audio/mpeg", "audio/wav", "audio/x-wav", "audio/vnd.wave", "audio/x-m4a", "audio/mp4", "audio/ogg", "audio/flac", "audio/x-flac"],
+      "parameters": [
+        {"name": "file", "type": "string", "required": true, "description": "Path to the document file"},
+        {"name": "output", "type": "string", "required": false, "description": "Output file path (default: stdout)"},
+        {"name": "sheets", "type": "string", "required": false, "description": "Comma-separated sheet names for Excel files"},
+        {"name": "track-changes", "type": "boolean", "required": false, "description": "Annotate revisions with author/date markers (DOCX, default behavior)"},
+        {"name": "accept-changes", "type": "boolean", "required": false, "description": "Accept all changes: clean output without markers, deletions removed (DOCX)"},
+        {"name": "comments", "type": "boolean", "required": false, "description": "Include document comments (DOCX)"},
+        {"name": "header-format", "type": "string", "required": false, "description": "Header format for EML: yaml (default) or table"},
+        {"name": "all-headers", "type": "boolean", "required": false, "description": "Include all email headers (EML)"},
+        {"name": "extract-attachments", "type": "string", "required": false, "description": "Extract attachments to specified directory (EML)"},
+        {"name": "strip-signature", "type": "boolean", "required": false, "description": "Remove email signature from body (EML)"},
+        {"name": "keep-inline-images", "type": "boolean", "required": false, "description": "Keep decorative inline images (spacers, signature logos) in the body; dropped by default (EML/MSG)"},
+        {"name": "audio-lang", "type": "string", "required": false, "description": "Language code for audio transcription, e.g. cs, en; default auto-detect (Audio, via vox plugin)"},
+        {"name": "notes", "type": "boolean", "required": false, "description": "Append speaker notes as a separate block per slide (PPTX)"},
+        {"name": "slide-numbers", "type": "boolean", "required": false, "description": "Prefix slide chapter headings with 'Slide N:' even when a title exists (PPTX)"},
+        {"name": "shape-order", "type": "string", "required": false, "description": "Shape traversal order within a slide: reading (default) or document (PPTX)"},
+        {"name": "preserve-colors", "type": "boolean", "required": false, "description": "Keep colored text runs from HTML/MSG/EML bodies"},
+        {"name": "color-style", "type": "string", "required": false, "description": "Color marker style: html-span (default), highlight, emoji, bracket"},
+        {"name": "marked-colors", "type": "string", "required": false, "description": "Comma-separated colors to preserve (literal match disables redish heuristic)"},
+        {"name": "pdf-metadata", "type": "boolean", "required": false, "description": "Include YAML frontmatter with document metadata (PDF)"},
+        {"name": "pdf-no-headings", "type": "boolean", "required": false, "description": "Disable heading detection based on font size (PDF)"},
+        {"name": "pdf-pagebreak", "type": "string", "required": false, "description": "Page break style: hr (default), comment, none (PDF)"},
+        {"name": "pdf-pages", "type": "string", "required": false, "description": "Page range to extract, e.g., 1-10 or 5 (PDF)"},
+        {"name": "pdf-ocr", "type": "string", "required": false, "description": "OCR fallback for scanned PDFs: auto (default), on, off"},
+        {"name": "pdf-ocr-lang", "type": "string", "required": false, "description": "Tesseract language code(s) for OCR, e.g. eng, ces, ces+eng"},
+        {"name": "pdf-ocr-dpi", "type": "integer", "required": false, "description": "Render DPI for OCR pages (default: 300)"},
+        {"name": "verbose", "type": "boolean", "required": false, "description": "Verbose output"}
+      ],
+      "examples": [
+        "text-extractor convert report.xlsx -o report.md",
+        "text-extractor convert data.xlsx --sheets Sheet1,Sheet2",
+        "text-extractor convert document.docx --track-changes --comments",
+        "text-extractor convert deck.pptx -o deck.md",
+        "text-extractor convert deck.pptx --notes --slide-numbers -o deck.md",
+        "text-extractor convert email.eml -o email.md",
+        "text-extractor convert email.eml --header-format table --all-headers",
+        "text-extractor convert email.eml --extract-attachments ./attachments",
+        "text-extractor convert email.eml --strip-signature -o clean.md",
+        "text-extractor convert invite.ics -o invite.md",
+        "text-extractor convert review.msg --preserve-colors -o review.md",
+        "text-extractor convert review.msg --preserve-colors --color-style highlight -o review.md",
+        "text-extractor convert review.msg --preserve-colors --marked-colors red,#C00000 -o review.md",
+        "text-extractor convert document.pdf -o document.md",
+        "text-extractor convert document.pdf --pdf-metadata",
+        "text-extractor convert document.pdf --pdf-pages 1-10",
+        "text-extractor convert document.pdf --pdf-pagebreak comment",
+        "text-extractor convert scanned.pdf --pdf-ocr-lang ces -o scanned.md",
+        "text-extractor convert scanned.pdf --pdf-ocr on --pdf-ocr-lang eng -o scanned.md",
+        "text-extractor convert document.pdf --pdf-ocr off"
+      ]
+    }
+  ]
+}

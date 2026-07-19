@@ -1,0 +1,29 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency.schema.json",
+	"$version": "1.0.0",
+	"title": "Competency",
+	"description": "A Competency node — a concrete professional capability the organization can perform (e.g. competency:rag-knowledge-retrieval). Classified into one or more CompetencyArea nodes via the 'classified_in' relation, and connected to people, resources, sectors and evidence via relations. A competency describes HOW work is delivered; WHAT is delivered to a customer is tracked separately in the Capability Registry.",
+	"type": "object",
+	"required": ["id", "name"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Competency identifier. Grammar: 'competency:' prefix + dot-separated slug levels, each matching [a-z0-9-] (e.g. 'competency:rag-knowledge-retrieval').",
+			"pattern": "^competency:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable competency name in English per the competency catalog (e.g. 'RAG & Knowledge Retrieval')"
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional longer description of the competency"
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this node"
+		}
+	},
+	"additionalProperties": false
+}

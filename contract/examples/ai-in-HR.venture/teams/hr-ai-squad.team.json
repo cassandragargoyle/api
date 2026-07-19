@@ -1,0 +1,11 @@
+{
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "tea-hr-ai",
+	"slug": "hr-ai-squad",
+	"name": "HR AI Squad",
+	"kind": "team",
+	"productRefs": ["prd-hr-portal"],
+	"createdAt": "2026-07-10T08:06:00Z",
+	"updatedAt": "2026-07-10T08:06:00Z"
+}

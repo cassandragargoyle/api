@@ -1,0 +1,53 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/team.schema.json",
+	"$version": "1.0.0",
+	"title": "Team",
+	"description": "Team or project identity registered inside a venture (Opportunity Management v2 delivery spine). A registry entry: it carries identity only. 'teams/' and 'backlogs/' are sibling collections at the venture level; a backlog is not nested in a team but may reference one (backlog.teamRef). productRefs[] is optional and, when omitted, is derived from the products of the team's use-cases.",
+	"type": "object",
+	"required": ["id", "slug", "name", "kind"],
+	"properties": {
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique team id (asset identity; future federation joins on this)."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.team.json' filename stem."
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable team or project name."
+		},
+		"kind": {
+			"type": "string",
+			"enum": ["team", "project"],
+			"description": "Whether this is a standing team or a time-boxed project."
+		},
+		"productRefs": {
+			"type": "array",
+			"description": "Optional ids of products (product.schema.json) this team owns/delivers. When omitted, derived from the team's use-cases.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,84 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/vim-extraction-source.schema.json",
+	"$version": "1.0.0",
+	"title": "VimExtractionSource",
+	"description": "Per-source extraction result with full provenance for replay and debugging",
+	"type": "object",
+	"required": ["source_id", "source_file", "provenance"],
+	"properties": {
+		"source_id": {
+			"type": "string",
+			"description": "Unique source identifier within VIM"
+		},
+		"source_file": {
+			"type": "string",
+			"description": "Source file name or path"
+		},
+		"source_page": {
+			"type": "integer",
+			"description": "Page number in multi-page source (1-based)",
+			"minimum": 1
+		},
+		"provenance": {
+			"$ref": "#/$defs/Provenance"
+		},
+		"fields": {
+			"type": "array",
+			"description": "Extracted field values from this source",
+			"items": {
+				"$ref": "vim-extraction-field.schema.json"
+			}
+		},
+		"tables": {
+			"type": "array",
+			"description": "Extracted table fragments from this source",
+			"items": {
+				"$ref": "vim-extraction-field.schema.json#/$defs/ExtractionTable"
+			}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"Provenance": {
+			"type": "object",
+			"description": "Full extraction context for replay and debugging",
+			"required": ["extraction_method"],
+			"properties": {
+				"extraction_method": {
+					"type": "string",
+					"description": "Primary method used for extraction",
+					"enum": ["zone_ocr", "zone_barcode", "zone_checkbox", "template_match", "llm_extract", "manual", "hybrid"]
+				},
+				"engine": {
+					"type": "string",
+					"description": "Engine/backend used (tesseract, easyocr, trocr, pyzbar)"
+				},
+				"engine_version": {
+					"type": "string",
+					"description": "Engine version for reproducibility"
+				},
+				"params": {
+					"type": "object",
+					"description": "Engine-specific parameters (open object for replay)",
+					"additionalProperties": true
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "ISO 8601 extraction timestamp"
+				},
+				"duration_ms": {
+					"type": "integer",
+					"description": "Extraction duration in milliseconds",
+					"minimum": 0
+				},
+				"pipeline_step": {
+					"type": "string",
+					"description": "Pipeline step identifier for ordering"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

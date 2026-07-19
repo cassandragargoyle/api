@@ -1,0 +1,50 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/venture.schema.json",
+	"$version": "1.0.0",
+	"title": "Venture",
+	"description": "Neutral, self-contained container for the Opportunity Management v2 model (supersedes discovery.schema.json from #014). A venture is a top-level '.venture' directory that may hold one or more initiatives, products, teams, records (ideas + use-cases) and backlogs. It is NOT an initiative itself. SaaS-ready: tenantId / workspaceId are reserved for a later multi-tenant server layer and carry no behavior in the file-based store.",
+	"type": "object",
+	"required": ["schemaVersion", "id", "slug", "name"],
+	"properties": {
+		"schemaVersion": {
+			"type": "string",
+			"description": "Contract version this document was authored against (e.g. '2.0.0')."
+		},
+		"tenantId": {
+			"type": ["string", "null"],
+			"description": "Reserved for the future multi-tenant SaaS layer; null in the local file-based store."
+		},
+		"workspaceId": {
+			"type": ["string", "null"],
+			"description": "Reserved workspace scope for the future SaaS layer; null in the local store."
+		},
+		"id": {
+			"type": "string",
+			"description": "Stable unique venture id (asset identity; future federation joins on this)."
+		},
+		"slug": {
+			"type": "string",
+			"description": "Filesystem-friendly slug, also the '<slug>.venture' directory name."
+		},
+		"name": {
+			"type": "string",
+			"description": "Human-readable venture name."
+		},
+		"description": {
+			"type": "string",
+			"description": "Optional longer description of the venture."
+		},
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Creation timestamp (ISO 8601)."
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last-modified timestamp (ISO 8601)."
+		}
+	},
+	"additionalProperties": false
+}

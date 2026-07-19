@@ -1,0 +1,88 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Maven: Clean",
+            "type": "shell",
+            "command": "mvn clean",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Maven: Compile",
+            "type": "shell",
+            "command": "mvn compile",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": ["$maven"]
+        },
+        {
+            "label": "Maven: Install",
+            "type": "shell",
+            "command": "mvn install",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": ["$maven"]
+        },
+        {
+            "label": "Maven: Test",
+            "type": "shell",
+            "command": "mvn test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": ["$maven"]
+        },
+        {
+            "label": "Maven: Package",
+            "type": "shell",
+            "command": "mvn package",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": ["$maven"]
+        },
+        {
+            "label": "Maven: Clean Install",
+            "type": "shell",
+            "command": "mvn clean install",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": ["$maven"]
+        },
+        {
+            "label": "Maven: Verify",
+            "type": "shell",
+            "command": "mvn verify",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": ["$maven"]
+        }
+    ]
+}

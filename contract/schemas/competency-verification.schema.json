@@ -1,0 +1,34 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-verification.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyVerification",
+	"description": "Verification block attached to every competency-model node and relation. Distinguishes what is merely claimed ('declared') from what is evidenced ('documented' through 'production'). Organizational maturity (competency-maturity.schema.json) is derived from these blocks, so keep 'status' and 'evidence' honest.",
+	"type": "object",
+	"required": ["status"],
+	"properties": {
+		"status": {
+			"type": "string",
+			"description": "Confidence level of the assertion this block is attached to",
+			"enum": ["declared", "documented", "tested", "production", "deprecated", "unknown"]
+		},
+		"source": {
+			"type": "string",
+			"description": "Who or what asserts this (person id, team name, document reference, or tool)"
+		},
+		"lastChecked": {
+			"type": "string",
+			"format": "date",
+			"description": "ISO 8601 date (YYYY-MM-DD) the assertion was last verified"
+		},
+		"evidence": {
+			"type": "array",
+			"description": "Evidence node ids (evidence:*) or external references backing the status",
+			"items": {
+				"type": "string"
+			},
+			"uniqueItems": true
+		}
+	},
+	"additionalProperties": false
+}

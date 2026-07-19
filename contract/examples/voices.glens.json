@@ -1,0 +1,43 @@
+{
+	"version": "1.0.0",
+	"meta": {
+		"title": "Voices graph"
+	},
+	"nodes": [
+		{
+			"id": "tag:hr",
+			"type": "tag",
+			"label": "hr"
+		},
+		{
+			"id": "tag:onboarding",
+			"type": "tag",
+			"label": "onboarding"
+		},
+		{
+			"id": "VC-V015",
+			"type": "voice",
+			"voice": "VoC",
+			"label": "VC-V015",
+			"title": "New hire cannot find the onboarding checklist",
+			"description": "Several new employees report the onboarding checklist is hard to locate in the HR portal.",
+			"meta": {
+				"source": "hr-survey-2026-q2",
+				"weight": "3"
+			}
+		}
+	],
+	"links": [
+		{
+			"source": "tag:hr",
+			"target": "VC-V015",
+			"rel": "related",
+			"description": "Voice belongs to the HR area"
+		},
+		{
+			"source": "tag:onboarding",
+			"target": "VC-V015",
+			"rel": "related"
+		}
+	]
+}

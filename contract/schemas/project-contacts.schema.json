@@ -1,0 +1,57 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/project-contacts.schema.json",
+	"$version": "1.0.0",
+	"title": "ProjectContacts",
+	"description": "Layer 3 — the pending-contacts 'waiting room' of a concrete project (projects/<slug>/contacts.json). People who appeared around the customer but are NOT yet participants (unknown / unconfirmed role). Kept out of project-participants so they never render into the project people table. Each entry only references a person in the shared registry (people-registry.schema.json) via 'ref'; once their project role is clarified they are promoted to project-participants and deleted from here.",
+	"type": "object",
+	"required": ["version", "project", "updated", "contacts"],
+	"properties": {
+		"version": {
+			"type": "integer",
+			"const": 1,
+			"description": "Schema version of this file (currently 1)."
+		},
+		"project": {
+			"type": "string",
+			"description": "Project slug, identical to the containing folder name."
+		},
+		"updated": {
+			"type": "string",
+			"format": "date",
+			"description": "Date of the last edit (YYYY-MM-DD)."
+		},
+		"comment": {
+			"type": "string",
+			"description": "Free-form explanation of the file's purpose and the ref / promote / delete rules."
+		},
+		"contacts": {
+			"type": "array",
+			"description": "People captured around the customer whose project role is not yet confirmed.",
+			"items": {"$ref": "#/$defs/contact"}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"contact": {
+			"type": "object",
+			"required": ["ref", "party", "note"],
+			"properties": {
+				"ref": {
+					"type": "string",
+					"description": "Reference to a person 'id' in the shared people-registry (projects/users.json)."
+				},
+				"party": {
+					"type": "string",
+					"enum": ["supplier", "customer"],
+					"description": "Side: supplier | customer (usually 'customer' for contacts)."
+				},
+				"note": {
+					"type": "string",
+					"description": "Short context — who they are, the source of the contact, and what still needs to be filled in."
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

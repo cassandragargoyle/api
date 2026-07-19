@@ -1,0 +1,71 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/people-registry.schema.json",
+	"$version": "1.0.0",
+	"title": "PeopleRegistry",
+	"description": "Layer 1 — the shared people registry (projects/users.json). The single source of truth for a person's master data (name, contact, employer) across all delivery projects. A person is created here first; only then may per-project layers reference them by 'ref'. Master data is never edited twice: layers 2 (project-participants) and 3 (project-contacts) carry only a 'ref' plus project-specific fields.",
+	"type": "object",
+	"required": ["version", "updated", "users"],
+	"properties": {
+		"version": {
+			"type": "integer",
+			"const": 1,
+			"description": "Schema version of this file (currently 1)."
+		},
+		"updated": {
+			"type": "string",
+			"format": "date",
+			"description": "Date of the last edit (YYYY-MM-DD)."
+		},
+		"users": {
+			"type": "array",
+			"description": "All persons across all projects. Each entry is the authoritative master record for one person.",
+			"items": {"$ref": "#/$defs/person"}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"person": {
+			"type": "object",
+			"required": ["id", "name", "employer", "createdAt", "updatedAt"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Unique person identifier — typically the e-mail, or a 'jmeno.prijmeni' slug. This is the value that 'ref' in the other layers points at."
+				},
+				"name": {
+					"type": "string",
+					"description": "Full name."
+				},
+				"title": {
+					"type": "string",
+					"description": "Company position (e.g. 'CTO'); independent of the role on any project."
+				},
+				"employer": {
+					"type": "string",
+					"description": "Employer / organization."
+				},
+				"email": {
+					"type": "string",
+					"format": "email",
+					"description": "E-mail."
+				},
+				"phone": {
+					"type": "string",
+					"description": "Phone number."
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time",
+					"description": "When the record was created (ISO 8601 with timezone)."
+				},
+				"updatedAt": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last modification (ISO 8601 with timezone)."
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

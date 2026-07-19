@@ -1,0 +1,83 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/task-manifest.schema.json",
+	"$version": "1.0.0",
+	"title": "TaskManifest",
+	"description": "Plugin task capability manifest for Unified AI Plugin Platform",
+	"type": "object",
+	"required": ["title", "summary", "task_type"],
+	"properties": {
+		"task_type": {
+			"type": "string",
+			"description": "Task type identifier matching TaskRequest.task (e.g. 'image.resize')"
+		},
+		"title": {
+			"type": "string",
+			"description": "Short human-readable task name"
+		},
+		"summary": {
+			"type": "string",
+			"description": "Brief description of what this task does"
+		},
+		"when_to_use": {
+			"type": "string",
+			"description": "AI-readable guidance on when this task is appropriate"
+		},
+		"when_not_to_use": {
+			"type": "string",
+			"description": "AI-readable guidance on when this task should not be used"
+		},
+		"tunable_parameters": {
+			"type": "array",
+			"description": "Parameters the caller can configure",
+			"items": {
+				"type": "object",
+				"required": ["name", "type"],
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": ["string", "integer", "number", "boolean", "object", "array"]
+					},
+					"description": {
+						"type": "string"
+					},
+					"required": {
+						"type": "boolean",
+						"default": false
+					},
+					"default": {}
+				},
+				"additionalProperties": false
+			}
+		},
+		"expected_artifacts": {
+			"type": "array",
+			"description": "Artifacts this task produces",
+			"items": {
+				"type": "object",
+				"required": ["name", "type"],
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"description": "MIME type or artifact category"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"result_interpretation": {
+			"type": "string",
+			"description": "AI-readable guidance on how to interpret task results"
+		}
+	},
+	"additionalProperties": false
+}

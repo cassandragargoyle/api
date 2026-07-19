@@ -1,0 +1,61 @@
+{
+	"schemaVersion": "3.0.0",
+	"subjectRef": "idea-onboarding-assistant",
+	"subjectKind": "idea",
+	"status": "open",
+	"participants": [
+		{ "kind": "user", "id": "j.novak", "displayName": "Jan Novák" },
+		{ "kind": "user", "id": "p.svoboda", "displayName": "Petra Svobodová" },
+		{ "kind": "ai_agent", "id": "ava", "displayName": "Ava", "avatarUrl": "https://cassandragargoyle.org/avatars/ava.png" },
+		{ "kind": "system", "id": "system", "displayName": "System" }
+	],
+	"messages": [
+		{
+			"id": "m1",
+			"actor": { "kind": "user", "id": "j.novak", "displayName": "Jan Novák" },
+			"type": "question",
+			"text": "Should the assistant answer from HR docs only, or also from the intranet?",
+			"timestamp": "2026-07-10T08:55:00Z"
+		},
+		{
+			"id": "m2",
+			"parentId": "m1",
+			"actor": { "kind": "ai_agent", "id": "ava", "displayName": "Ava" },
+			"type": "proposal",
+			"text": "Start with **HR docs** for a tighter, verifiable scope; add the intranet once retrieval quality is validated.",
+			"reactions": [
+				{ "emoji": "👍", "actorIds": ["j.novak", "p.svoboda"] }
+			],
+			"timestamp": "2026-07-10T08:56:00Z"
+		},
+		{
+			"id": "m3",
+			"parentId": "m2",
+			"actor": { "kind": "user", "id": "p.svoboda", "displayName": "Petra Svobodová" },
+			"type": "comment",
+			"text": "Agreed with @ava — scoping to HR docs first keeps the pilot measurable.",
+			"mentions": ["ava"],
+			"timestamp": "2026-07-10T09:02:00Z"
+		},
+		{
+			"id": "m4",
+			"actor": { "kind": "user", "id": "j.novak", "displayName": "Jan Novák" },
+			"type": "decision",
+			"text": "Decision: pilot the onboarding assistant on HR docs only; revisit intranet retrieval after the first evaluation round.",
+			"produced": [
+				{ "kind": "use-case", "ref": "uc-onboarding-hr-docs-pilot" }
+			],
+			"attachments": [
+				{ "kind": "link", "ref": "https://cassandragargoyle.org/hr/onboarding-scope", "label": "Onboarding scope note" }
+			],
+			"timestamp": "2026-07-10T09:10:00Z"
+		},
+		{
+			"id": "m5",
+			"actor": { "kind": "ai_agent", "id": "ava", "displayName": "Ava" },
+			"type": "ai_summary",
+			"text": "Summary: the team scoped the onboarding assistant to HR docs for the pilot, deferring intranet retrieval until quality is validated. A use-case was created to track the pilot.",
+			"timestamp": "2026-07-10T09:11:00Z"
+		}
+	]
+}

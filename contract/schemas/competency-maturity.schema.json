@@ -1,0 +1,49 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-maturity.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyMaturity",
+	"description": "A Maturity node — the organizational maturity of a competency. This is a DERIVED, materialized view: it is computed from evidence and assessments (never entered by hand) and regenerated when its inputs change. Consumers should treat it as read-only projection output.",
+	"type": "object",
+	"required": ["id", "competency", "level"],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "Maturity identifier. Grammar: 'maturity:' prefix + dot-separated slug levels, each matching [a-z0-9-] (typically mirrors the competency slug, e.g. 'maturity:rag-knowledge-retrieval').",
+			"pattern": "^maturity:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"competency": {
+			"type": "string",
+			"description": "Competency node id this maturity is computed for",
+			"pattern": "^competency:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"level": {
+			"type": "string",
+			"description": "Organizational maturity level, ascending",
+			"enum": ["None", "Awareness", "Emerging", "Operational", "Established", "Strategic"]
+		},
+		"derived": {
+			"type": "boolean",
+			"description": "Always true — flags this node as a computed projection, not hand-authored source data",
+			"const": true
+		},
+		"computedOn": {
+			"type": "string",
+			"format": "date",
+			"description": "ISO 8601 date (YYYY-MM-DD) the level was last computed"
+		},
+		"basis": {
+			"type": "array",
+			"description": "Node ids (evidence:* / assessment:*) the level was derived from",
+			"items": {
+				"type": "string"
+			},
+			"uniqueItems": true
+		},
+		"verification": {
+			"$ref": "competency-verification.schema.json",
+			"description": "Verification block for this derived node"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,13 @@
+{
+	"tenantId": null,
+	"workspaceId": null,
+	"id": "prd-hr-portal",
+	"slug": "hr-portal",
+	"name": "HR Portal",
+	"description": "Internal web portal employees use for onboarding, leave, and HR self-service.",
+	"repo": "CassandraGargoyle/hr-portal",
+	"component": "HRPORTAL",
+	"vendorRef": "org-cassandragargoyle",
+	"createdAt": "2026-07-10T08:05:00Z",
+	"updatedAt": "2026-07-10T08:05:00Z"
+}

@@ -1,0 +1,11 @@
+{
+	"id": "competency:rag-knowledge-retrieval",
+	"name": "RAG & Knowledge Retrieval",
+	"description": "Design and delivery of retrieval-augmented generation: chunking, embeddings, vector stores, retrieval evaluation",
+	"verification": {
+		"status": "production",
+		"source": "person:jane-doe",
+		"lastChecked": "2026-07-16",
+		"evidence": ["evidence:acme-rag-pilot"]
+	}
+}

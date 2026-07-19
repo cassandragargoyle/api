@@ -1,0 +1,89 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/competency-relations.schema.json",
+	"$version": "1.0.0",
+	"title": "CompetencyRelations",
+	"description": "A relations file for the competency model — the JSON contract equivalent of relations/<type>.yaml. Holds a list of typed edges connecting competency-model nodes. Each edge names its 'type', 'from' and 'to' node ids; some types carry extra fields ('primary' for classified_in, 'assessment' for has_competency).",
+	"type": "object",
+	"required": ["relations"],
+	"properties": {
+		"relations": {
+			"type": "array",
+			"description": "List of typed edges",
+			"items": {
+				"$ref": "#/$defs/Relation"
+			}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"nodeId": {
+			"type": "string",
+			"description": "A competency-model node id: '<prefix>:' + dot-separated slug levels, each matching [a-z0-9-]",
+			"pattern": "^[a-z]+:[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+		},
+		"Relation": {
+			"type": "object",
+			"description": "A single typed edge. Endpoint prefixes are fixed per type: classified_in (competency->area), owned_by (area->person), has_competency (person->competency), backed_by (competency->resource), applied_in (competency->sector), evidenced_by (competency->evidence).",
+			"required": ["type", "from", "to"],
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "Edge type",
+					"enum": ["classified_in", "owned_by", "has_competency", "backed_by", "applied_in", "evidenced_by"]
+				},
+				"from": {
+					"$ref": "#/$defs/nodeId",
+					"description": "Source node id"
+				},
+				"to": {
+					"$ref": "#/$defs/nodeId",
+					"description": "Target node id"
+				},
+				"primary": {
+					"type": "boolean",
+					"description": "Applies to 'classified_in' only. Exactly one classified_in edge per competency must set primary:true (cross-edge cardinality is enforced by the curator, not this schema)."
+				},
+				"assessment": {
+					"$ref": "competency-assessment.schema.json",
+					"description": "Applies to 'has_competency' only. Inline assessment block, or omit and reference a standalone assessment node elsewhere."
+				},
+				"verification": {
+					"$ref": "competency-verification.schema.json",
+					"description": "Verification block for this edge"
+				}
+			},
+			"additionalProperties": false,
+			"allOf": [
+				{
+					"if": {
+						"properties": {"type": {"const": "has_competency"}}
+					},
+					"then": {
+						"required": ["assessment"]
+					}
+				},
+				{
+					"if": {
+						"not": {
+							"properties": {"type": {"const": "classified_in"}}
+						}
+					},
+					"then": {
+						"not": {"required": ["primary"]}
+					}
+				},
+				{
+					"if": {
+						"not": {
+							"properties": {"type": {"const": "has_competency"}}
+						}
+					},
+					"then": {
+						"not": {"required": ["assessment"]}
+					}
+				}
+			]
+		}
+	}
+}
