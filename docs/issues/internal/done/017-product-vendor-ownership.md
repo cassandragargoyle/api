@@ -1,4 +1,4 @@
-# Issue #017: Product schema — optional vendor / owner organization reference
+# Issue #17: Product schema — optional vendor / owner organization reference
 
 **Type**: Enhancement
 **Priority**: Medium
@@ -7,6 +7,7 @@
 **Labels**: contract, schema, product, opportunity-management, federation
 **Repository**: Api
 **Related**: #015 (Opportunity Management v2 — introduced `product.schema.json`)
+**GitHub**: #17
 
 ## Summary
 

@@ -1,4 +1,4 @@
-# Issue #014: Opportunity Management contract schemas
+# Issue #14: Opportunity Management contract schemas
 
 **Type**: Feature
 **Priority**: Medium
@@ -8,6 +8,7 @@
 **Labels**: contract, schema, opportunity-management, iso16355, pft, multi-language
 **Repository**: Api
 **Related**: ADR-008 (Opportunity Management — portunix-architecture),
+**GitHub**: #14
 portunix #196 (ptx-pft `pft ideas`), portunix-vscode #092 (Pilot gallery),
 Issue #011 (Graph View Contract — reused for the backlog graph)
 **Extended by**: #015 (v2 model — Venture/Initiative/Use-Case/Epic/Team/Backlog/Product;

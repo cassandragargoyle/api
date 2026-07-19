@@ -1,4 +1,4 @@
-# Issue #003: Fix "persistance" typo to "persistence"
+# Issue #20: Fix "persistance" typo to "persistence"
 
 **Type**: Bug Fix
 **Priority**: Low
@@ -8,6 +8,7 @@
 **Labels**: refactoring, naming
 **Repository**: Api
 **Reported by**: Adam
+**GitHub**: #20
 
 ## Description
 

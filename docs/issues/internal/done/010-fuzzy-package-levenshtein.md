@@ -195,7 +195,7 @@ module reaches v2 it would become `github.com/cassandragargoyle/api/go/v2`.
 
 ## References
 
-- [Issue #006: Restructure project layout for multi-language platform](done/006-restructure-multi-language-layout-mvp.md)
-- [Issue #005: Python TelemetryProvider shared module](done/005-python-telemetry-provider.md)
+- [Issue #23: Restructure project layout for multi-language platform](done/023-restructure-multi-language-layout-mvp.md)
+- [Issue #22: Python TelemetryProvider shared module](done/022-python-telemetry-provider.md)
   — precedent for a Java↔Python parity package
 - [Wikipedia: Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)

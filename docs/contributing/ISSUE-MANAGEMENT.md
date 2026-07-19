@@ -1,179 +1,148 @@
+---
+title: Issue Management
+description: Workflow for creating, tracking, and archiving issues in Api — GitHub-first, where GitHub assigns the number and each issue keeps a long-form mirror in docs/issues/internal/N-*.md (archived to done/ on completion). No overview tables.
+category: contributing-guide
+status: active
+language: en
+last_updated: 2026-07-19
+---
+
 # Issue Management for Api
 
-## Overview
+## Principle: GitHub-First
 
-This document outlines how issues are managed in the Api project.
+**GitHub is the single source of truth for the issue list.** The issue is
+created on GitHub first, so **GitHub assigns the number `N`**. The GitHub issue
+carries only the *basics* — a short description plus a link to the detail file.
+The full write-up lives in the repo at `docs/issues/internal/N-name.md`, where
+the filename number **equals the GitHub issue number**.
 
-## Issue Types
+> There are **no overview tables** in `docs/issues/` — a shared Markdown table
+> edited by everyone caused constant merge conflicts and was removed. Status,
+> assignee, labels, and milestone live on GitHub; the repo keeps only the
+> long-form write-up per issue.
 
-### Bug Reports
-
-- Software defects and errors
-- Performance issues
-- Security vulnerabilities
-- Regression bugs
-
-### Feature Requests
-
-- New functionality proposals
-- Enhancement suggestions
-- API improvements
-- User experience improvements
-
-### Tasks
-
-- Development tasks
-- Documentation updates
-- Maintenance work
-- Infrastructure changes
-
-## Labels and Categories
-
-### Type Labels
-
-- `bug` - Bug reports
-- `enhancement` - Feature requests
-- `task` - General tasks
-- `documentation` - Documentation issues
-- `question` - Questions and discussions
-
-### Priority Labels
-
-- `critical` - Urgent fixes needed
-- `high` - High priority
-- `medium` - Normal priority
-- `low` - Low priority, nice to have
-
-### Status Labels
-
-- `needs-triage` - Requires initial review
-- `in-progress` - Currently being worked on
-- `blocked` - Cannot proceed due to dependencies
-- `ready-for-review` - Ready for code review
-- `needs-info` - More information required
+The `/create-issue` skill automates this flow.
 
 ## Workflow
 
-### 1. Issue Creation
+1. **Create the GitHub issue** (GitHub assigns `N`). Keep the body minimal —
+   a one-line summary plus a link placeholder:
 
-- Create file `docs/issues/internal/{number}-{short-title}.md` (active location)
-- **Next number**: assign one greater than the highest number anywhere under
-  `docs/issues/internal/` **including the `internal/done/` archive** (completed
-  issues are moved there but keep their number). Scanning only the active
-  directory reuses a number already taken by an archived issue — always list
-  `done/` before allocating.
-- Add a row to the **Active** table in `docs/issues/README.md`
-- Use appropriate template
-- Add relevant labels
-- Assign to milestone if applicable
-- Provide clear description
+   ```bash
+   gh issue create --repo cassandragargoyle/api \
+     --title "Short descriptive title" \
+     --body "One-line summary.
 
-### 2. Triage Process
+   📄 Full details: docs/issues/internal/N-name.md" \
+     [--label <type>,<priority>,<component>]
+   ```
 
-- Review new issues weekly
-- Assign priority and labels
-- Add to appropriate project board
-- Assign team members if needed
+   `gh issue create` prints the URL — take `N` from it (`.../issues/7` → `N=7`).
+   Never invent a number. GitHub issues and pull requests share one counter, so
+   numbers may skip where a PR consumed one.
 
-### 3. Development
+2. **Write the detail file** `docs/issues/internal/N-name.md` (problem,
+   acceptance criteria, testing, related issues). Use `N` in the filename and in
+   the `# Issue #N:` heading.
 
-- Link pull requests to issues
-- Update issue status regularly
-- Communicate blockers promptly
-- Document decisions and changes
+3. **Update the GitHub body** with a working link once `N` and the filename are
+   known (blob URL on `main`):
 
-### 4. Closure
+   ```bash
+   gh issue edit N --repo cassandragargoyle/api \
+     --body "One-line summary.
 
-- Verify fix or implementation
-- Update documentation if needed
-- Close with appropriate comment
-- Reference in release notes
-- **Archive the issue file**: as the last step, move the issue file
-  to the `done/` subfolder —
-  `git mv docs/issues/internal/{file}.md docs/issues/internal/done/`
-  — and move its row from the **Active** to the **Done** table in
-  `docs/issues/README.md` (update the link path to `internal/done/...`).
-  Commit the archive move together with the status change.
+   📄 [Full details](https://github.com/cassandragargoyle/api/blob/main/docs/issues/internal/N-name.md)"
+   ```
 
-## Directory Layout
+4. **Reference `N`** in branches and commits: `feat/N-name`, `feat(#N): …`,
+   `closes #N`.
 
-Active issues (`new`, `open`, `in-progress`, `blocked`, `on-hold`) live in
-`docs/issues/internal/`. Completed issues (`implemented`, `closed`) are
-archived in `docs/issues/internal/done/`. The README table at
-`docs/issues/README.md` remains the single human entry point and links
-to whichever location each file currently occupies.
+5. **Archive on completion**: `gh issue close N` and
+   `git mv docs/issues/internal/N-name.md docs/issues/internal/done/`.
 
-Rationale: keeps `ls docs/issues/internal/` focused on active work
-without fragmenting the archive by status or year. See
-`docs/issues/README.md` for the full description.
-
-## Templates
-
-### Bug Report Template
+## Detail file template
 
 ```markdown
-**Bug Description**
-Brief description of the issue
+# Issue #N: <Title>
 
-**Environment**
-- OS: [e.g. Ubuntu 20.04]
-- Version: [e.g. v1.2.3]
-- Browser: [if applicable]
+**Type**: Feature | Enhancement | Bug Fix | Security | Task
+**Priority**: Critical | High | Medium | Low
+**Status**: 📋 Open
+**Created**: <YYYY-MM-DD>
+**GitHub**: #N
+**Component**: <java | python | go | typescript | contract | build-infra | core | docs>
+**Related**: #<...>, ADR-<...>
 
-**Steps to Reproduce**
-1. Step one
-2. Step two
-3. ...
+## Summary
+<1–3 sentences>
 
-**Expected Behavior**
-What should happen
+## Problem Description / Motivation
+...
 
-**Actual Behavior**
-What actually happens
+## Scope
+### In scope
+### Out of scope (follow-up issues)
 
-**Additional Context**
-Any other relevant information
+## Acceptance Criteria
+1. ...
+
+## Testing
+...
 ```
 
-### Feature Request Template
+## Labels
 
-```markdown
-**Feature Description**
-Clear description of the requested feature
+Assign labels on the GitHub issue (create them once with `gh label create`):
 
-**Use Case**
-Why is this feature needed?
+- **Type**: `bug`, `enhancement`, `documentation`, `question`, `task`
+- **Priority**: `critical`, `high`, `medium`, `low`
+- **Component** — one per language module or area, matching the top-level
+  directory: `java`, `python`, `go`, `typescript`, `contract`. Cross-cutting
+  areas use `build-infra`, `core`, or `docs`. This is how issues are filtered:
 
-**Proposed Solution**
-How should this be implemented?
+  ```text
+  is:issue is:open label:typescript
+  ```
 
-**Alternatives Considered**
-Other approaches you've considered
+- **Status** (optional): `needs-triage`, `in-progress`, `blocked`,
+  `ready-for-review`
+- **Platform** (optional): `windows`, `linux`, `macos`, `cross-platform`
 
-**Additional Context**
-Screenshots, mockups, or examples
+Create a component label once:
+
+```bash
+gh label create typescript --repo cassandragargoyle/api \
+  --color 1d76db --description "Issues for the TypeScript module"
 ```
 
-## Best Practices
+## File structure
 
-### For Contributors
+```text
+docs/issues/
+├── README.md                 # Process pointer only — NO overview table
+└── internal/                 # Active issue detail files (N = GitHub issue number)
+    ├── N-name.md             # Long-form write-up
+    └── done/                 # Archived (✅ Implemented / ❌ Closed) issues
+        └── N-*.md
+```
 
-- Search existing issues before creating new ones
-- Provide complete information
-- Follow issue templates
-- Be respectful and constructive
-- Update issues with progress
+## Numbering note
 
-### For Maintainers
+- Filenames from the adoption of this model onward use the **GitHub issue
+  number** `N`. Legacy internal-only numbers (`001`–`017`, in `done/`) were
+  never mirrored to GitHub and are kept for history only.
+- Never invent a number — always take the one GitHub returns.
 
-- Respond to issues promptly
-- Provide clear feedback
-- Use consistent labeling
-- Keep issues organized
-- Close stale issues appropriately
+## Best practices
+
+- Search existing GitHub issues before opening a new one.
+- Keep the GitHub body short; put depth in the detail file.
+- Assign type + priority + component labels immediately.
+- Include reproduction steps for bugs and acceptance criteria for features.
+- All issue text in **English** (project convention).
 
 ---
 
-*Effective issue management helps maintain project quality and team productivity.*
-*Last updated: 2026-04-03*
-*Maintained by: Api Team*
+*Last updated: 2026-07-19 — switched to the GitHub-first model (Model A); removed overview tables and local-first numbering.*

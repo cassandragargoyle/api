@@ -1,4 +1,4 @@
-# Issue #016: Discussion contract v3.0.0 — structured, multi-actor threads
+# Issue #16: Discussion contract v3.0.0 — structured, multi-actor threads
 
 **Type**: Feature
 **Priority**: Medium
@@ -8,6 +8,7 @@
 **Labels**: contract, schema, opportunity-management, discussion, chat, multi-actor, provenance, breaking-change
 **Repository**: Api
 **Related**: #015 (Opportunity Management v2 entities — `discussion.schema.json`
+**GitHub**: #16
 v2.0.0 introduced there), #014 (Opportunity Management contracts v1),
 ADR-008 (Opportunity Management — portunix-architecture),
 portunix-vscode #099 (Pilot `VentureDiscussionView` — consumer of this contract),

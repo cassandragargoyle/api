@@ -1,4 +1,4 @@
-# Issue #012: Add TypeScript (`typescript/`) module with `log` package
+# Issue #12: Add TypeScript (`typescript/`) module with `log` package
 
 **Type**: Feature
 **Priority**: Medium
@@ -7,6 +7,7 @@
 **Closed**: 2026-07-06
 **Labels**: feature, typescript, react, log, logging, multi-language
 **Repository**: Api
+**GitHub**: #12
 
 ## Summary
 
@@ -38,7 +39,7 @@ window, and a webview panel all emit the project-standard log line.
 This establishes the `typescript/` module so future shared code (utilities,
 contract types, fuzzy matching) can be added alongside `log` without another
 restructuring — matching the precedent set by
-[#006](done/006-restructure-multi-language-layout-mvp.md) for `go/` and
+[#23](done/023-restructure-multi-language-layout-mvp.md) for `go/` and
 [#010](done/010-fuzzy-package-levenshtein.md) for adding a package across
 languages.
 
@@ -262,7 +263,7 @@ reverse.)
 1. **npm distribution.** Local `npm pack` + file dependency for v1, or set up a
    GitHub Packages npm feed now? (Leaning: local pack for v1; registry is a
    follow-up, mirroring how Java started before GitHub Packages in
-   [#002](done/002-github-packages-publishing.md).)
+   [#19](done/019-github-packages-publishing.md).)
 2. **Test runner / linter.** Vitest + ESLint/Prettier vs Biome — pick to match
    whatever portunix-vscode already uses so contributors share one toolchain.
 3. **Version alignment.** Reuse the repo's `1.0.0.9` scheme, or start the npm
@@ -272,11 +273,11 @@ reverse.)
 
 - [Java log package README](../../../java/src/main/java/org/cassandragargoyle/api/log/README.md)
   — the surface this module mirrors
-- [Issue #006: Restructure project layout for multi-language platform](done/006-restructure-multi-language-layout-mvp.md)
+- [Issue #23: Restructure project layout for multi-language platform](done/023-restructure-multi-language-layout-mvp.md)
   — precedent for adding a top-level language module (`go/`)
 - [Issue #010: Add `fuzzy` package (Java, Go, Python)](done/010-fuzzy-package-levenshtein.md)
   — precedent for a cross-language package with shared test vectors
-- [Issue #005: Python TelemetryProvider shared module](done/005-python-telemetry-provider.md)
+- [Issue #22: Python TelemetryProvider shared module](done/022-python-telemetry-provider.md)
   — precedent for a Java↔Python parity package
 - [portunix-vscode README](https://github.com/CassandraGargoyle/portunix-vscode)
   — first consumer (Pilot UI `src/pilot/`, VS Code extension `src/vscode-extension/`)

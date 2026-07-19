@@ -1,4 +1,4 @@
-# Issue #004: OpenTelemetry TelemetryProvider utility class
+# Issue #21: OpenTelemetry TelemetryProvider utility class
 
 **Type**: Feature
 **Priority**: Medium
@@ -8,6 +8,7 @@
 **Labels**: feature, observability, opentelemetry, tracing
 **Related**: portunix-plugins#050, ADR-016
 **Repository**: Api
+**GitHub**: #21
 
 ## Description
 

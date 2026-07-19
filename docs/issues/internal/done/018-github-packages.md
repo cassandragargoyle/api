@@ -1,4 +1,4 @@
-# Issue #001: Github packages
+# Issue #18: Github packages
 
 **Type**: Feature (design / discussion)
 **Priority**: Medium
@@ -6,9 +6,10 @@
 **Created**: 2026-02-11
 **Closed**: 2026-04-19
 **Labels**: architecture, maven, github-packages
-**Related**: #002
-**Superseded by**: #002 (concrete publishing workflow)
+**Related**: #19
+**Superseded by**: #19 (concrete publishing workflow)
 **Repository**: Api
+**GitHub**: #18
 
 ## Closure note
 
@@ -20,7 +21,7 @@ criteria of its own.
 The concrete implementation — `distributionManagement`, the
 `.github/workflows/publish.yml` release pipeline, and the first
 published version — landed in issue
-[#002](done/002-github-packages-publishing.md) and is in production.
+[#19](done/019-github-packages-publishing.md) and is in production.
 Follow-up topics listed at the bottom of this document (BOM module,
 CODEOWNERS, semver/changelog automation, consumer-driven contract
 tests, etc.) are out of scope here; open a new issue if any of them

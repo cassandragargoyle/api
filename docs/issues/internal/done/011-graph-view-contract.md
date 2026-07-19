@@ -1,4 +1,4 @@
-# #011 — Graph View Contract: JSON Schema + File Extension for the 3D Node-Graph Viewer
+# Issue #11: Graph View Contract: JSON Schema + File Extension for the 3D Node-Graph Viewer
 
 **Status:** ✅ Implemented
 **Priority:** Medium
@@ -6,6 +6,7 @@
 **Labels:** contract, schema, graph, visualization
 **Created:** 2026-06-28
 **Closed:** 2026-06-29
+**GitHub**: #11
 
 ---
 
@@ -35,7 +36,7 @@ origin. Today the shape lives informally in the plugin's `model.py` and in the
 hand-written `app.js`. Promoting it to an Api contract gives every language
 (Python plugin, TypeScript component, future Go/Java callers) one validated,
 versioned definition — exactly as done for the VIM and plugin-platform schemas
-(see #009).
+(see #26).
 
 ## Distinct from the existing `*.graph.json` (2D)
 
@@ -125,7 +126,7 @@ Once chosen, the token should be:
 
 ## Related
 
-- Api #009 — Plugin Platform Contract Schemas (schema layout / conventions)
+- Api #26 — Plugin Platform Contract Schemas (schema layout / conventions)
 - portunix-plugins #086 — `graphlens` plugin (consumer; `model.py` builds it, `viewer.py` serves it)
 - portunix-vscode #050 — `GraphLens3D` React component (consumer; renderer)
 - portunix-vscode #030 — 2D Graph Canvas `*.graph.json` (the format this one must stay distinct from)

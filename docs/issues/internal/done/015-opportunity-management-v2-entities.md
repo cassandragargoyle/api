@@ -1,4 +1,4 @@
-# Issue #015: Opportunity Management v2 — Venture / Initiative / Use-Case / Epic / Team / Product contracts
+# Issue #15: Opportunity Management v2 — Venture / Initiative / Use-Case / Epic / Team / Product contracts
 
 **Type**: Feature
 **Priority**: Medium
@@ -8,6 +8,7 @@
 **Labels**: contract, schema, opportunity-management, use-case, initiative, epic, team, product, iso16355, pft, multi-language
 **Repository**: Api
 **Related**: #014 (Opportunity Management contracts v1 — extended by this issue),
+**GitHub**: #15
 ADR-008 (Opportunity Management — portunix-architecture),
 portunix #197 (ptx-pft `pft ideas` v2), portunix-vscode #098 (Pilot v2 GUI),
 #011 (Graph View Contract — reused for both backlogs)
