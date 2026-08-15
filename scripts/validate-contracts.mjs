@@ -33,6 +33,7 @@ const SUFFIX_SCHEMA = [
 	[".backlog.json", "backlog.schema.json"],
 	[".epic.json", "epic.schema.json"],
 	[".glens.json", "graph-view.schema.json"],
+	[".scribe.json", "transcript.schema.json"],
 	[".competency-area.json", "competency-area.schema.json"],
 	[".competency-relations.json", "competency-relations.schema.json"],
 	[".competency.json", "competency.schema.json"],
