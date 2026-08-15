@@ -1,0 +1,48 @@
+{
+	"schema_version": "1.0",
+	"media": {
+		"source": "./recordings/meeting-2026-08-15.mp4",
+		"resolved_path": "/abs/recordings/meeting-2026-08-15.mp4",
+		"kind": "video",
+		"duration": 392.4,
+		"language": "cs"
+	},
+	"speakers": [
+		{ "id": "S1", "label": "Speaker 1", "color": "#4C78A8" },
+		{ "id": "S2", "label": "Jana", "color": "#F58518" }
+	],
+	"segments": [
+		{
+			"id": "seg-0001",
+			"start": 0.0,
+			"end": 11.8,
+			"speaker": "S1",
+			"text": "Dobrý den, dnes probereme rozpočet.",
+			"status": "verified",
+			"confidence": 0.87,
+			"source_text": "dobrý den dnes probereme rozpočet",
+			"flags": [
+				{
+					"id": "flag-01",
+					"kind": "term-guess",
+					"reason": "term 'rozpočet' may be misheard — verify against glossary",
+					"span": [5.4, 7.1],
+					"resolved": false
+				}
+			]
+		},
+		{
+			"id": "seg-0002",
+			"start": 11.8,
+			"end": 20.5,
+			"speaker": "S2",
+			"text": "Souhlasím, začněme příjmy.",
+			"status": "edited",
+			"confidence": 0.91,
+			"source_text": "souhlasím začněme příjmy",
+			"flags": []
+		}
+	],
+	"revision": 7,
+	"updated_at": "2026-08-15T14:20:00Z"
+}

@@ -46,6 +46,16 @@ Graph-view documents use the **`*.glens.json`** filename suffix (tied to graphle
 
 > **Distinct from the 2D `*.graph.json` format.** The 2D Graph Canvas format (`GraphFile`: `nodes` + `edges` + `metadata`, Cytoscape, portunix-vscode #030) is a different contract. This 3D graph-view format uses `links` (not `edges`) and `meta` (not `metadata`), and must not reuse the `*.graph.json` suffix.
 
+### Transcription
+
+| Schema | Description |
+| ------ | ----------- |
+| [transcript.schema.json](schemas/transcript.schema.json) | Video/audio transcript working document for the scribe correction backend (`media` + `speakers` + `segments` + `flags`) |
+
+Transcript documents use the **`*.scribe.json`** filename suffix (tied to scribe / `ptx-scribe`, portunix-plugins #113) so tools, editors, and the future VS Code transcript editor recognize the type without inspecting contents.
+
+> **Provisional.** The shape may still change once reconciled against a real transcript sample (portunix-plugins #113, criterion 15); `schema_version` tracks that evolution. The transcript Markdown (front matter with `source` + `[mm:ss]` segments) is a lighter, related convention shared with `vox` and is not (yet) a formal schema here.
+
 ### Opportunity Management (v2)
 
 Two-spine model authored by `ptx-pft` and read by Pilot (ADR-008, issue #015 —

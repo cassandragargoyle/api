@@ -1,0 +1,71 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/transcript.schema.json",
+	"$version": "1.0.0",
+	"title": "Transcript",
+	"description": "Language-independent contract for the scribe transcript working document (the *.scribe.json edited by the scribe plugin, portunix-plugins #113, and read by a future VS Code transcript editor). A media reference + speakers + timed segments + assistant-placed flags. The JSON is the working source of truth during correction; the transcript Markdown is the seed/input and a render target. Files using this format use the '.scribe.json' filename suffix. PROVISIONAL: field names/layout may still change once reconciled against a real transcript sample (portunix-plugins #113, acceptance criterion 15); 'schema_version' tracks that evolution.",
+	"type": "object",
+	"required": ["schema_version", "media", "segments"],
+	"properties": {
+		"schema_version": { "type": "string", "const": "1.0" },
+		"media": { "$ref": "#/$defs/media" },
+		"speakers": { "type": "array", "items": { "$ref": "#/$defs/speaker" } },
+		"segments": { "type": "array", "items": { "$ref": "#/$defs/segment" } },
+		"revision": { "type": "integer", "minimum": 0 },
+		"updated_at": { "type": ["string", "null"] }
+	},
+	"$defs": {
+		"media": {
+			"type": "object",
+			"required": ["source"],
+			"properties": {
+				"source": { "type": "string", "description": "Link to the recording: relative path, absolute path, or URL" },
+				"resolved_path": { "type": ["string", "null"] },
+				"kind": { "enum": ["video", "audio", "unknown"] },
+				"duration": { "type": ["number", "null"] },
+				"language": { "type": ["string", "null"] }
+			}
+		},
+		"speaker": {
+			"type": "object",
+			"required": ["id", "label"],
+			"properties": {
+				"id": { "type": "string" },
+				"label": { "type": "string" },
+				"color": { "type": ["string", "null"] }
+			}
+		},
+		"flag": {
+			"type": "object",
+			"required": ["id"],
+			"properties": {
+				"id": { "type": "string" },
+				"kind": { "enum": ["unclear", "low-confidence", "term-guess", "name-guess", "crosstalk", "inaudible"] },
+				"reason": { "type": "string" },
+				"span": {
+					"type": ["array", "null"],
+					"description": "Location in the recording [start, end] in seconds; null defaults to the segment timing",
+					"items": { "type": "number" },
+					"minItems": 2,
+					"maxItems": 2
+				},
+				"resolved": { "type": "boolean" }
+			}
+		},
+		"segment": {
+			"type": "object",
+			"required": ["id", "start", "end"],
+			"properties": {
+				"id": { "type": "string" },
+				"start": { "type": "number" },
+				"end": { "type": "number" },
+				"speaker": { "type": ["string", "null"] },
+				"text": { "type": "string" },
+				"status": { "enum": ["raw", "edited", "verified"] },
+				"confidence": { "type": ["number", "null"] },
+				"source_text": { "type": "string", "description": "Original STT text, kept for non-destructive diff/undo" },
+				"flags": { "type": "array", "items": { "$ref": "#/$defs/flag" } }
+			}
+		}
+	}
+}
