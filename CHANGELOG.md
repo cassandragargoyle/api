@@ -21,6 +21,13 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
   `make sync-scribe-proto`). No language module changes (portunix-vscode #112).
 - A **Proto** section in `contract/README.md`, listing the gRPC service contracts
   alongside the JSON Schemas.
+- `Speaker.languages` in `contract/proto/scribe.proto` — ordered ISO 639-1 codes
+  for the languages a participant speaks in the recording, the first being their
+  primary one (`["cs", "en"]` = speaks Czech, occasionally uses English). A
+  meeting has no single language, and the language belongs to the person rather
+  than to the file, so `Media.language` cannot answer it. Additive proto3 field;
+  no server change is required to keep reading existing documents, but writing
+  the value needs an RPC that does not exist yet (portunix-vscode #112).
 - `UseCase.solution` in `contract/schemas/use-case.schema.json` (schema `$version`
   1.0.0 → 1.1.0) — a free-text sketch of how the use-case is to be solved, bound
   to the target product. `opportunity.aiSolution` cannot answer it: an idea's

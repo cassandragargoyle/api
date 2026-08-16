@@ -60,6 +60,12 @@ message Speaker {
   string id = 1;
   string label = 2;
   string color = 3;
+  // ISO 639-1 codes for the languages this person speaks in the recording, in
+  // order: the first is their primary language, the rest are ones they switch
+  // into. `["cs", "en"]` reads as "speaks Czech, occasionally uses English".
+  // Empty means unknown — it is not inferred from Media.language, which describes
+  // the file rather than any one participant.
+  repeated string languages = 4;
 }
 
 message Flag {
