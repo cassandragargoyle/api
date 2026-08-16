@@ -13,6 +13,14 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- **`contract/proto/scribe.proto`** — canonical gRPC contract for the scribe
+  transcript-correction backend (`portunix.scribe.ScribeService`), the service
+  counterpart to `contract/schemas/transcript.schema.json`. Servers and clients
+  vendor a copy rather than hand-writing the wire format: `portunix-plugins`
+  (Python server) and `portunix-vscode` (transcript editor client, synced by
+  `make sync-scribe-proto`). No language module changes (portunix-vscode #112).
+- A **Proto** section in `contract/README.md`, listing the gRPC service contracts
+  alongside the JSON Schemas.
 - `UseCase.solution` in `contract/schemas/use-case.schema.json` (schema `$version`
   1.0.0 → 1.1.0) — a free-text sketch of how the use-case is to be solved, bound
   to the target product. `opportunity.aiSolution` cannot answer it: an idea's
