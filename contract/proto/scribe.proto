@@ -1,0 +1,230 @@
+syntax = "proto3";
+
+// Canonical gRPC contract for the scribe transcript-correction backend.
+//
+// This file is the single source of truth. Consumers vendor a copy rather than
+// hand-writing the wire format:
+//   - portunix-plugins  plugins/scribe/proto/scribe.proto   (server, Python)
+//   - portunix-vscode   src/vscode-extension/proto/scribe.proto  (client, `make sync-scribe-proto`)
+//
+// The `package` line is part of the wire identity (`portunix.scribe.ScribeService`)
+// and must not be renamed. The message types mirror the JSON contract schema in
+// contract/schemas/transcript.schema.json.
+package portunix.scribe;
+
+option go_package = "portunix.cz/api/scribe";
+option java_package = "cz.portunix.api.scribe";
+option java_multiple_files = true;
+
+// Backend for correcting video/audio transcripts. The service is stateless
+// per-call: every RPC is keyed by the working document's file path (the
+// `*.scribe.json` sidecar), loaded and saved around the mutation. Media playback
+// stays on the frontend — the backend only returns paths + timings.
+service ScribeService {
+  // Load an existing `*.scribe.json`, or initialize one from a transcript `.md`.
+  rpc OpenDocument(OpenDocumentRequest) returns (DocumentResponse);
+  rpc GetDocument(GetDocumentRequest) returns (DocumentResponse);
+
+  // Segment edits.
+  rpc UpdateSegment(UpdateSegmentRequest) returns (SegmentResponse);
+  rpc SplitSegment(SplitSegmentRequest) returns (SplitSegmentResponse);
+  rpc MergeSegments(MergeSegmentsRequest) returns (SegmentResponse);
+
+  // Speaker management.
+  rpc ListSpeakers(ListSpeakersRequest) returns (ListSpeakersResponse);
+  rpc RenameSpeaker(RenameSpeakerRequest) returns (SpeakerResponse);
+  rpc MergeSpeakers(MergeSpeakersRequest) returns (SpeakerResponse);
+
+  // Flagging problematic passages (the jump-to-next-problem worklist).
+  rpc AddFlag(AddFlagRequest) returns (FlagResponse);
+  rpc ListFlags(ListFlagsRequest) returns (ListFlagsResponse);
+  rpc ResolveFlag(ResolveFlagRequest) returns (FlagResponse);
+
+  // Render a clean output Markdown from the working JSON.
+  rpc ExportMarkdown(ExportMarkdownRequest) returns (ExportMarkdownResponse);
+
+  rpc Health(HealthRequest) returns (HealthResponse);
+}
+
+// --- data model (mirrors src/scribe/model.py) ---
+
+message Media {
+  string source = 1;
+  string resolved_path = 2;
+  string kind = 3;        // video | audio | unknown
+  double duration = 4;
+  string language = 5;
+}
+
+message Speaker {
+  string id = 1;
+  string label = 2;
+  string color = 3;
+  // ISO 639-1 codes for the languages this person speaks in the recording, in
+  // order: the first is their primary language, the rest are ones they switch
+  // into. `["cs", "en"]` reads as "speaks Czech, occasionally uses English".
+  // Empty means unknown — it is not inferred from Media.language, which describes
+  // the file rather than any one participant.
+  repeated string languages = 4;
+}
+
+message Flag {
+  string id = 1;
+  string kind = 2;        // unclear | low-confidence | term-guess | name-guess | crosstalk | inaudible
+  string reason = 3;
+  bool has_span = 4;      // false → span defaults to the segment timing
+  double span_start = 5;
+  double span_end = 6;
+  bool resolved = 7;
+}
+
+message Segment {
+  string id = 1;
+  double start = 2;
+  double end = 3;
+  string speaker = 4;
+  string text = 5;
+  string status = 6;      // raw | edited | verified
+  double confidence = 7;
+  string source_text = 8;
+  repeated Flag flags = 9;
+}
+
+message TranscriptDoc {
+  string schema_version = 1;
+  Media media = 2;
+  repeated Speaker speakers = 3;
+  repeated Segment segments = 4;
+  int32 revision = 5;
+  string updated_at = 6;
+}
+
+// --- requests / responses ---
+
+message OpenDocumentRequest {
+  // A `.scribe.json` (loaded) or a transcript `.md` (initialized into a sidecar).
+  string path = 1;
+  bool require_media = 2;
+}
+
+message DocumentResponse {
+  string document_path = 1;   // the resolved `*.scribe.json` path
+  TranscriptDoc doc = 2;
+}
+
+message GetDocumentRequest {
+  string document_path = 1;
+}
+
+message UpdateSegmentRequest {
+  string document_path = 1;
+  string segment_id = 2;
+  optional string text = 3;
+  optional string speaker = 4;
+  optional double start = 5;
+  optional double end = 6;
+  optional string status = 7;
+}
+
+message SegmentResponse {
+  Segment segment = 1;
+  int32 revision = 2;
+}
+
+message SplitSegmentRequest {
+  string document_path = 1;
+  string segment_id = 2;
+  double at_time = 3;
+}
+
+message SplitSegmentResponse {
+  Segment first = 1;
+  Segment second = 2;
+  int32 revision = 3;
+}
+
+message MergeSegmentsRequest {
+  string document_path = 1;
+  string first_id = 2;
+  string second_id = 3;
+}
+
+message ListSpeakersRequest {
+  string document_path = 1;
+}
+
+message ListSpeakersResponse {
+  repeated Speaker speakers = 1;
+}
+
+message RenameSpeakerRequest {
+  string document_path = 1;
+  string speaker_id = 2;
+  string label = 3;
+}
+
+message SpeakerResponse {
+  Speaker speaker = 1;
+  int32 revision = 2;
+}
+
+message MergeSpeakersRequest {
+  string document_path = 1;
+  string source_id = 2;
+  string target_id = 3;
+}
+
+message AddFlagRequest {
+  string document_path = 1;
+  string segment_id = 2;
+  string kind = 3;
+  string reason = 4;
+  bool has_span = 5;
+  double span_start = 6;
+  double span_end = 7;
+}
+
+message FlagResponse {
+  Flag flag = 1;
+  int32 revision = 2;
+}
+
+message ListFlagsRequest {
+  string document_path = 1;
+  bool include_resolved = 2;
+}
+
+message FlagItem {
+  string segment_id = 1;
+  Flag flag = 2;
+  double span_start = 3;   // resolved span (defaults to segment timing)
+  double span_end = 4;
+}
+
+message ListFlagsResponse {
+  repeated FlagItem flags = 1;
+}
+
+message ResolveFlagRequest {
+  string document_path = 1;
+  string flag_id = 2;
+  bool resolved = 3;       // true to resolve, false to reopen
+}
+
+message ExportMarkdownRequest {
+  string document_path = 1;
+  string output_path = 2;  // when empty, only the rendered markdown is returned
+  string corrected_at = 3; // optional ISO timestamp for deterministic front matter
+}
+
+message ExportMarkdownResponse {
+  string output_path = 1;
+  string markdown = 2;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+  string version = 2;
+}

@@ -123,6 +123,16 @@ person present in both is keyed by the same id.
 | [project-contacts.schema.json](schemas/project-contacts.schema.json) | 3 | Pending-contacts "waiting room" (`projects/<slug>/contacts.json`); `ref` + note, promoted to layer 2 once the role is clear |
 | [company-people-registry.schema.json](schemas/company-people-registry.schema.json) | — | Firm-wide registry (root `users.json`); superset of the master fields plus `relation`; presence = active cooperation |
 
+## Proto
+
+gRPC service contracts. These are the canonical definitions — servers and clients vendor a copy
+into their own tree rather than hand-writing the wire format, and re-sync when the contract moves.
+
+| Proto | Service | Description |
+| ----- | ------- | ----------- |
+| [task-platform.proto](proto/task-platform.proto) | `portunix.platform.v1.TaskPlatformService` | Universal task discovery and execution; mirrors `task-manifest` / `task-request` / `task-response` schemas |
+| [scribe.proto](proto/scribe.proto) | `portunix.scribe.ScribeService` | Transcript correction backend (segments, speakers, flags, Markdown export); mirrors [transcript.schema.json](schemas/transcript.schema.json) |
+
 ## Examples
 
 ### Task Platform Examples
