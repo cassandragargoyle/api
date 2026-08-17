@@ -20,6 +20,15 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
   product, and the schema's `additionalProperties: false` left analyses that
   arrive with a proposed approach nowhere to put it. Optional and nullable, so
   existing documents keep validating; no language module changes.
+- **Contract terms on `UseCase`** (schema `$version` 1.1.0 → 1.2.0) —
+  `contractRef` plus `deliverables`, `acceptanceCriteria`, `outOfScope` and
+  `assumptions`. A non-null `contractRef` is what separates a use-case somebody
+  is obliged to deliver from one that is merely catalogued; the four arrays carry
+  the terms that obligation comes with. `status` stays what it was — a delivery
+  lifecycle state, not a commitment. `contractRef` is a plain reference on
+  purpose: the contract's own terms (parties, price, dates) belong to the
+  contract system, not to the delivery spine. All optional, so existing documents
+  keep validating; no language module changes.
 - **TypeScript module** (`typescript/`, npm package `@cassandragargoyle/api`) —
   the fourth top-level language module, mirroring `java/`, `python/` and `go/`.
   Dual ESM + CJS build with emitted `.d.ts`, Vitest tests, ESLint + Prettier

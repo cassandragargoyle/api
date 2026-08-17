@@ -1,9 +1,9 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/use-case.schema.json",
-	"$version": "1.1.0",
+	"$version": "1.2.0",
 	"title": "UseCase",
-	"description": "Time-boxed delivery unit (Opportunity Management v2 delivery spine: Team/Project -> Epic -> Use-Case). A use-case is bound to exactly one product (productRef, N:1), implements one or more ideas (implementsIdeaRefs[], M:N, usually one), and is where real story points live. This is a lightweight entity that may optionally reference a formal UC-<COMPONENT>-<NNN> document via ucDocRef (per #015 open question 2). Following the linking principle, the volatile use-case points to stable product/idea assets; they never point back.",
+	"description": "Time-boxed delivery unit (Opportunity Management v2 delivery spine: Team/Project -> Epic -> Use-Case). A use-case is bound to exactly one product (productRef, N:1), implements one or more ideas (implementsIdeaRefs[], M:N, usually one), and is where real story points live. Once somebody is contractually obliged to deliver it, 'contractRef' points at the commitment and 'deliverables' / 'acceptanceCriteria' / 'outOfScope' / 'assumptions' carry its terms. This is a lightweight entity that may optionally reference a formal UC-<COMPONENT>-<NNN> document via ucDocRef (per #015 open question 2). Following the linking principle, the volatile use-case points to stable product/idea assets; they never point back.",
 	"type": "object",
 	"required": ["id", "slug", "title", "productRef"],
 	"properties": {
@@ -61,6 +61,35 @@
 		"ucDocRef": {
 			"type": ["string", "null"],
 			"description": "Optional reference to a formal UC-<COMPONENT>-<NNN> use-case document (USE-CASE-METHODOLOGY). Null when the use-case is standalone."
+		},
+		"contractRef": {
+			"type": ["string", "null"],
+			"description": "Reference to the contract, order or statement of work that commits this use-case to realization — a contract number, document id, or path to the signed specification. A non-null value is what distinguishes a use-case somebody is obliged to deliver from one that is merely catalogued; delivery status stays in 'status'. Null when the use-case is not contracted.",
+			"$comment": "Deliberately a plain reference rather than an object: the contract's own terms (parties, price, dates) belong to the contract system, not to the delivery spine."
+		},
+		"deliverables": {
+			"type": "array",
+			"description": "What the use-case commits to deliver, one item per deliverable or expert activity. Distinct from 'solution', which sketches how it is to be built: a deliverable is what the other party is entitled to receive.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"acceptanceCriteria": {
+			"type": "array",
+			"description": "Conditions the delivery must meet to be accepted, one per item. Kept as written — an acceptance criterion is contractual language, not a summary.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"outOfScope": {
+			"type": "array",
+			"description": "What is explicitly NOT part of the delivery, one per item. Recorded separately from the deliverables because an exclusion agreed in writing is what prevents a dispute later; an empty array and an absent one mean different things.",
+			"items": {"type": "string"},
+			"uniqueItems": true
+		},
+		"assumptions": {
+			"type": "array",
+			"description": "Preconditions the delivery depends on, including obligations of the other party (data to be provided, access, availability of people). One per item.",
+			"items": {"type": "string"},
+			"uniqueItems": true
 		},
 		"tags": {
 			"type": "array",
