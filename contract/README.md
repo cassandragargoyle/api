@@ -69,7 +69,7 @@ and design decisions.
 | [venture.schema.json](schemas/venture.schema.json) | Neutral `.venture` container (supersedes `discovery.schema.json`) |
 | [initiative.schema.json](schemas/initiative.schema.json) | Strategic intent; `ideaRefs[]` (M:N) |
 | [opportunity.schema.json](schemas/opportunity.schema.json) | Idea (demand asset); coarse `complexity` replaces story points |
-| [use-case.schema.json](schemas/use-case.schema.json) | Delivery unit; `storyPoints`, `productRef`, `implementsIdeaRefs[]` |
+| [use-case.schema.json](schemas/use-case.schema.json) | Delivery unit; `storyPoints`, `productRef`, `implementsIdeaRefs[]`, product-bound `solution`, contract terms (`contractRef`, `deliverables`, `acceptanceCriteria`, `outOfScope`, `assumptions`) |
 | [product.schema.json](schemas/product.schema.json) | Product registered inside the venture; optional `vendorRef` to the owning organization |
 | [team.schema.json](schemas/team.schema.json) | Team/Project registry; `kind`, optional `productRefs[]` |
 | [backlog.schema.json](schemas/backlog.schema.json) | First-class backlog; `kind`, optional `teamRef`, membership + relations |

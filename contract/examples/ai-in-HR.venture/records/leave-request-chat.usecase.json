@@ -6,6 +6,21 @@
 	"title": "File a leave request from chat",
 	"actor": "Employee",
 	"goal": "Submit a leave request conversationally and get it routed for approval.",
+	"solution": "Chat flow in the HR portal collects the leave details, validates them against the entitlement service and files the request through the existing approval API.",
+	"contractRef": "SOW-2026-014, annex B, module 3",
+	"deliverables": [
+		"Chat flow covering the request, edit and cancel paths",
+		"Integration with the approval API, including the audit trail"
+	],
+	"acceptanceCriteria": [
+		"90 % of requests filed without falling back to the form"
+	],
+	"outOfScope": [
+		"Approver-side mobile application"
+	],
+	"assumptions": [
+		"The entitlement service exposes balances through its existing API"
+	],
 	"status": "ready",
 	"storyPoints": null,
 	"productRef": "prd-hr-portal",
