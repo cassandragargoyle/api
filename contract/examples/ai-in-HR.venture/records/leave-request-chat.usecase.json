@@ -6,6 +6,7 @@
 	"title": "File a leave request from chat",
 	"actor": "Employee",
 	"goal": "Submit a leave request conversationally and get it routed for approval.",
+	"solution": "Chat flow in the HR portal collects the leave details, validates them against the entitlement service and files the request through the existing approval API.",
 	"status": "ready",
 	"storyPoints": null,
 	"productRef": "prd-hr-portal",

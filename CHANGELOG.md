@@ -13,6 +13,13 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- `UseCase.solution` in `contract/schemas/use-case.schema.json` (schema `$version`
+  1.0.0 → 1.1.0) — a free-text sketch of how the use-case is to be solved, bound
+  to the target product. `opportunity.aiSolution` cannot answer it: an idea's
+  solution is product-agnostic by definition, while a use-case is bound to one
+  product, and the schema's `additionalProperties: false` left analyses that
+  arrive with a proposed approach nowhere to put it. Optional and nullable, so
+  existing documents keep validating; no language module changes.
 - **TypeScript module** (`typescript/`, npm package `@cassandragargoyle/api`) —
   the fourth top-level language module, mirroring `java/`, `python/` and `go/`.
   Dual ESM + CJS build with emitted `.d.ts`, Vitest tests, ESLint + Prettier

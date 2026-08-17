@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/use-case.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.1.0",
 	"title": "UseCase",
 	"description": "Time-boxed delivery unit (Opportunity Management v2 delivery spine: Team/Project -> Epic -> Use-Case). A use-case is bound to exactly one product (productRef, N:1), implements one or more ideas (implementsIdeaRefs[], M:N, usually one), and is where real story points live. This is a lightweight entity that may optionally reference a formal UC-<COMPONENT>-<NNN> document via ucDocRef (per #015 open question 2). Following the linking principle, the volatile use-case points to stable product/idea assets; they never point back.",
 	"type": "object",
@@ -34,6 +34,10 @@
 		"goal": {
 			"type": "string",
 			"description": "Goal the actor achieves through this use-case."
+		},
+		"solution": {
+			"type": ["string", "null"],
+			"description": "Free-text sketch of how the use-case is to be solved, bound to the target product (unlike opportunity.aiSolution, which is product-agnostic). Holds what a discovery workshop or an analysis produced before the work is broken down: the proposed approach, the layers involved, the systems it touches. Null when no solution has been proposed yet."
 		},
 		"status": {
 			"type": "string",
