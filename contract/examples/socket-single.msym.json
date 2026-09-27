@@ -50,6 +50,8 @@
   "meta": {
     "author": "CassandraGargoyle",
     "license": "MIT",
-    "source": "core pack of ptx-modeler (portunix-plugins #124)"
+    "licenseUrl": "https://opensource.org/license/mit",
+    "source": "core pack of ptx-modeler (portunix-plugins #124)",
+    "sourceUrl": "https://github.com/cassandragargoyle/portunix-plugins/blob/main/plugins/modeler/catalog/core/symbols/socket/single.msym.json"
   }
 }
