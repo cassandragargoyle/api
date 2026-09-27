@@ -67,12 +67,15 @@ authoritative; SVG/glTF drawings are derived views. Coordinates are integer mill
 | ------ | ----------- |
 | [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log` |
 | [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema |
+| [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields and standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) |
 
 Model documents use the **`*.model.json`** filename suffix and operation files the
 **`*.ops.json`** suffix, so tools, editors and AI agents recognize them without inspecting contents.
+Symbol elements use the **`*.msym.json`** suffix (one self-contained file per symbol at
+`symbols/<category>/<name>.msym.json` inside a symbol pack), so the VS Code viewer can open them directly.
 
-> **Single source of truth.** The plugin embeds identical copies of both schemas
-> (`ptx-modeler schema [--ops]`); a plugin test fails when they drift from this directory.
+> **Single source of truth.** The plugin embeds identical copies of all three schemas
+> (`ptx-modeler schema [--ops | --symbol]`); a plugin test fails when they drift from this directory.
 
 ### Opportunity Management (v2)
 
@@ -183,6 +186,8 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | ------- | ----------- |
 | [house.ops.json](examples/house.ops.json) | Operations creating a sample house: 4 rooms, wall graph with L/T/X joins, doors, windows, host-relative sockets/switches and ceiling lights. Validated by `make validate-contract`. |
 | [house.model.json](examples/house.model.json) | The model produced by `ptx-modeler init` + `op apply` of `house.ops.json` (incl. operation log). Validated by `make validate-contract`. |
+| [socket-single.msym.json](examples/socket-single.msym.json) | Symbol element derived from IEC 60617-11 (single socket outlet) with a terminal and a label text field. Validated by `make validate-contract`. |
+| [sensor-temperature.msym.json](examples/sensor-temperature.msym.json) | `custom` symbol element (no standard symbol referenced), as in the ptx-modeler core pack. Validated by `make validate-contract`. |
 
 ### Opportunity Management Examples
 
