@@ -1,0 +1,54 @@
+{
+  "kind": "probe",
+  "url": "https://gitlab.com/kicad/libraries/kicad-symbols",
+  "repository": "kicad/libraries/kicad-symbols",
+  "branch": "master",
+  "known": {
+    "id": "kicad-symbols",
+    "name": "KiCad schematic symbol libraries",
+    "status": "planned",
+    "layer": "curated",
+    "trackingIssue": 140
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "url": "https://gitlab.com/kicad/libraries/kicad-symbols/-/blob/master/LICENSE.md",
+    "usage": "free use in designs of any kind, commercial or closed, without attribution or share-alike (the design exception waives article 3); redistribution of the libraries or parts of them as a collection under CC BY-SA 4.0 with attribution and the license documents",
+    "restrictions": [
+      "share-alike",
+      "attribution"
+    ]
+  },
+  "files": 22900,
+  "histogram": [],
+  "formats": [
+    {
+      "format": "kicad_sym",
+      "name": "KiCad symbol library",
+      "ext": ".kicad_sym",
+      "count": 22900,
+      "signature": "(kicad_symbol_lib",
+      "status": "planned"
+    }
+  ],
+  "classification": "unsupported",
+  "actions": [
+    {
+      "kind": "license-review",
+      "url": "https://gitlab.com/kicad/libraries/kicad-symbols/-/blob/master/LICENSE.md",
+      "explain": "License CC-BY-SA-4.0: free use in designs of any kind, commercial or closed, without attribution or share-alike (the design exception waives article 3); redistribution of the libraries or parts of them as a collection under CC BY-SA 4.0 with attribution and the license documents. Restrictions: share-alike (redistributed derivatives must use the same license); attribution (redistribution requires attribution of the authors). Tell the user these terms and get approval before fetching or converting.",
+      "requires": [
+        "confirmation"
+      ]
+    },
+    {
+      "kind": "track",
+      "command": "gh issue view 140 --repo cassandragargoyle/portunix-plugins",
+      "url": "https://github.com/cassandragargoyle/portunix-plugins/issues/140",
+      "explain": "support for this format is tracked; follow or comment on the issue instead of reporting again"
+    }
+  ],
+  "notes": [
+    "known source kicad-symbols (curated registry): answered from the registry without network access"
+  ]
+}

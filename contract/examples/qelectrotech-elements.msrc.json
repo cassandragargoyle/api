@@ -1,0 +1,337 @@
+{
+  "format": "portunix.modeler.symbol-source/v1",
+  "id": "qelectrotech-elements",
+  "name": "QElectroTech elements collection",
+  "homepage": "https://qelectrotech.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qelectrotech/qelectrotech-elements",
+    "branch": "main"
+  },
+  "license": {
+    "spdx": "CC-BY-3.0",
+    "url": "https://github.com/qelectrotech/qelectrotech-elements/blob/main/ELEMENTS.LICENSE",
+    "usage": "use and modification in diagrams without conditions; redistribution outside a diagram under CC BY 3.0",
+    "restrictions": [
+      "no-ml-training"
+    ]
+  },
+  "formats": [
+    {
+      "format": "elmt",
+      "glob": "**/*.elmt",
+      "count": 8838
+    }
+  ],
+  "domains": [
+    "electrical",
+    "logic",
+    "hydraulic",
+    "pneumatic",
+    "energy"
+  ],
+  "standards": [
+    {
+      "standard": "IEC 60617",
+      "path": "10_electric/91_en_60617"
+    }
+  ],
+  "categories": [
+    {
+      "path": "10_electric",
+      "names": {
+        "cs": "Elektrotechnika",
+        "de": "Elektrik",
+        "en": "Electric",
+        "fr": "Electrique"
+      },
+      "count": 7001
+    },
+    {
+      "path": "10_electric/10_allpole",
+      "names": {
+        "cs": "Vícežilový",
+        "de": "Allpolig",
+        "en": "All-pole",
+        "fr": "Multifilaire"
+      },
+      "count": 941
+    },
+    {
+      "path": "10_electric/11_singlepole",
+      "names": {
+        "cs": "Jednopólové",
+        "de": "Einpolig",
+        "en": "Single pole",
+        "fr": "Unifilaire"
+      },
+      "count": 308
+    },
+    {
+      "path": "10_electric/20_manufacturers_articles",
+      "names": {
+        "cs": "Tovární díly",
+        "de": "Herstellerartikel",
+        "en": "Manufacturers articles",
+        "fr": "Articles constructeurs"
+      },
+      "count": 4102
+    },
+    {
+      "path": "10_electric/90_american_standards",
+      "names": {
+        "cs": "Americký standard (USA)",
+        "de": "Amerikanisch",
+        "en": "American",
+        "fr": "Américain"
+      },
+      "count": 4
+    },
+    {
+      "path": "10_electric/91_en_60617",
+      "names": {
+        "cs": "EN 60617",
+        "de": "DIN EN 60617",
+        "en": "IEC 60617",
+        "fr": "EN 60617"
+      },
+      "count": 912
+    },
+    {
+      "path": "10_electric/98_graphics",
+      "names": {
+        "cs": "Označení",
+        "de": "Grafik",
+        "en": "Graphics",
+        "fr": "Graphisme"
+      },
+      "count": 723
+    },
+    {
+      "path": "10_electric/99_miscellaneous_unsorted",
+      "names": {
+        "cs": "Různé",
+        "de": "Sonstiges und unsortiert",
+        "en": "Miscellaneous and unsorted",
+        "fr": "Divers et non classés"
+      },
+      "count": 11
+    },
+    {
+      "path": "20_logic",
+      "names": {
+        "cs": "logiky",
+        "de": "Logik",
+        "en": "logics",
+        "fr": "logiques"
+      },
+      "count": 75
+    },
+    {
+      "path": "20_logic/2010_logic_gates",
+      "names": {
+        "cs": "logické obvody",
+        "de": "Logikschaltungen",
+        "en": "logic circuits",
+        "fr": "circuits logiques"
+      },
+      "count": 43
+    },
+    {
+      "path": "20_logic/2020_flow_chart",
+      "names": {
+        "cs": "vývojové diagramy",
+        "de": "Ablaufdiagramme",
+        "en": "flowcharts",
+        "fr": "organigrammes"
+      },
+      "count": 32
+    },
+    {
+      "path": "30_hydraulic",
+      "names": {
+        "cs": "Hydraulika",
+        "de": "Hydraulik",
+        "en": "Hydraulic",
+        "fr": "Hydraulique"
+      },
+      "count": 94
+    },
+    {
+      "path": "30_hydraulic/21_tanks",
+      "names": {
+        "cs": "Vodní nádrže",
+        "de": "Behälter",
+        "en": "Tanks",
+        "fr": "Réservoirs"
+      },
+      "count": 2
+    },
+    {
+      "path": "30_hydraulic/31_control_valves",
+      "names": {
+        "cs": "Řídící ventily",
+        "de": "Wegeventile",
+        "en": "Control valves",
+        "fr": "Distributeurs"
+      },
+      "count": 60
+    },
+    {
+      "path": "30_hydraulic/45_valves",
+      "names": {
+        "cs": "Klapky",
+        "de": "Ventile",
+        "en": "Valves",
+        "fr": "Vannes"
+      },
+      "count": 11
+    },
+    {
+      "path": "30_hydraulic/51_cylinders",
+      "names": {
+        "cs": "Válce",
+        "de": "Zylinder",
+        "en": "Cylinders",
+        "fr": "Vérins"
+      },
+      "count": 8
+    },
+    {
+      "path": "30_hydraulic/61_pumps",
+      "names": {
+        "cs": "Čerpadla",
+        "de": "Pumpen",
+        "en": "Pumps",
+        "fr": "Pompes"
+      },
+      "count": 11
+    },
+    {
+      "path": "30_hydraulic/71_exchangers",
+      "names": {
+        "cs": "Výměníky tepla",
+        "de": "Wärmetauscher",
+        "en": "Heat exchanger",
+        "fr": "Echangeurs"
+      },
+      "count": 1
+    },
+    {
+      "path": "30_hydraulic/81_filters",
+      "names": {
+        "cs": "Filtry",
+        "de": "Filter",
+        "en": "Filters",
+        "fr": "Filtres"
+      },
+      "count": 1
+    },
+    {
+      "path": "50_pneumatic",
+      "names": {
+        "cs": "Pneumatika",
+        "de": "Pneumatik",
+        "en": "Pneumatic",
+        "fr": "Pneumatique"
+      },
+      "count": 343
+    },
+    {
+      "path": "50_pneumatic/5010_compressed_air",
+      "names": {
+        "cs": "stlačený vzduch",
+        "de": "Druckluft",
+        "en": "compressed air",
+        "fr": "air comprimé"
+      },
+      "count": 102
+    },
+    {
+      "path": "50_pneumatic/5020_velves",
+      "names": {
+        "cs": "ventily",
+        "de": "Ventile",
+        "en": "valves",
+        "fr": "vannes"
+      },
+      "count": 172
+    },
+    {
+      "path": "50_pneumatic/5030_actuators",
+      "names": {
+        "cs": "Akční členy",
+        "de": "Aktuatoren",
+        "en": "Actuators",
+        "fr": "Actionneurs"
+      },
+      "count": 59
+    },
+    {
+      "path": "50_pneumatic/5040_sensors",
+      "names": {
+        "cs": "Sensor",
+        "de": "Sensor",
+        "en": "Sensor",
+        "fr": "Sensor"
+      },
+      "count": 10
+    },
+    {
+      "path": "60_energy",
+      "names": {
+        "cs": "Energie",
+        "de": "Energietechnik",
+        "en": "Energy",
+        "fr": "Energie"
+      },
+      "count": 1325
+    },
+    {
+      "path": "60_energy/11_water",
+      "names": {
+        "cs": "Voda",
+        "de": "Wasser",
+        "en": "Water",
+        "fr": "Eaux"
+      },
+      "count": 819
+    },
+    {
+      "path": "60_energy/21_refrigeration",
+      "names": {
+        "cs": "Chlazení",
+        "de": "Kältetechnik",
+        "en": "Refrigeration",
+        "fr": "Froid"
+      },
+      "count": 325
+    },
+    {
+      "path": "60_energy/31_solar_thermal",
+      "names": {
+        "cs": "Sluneční tepelné kolektory",
+        "de": "Solar-Thermie",
+        "en": "Solar-thermal",
+        "fr": "Solaire-thermique"
+      },
+      "count": 161
+    },
+    {
+      "path": "60_energy/41_manufacturers_articles",
+      "names": {
+        "cs": "Tovární díly",
+        "de": "Herstellerartikel",
+        "en": "Manufacturers articles",
+        "fr": "Articles constructeurs"
+      },
+      "count": 20
+    }
+  ],
+  "index": {
+    "strategy": "clone",
+    "names": "elmt"
+  },
+  "trackingIssue": 128,
+  "verified": "2026-09-27"
+}

@@ -1,0 +1,783 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/modeler-symbol-discovery.schema.json",
+	"$version": "1.0.0",
+	"title": "ModelerSymbolDiscovery",
+	"description": "JSON output of the Portunix Modeler symbol discovery (ptx-modeler symbol search / sources / index / source probe|add|report with -f json, portunix-plugins #130) and of the ModelerSymbolService discovery RPCs, which return identical bytes. The 'kind' field selects the document type. Every result carries complete next-step actions for AI agents; remote text appears only as a short excerpt marked untrusted.",
+	"oneOf": [
+		{
+			"$ref": "#/$defs/search"
+		},
+		{
+			"$ref": "#/$defs/probe"
+		},
+		{
+			"$ref": "#/$defs/issueDraft"
+		},
+		{
+			"$ref": "#/$defs/sources"
+		},
+		{
+			"$ref": "#/$defs/source"
+		},
+		{
+			"$ref": "#/$defs/index"
+		},
+		{
+			"$ref": "#/$defs/sourceAdded"
+		}
+	],
+	"$defs": {
+		"search": {
+			"type": "object",
+			"required": [
+				"kind",
+				"query",
+				"scopes",
+				"results"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "search"
+				},
+				"query": {
+					"type": "string"
+				},
+				"lang": {
+					"type": "string"
+				},
+				"scopes": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"scope"
+						],
+						"additionalProperties": false,
+						"properties": {
+							"scope": {
+								"enum": [
+									"catalog",
+									"local-index",
+									"remote-metadata"
+								]
+							},
+							"source": {
+								"type": "string"
+							},
+							"revision": {
+								"type": "string"
+							},
+							"symbols": {
+								"type": "integer"
+							}
+						}
+					}
+				},
+				"results": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/result"
+					},
+					"minItems": 1
+				}
+			},
+			"description": "Output of 'symbol search' and the SearchSymbols RPC"
+		},
+		"result": {
+			"type": "object",
+			"required": [
+				"availability",
+				"actions"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"key": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				},
+				"names": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					}
+				},
+				"category": {
+					"type": "string"
+				},
+				"standards": {
+					"type": "array",
+					"items": {
+						"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol.schema.json#/$defs/reference"
+					}
+				},
+				"source": {
+					"type": "string"
+				},
+				"path": {
+					"type": "string"
+				},
+				"format": {
+					"type": "string"
+				},
+				"availability": {
+					"enum": [
+						"in-catalog",
+						"local-source",
+						"remote-source",
+						"unsupported-format",
+						"not-found"
+					]
+				},
+				"license": {
+					"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json#/$defs/license"
+				},
+				"match": {
+					"$ref": "#/$defs/match"
+				},
+				"actions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/action"
+					}
+				}
+			}
+		},
+		"match": {
+			"type": "object",
+			"required": [
+				"score",
+				"field"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"score": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"field": {
+					"type": "string"
+				},
+				"value": {
+					"type": "string"
+				}
+			}
+		},
+		"action": {
+			"type": "object",
+			"required": [
+				"kind"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"enum": [
+						"license-review",
+						"fetch",
+						"index",
+						"convert",
+						"use",
+						"probe",
+						"add",
+						"report",
+						"track"
+					]
+				},
+				"command": {
+					"type": "string",
+					"description": "Complete command; upper case words are placeholders (DIR, PACK, OPS.json, MODEL.model.json, URL, TEXT)"
+				},
+				"url": {
+					"type": "string"
+				},
+				"explain": {
+					"type": "string"
+				},
+				"requires": {
+					"type": "array",
+					"items": {
+						"enum": [
+							"network",
+							"confirmation",
+							"license-review"
+						]
+					}
+				}
+			}
+		},
+		"probe": {
+			"type": "object",
+			"required": [
+				"kind",
+				"url",
+				"license",
+				"files",
+				"histogram",
+				"formats",
+				"classification",
+				"actions"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "probe"
+				},
+				"url": {
+					"type": "string"
+				},
+				"repository": {
+					"type": "string"
+				},
+				"branch": {
+					"type": "string"
+				},
+				"revision": {
+					"type": "string"
+				},
+				"known": {
+					"type": "object",
+					"required": [
+						"id",
+						"name",
+						"status"
+					],
+					"additionalProperties": false,
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"name": {
+							"type": "string"
+						},
+						"status": {
+							"enum": [
+								"supported",
+								"partially-supported",
+								"planned",
+								"unsupported"
+							]
+						},
+						"layer": {
+							"type": "string"
+						},
+						"trackingIssue": {
+							"type": "integer"
+						}
+					}
+				},
+				"license": {
+					"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json#/$defs/license"
+				},
+				"files": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"truncated": {
+					"type": "boolean"
+				},
+				"histogram": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"ext",
+							"count"
+						],
+						"additionalProperties": false,
+						"properties": {
+							"ext": {
+								"type": "string"
+							},
+							"count": {
+								"type": "integer"
+							}
+						}
+					},
+					"maxItems": 20
+				},
+				"formats": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"format",
+							"count",
+							"status"
+						],
+						"additionalProperties": false,
+						"properties": {
+							"format": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"ext": {
+								"type": "string"
+							},
+							"count": {
+								"type": "integer"
+							},
+							"signature": {
+								"type": "string"
+							},
+							"status": {
+								"enum": [
+									"supported",
+									"partially-supported",
+									"planned",
+									"unsupported"
+								]
+							},
+							"converter": {
+								"type": "string"
+							},
+							"samples": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								},
+								"maxItems": 5,
+								"description": "Sample paths only, never file content"
+							}
+						}
+					}
+				},
+				"standards": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"classification": {
+					"enum": [
+						"supported",
+						"partially-supported",
+						"unsupported",
+						"license-unclear",
+						"not-a-symbol-source"
+					]
+				},
+				"actions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/action"
+					}
+				},
+				"notes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"excerpt": {
+					"type": "object",
+					"required": [
+						"untrusted",
+						"text"
+					],
+					"additionalProperties": false,
+					"properties": {
+						"untrusted": {
+							"const": true
+						},
+						"text": {
+							"type": "string",
+							"maxLength": 260
+						}
+					},
+					"description": "Remote text passed on as data, never as instructions"
+				}
+			},
+			"description": "Output of 'symbol source probe' and the ProbeSource RPC; facts only"
+		},
+		"issueDraft": {
+			"type": "object",
+			"required": [
+				"kind",
+				"repo",
+				"source",
+				"title",
+				"body",
+				"labels",
+				"url",
+				"actions"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "issue-draft"
+				},
+				"repo": {
+					"type": "string",
+					"pattern": "^[^/\\s]+/[^/\\s]+$"
+				},
+				"source": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				},
+				"body": {
+					"type": "string"
+				},
+				"labels": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"url": {
+					"type": "string",
+					"description": "Prefilled new-issue URL"
+				},
+				"urlTruncated": {
+					"type": "boolean"
+				},
+				"existing": {
+					"$ref": "#/$defs/issueRef"
+				},
+				"created": {
+					"$ref": "#/$defs/issueRef"
+				},
+				"actions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/action"
+					}
+				},
+				"notes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"description": "Output of 'symbol source report' and the DraftSourceIssue RPC"
+		},
+		"issueRef": {
+			"type": "object",
+			"required": [
+				"number",
+				"url"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"number": {
+					"type": "integer",
+					"minimum": 1
+				},
+				"title": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			}
+		},
+		"sources": {
+			"type": "object",
+			"required": [
+				"kind",
+				"converters",
+				"sources"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "sources"
+				},
+				"converters": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"sources": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"id",
+							"name",
+							"layer",
+							"status",
+							"formats",
+							"license",
+							"indexed"
+						],
+						"additionalProperties": false,
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"layer": {
+								"type": "string"
+							},
+							"url": {
+								"type": "string"
+							},
+							"status": {
+								"enum": [
+									"supported",
+									"partially-supported",
+									"planned",
+									"unsupported"
+								]
+							},
+							"formats": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"required": [
+										"format",
+										"status"
+									],
+									"additionalProperties": false,
+									"properties": {
+										"format": {
+											"type": "string"
+										},
+										"count": {
+											"type": "integer"
+										},
+										"status": {
+											"enum": [
+												"supported",
+												"partially-supported",
+												"planned",
+												"unsupported"
+											]
+										},
+										"converter": {
+											"type": "string"
+										}
+									}
+								}
+							},
+							"license": {
+								"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json#/$defs/license"
+							},
+							"verified": {
+								"type": "string"
+							},
+							"trackingIssue": {
+								"type": "integer"
+							},
+							"indexed": {
+								"type": "boolean"
+							}
+						}
+					}
+				}
+			},
+			"description": "Output of 'symbol sources list' and the ListSources RPC"
+		},
+		"source": {
+			"type": "object",
+			"required": [
+				"kind",
+				"layer",
+				"status",
+				"source",
+				"indexes"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "source"
+				},
+				"layer": {
+					"type": "string"
+				},
+				"file": {
+					"type": "string"
+				},
+				"status": {
+					"type": "object",
+					"required": [
+						"status",
+						"formats"
+					],
+					"additionalProperties": false,
+					"properties": {
+						"status": {
+							"enum": [
+								"supported",
+								"partially-supported",
+								"planned",
+								"unsupported"
+							]
+						},
+						"formats": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"required": [
+									"format",
+									"status"
+								],
+								"additionalProperties": false,
+								"properties": {
+									"format": {
+										"type": "string"
+									},
+									"count": {
+										"type": "integer"
+									},
+									"status": {
+										"enum": [
+											"supported",
+											"partially-supported",
+											"planned",
+											"unsupported"
+										]
+									},
+									"converter": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"source": {
+					"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json"
+				},
+				"indexes": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"source",
+							"format",
+							"root",
+							"symbols"
+						],
+						"additionalProperties": false,
+						"properties": {
+							"source": {
+								"type": "string"
+							},
+							"format": {
+								"type": "string"
+							},
+							"revision": {
+								"type": "string"
+							},
+							"root": {
+								"type": "string"
+							},
+							"symbols": {
+								"type": "integer"
+							},
+							"built": {
+								"type": "string"
+							},
+							"file": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			},
+			"description": "Output of 'symbol sources show' and the GetSource RPC"
+		},
+		"index": {
+			"type": "object",
+			"required": [
+				"kind",
+				"indexes"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "index"
+				},
+				"indexes": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"source",
+							"format",
+							"root",
+							"symbols"
+						],
+						"additionalProperties": false,
+						"properties": {
+							"source": {
+								"type": "string"
+							},
+							"format": {
+								"type": "string"
+							},
+							"revision": {
+								"type": "string"
+							},
+							"root": {
+								"type": "string"
+							},
+							"symbols": {
+								"type": "integer"
+							},
+							"built": {
+								"type": "string"
+							},
+							"file": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"warnings": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"description": "Output of 'symbol index build' and 'symbol index list'"
+		},
+		"sourceAdded": {
+			"type": "object",
+			"required": [
+				"kind",
+				"file",
+				"status",
+				"source"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "source-added"
+				},
+				"file": {
+					"type": "string"
+				},
+				"status": {
+					"enum": [
+						"supported",
+						"partially-supported",
+						"planned",
+						"unsupported"
+					]
+				},
+				"source": {
+					"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json"
+				}
+			},
+			"description": "Output of 'symbol source add'"
+		}
+	}
+}

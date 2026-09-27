@@ -1,0 +1,1600 @@
+{
+  "format": "portunix.modeler.symbol-source/v1",
+  "id": "kicad-symbols",
+  "name": "KiCad schematic symbol libraries",
+  "homepage": "https://www.kicad.org/libraries/",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/kicad/libraries/kicad-symbols",
+    "branch": "master"
+  },
+  "license": {
+    "spdx": "CC-BY-SA-4.0",
+    "url": "https://gitlab.com/kicad/libraries/kicad-symbols/-/blob/master/LICENSE.md",
+    "usage": "free use in designs of any kind, commercial or closed, without attribution or share-alike (the design exception waives article 3); redistribution of the libraries or parts of them as a collection under CC BY-SA 4.0 with attribution and the license documents",
+    "restrictions": [
+      "share-alike",
+      "attribution"
+    ]
+  },
+  "formats": [
+    {
+      "format": "kicad_sym",
+      "glob": "**/*.kicad_sym",
+      "count": 22900
+    }
+  ],
+  "domains": [
+    "electronic",
+    "electrical"
+  ],
+  "categories": [
+    {
+      "path": "4xxx_IEEE.kicad_symdir",
+      "names": {
+        "en": "4xxx_IEEE"
+      },
+      "count": 99
+    },
+    {
+      "path": "4xxx.kicad_symdir",
+      "names": {
+        "en": "4xxx"
+      },
+      "count": 51
+    },
+    {
+      "path": "74xGxx.kicad_symdir",
+      "names": {
+        "en": "74xGxx"
+      },
+      "count": 174
+    },
+    {
+      "path": "74xx_IEEE.kicad_symdir",
+      "names": {
+        "en": "74xx_IEEE"
+      },
+      "count": 185
+    },
+    {
+      "path": "74xx.kicad_symdir",
+      "names": {
+        "en": "74xx"
+      },
+      "count": 277
+    },
+    {
+      "path": "Amplifier_Audio.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Audio"
+      },
+      "count": 107
+    },
+    {
+      "path": "Amplifier_Buffer.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Buffer"
+      },
+      "count": 12
+    },
+    {
+      "path": "Amplifier_Current.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Current"
+      },
+      "count": 152
+    },
+    {
+      "path": "Amplifier_Difference.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Difference"
+      },
+      "count": 18
+    },
+    {
+      "path": "Amplifier_Instrumentation.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Instrumentation"
+      },
+      "count": 42
+    },
+    {
+      "path": "Amplifier_Operational.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Operational"
+      },
+      "count": 436
+    },
+    {
+      "path": "Amplifier_Video.kicad_symdir",
+      "names": {
+        "en": "Amplifier_Video"
+      },
+      "count": 3
+    },
+    {
+      "path": "Analog_ADC.kicad_symdir",
+      "names": {
+        "en": "Analog_ADC"
+      },
+      "count": 189
+    },
+    {
+      "path": "Analog_DAC.kicad_symdir",
+      "names": {
+        "en": "Analog_DAC"
+      },
+      "count": 156
+    },
+    {
+      "path": "Analog.kicad_symdir",
+      "names": {
+        "en": "Analog"
+      },
+      "count": 22
+    },
+    {
+      "path": "Analog_Switch.kicad_symdir",
+      "names": {
+        "en": "Analog_Switch"
+      },
+      "count": 170
+    },
+    {
+      "path": "Audio.kicad_symdir",
+      "names": {
+        "en": "Audio"
+      },
+      "count": 118
+    },
+    {
+      "path": "Auxiliary_Items.kicad_symdir",
+      "names": {
+        "en": "Auxiliary_Items"
+      },
+      "count": 22
+    },
+    {
+      "path": "Battery_Management.kicad_symdir",
+      "names": {
+        "en": "Battery_Management"
+      },
+      "count": 159
+    },
+    {
+      "path": "Buffer.kicad_symdir",
+      "names": {
+        "en": "Buffer"
+      },
+      "count": 2
+    },
+    {
+      "path": "Comparator.kicad_symdir",
+      "names": {
+        "en": "Comparator"
+      },
+      "count": 61
+    },
+    {
+      "path": "Connector_Audio.kicad_symdir",
+      "names": {
+        "en": "Connector_Audio"
+      },
+      "count": 233
+    },
+    {
+      "path": "Connector_Generic.kicad_symdir",
+      "names": {
+        "en": "Connector_Generic"
+      },
+      "count": 334
+    },
+    {
+      "path": "Connector_Generic_MountingPin.kicad_symdir",
+      "names": {
+        "en": "Connector_Generic_MountingPin"
+      },
+      "count": 334
+    },
+    {
+      "path": "Connector_Generic_Shielded.kicad_symdir",
+      "names": {
+        "en": "Connector_Generic_Shielded"
+      },
+      "count": 335
+    },
+    {
+      "path": "Connector.kicad_symdir",
+      "names": {
+        "en": "Connector"
+      },
+      "count": 401
+    },
+    {
+      "path": "Converter_ACDC.kicad_symdir",
+      "names": {
+        "en": "Converter_ACDC"
+      },
+      "count": 242
+    },
+    {
+      "path": "Converter_DCDC_Isolated.kicad_symdir",
+      "names": {
+        "en": "Converter_DCDC_Isolated"
+      },
+      "count": 1162
+    },
+    {
+      "path": "Converter_DCDC.kicad_symdir",
+      "names": {
+        "en": "Converter_DCDC"
+      },
+      "count": 181
+    },
+    {
+      "path": "CPLD_Altera.kicad_symdir",
+      "names": {
+        "en": "CPLD_Altera"
+      },
+      "count": 26
+    },
+    {
+      "path": "CPLD_Microchip.kicad_symdir",
+      "names": {
+        "en": "CPLD_Microchip"
+      },
+      "count": 8
+    },
+    {
+      "path": "CPLD_Renesas.kicad_symdir",
+      "names": {
+        "en": "CPLD_Renesas"
+      },
+      "count": 5
+    },
+    {
+      "path": "CPLD_Xilinx.kicad_symdir",
+      "names": {
+        "en": "CPLD_Xilinx"
+      },
+      "count": 22
+    },
+    {
+      "path": "CPU.kicad_symdir",
+      "names": {
+        "en": "CPU"
+      },
+      "count": 8
+    },
+    {
+      "path": "CPU_NXP_68000.kicad_symdir",
+      "names": {
+        "en": "CPU_NXP_68000"
+      },
+      "count": 6
+    },
+    {
+      "path": "CPU_NXP_6800.kicad_symdir",
+      "names": {
+        "en": "CPU_NXP_6800"
+      },
+      "count": 12
+    },
+    {
+      "path": "CPU_NXP_IMX.kicad_symdir",
+      "names": {
+        "en": "CPU_NXP_IMX"
+      },
+      "count": 18
+    },
+    {
+      "path": "CPU_PowerPC.kicad_symdir",
+      "names": {
+        "en": "CPU_PowerPC"
+      },
+      "count": 1
+    },
+    {
+      "path": "Device.kicad_symdir",
+      "names": {
+        "en": "Device"
+      },
+      "count": 537
+    },
+    {
+      "path": "Diode_Bridge.kicad_symdir",
+      "names": {
+        "en": "Diode_Bridge"
+      },
+      "count": 214
+    },
+    {
+      "path": "Diode.kicad_symdir",
+      "names": {
+        "en": "Diode"
+      },
+      "count": 763
+    },
+    {
+      "path": "Diode_Laser.kicad_symdir",
+      "names": {
+        "en": "Diode_Laser"
+      },
+      "count": 5
+    },
+    {
+      "path": "Display_Graphic.kicad_symdir",
+      "names": {
+        "en": "Display_Graphic"
+      },
+      "count": 40
+    },
+    {
+      "path": "Display_Character.kicad_symdir",
+      "names": {
+        "en": "Display_Character"
+      },
+      "count": 130
+    },
+    {
+      "path": "Driver_Display.kicad_symdir",
+      "names": {
+        "en": "Driver_Display"
+      },
+      "count": 15
+    },
+    {
+      "path": "Driver_FET.kicad_symdir",
+      "names": {
+        "en": "Driver_FET"
+      },
+      "count": 217
+    },
+    {
+      "path": "Driver.kicad_symdir",
+      "names": {
+        "en": "Driver"
+      },
+      "count": 10
+    },
+    {
+      "path": "Driver_LED.kicad_symdir",
+      "names": {
+        "en": "Driver_LED"
+      },
+      "count": 131
+    },
+    {
+      "path": "Driver_Motor.kicad_symdir",
+      "names": {
+        "en": "Driver_Motor"
+      },
+      "count": 100
+    },
+    {
+      "path": "DSP_AnalogDevices.kicad_symdir",
+      "names": {
+        "en": "DSP_AnalogDevices"
+      },
+      "count": 5
+    },
+    {
+      "path": "DSP_Freescale.kicad_symdir",
+      "names": {
+        "en": "DSP_Freescale"
+      },
+      "count": 1
+    },
+    {
+      "path": "DSP_Microchip_DSPIC33.kicad_symdir",
+      "names": {
+        "en": "DSP_Microchip_DSPIC33"
+      },
+      "count": 19
+    },
+    {
+      "path": "DSP_Motorola.kicad_symdir",
+      "names": {
+        "en": "DSP_Motorola"
+      },
+      "count": 1
+    },
+    {
+      "path": "DSP_Texas.kicad_symdir",
+      "names": {
+        "en": "DSP_Texas"
+      },
+      "count": 1
+    },
+    {
+      "path": "Fiber_Optic.kicad_symdir",
+      "names": {
+        "en": "Fiber_Optic"
+      },
+      "count": 2
+    },
+    {
+      "path": "Filter.kicad_symdir",
+      "names": {
+        "en": "Filter"
+      },
+      "count": 141
+    },
+    {
+      "path": "FPGA_Altera_MAX10.kicad_symdir",
+      "names": {
+        "en": "FPGA_Altera_MAX10"
+      },
+      "count": 2
+    },
+    {
+      "path": "FPGA_CologneChip_GateMate.kicad_symdir",
+      "names": {
+        "en": "FPGA_CologneChip_GateMate"
+      },
+      "count": 1
+    },
+    {
+      "path": "FPGA_Efinix_Trion.kicad_symdir",
+      "names": {
+        "en": "FPGA_Efinix_Trion"
+      },
+      "count": 1
+    },
+    {
+      "path": "FPGA_Lattice.kicad_symdir",
+      "names": {
+        "en": "FPGA_Lattice"
+      },
+      "count": 25
+    },
+    {
+      "path": "FPGA_Microsemi.kicad_symdir",
+      "names": {
+        "en": "FPGA_Microsemi"
+      },
+      "count": 18
+    },
+    {
+      "path": "FPGA_Xilinx_Artix7.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx_Artix7"
+      },
+      "count": 27
+    },
+    {
+      "path": "FPGA_Xilinx.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx"
+      },
+      "count": 34
+    },
+    {
+      "path": "FPGA_Xilinx_Kintex7.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx_Kintex7"
+      },
+      "count": 18
+    },
+    {
+      "path": "FPGA_Xilinx_Spartan6.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx_Spartan6"
+      },
+      "count": 45
+    },
+    {
+      "path": "FPGA_Xilinx_Virtex5.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx_Virtex5"
+      },
+      "count": 41
+    },
+    {
+      "path": "FPGA_Xilinx_Virtex6.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx_Virtex6"
+      },
+      "count": 28
+    },
+    {
+      "path": "FPGA_Xilinx_Virtex7.kicad_symdir",
+      "names": {
+        "en": "FPGA_Xilinx_Virtex7"
+      },
+      "count": 34
+    },
+    {
+      "path": "GPU.kicad_symdir",
+      "names": {
+        "en": "GPU"
+      },
+      "count": 3
+    },
+    {
+      "path": "Graphic.kicad_symdir",
+      "names": {
+        "en": "Graphic"
+      },
+      "count": 33
+    },
+    {
+      "path": "Interface_CAN_LIN.kicad_symdir",
+      "names": {
+        "en": "Interface_CAN_LIN"
+      },
+      "count": 98
+    },
+    {
+      "path": "Interface_CurrentLoop.kicad_symdir",
+      "names": {
+        "en": "Interface_CurrentLoop"
+      },
+      "count": 3
+    },
+    {
+      "path": "Interface_Ethernet.kicad_symdir",
+      "names": {
+        "en": "Interface_Ethernet"
+      },
+      "count": 36
+    },
+    {
+      "path": "Interface_Expansion.kicad_symdir",
+      "names": {
+        "en": "Interface_Expansion"
+      },
+      "count": 111
+    },
+    {
+      "path": "Interface_HDMI.kicad_symdir",
+      "names": {
+        "en": "Interface_HDMI"
+      },
+      "count": 2
+    },
+    {
+      "path": "Interface_HID.kicad_symdir",
+      "names": {
+        "en": "Interface_HID"
+      },
+      "count": 5
+    },
+    {
+      "path": "Interface.kicad_symdir",
+      "names": {
+        "en": "Interface"
+      },
+      "count": 116
+    },
+    {
+      "path": "Interface_LineDriver.kicad_symdir",
+      "names": {
+        "en": "Interface_LineDriver"
+      },
+      "count": 16
+    },
+    {
+      "path": "Interface_Optical.kicad_symdir",
+      "names": {
+        "en": "Interface_Optical"
+      },
+      "count": 43
+    },
+    {
+      "path": "Interface_Telecom.kicad_symdir",
+      "names": {
+        "en": "Interface_Telecom"
+      },
+      "count": 3
+    },
+    {
+      "path": "Interface_UART.kicad_symdir",
+      "names": {
+        "en": "Interface_UART"
+      },
+      "count": 168
+    },
+    {
+      "path": "Interface_USB.kicad_symdir",
+      "names": {
+        "en": "Interface_USB"
+      },
+      "count": 145
+    },
+    {
+      "path": "Isolator_Analog.kicad_symdir",
+      "names": {
+        "en": "Isolator_Analog"
+      },
+      "count": 18
+    },
+    {
+      "path": "Isolator.kicad_symdir",
+      "names": {
+        "en": "Isolator"
+      },
+      "count": 432
+    },
+    {
+      "path": "Jumper.kicad_symdir",
+      "names": {
+        "en": "Jumper"
+      },
+      "count": 11
+    },
+    {
+      "path": "LED.kicad_symdir",
+      "names": {
+        "en": "LED"
+      },
+      "count": 64
+    },
+    {
+      "path": "Logic_LevelTranslator.kicad_symdir",
+      "names": {
+        "en": "Logic_LevelTranslator"
+      },
+      "count": 61
+    },
+    {
+      "path": "Logic_Programmable.kicad_symdir",
+      "names": {
+        "en": "Logic_Programmable"
+      },
+      "count": 16
+    },
+    {
+      "path": "MCU_AnalogDevices.kicad_symdir",
+      "names": {
+        "en": "MCU_AnalogDevices"
+      },
+      "count": 3
+    },
+    {
+      "path": "MCU_Cypress.kicad_symdir",
+      "names": {
+        "en": "MCU_Cypress"
+      },
+      "count": 36
+    },
+    {
+      "path": "MCU_Dialog.kicad_symdir",
+      "names": {
+        "en": "MCU_Dialog"
+      },
+      "count": 2
+    },
+    {
+      "path": "MCU_Espressif.kicad_symdir",
+      "names": {
+        "en": "MCU_Espressif"
+      },
+      "count": 7
+    },
+    {
+      "path": "MCU_Intel.kicad_symdir",
+      "names": {
+        "en": "MCU_Intel"
+      },
+      "count": 31
+    },
+    {
+      "path": "MCU_Microchip_8051.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_8051"
+      },
+      "count": 15
+    },
+    {
+      "path": "MCU_Microchip_ATmega.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_ATmega"
+      },
+      "count": 440
+    },
+    {
+      "path": "MCU_Microchip_ATtiny.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_ATtiny"
+      },
+      "count": 223
+    },
+    {
+      "path": "MCU_Microchip_AVR_Dx.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_AVR_Dx"
+      },
+      "count": 50
+    },
+    {
+      "path": "MCU_Microchip_AVR.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_AVR"
+      },
+      "count": 19
+    },
+    {
+      "path": "MCU_Microchip_PIC10.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_PIC10"
+      },
+      "count": 24
+    },
+    {
+      "path": "MCU_Microchip_PIC12.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_PIC12"
+      },
+      "count": 114
+    },
+    {
+      "path": "MCU_Microchip_PIC16.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_PIC16"
+      },
+      "count": 260
+    },
+    {
+      "path": "MCU_Microchip_PIC18.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_PIC18"
+      },
+      "count": 172
+    },
+    {
+      "path": "MCU_Microchip_PIC24.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_PIC24"
+      },
+      "count": 7
+    },
+    {
+      "path": "MCU_Microchip_PIC32.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_PIC32"
+      },
+      "count": 17
+    },
+    {
+      "path": "MCU_Microchip_SAMA.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_SAMA"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_Microchip_SAMD.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_SAMD"
+      },
+      "count": 87
+    },
+    {
+      "path": "MCU_Microchip_SAME.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_SAME"
+      },
+      "count": 16
+    },
+    {
+      "path": "MCU_Microchip_SAML.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_SAML"
+      },
+      "count": 20
+    },
+    {
+      "path": "MCU_Microchip_SAMV.kicad_symdir",
+      "names": {
+        "en": "MCU_Microchip_SAMV"
+      },
+      "count": 3
+    },
+    {
+      "path": "MCU_Module.kicad_symdir",
+      "names": {
+        "en": "MCU_Module"
+      },
+      "count": 64
+    },
+    {
+      "path": "MCU_Nordic.kicad_symdir",
+      "names": {
+        "en": "MCU_Nordic"
+      },
+      "count": 12
+    },
+    {
+      "path": "MCU_NXP_ColdFire.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_ColdFire"
+      },
+      "count": 6
+    },
+    {
+      "path": "MCU_NXP_HC11.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_HC11"
+      },
+      "count": 10
+    },
+    {
+      "path": "MCU_NXP_HC12.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_HC12"
+      },
+      "count": 2
+    },
+    {
+      "path": "MCU_NXP_HCS12.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_HCS12"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_NXP_Kinetis.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_Kinetis"
+      },
+      "count": 155
+    },
+    {
+      "path": "MCU_NXP_LPC.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_LPC"
+      },
+      "count": 106
+    },
+    {
+      "path": "MCU_NXP_MAC7100.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_MAC7100"
+      },
+      "count": 2
+    },
+    {
+      "path": "MCU_NXP_MCore.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_MCore"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_NXP_NTAG.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_NTAG"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_NXP_S08.kicad_symdir",
+      "names": {
+        "en": "MCU_NXP_S08"
+      },
+      "count": 189
+    },
+    {
+      "path": "MCU_Parallax.kicad_symdir",
+      "names": {
+        "en": "MCU_Parallax"
+      },
+      "count": 3
+    },
+    {
+      "path": "MCU_Puya.kicad_symdir",
+      "names": {
+        "en": "MCU_Puya"
+      },
+      "count": 2
+    },
+    {
+      "path": "MCU_RaspberryPi.kicad_symdir",
+      "names": {
+        "en": "MCU_RaspberryPi"
+      },
+      "count": 5
+    },
+    {
+      "path": "MCU_Renesas_Synergy_S1.kicad_symdir",
+      "names": {
+        "en": "MCU_Renesas_Synergy_S1"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_SiFive.kicad_symdir",
+      "names": {
+        "en": "MCU_SiFive"
+      },
+      "count": 3
+    },
+    {
+      "path": "MCU_SiliconLabs.kicad_symdir",
+      "names": {
+        "en": "MCU_SiliconLabs"
+      },
+      "count": 48
+    },
+    {
+      "path": "MCU_STC.kicad_symdir",
+      "names": {
+        "en": "MCU_STC"
+      },
+      "count": 10
+    },
+    {
+      "path": "MCU_ST_STM32C0.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32C0"
+      },
+      "count": 57
+    },
+    {
+      "path": "MCU_ST_STM32F0.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32F0"
+      },
+      "count": 133
+    },
+    {
+      "path": "MCU_ST_STM32F1.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32F1"
+      },
+      "count": 178
+    },
+    {
+      "path": "MCU_ST_STM32F2.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32F2"
+      },
+      "count": 62
+    },
+    {
+      "path": "MCU_ST_STM32F3.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32F3"
+      },
+      "count": 126
+    },
+    {
+      "path": "MCU_ST_STM32F4.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32F4"
+      },
+      "count": 300
+    },
+    {
+      "path": "MCU_ST_STM32F7.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32F7"
+      },
+      "count": 156
+    },
+    {
+      "path": "MCU_ST_STM32G0.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32G0"
+      },
+      "count": 228
+    },
+    {
+      "path": "MCU_ST_STM32G4.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32G4"
+      },
+      "count": 165
+    },
+    {
+      "path": "MCU_ST_STM32H5.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32H5"
+      },
+      "count": 73
+    },
+    {
+      "path": "MCU_ST_STM32H7.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32H7"
+      },
+      "count": 225
+    },
+    {
+      "path": "MCU_ST_STM32L0.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32L0"
+      },
+      "count": 245
+    },
+    {
+      "path": "MCU_ST_STM32L1.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32L1"
+      },
+      "count": 158
+    },
+    {
+      "path": "MCU_ST_STM32L4.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32L4"
+      },
+      "count": 320
+    },
+    {
+      "path": "MCU_ST_STM32L5.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32L5"
+      },
+      "count": 44
+    },
+    {
+      "path": "MCU_ST_STM32MP1.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32MP1"
+      },
+      "count": 84
+    },
+    {
+      "path": "MCU_ST_STM32U0.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32U0"
+      },
+      "count": 48
+    },
+    {
+      "path": "MCU_ST_STM32U5.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32U5"
+      },
+      "count": 162
+    },
+    {
+      "path": "MCU_ST_STM32WB.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32WB"
+      },
+      "count": 40
+    },
+    {
+      "path": "MCU_ST_STM32WL.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM32WL"
+      },
+      "count": 16
+    },
+    {
+      "path": "MCU_ST_STM8.kicad_symdir",
+      "names": {
+        "en": "MCU_ST_STM8"
+      },
+      "count": 36
+    },
+    {
+      "path": "MCU_Texas.kicad_symdir",
+      "names": {
+        "en": "MCU_Texas"
+      },
+      "count": 23
+    },
+    {
+      "path": "MCU_Texas_MSP430.kicad_symdir",
+      "names": {
+        "en": "MCU_Texas_MSP430"
+      },
+      "count": 361
+    },
+    {
+      "path": "MCU_Texas_SimpleLink.kicad_symdir",
+      "names": {
+        "en": "MCU_Texas_SimpleLink"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_Trident.kicad_symdir",
+      "names": {
+        "en": "MCU_Trident"
+      },
+      "count": 1
+    },
+    {
+      "path": "MCU_WCH_RiscV.kicad_symdir",
+      "names": {
+        "en": "MCU_WCH_RiscV"
+      },
+      "count": 15
+    },
+    {
+      "path": "Mechanical.kicad_symdir",
+      "names": {
+        "en": "Mechanical"
+      },
+      "count": 13
+    },
+    {
+      "path": "Memory_EEPROM.kicad_symdir",
+      "names": {
+        "en": "Memory_EEPROM"
+      },
+      "count": 100
+    },
+    {
+      "path": "Memory_EPROM.kicad_symdir",
+      "names": {
+        "en": "Memory_EPROM"
+      },
+      "count": 13
+    },
+    {
+      "path": "Memory_Flash.kicad_symdir",
+      "names": {
+        "en": "Memory_Flash"
+      },
+      "count": 64
+    },
+    {
+      "path": "Memory_NVRAM.kicad_symdir",
+      "names": {
+        "en": "Memory_NVRAM"
+      },
+      "count": 32
+    },
+    {
+      "path": "Memory_RAM.kicad_symdir",
+      "names": {
+        "en": "Memory_RAM"
+      },
+      "count": 102
+    },
+    {
+      "path": "Memory_ROM.kicad_symdir",
+      "names": {
+        "en": "Memory_ROM"
+      },
+      "count": 2
+    },
+    {
+      "path": "Memory_UniqueID.kicad_symdir",
+      "names": {
+        "en": "Memory_UniqueID"
+      },
+      "count": 2
+    },
+    {
+      "path": "Motor.kicad_symdir",
+      "names": {
+        "en": "Motor"
+      },
+      "count": 23
+    },
+    {
+      "path": "Oscillator.kicad_symdir",
+      "names": {
+        "en": "Oscillator"
+      },
+      "count": 121
+    },
+    {
+      "path": "Potentiometer_Digital.kicad_symdir",
+      "names": {
+        "en": "Potentiometer_Digital"
+      },
+      "count": 64
+    },
+    {
+      "path": "power.kicad_symdir",
+      "names": {
+        "en": "power"
+      },
+      "count": 101
+    },
+    {
+      "path": "Power_Management.kicad_symdir",
+      "names": {
+        "en": "Power_Management"
+      },
+      "count": 286
+    },
+    {
+      "path": "Power_Protection.kicad_symdir",
+      "names": {
+        "en": "Power_Protection"
+      },
+      "count": 143
+    },
+    {
+      "path": "Power_Supervisor.kicad_symdir",
+      "names": {
+        "en": "Power_Supervisor"
+      },
+      "count": 94
+    },
+    {
+      "path": "Reference_Current.kicad_symdir",
+      "names": {
+        "en": "Reference_Current"
+      },
+      "count": 12
+    },
+    {
+      "path": "Reference_Voltage.kicad_symdir",
+      "names": {
+        "en": "Reference_Voltage"
+      },
+      "count": 355
+    },
+    {
+      "path": "Regulator_Controller.kicad_symdir",
+      "names": {
+        "en": "Regulator_Controller"
+      },
+      "count": 154
+    },
+    {
+      "path": "Regulator_Current.kicad_symdir",
+      "names": {
+        "en": "Regulator_Current"
+      },
+      "count": 2
+    },
+    {
+      "path": "Regulator_Linear.kicad_symdir",
+      "names": {
+        "en": "Regulator_Linear"
+      },
+      "count": 1629
+    },
+    {
+      "path": "Regulator_SwitchedCapacitor.kicad_symdir",
+      "names": {
+        "en": "Regulator_SwitchedCapacitor"
+      },
+      "count": 40
+    },
+    {
+      "path": "Regulator_Switching.kicad_symdir",
+      "names": {
+        "en": "Regulator_Switching"
+      },
+      "count": 1071
+    },
+    {
+      "path": "Relay.kicad_symdir",
+      "names": {
+        "en": "Relay"
+      },
+      "count": 258
+    },
+    {
+      "path": "Relay_SolidState.kicad_symdir",
+      "names": {
+        "en": "Relay_SolidState"
+      },
+      "count": 120
+    },
+    {
+      "path": "RF_AM_FM.kicad_symdir",
+      "names": {
+        "en": "RF_AM_FM"
+      },
+      "count": 13
+    },
+    {
+      "path": "RF_Amplifier.kicad_symdir",
+      "names": {
+        "en": "RF_Amplifier"
+      },
+      "count": 77
+    },
+    {
+      "path": "RF_Bluetooth.kicad_symdir",
+      "names": {
+        "en": "RF_Bluetooth"
+      },
+      "count": 14
+    },
+    {
+      "path": "RF_Filter.kicad_symdir",
+      "names": {
+        "en": "RF_Filter"
+      },
+      "count": 201
+    },
+    {
+      "path": "RF_GPS.kicad_symdir",
+      "names": {
+        "en": "RF_GPS"
+      },
+      "count": 26
+    },
+    {
+      "path": "RF_GSM.kicad_symdir",
+      "names": {
+        "en": "RF_GSM"
+      },
+      "count": 22
+    },
+    {
+      "path": "RF.kicad_symdir",
+      "names": {
+        "en": "RF"
+      },
+      "count": 66
+    },
+    {
+      "path": "RF_Mixer.kicad_symdir",
+      "names": {
+        "en": "RF_Mixer"
+      },
+      "count": 8
+    },
+    {
+      "path": "RF_Module.kicad_symdir",
+      "names": {
+        "en": "RF_Module"
+      },
+      "count": 85
+    },
+    {
+      "path": "RF_NFC.kicad_symdir",
+      "names": {
+        "en": "RF_NFC"
+      },
+      "count": 9
+    },
+    {
+      "path": "RF_RFID.kicad_symdir",
+      "names": {
+        "en": "RF_RFID"
+      },
+      "count": 2
+    },
+    {
+      "path": "RF_Switch.kicad_symdir",
+      "names": {
+        "en": "RF_Switch"
+      },
+      "count": 31
+    },
+    {
+      "path": "RF_WiFi.kicad_symdir",
+      "names": {
+        "en": "RF_WiFi"
+      },
+      "count": 2
+    },
+    {
+      "path": "RF_ZigBee.kicad_symdir",
+      "names": {
+        "en": "RF_ZigBee"
+      },
+      "count": 8
+    },
+    {
+      "path": "Security.kicad_symdir",
+      "names": {
+        "en": "Security"
+      },
+      "count": 7
+    },
+    {
+      "path": "Sensor_Audio.kicad_symdir",
+      "names": {
+        "en": "Sensor_Audio"
+      },
+      "count": 8
+    },
+    {
+      "path": "Sensor_Current.kicad_symdir",
+      "names": {
+        "en": "Sensor_Current"
+      },
+      "count": 261
+    },
+    {
+      "path": "Sensor_Distance.kicad_symdir",
+      "names": {
+        "en": "Sensor_Distance"
+      },
+      "count": 5
+    },
+    {
+      "path": "Sensor_Energy.kicad_symdir",
+      "names": {
+        "en": "Sensor_Energy"
+      },
+      "count": 46
+    },
+    {
+      "path": "Sensor_Gas.kicad_symdir",
+      "names": {
+        "en": "Sensor_Gas"
+      },
+      "count": 15
+    },
+    {
+      "path": "Sensor_Humidity.kicad_symdir",
+      "names": {
+        "en": "Sensor_Humidity"
+      },
+      "count": 15
+    },
+    {
+      "path": "Sensor.kicad_symdir",
+      "names": {
+        "en": "Sensor"
+      },
+      "count": 16
+    },
+    {
+      "path": "Sensor_Magnetic.kicad_symdir",
+      "names": {
+        "en": "Sensor_Magnetic"
+      },
+      "count": 76
+    },
+    {
+      "path": "Sensor_Motion.kicad_symdir",
+      "names": {
+        "en": "Sensor_Motion"
+      },
+      "count": 35
+    },
+    {
+      "path": "Sensor_Optical.kicad_symdir",
+      "names": {
+        "en": "Sensor_Optical"
+      },
+      "count": 75
+    },
+    {
+      "path": "Sensor_Pressure.kicad_symdir",
+      "names": {
+        "en": "Sensor_Pressure"
+      },
+      "count": 27
+    },
+    {
+      "path": "Sensor_Proximity.kicad_symdir",
+      "names": {
+        "en": "Sensor_Proximity"
+      },
+      "count": 36
+    },
+    {
+      "path": "Sensor_Temperature.kicad_symdir",
+      "names": {
+        "en": "Sensor_Temperature"
+      },
+      "count": 120
+    },
+    {
+      "path": "Sensor_Touch.kicad_symdir",
+      "names": {
+        "en": "Sensor_Touch"
+      },
+      "count": 24
+    },
+    {
+      "path": "Sensor_Voltage.kicad_symdir",
+      "names": {
+        "en": "Sensor_Voltage"
+      },
+      "count": 1
+    },
+    {
+      "path": "Simulation_SPICE.kicad_symdir",
+      "names": {
+        "en": "Simulation_SPICE"
+      },
+      "count": 42
+    },
+    {
+      "path": "Switch.kicad_symdir",
+      "names": {
+        "en": "Switch"
+      },
+      "count": 80
+    },
+    {
+      "path": "Timer.kicad_symdir",
+      "names": {
+        "en": "Timer"
+      },
+      "count": 67
+    },
+    {
+      "path": "Timer_PLL.kicad_symdir",
+      "names": {
+        "en": "Timer_PLL"
+      },
+      "count": 21
+    },
+    {
+      "path": "Timer_RTC.kicad_symdir",
+      "names": {
+        "en": "Timer_RTC"
+      },
+      "count": 49
+    },
+    {
+      "path": "Transformer.kicad_symdir",
+      "names": {
+        "en": "Transformer"
+      },
+      "count": 117
+    },
+    {
+      "path": "Transistor_Array.kicad_symdir",
+      "names": {
+        "en": "Transistor_Array"
+      },
+      "count": 26
+    },
+    {
+      "path": "Transistor_BJT.kicad_symdir",
+      "names": {
+        "en": "Transistor_BJT"
+      },
+      "count": 391
+    },
+    {
+      "path": "Transistor_FET.kicad_symdir",
+      "names": {
+        "en": "Transistor_FET"
+      },
+      "count": 608
+    },
+    {
+      "path": "Transistor_FET_Other.kicad_symdir",
+      "names": {
+        "en": "Transistor_FET_Other"
+      },
+      "count": 17
+    },
+    {
+      "path": "Transistor_IGBT.kicad_symdir",
+      "names": {
+        "en": "Transistor_IGBT"
+      },
+      "count": 2
+    },
+    {
+      "path": "Transistor_Power_Module.kicad_symdir",
+      "names": {
+        "en": "Transistor_Power_Module"
+      },
+      "count": 35
+    },
+    {
+      "path": "Triac_Thyristor.kicad_symdir",
+      "names": {
+        "en": "Triac_Thyristor"
+      },
+      "count": 52
+    },
+    {
+      "path": "Valve.kicad_symdir",
+      "names": {
+        "en": "Valve"
+      },
+      "count": 24
+    },
+    {
+      "path": "Video.kicad_symdir",
+      "names": {
+        "en": "Video"
+      },
+      "count": 39
+    }
+  ],
+  "index": {
+    "strategy": "clone",
+    "names": "kicad_sym"
+  },
+  "trackingIssue": 140,
+  "verified": "2026-09-28"
+}

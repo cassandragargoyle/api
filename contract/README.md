@@ -68,11 +68,15 @@ authoritative; SVG/glTF drawings are derived views. Coordinates are integer mill
 | [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log` |
 | [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema |
 | [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields, standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) and provenance in `meta` (`author`, `license` as SPDX id, `licenseUrl`, `source`, `sourceUrl`, `attribution`). 1.2.0 (portunix-plugins #128): pinned `origin` (`type` git/file, `url`, `revision`, `path`, `format`, `sha256`) and opaque `extensions` keyed by namespace (e.g. `qet` for lossless QElectroTech round trips) |
+| [modeler-symbol-source.schema.json](schemas/modeler-symbol-source.schema.json) | Symbol source (`format: portunix.modeler.symbol-source/v1`, portunix-plugins #130): one external symbol collection of the ptx-modeler source registry (e.g. QElectroTech elements, KiCad libraries) with repository, verified license facts (SPDX, usage, restrictions such as `no-ml-training`), formats, domains, standards, searchable categories, index strategy and tracking issue. The support status is computed by the plugin, never stored |
+| [modeler-symbol-discovery.schema.json](schemas/modeler-symbol-discovery.schema.json) | JSON output of the symbol discovery (`ptx-modeler symbol search / sources / index / source probe\|add\|report -f json`, portunix-plugins #130) and of the `ModelerSymbolService` discovery RPCs (byte-identical); `kind` selects search, probe, issue-draft, sources, source, index or source-added. Results carry availability levels and complete next-step actions for AI agents |
 
 Model documents use the **`*.model.json`** filename suffix and operation files the
 **`*.ops.json`** suffix, so tools, editors and AI agents recognize them without inspecting contents.
 Symbol elements use the **`*.msym.json`** suffix (one self-contained file per symbol at
 `symbols/<category>/<name>.msym.json` inside a symbol pack), so the VS Code viewer can open them directly.
+Symbol sources use the **`*.msrc.json`** suffix (`<id>.msrc.json`) and discovery outputs saved to
+files the **`*.symbol-discovery.json`** suffix.
 Their `meta` object carries the provenance of the drawing, so symbols converted from other
 collections keep their attribution when edited or redistributed:
 
@@ -87,8 +91,9 @@ collections keep their attribution when edited or redistributed:
 
 All fields are optional; further keys are allowed as free strings.
 
-> **Single source of truth.** The plugin embeds identical copies of all three schemas
-> (`ptx-modeler schema [--ops | --symbol]`); a plugin test fails when they drift from this directory.
+> **Single source of truth.** The plugin embeds identical copies of all modeler schemas and of
+> `help-ai.schema.json` (`ptx-modeler schema [--ops | --symbol | --source | --discovery]`); a plugin
+> test fails when they drift from this directory.
 
 ### Opportunity Management (v2)
 
@@ -166,7 +171,7 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | ----- | ------- | ----------- |
 | [task-platform.proto](proto/task-platform.proto) | `portunix.platform.v1.TaskPlatformService` | Universal task discovery and execution; mirrors `task-manifest` / `task-request` / `task-response` schemas |
 | [scribe.proto](proto/scribe.proto) | `portunix.scribe.ScribeService` | Transcript correction backend (segments, speakers, flags, Markdown export); mirrors [transcript.schema.json](schemas/transcript.schema.json) |
-| [modeler.proto](proto/modeler.proto) | `portunix.modeler.ModelerSymbolService` | Portunix Modeler symbol conversions (portunix-plugins #128): QElectroTech `.elmt` ↔ `*.msym.json` for single elements (bytes) and collections/packs (server paths), with the CLI's conversion warnings; symbols validate against [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) |
+| [modeler.proto](proto/modeler.proto) | `portunix.modeler.ModelerSymbolService` | Portunix Modeler symbol conversions (portunix-plugins #128): QElectroTech `.elmt` ↔ `*.msym.json` for single elements (bytes) and collections/packs (server paths), with the CLI's conversion warnings; symbols validate against [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json). Symbol source discovery (portunix-plugins #130): `SearchSymbols`, `ListSources`, `GetSource`, `ProbeSource`, `DraftSourceIssue` return the CLI's JSON documents ([modeler-symbol-discovery.schema.json](schemas/modeler-symbol-discovery.schema.json)); no RPC creates issues |
 
 ## Examples
 
@@ -203,6 +208,10 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [socket-single.msym.json](examples/socket-single.msym.json) | Symbol element derived from IEC 60617-11 (single socket outlet) with a terminal and a label text field. Validated by `make validate-contract`. |
 | [sensor-temperature.msym.json](examples/sensor-temperature.msym.json) | `custom` symbol element (no standard symbol referenced), as in the ptx-modeler core pack. Validated by `make validate-contract`. |
 | [smart-relay-qet.msym.json](examples/smart-relay-qet.msym.json) | Symbol imported from a QElectroTech `.elmt` element (`ptx-modeler symbol import-elmt`): `data-qet-*` SVG attributes, `extensions.qet` (link type, kind/element informations, terminal and dynamic text data) and a pinned `origin`. Validated by `make validate-contract`. |
+| [qelectrotech-elements.msrc.json](examples/qelectrotech-elements.msrc.json) | Curated symbol source of the ptx-modeler registry: QElectroTech elements (CC BY 3.0 with `no-ml-training`, license verified 2026-09-27), IEC 60617 path and localized categories. Validated by `make validate-contract`. |
+| [kicad-symbols.msrc.json](examples/kicad-symbols.msrc.json) | Curated symbol source: KiCad schematic symbol libraries on GitLab (CC BY-SA 4.0 with the design exception), 223 libraries as categories, tracking issue for the `kicad_sym` converter. Validated by `make validate-contract`. |
+| [search-en-60617.symbol-discovery.json](examples/search-en-60617.symbol-discovery.json) | `ptx-modeler symbol search -f json "EN 60617 07-02-01"`: a `remote-source` result with license-review, fetch, index, convert and use actions. Validated by `make validate-contract`. |
+| [probe-kicad.symbol-discovery.json](examples/probe-kicad.symbol-discovery.json) | `ptx-modeler symbol source probe -f json` of the registered KiCad source (answered offline from the registry, `track` action). Validated by `make validate-contract`. |
 
 ### Opportunity Management Examples
 

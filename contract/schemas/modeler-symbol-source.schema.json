@@ -1,0 +1,213 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json",
+	"$version": "1.0.0",
+	"title": "ModelerSymbolSource",
+	"description": "One symbol source of the Portunix Modeler source registry (ptx-modeler, portunix-plugins #130): a collection of symbols with one origin, license and set of formats, e.g. the QElectroTech elements or the KiCad symbol libraries. Files use the '.msrc.json' filename suffix and are named '<id>.msrc.json'. The registry loads curated entries shipped with the plugin, user entries and --sources directories; later layers override earlier ones by id. The support status is computed from the converters of the running binary and is never stored.",
+	"type": "object",
+	"required": [
+		"format",
+		"id",
+		"name",
+		"license",
+		"formats"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"format": {
+			"const": "portunix.modeler.symbol-source/v1",
+			"description": "Source format identifier"
+		},
+		"id": {
+			"type": "string",
+			"pattern": "^[a-z0-9][a-z0-9-]*$",
+			"description": "Registry id; referenced by search results and by the resolvable origin of converted symbols"
+		},
+		"name": {
+			"type": "string",
+			"minLength": 1
+		},
+		"homepage": {
+			"type": "string",
+			"pattern": "^https?://[^\\s/]+",
+			"description": "http(s) URL"
+		},
+		"repository": {
+			"type": "object",
+			"required": [
+				"type",
+				"url"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"const": "git"
+				},
+				"url": {
+					"type": "string",
+					"pattern": "^https?://[^\\s/]+",
+					"description": "Repository URL used for fetching (git clone)"
+				},
+				"branch": {
+					"type": "string"
+				}
+			}
+		},
+		"license": {
+			"$ref": "#/$defs/license"
+		},
+		"formats": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"format"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"format": {
+						"type": "string",
+						"pattern": "^[a-z0-9_]+$",
+						"description": "Symbol file format, e.g. 'elmt', 'kicad_sym', 'msym'"
+					},
+					"glob": {
+						"type": "string",
+						"description": "Files of the format, e.g. '**/*.elmt'"
+					},
+					"count": {
+						"type": "integer",
+						"minimum": 0
+					}
+				}
+			},
+			"minItems": 1,
+			"description": "Symbol file formats of the source"
+		},
+		"domains": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "e.g. electrical, electronic, hydraulic"
+		},
+		"standards": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"standard"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"standard": {
+						"type": "string",
+						"minLength": 1
+					},
+					"path": {
+						"type": "string",
+						"description": "Directory of the source that follows the standard"
+					}
+				}
+			}
+		},
+		"categories": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"path"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"path": {
+						"type": "string",
+						"minLength": 1
+					},
+					"names": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "string"
+						},
+						"description": "Localized names by language code"
+					},
+					"count": {
+						"type": "integer",
+						"minimum": 0
+					}
+				}
+			},
+			"description": "Directories with localized names, searchable without a local index"
+		},
+		"index": {
+			"type": "object",
+			"required": [
+				"strategy",
+				"names"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"strategy": {
+					"enum": [
+						"clone"
+					]
+				},
+				"names": {
+					"type": "string",
+					"pattern": "^[a-z0-9_]+$",
+					"description": "Symbol file format, e.g. 'elmt', 'kicad_sym', 'msym'"
+				}
+			},
+			"description": "How a local index is built: clone = index a local checkout; names = format whose files carry the descriptive names"
+		},
+		"trackingIssue": {
+			"type": "integer",
+			"minimum": 1,
+			"description": "portunix-plugins issue that tracks support for the formats without a converter"
+		},
+		"verified": {
+			"type": "string",
+			"pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+			"description": "Date a human verified the license facts"
+		}
+	},
+	"$defs": {
+		"license": {
+			"type": "object",
+			"required": [
+				"spdx"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"spdx": {
+					"type": "string",
+					"pattern": "^[A-Za-z0-9.+-]+( (AND|OR|WITH) [A-Za-z0-9.+-]+)*$",
+					"description": "SPDX license expression; NOASSERTION when unclear"
+				},
+				"url": {
+					"type": "string",
+					"pattern": "^https?://[^\\s/]+",
+					"description": "Link to the license terms"
+				},
+				"usage": {
+					"type": "string",
+					"description": "Terms beyond the SPDX identifier in plain words, e.g. what is allowed in diagrams"
+				},
+				"restrictions": {
+					"type": "array",
+					"items": {
+						"enum": [
+							"no-ml-training",
+							"no-redistribution",
+							"non-commercial",
+							"share-alike",
+							"attribution"
+						]
+					},
+					"uniqueItems": true,
+					"description": "Restrictions an agent must pass on to the user before fetching"
+				}
+			},
+			"description": "License facts, verified by a human for curated entries"
+		}
+	}
+}
