@@ -56,6 +56,24 @@ Transcript documents use the **`*.scribe.json`** filename suffix (tied to scribe
 
 > **Provisional.** The shape may still change once reconciled against a real transcript sample (portunix-plugins #113, criterion 15); `schema_version` tracks that evolution. The transcript Markdown (front matter with `source` + `[mm:ss]` segments) is a lighter, related convention shared with `vox` and is not (yet) a formal schema here.
 
+### Modeling
+
+Building model of the Portunix Modeler (`ptx-modeler`, portunix-plugins #116): a flat entity
+store (storeys, wall graph of junctions and walls, doors/windows, rooms, electrical devices,
+imported underlay/annotations, title block) with layers and an operation log. The model is
+authoritative; SVG/glTF drawings are derived views. Coordinates are integer millimetres.
+
+| Schema | Description |
+| ------ | ----------- |
+| [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log` |
+| [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema |
+
+Model documents use the **`*.model.json`** filename suffix and operation files the
+**`*.ops.json`** suffix, so tools, editors and AI agents recognize them without inspecting contents.
+
+> **Single source of truth.** The plugin embeds identical copies of both schemas
+> (`ptx-modeler schema [--ops]`); a plugin test fails when they drift from this directory.
+
 ### Opportunity Management (v2)
 
 Two-spine model authored by `ptx-pft` and read by Pilot (ADR-008, issue #015 —
@@ -158,6 +176,13 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | Example | Description |
 | ------- | ----------- |
 | [voices.glens.json](examples/voices.glens.json) | Small voices graph for the graphlens 3D viewer |
+
+### Modeling Examples
+
+| Example | Description |
+| ------- | ----------- |
+| [house.ops.json](examples/house.ops.json) | Operations creating a sample house: 4 rooms, wall graph with L/T/X joins, doors, windows, host-relative sockets/switches and ceiling lights. Validated by `make validate-contract`. |
+| [house.model.json](examples/house.model.json) | The model produced by `ptx-modeler init` + `op apply` of `house.ops.json` (incl. operation log). Validated by `make validate-contract`. |
 
 ### Opportunity Management Examples
 

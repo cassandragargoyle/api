@@ -1,0 +1,609 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/modeler-model.schema.json",
+	"$version": "1.0.0",
+	"title": "ModelerModel",
+	"description": "Semantic building model of the Portunix Modeler (ptx-modeler, portunix-plugins #116): a flat entity store (storeys, wall graph of junctions and walls, openings, rooms, electrical devices, imported underlay/annotations, title block) with layers and an operation log. The model is authoritative; SVG/glTF drawings are derived views. Coordinates are integer millimetres with the y axis pointing up. Files use the '.model.json' filename suffix. Mutations are expressed as operations (modeler-ops.schema.json).",
+	"type": "object",
+	"required": [
+		"schema",
+		"units",
+		"layers",
+		"entities"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"schema": {
+			"const": "portunix.modeler/v1",
+			"description": "Document format identifier; readers reject unknown major versions"
+		},
+		"units": {
+			"const": "mm"
+		},
+		"meta": {
+			"type": "object",
+			"description": "Free metadata; 'name' is the model name",
+			"additionalProperties": {
+				"type": "string"
+			}
+		},
+		"layers": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"id"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Layer id, conventionally 'architecture', 'electrical', 'titleblock'"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"entities": {
+			"type": "array",
+			"description": "Entities in natural id order",
+			"items": {
+				"$ref": "#/$defs/entity"
+			}
+		},
+		"log": {
+			"type": "array",
+			"description": "Applied operations (an import is logged as one 'import' entry)",
+			"items": {
+				"$ref": "modeler-ops.schema.json#/$defs/opBase",
+				"required": [
+					"seq"
+				],
+				"properties": {
+					"seq": {
+						"type": "integer",
+						"minimum": 1
+					}
+				},
+				"unevaluatedProperties": false
+			}
+		}
+	},
+	"$defs": {
+		"id": {
+			"type": "string",
+			"pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+			"description": "Stable entity identifier, e.g. 'wall-7'"
+		},
+		"point": {
+			"type": "array",
+			"description": "Position [x, y] in integer millimetres (y axis up)",
+			"items": {
+				"type": "integer"
+			},
+			"minItems": 2,
+			"maxItems": 2
+		},
+		"path": {
+			"type": "object",
+			"description": "Polyline in integer millimetres",
+			"required": [
+				"points"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"points": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/point"
+					},
+					"minItems": 1
+				},
+				"closed": {
+					"type": "boolean"
+				}
+			}
+		},
+		"storey": {
+			"type": "object",
+			"description": "Floor level (kind 'storey', no parent)",
+			"additionalProperties": false,
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Display name, e.g. '1NP'"
+				},
+				"elevation": {
+					"type": "integer",
+					"description": "Floor level in mm"
+				},
+				"height": {
+					"type": "integer",
+					"description": "Clear height in mm",
+					"minimum": 0
+				}
+			}
+		},
+		"junction": {
+			"type": "object",
+			"description": "Node of the wall graph (kind 'junction', parent storey)",
+			"required": [
+				"at"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"at": {
+					"$ref": "#/$defs/point"
+				}
+			}
+		},
+		"wall": {
+			"type": "object",
+			"description": "Edge of the wall graph (kind 'wall', parent storey)",
+			"required": [
+				"from",
+				"to",
+				"thickness"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"from": {
+					"$ref": "#/$defs/id",
+					"description": "Start junction"
+				},
+				"to": {
+					"$ref": "#/$defs/id",
+					"description": "End junction"
+				},
+				"thickness": {
+					"type": "integer",
+					"description": "Wall thickness in mm",
+					"exclusiveMinimum": 0
+				},
+				"height": {
+					"type": "integer",
+					"description": "Wall height in mm",
+					"minimum": 0
+				}
+			}
+		},
+		"opening": {
+			"type": "object",
+			"description": "Door or window hosted by a wall (kind 'door'/'window', parent wall)",
+			"required": [
+				"offset",
+				"width"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"offset": {
+					"type": "integer",
+					"description": "Start of the opening along the wall axis from the wall's 'from' junction, mm",
+					"minimum": 0
+				},
+				"width": {
+					"type": "integer",
+					"description": "Opening width in mm",
+					"exclusiveMinimum": 0
+				},
+				"height": {
+					"type": "integer",
+					"description": "Opening height in mm",
+					"minimum": 0
+				},
+				"sill": {
+					"type": "integer",
+					"description": "Sill height in mm",
+					"minimum": 0
+				},
+				"hinge": {
+					"enum": [
+						"start",
+						"end"
+					],
+					"description": "Door hinge side"
+				},
+				"swing": {
+					"enum": [
+						"left",
+						"right"
+					],
+					"description": "Door swing side of the wall axis"
+				}
+			}
+		},
+		"room": {
+			"type": "object",
+			"description": "Room (kind 'room', parent storey); needs a polygon or a label point",
+			"additionalProperties": false,
+			"properties": {
+				"number": {
+					"type": "string",
+					"description": "Room number, e.g. '1.05'"
+				},
+				"name": {
+					"type": "string",
+					"description": "Room name"
+				},
+				"polygon": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/point"
+					},
+					"minItems": 3
+				},
+				"label": {
+					"$ref": "#/$defs/point"
+				}
+			}
+		},
+		"device": {
+			"type": "object",
+			"description": "Electrical device (kind 'device'); parent wall = host-relative placement (offset, side), parent storey = absolute placement (at, rotation) or path",
+			"required": [
+				"symbol"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"symbol": {
+					"type": "string",
+					"description": "Catalog symbol key, e.g. 'core.socket.single' (see 'ptx-modeler catalog list')",
+					"pattern": "^[a-z][a-z0-9-]*\\.[a-z0-9.-]+$"
+				},
+				"label": {
+					"type": "string",
+					"description": "Designation, e.g. 'SV1.05-1'"
+				},
+				"circuit": {
+					"type": "string",
+					"description": "Circuit designation, e.g. 'ZS105'"
+				},
+				"variant": {
+					"type": "string",
+					"description": "Modifier symbol key, e.g. 'core.modifier.dim-dali'"
+				},
+				"count": {
+					"type": "integer",
+					"description": "Number of identical devices at the spot",
+					"minimum": 1
+				},
+				"offset": {
+					"type": "integer",
+					"description": "Host-relative: distance along the wall axis in mm",
+					"minimum": 0
+				},
+				"side": {
+					"enum": [
+						"left",
+						"right"
+					],
+					"description": "Host-relative: wall face"
+				},
+				"at": {
+					"$ref": "#/$defs/point"
+				},
+				"rotation": {
+					"type": "integer",
+					"description": "Tenths of a degree, counter-clockwise",
+					"minimum": 0,
+					"maximum": 3599
+				},
+				"mirror": {
+					"type": "boolean"
+				},
+				"scale": {
+					"type": "integer",
+					"description": "Symbol size in permille of the catalog size",
+					"exclusiveMinimum": 0
+				},
+				"mount": {
+					"type": "integer",
+					"description": "Mounting height above the floor in mm",
+					"minimum": 0
+				},
+				"path": {
+					"$ref": "#/$defs/path"
+				},
+				"room": {
+					"type": "string",
+					"description": "Room number the device belongs to"
+				}
+			}
+		},
+		"underlay": {
+			"type": "object",
+			"description": "Imported raw geometry (kind 'underlay', parent storey)",
+			"required": [
+				"style",
+				"paths"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"source": {
+					"type": "string",
+					"description": "Source CAD layer"
+				},
+				"style": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"stroke": {
+							"type": "string",
+							"pattern": "^#[0-9a-f]{6}$"
+						},
+						"fill": {
+							"type": "string",
+							"pattern": "^#[0-9a-f]{6}$"
+						},
+						"width": {
+							"type": "integer",
+							"description": "Stroke width in model mm",
+							"minimum": 0
+						}
+					}
+				},
+				"paths": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/path"
+					}
+				}
+			}
+		},
+		"annotation": {
+			"type": "object",
+			"description": "Text (kind 'annotation', parent storey)",
+			"required": [
+				"text",
+				"at",
+				"size"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"text": {
+					"type": "string",
+					"description": "Text",
+					"minLength": 1
+				},
+				"at": {
+					"$ref": "#/$defs/point"
+				},
+				"size": {
+					"type": "integer",
+					"description": "Text height in model mm",
+					"exclusiveMinimum": 0
+				},
+				"angle": {
+					"type": "integer",
+					"description": "Tenths of a degree, counter-clockwise"
+				},
+				"color": {
+					"type": "string",
+					"pattern": "^#[0-9a-f]{6}$"
+				},
+				"source": {
+					"type": "string",
+					"description": "Source CAD layer"
+				}
+			}
+		},
+		"titleblock": {
+			"type": "object",
+			"description": "Title block / stamp fields (kind 'titleblock', no parent)",
+			"required": [
+				"fields"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"fields": {
+					"type": "object",
+					"description": "Known keys: building, investor, object, title, stage, project, designer, author, revision, sheets, date, revision_date, scale",
+					"additionalProperties": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"entity": {
+			"type": "object",
+			"required": [
+				"id",
+				"kind"
+			],
+			"properties": {
+				"id": {
+					"$ref": "#/$defs/id"
+				},
+				"kind": {
+					"enum": [
+						"storey",
+						"junction",
+						"wall",
+						"door",
+						"window",
+						"room",
+						"device",
+						"underlay",
+						"annotation",
+						"titleblock"
+					]
+				},
+				"parent": {
+					"$ref": "#/$defs/id"
+				},
+				"layer": {
+					"type": "string",
+					"description": "Layer id (must exist in 'layers')"
+				},
+				"props": {
+					"type": "object"
+				}
+			},
+			"additionalProperties": false,
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "storey"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/storey"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "junction"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/junction"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "wall"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/wall"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "door"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/opening"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "window"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/opening"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "room"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/room"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "device"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/device"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "underlay"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/underlay"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "annotation"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/annotation"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "titleblock"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/titleblock"
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+}
