@@ -1,0 +1,553 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/modeler-ops.schema.json",
+	"$version": "1.0.0",
+	"title": "ModelerOps",
+	"description": "Operations that mutate a Portunix Modeler model (ptx-modeler op apply, portunix-plugins #116). An ops file is a JSON array applied as one transaction: either every operation succeeds and the resulting model validates, or nothing changes and machine-readable violations are returned. The same contract is used by the CLI, AI agents and the editor. Payload shapes are the entity props of modeler-model.schema.json.",
+	"type": "array",
+	"items": {
+		"$ref": "#/$defs/op"
+	},
+	"$defs": {
+		"opBase": {
+			"type": "object",
+			"description": "Operation fields and per-op payload rules (open for extension by the log entry)",
+			"required": [
+				"op"
+			],
+			"properties": {
+				"op": {
+					"enum": [
+						"annotation.add",
+						"device.move",
+						"device.place",
+						"device.set",
+						"door.add",
+						"entity.remove",
+						"import",
+						"junction.add",
+						"junction.move",
+						"layer.add",
+						"meta.set",
+						"opening.move",
+						"room.add",
+						"storey.add",
+						"titleblock.set",
+						"underlay.add",
+						"wall.add",
+						"window.add"
+					]
+				},
+				"id": {
+					"$ref": "modeler-model.schema.json#/$defs/id"
+				},
+				"parent": {
+					"$ref": "modeler-model.schema.json#/$defs/id"
+				},
+				"layer": {
+					"type": "string"
+				},
+				"props": {}
+			},
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "annotation.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a text annotation; 'parent' is the storey",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/annotation"
+							}
+						},
+						"required": [
+							"parent",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "device.move"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Move a device",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": false,
+								"properties": {
+									"offset": {
+										"type": "integer",
+										"minimum": 0
+									},
+									"at": {
+										"$ref": "modeler-model.schema.json#/$defs/point"
+									},
+									"rotation": {
+										"type": "integer"
+									},
+									"mount": {
+										"type": "integer",
+										"minimum": 0
+									}
+								}
+							}
+						},
+						"required": [
+							"id",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "device.place"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Place an electrical device; 'parent' is a wall (host-relative) or a storey (absolute)",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/device"
+							}
+						},
+						"required": [
+							"parent",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "device.set"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Change device metadata",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": false,
+								"properties": {
+									"symbol": {
+										"type": "string"
+									},
+									"label": {
+										"type": "string"
+									},
+									"circuit": {
+										"type": "string"
+									},
+									"variant": {
+										"type": "string"
+									},
+									"room": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"required": [
+							"id",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "door.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a door; 'parent' is the host wall",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/opening"
+							}
+						},
+						"required": [
+							"parent",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "entity.remove"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Remove an entity; dependents are only removed with cascade",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": false,
+								"properties": {
+									"cascade": {
+										"type": "boolean"
+									}
+								}
+							}
+						},
+						"required": [
+							"id"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "import"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Log-only entry written by 'ptx-modeler import' (not applicable)",
+						"properties": {
+							"props": {
+								"type": "object",
+								"properties": {
+									"source": {
+										"type": "string"
+									},
+									"sha256": {
+										"type": "string"
+									},
+									"format": {
+										"type": "string"
+									},
+									"page": {
+										"type": "integer"
+									},
+									"ops": {
+										"type": "integer"
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "junction.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a wall-graph junction; 'parent' is the storey",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/junction"
+							}
+						},
+						"required": [
+							"parent"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "junction.move"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Move a junction; connected walls and their hosted openings/devices follow",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/junction"
+							}
+						},
+						"required": [
+							"id",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "layer.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a layer; 'id' is the layer id",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": false,
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"required": [
+							"id"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "meta.set"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Set model metadata; an empty value removes the key",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "opening.move"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Change the offset of a door or window",
+						"properties": {
+							"props": {
+								"type": "object",
+								"required": [
+									"offset"
+								],
+								"additionalProperties": false,
+								"properties": {
+									"offset": {
+										"type": "integer",
+										"minimum": 0
+									}
+								}
+							}
+						},
+						"required": [
+							"id",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "room.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a room; 'parent' is the storey",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/room"
+							}
+						},
+						"required": [
+							"parent"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "storey.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a storey",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/storey"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "titleblock.set"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Create the title block or merge fields into it (default id 'tb-1'); an empty value removes a field",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/titleblock"
+							}
+						},
+						"required": [
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "underlay.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add underlay geometry; 'parent' is the storey",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/underlay"
+							}
+						},
+						"required": [
+							"parent",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "wall.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a wall between two junctions; 'parent' is the storey",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/wall"
+							}
+						},
+						"required": [
+							"parent",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "window.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add a window; 'parent' is the host wall",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/opening"
+							}
+						},
+						"required": [
+							"parent",
+							"props"
+						]
+					}
+				}
+			]
+		},
+		"op": {
+			"description": "One operation",
+			"$ref": "#/$defs/opBase",
+			"unevaluatedProperties": false
+		}
+	}
+}

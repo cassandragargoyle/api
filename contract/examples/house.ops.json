@@ -1,0 +1,759 @@
+[
+  {
+    "op": "meta.set",
+    "props": {
+      "name": "Sample house"
+    }
+  },
+  {
+    "op": "storey.add",
+    "id": "sto-1np",
+    "props": {
+      "name": "1NP",
+      "elevation": 0,
+      "height": 2700
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        6000,
+        0
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j3",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        12000,
+        0
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j4",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        12000,
+        4000
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j5",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        12000,
+        9000
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j6",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        6000,
+        9000
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j7",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        0,
+        9000
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j8",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        0,
+        4000
+      ]
+    }
+  },
+  {
+    "op": "junction.add",
+    "id": "j9",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "at": [
+        6000,
+        4000
+      ]
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-s1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j1",
+      "to": "j2",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-s2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j2",
+      "to": "j3",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-e1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j3",
+      "to": "j4",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-e2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j4",
+      "to": "j5",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-n1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j5",
+      "to": "j6",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-n2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j6",
+      "to": "j7",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-w1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j7",
+      "to": "j8",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-w2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j8",
+      "to": "j1",
+      "thickness": 400,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-i1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j8",
+      "to": "j9",
+      "thickness": 150,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-i2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j9",
+      "to": "j4",
+      "thickness": 150,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-i3",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j2",
+      "to": "j9",
+      "thickness": 150,
+      "height": 2700
+    }
+  },
+  {
+    "op": "wall.add",
+    "id": "w-i4",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "from": "j9",
+      "to": "j6",
+      "thickness": 150,
+      "height": 2700
+    }
+  },
+  {
+    "op": "door.add",
+    "id": "door-entry",
+    "parent": "w-s1",
+    "layer": "architecture",
+    "props": {
+      "offset": 1000,
+      "width": 1000,
+      "height": 2100,
+      "hinge": "start",
+      "swing": "left"
+    }
+  },
+  {
+    "op": "door.add",
+    "id": "door-bed",
+    "parent": "w-i1",
+    "layer": "architecture",
+    "props": {
+      "offset": 4200,
+      "width": 800,
+      "height": 2000,
+      "hinge": "end",
+      "swing": "right"
+    }
+  },
+  {
+    "op": "door.add",
+    "id": "door-kitchen",
+    "parent": "w-i3",
+    "layer": "architecture",
+    "props": {
+      "offset": 2800,
+      "width": 800,
+      "height": 2000,
+      "hinge": "end",
+      "swing": "left"
+    }
+  },
+  {
+    "op": "door.add",
+    "id": "door-bath",
+    "parent": "w-i2",
+    "layer": "architecture",
+    "props": {
+      "offset": 800,
+      "width": 700,
+      "height": 2000,
+      "hinge": "start",
+      "swing": "left"
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-1",
+    "parent": "w-s1",
+    "layer": "architecture",
+    "props": {
+      "offset": 3500,
+      "width": 1500,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-2",
+    "parent": "w-s2",
+    "layer": "architecture",
+    "props": {
+      "offset": 2000,
+      "width": 2000,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-3",
+    "parent": "w-e1",
+    "layer": "architecture",
+    "props": {
+      "offset": 1200,
+      "width": 1500,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-4",
+    "parent": "w-e2",
+    "layer": "architecture",
+    "props": {
+      "offset": 1800,
+      "width": 1200,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-5",
+    "parent": "w-n1",
+    "layer": "architecture",
+    "props": {
+      "offset": 2000,
+      "width": 1500,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-6",
+    "parent": "w-n2",
+    "layer": "architecture",
+    "props": {
+      "offset": 1500,
+      "width": 2400,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-7",
+    "parent": "w-w1",
+    "layer": "architecture",
+    "props": {
+      "offset": 1500,
+      "width": 1800,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "window.add",
+    "id": "win-8",
+    "parent": "w-w2",
+    "layer": "architecture",
+    "props": {
+      "offset": 1200,
+      "width": 1500,
+      "height": 1500,
+      "sill": 900
+    }
+  },
+  {
+    "op": "room.add",
+    "id": "room-1",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "number": "1.01",
+      "name": "Obývací pokoj",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          6000,
+          0
+        ],
+        [
+          6000,
+          4000
+        ],
+        [
+          0,
+          4000
+        ]
+      ]
+    }
+  },
+  {
+    "op": "room.add",
+    "id": "room-2",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "number": "1.02",
+      "name": "Kuchyň",
+      "polygon": [
+        [
+          6000,
+          0
+        ],
+        [
+          12000,
+          0
+        ],
+        [
+          12000,
+          4000
+        ],
+        [
+          6000,
+          4000
+        ]
+      ]
+    }
+  },
+  {
+    "op": "room.add",
+    "id": "room-3",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "number": "1.03",
+      "name": "Ložnice",
+      "polygon": [
+        [
+          0,
+          4000
+        ],
+        [
+          6000,
+          4000
+        ],
+        [
+          6000,
+          9000
+        ],
+        [
+          0,
+          9000
+        ]
+      ]
+    }
+  },
+  {
+    "op": "room.add",
+    "id": "room-4",
+    "parent": "sto-1np",
+    "layer": "architecture",
+    "props": {
+      "number": "1.04",
+      "name": "Koupelna",
+      "polygon": [
+        [
+          6000,
+          4000
+        ],
+        [
+          12000,
+          4000
+        ],
+        [
+          12000,
+          9000
+        ],
+        [
+          6000,
+          9000
+        ]
+      ]
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sw-entry",
+    "parent": "w-s1",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.control.button-single",
+      "label": "TL1.01-1",
+      "side": "left",
+      "offset": 2300,
+      "mount": 1200,
+      "room": "1.01"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-zs-liv-1",
+    "parent": "w-w2",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.socket.single",
+      "label": "ZS101",
+      "circuit": "ZS101",
+      "side": "left",
+      "offset": 1000,
+      "mount": 300,
+      "room": "1.01"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-zs-liv-2",
+    "parent": "w-i3",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.socket.single",
+      "label": "ZS101",
+      "circuit": "ZS101",
+      "side": "left",
+      "offset": 1500,
+      "mount": 300,
+      "room": "1.01"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-zs-kit-1",
+    "parent": "w-s2",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.socket.single",
+      "label": "ZS102",
+      "circuit": "ZS102",
+      "side": "left",
+      "offset": 1000,
+      "mount": 1100,
+      "room": "1.02"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-zs-kit-3f",
+    "parent": "w-e1",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.socket.three-phase",
+      "label": "ZS103",
+      "circuit": "ZS103",
+      "side": "left",
+      "offset": 3000,
+      "mount": 300,
+      "room": "1.02"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sw-bed",
+    "parent": "w-i1",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.control.button-double",
+      "label": "TL1.03-1",
+      "side": "left",
+      "offset": 3900,
+      "mount": 1200,
+      "room": "1.03"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-zs-bed-1",
+    "parent": "w-w1",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.socket.single",
+      "label": "ZS104",
+      "circuit": "ZS104",
+      "side": "left",
+      "offset": 3700,
+      "mount": 300,
+      "room": "1.03"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-zs-bath",
+    "parent": "w-e2",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.socket.single",
+      "label": "ZS105",
+      "circuit": "ZS105",
+      "side": "left",
+      "offset": 800,
+      "mount": 1200,
+      "room": "1.04"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-board",
+    "parent": "w-w2",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.board.power",
+      "label": "RH",
+      "side": "left",
+      "offset": 3200,
+      "mount": 1500,
+      "room": "1.01"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sv-liv",
+    "parent": "sto-1np",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.light.ceiling",
+      "label": "SV1.01-1",
+      "at": [
+        3000,
+        2600
+      ],
+      "room": "1.01"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sv-kit",
+    "parent": "sto-1np",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.light.ceiling",
+      "label": "SV1.02-1",
+      "at": [
+        9000,
+        2600
+      ],
+      "room": "1.02"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sv-bed",
+    "parent": "sto-1np",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.light.ceiling",
+      "label": "SV1.03-1",
+      "at": [
+        3000,
+        7100
+      ],
+      "room": "1.03"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sv-bath",
+    "parent": "sto-1np",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.light.ceiling",
+      "label": "SV1.04-1",
+      "at": [
+        9000,
+        7100
+      ],
+      "room": "1.04"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-sv-bath-led",
+    "parent": "sto-1np",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.light.led-strip",
+      "label": "SV1.04-2",
+      "path": {
+        "points": [
+          [
+            6500,
+            8500
+          ],
+          [
+            11500,
+            8500
+          ]
+        ]
+      },
+      "room": "1.04"
+    }
+  },
+  {
+    "op": "device.place",
+    "id": "dev-pir",
+    "parent": "sto-1np",
+    "layer": "electrical",
+    "props": {
+      "symbol": "core.sensor.presence",
+      "label": "TM1.01-1",
+      "at": [
+        1500,
+        1500
+      ],
+      "room": "1.01"
+    }
+  }
+]
