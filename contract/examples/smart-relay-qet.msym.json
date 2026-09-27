@@ -1,0 +1,312 @@
+{
+  "format": "portunix.modeler.symbol/v1",
+  "key": "electric.99-custom.smart-relay",
+  "uuid": "b2407800-74d3-4477-81d0-688c2d0d001f",
+  "names": {
+    "cs": "Chytrý reléový modul",
+    "en": "Smart relay module"
+  },
+  "category": "electric",
+  "standard": {
+    "compliance": "custom"
+  },
+  "graphics": {
+    "viewBox": [
+      -7.5,
+      -6.25,
+      15,
+      12.5
+    ],
+    "anchor": [
+      0,
+      0
+    ],
+    "svg": "<title>Smart relay module</title>\n<rect x=\"-6.25\" y=\"-3.75\" width=\"12.5\" height=\"7.5\" rx=\"0.75\" ry=\"0.75\" fill=\"#dcdcdc\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"rect\" data-qet-antialias=\"true\" data-qet-style=\"line-style:normal;line-weight:normal;filling:HTMLGrayGainsboro;color:black\"/>\n<path d=\"M-2 -1 A1.5 1.5 0 0 0 -4.56066 -2.06066 A1.5 1.5 0 0 0 -3.5 0.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"arc\" data-qet-antialias=\"true\" data-qet-style=\"line-style:normal;line-weight:normal;filling:none;color:black\" data-qet-arc=\"-20 -10 12 12 0 270\"/>\n<g data-qet=\"line\" data-qet-end1=\"none\" data-qet-end2=\"simple\" data-qet-length1=\"1.5\" data-qet-length2=\"1.5\" data-qet-antialias=\"false\" data-qet-style=\"line-style:normal;line-weight:normal;filling:none;color:black\">\n<line x1=\"-3.5\" y1=\"-1\" x2=\"-3.5\" y2=\"-2.5\" stroke=\"currentColor\" stroke-width=\"0.25\"/>\n<polyline points=\"-3.6875,-2.125 -3.5,-2.5 -3.3125,-2.125\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet-deco=\"simple\"/>\n</g>\n<line x1=\"0\" y1=\"-3.75\" x2=\"0\" y2=\"3.75\" stroke=\"currentColor\" stroke-width=\"0.125\" stroke-dasharray=\"2 1\" data-qet=\"line\" data-qet-end1=\"none\" data-qet-end2=\"none\" data-qet-length1=\"1.5\" data-qet-length2=\"1.5\" data-qet-antialias=\"false\" data-qet-style=\"line-style:dashed;line-weight:thin;filling:none;color:black\"/>\n<polygon points=\"1.5,1.5 4.5,1.5 3,-1\" fill=\"#ffa500\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"polygon\" data-qet-closed=\"true\" data-qet-antialias=\"false\" data-qet-style=\"line-style:normal;line-weight:normal;filling:HTMLOrangeOrange;color:black\"/>\n<text x=\"1.25\" y=\"-1.5\" font-size=\"2.333333\" fill=\"currentColor\" data-qet=\"text\" data-qet-font=\"Sans Serif,7,-1,5,75,0,0,0,0,0\" data-qet-color=\"#000000\" data-qet-rotation=\"0\">SR</text>\n<line x1=\"-5\" y1=\"-6.25\" x2=\"-5\" y2=\"-3.75\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"line\" data-qet-end1=\"none\" data-qet-end2=\"none\" data-qet-length1=\"1.5\" data-qet-length2=\"1.5\" data-qet-antialias=\"false\" data-qet-style=\"line-style:normal;line-weight:normal;filling:none;color:black\"/>\n<line x1=\"5\" y1=\"-6.25\" x2=\"5\" y2=\"-3.75\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"line\" data-qet-end1=\"none\" data-qet-end2=\"none\" data-qet-length1=\"1.5\" data-qet-length2=\"1.5\" data-qet-antialias=\"false\" data-qet-style=\"line-style:normal;line-weight:normal;filling:none;color:black\"/>\n<line x1=\"-2.5\" y1=\"3.75\" x2=\"-2.5\" y2=\"6.25\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"line\" data-qet-end1=\"none\" data-qet-end2=\"none\" data-qet-length1=\"1.5\" data-qet-length2=\"1.5\" data-qet-antialias=\"false\" data-qet-style=\"line-style:normal;line-weight:normal;filling:none;color:black\"/>\n<line x1=\"2.5\" y1=\"3.75\" x2=\"2.5\" y2=\"6.25\" stroke=\"currentColor\" stroke-width=\"0.25\" data-qet=\"line\" data-qet-end1=\"none\" data-qet-end2=\"none\" data-qet-length1=\"1.5\" data-qet-length2=\"1.5\" data-qet-antialias=\"false\" data-qet-style=\"line-style:normal;line-weight:normal;filling:none;color:black\"/>"
+  },
+  "terminals": [
+    {
+      "id": "L",
+      "at": [
+        -5,
+        -6.25
+      ],
+      "orientation": "n"
+    },
+    {
+      "id": "N",
+      "at": [
+        5,
+        -6.25
+      ],
+      "orientation": "n"
+    },
+    {
+      "id": "A1",
+      "at": [
+        -2.5,
+        6.25
+      ],
+      "orientation": "s"
+    },
+    {
+      "id": "A2",
+      "at": [
+        2.5,
+        6.25
+      ],
+      "orientation": "s"
+    }
+  ],
+  "texts": [
+    {
+      "field": "label",
+      "at": [
+        6.75,
+        -3.5
+      ],
+      "size": 3,
+      "anchor": "start"
+    },
+    {
+      "field": "comment",
+      "at": [
+        6.75,
+        -1
+      ],
+      "size": 2,
+      "anchor": "start"
+    }
+  ],
+  "meta": {
+    "attribution": "\"Smart relay module\" by CassandraGargoyle, licensed under MIT",
+    "author": "CassandraGargoyle",
+    "license": "MIT",
+    "source": "QElectroTech element: 10_electric/99_custom/smart_relay.elmt"
+  },
+  "origin": {
+    "type": "file",
+    "path": "10_electric/99_custom/smart_relay.elmt",
+    "format": "elmt",
+    "sha256": "3b7478d641a3914667d494c33c782e7d4d5af5235a42322640946fb9245d5989"
+  },
+  "extensions": {
+    "qet": {
+      "version": "0.100.0",
+      "type": "element",
+      "linkType": "master",
+      "width": 60,
+      "height": 50,
+      "hotspotX": 30,
+      "hotspotY": 25,
+      "kindInformations": "\u003ckindInformations\u003e\n        \u003ckindInformation name=\"type\" show=\"1\"\u003ecoil\u003c/kindInformation\u003e\n        \u003ckindInformation name=\"number\" show=\"1\"\u003e1\u003c/kindInformation\u003e\n    \u003c/kindInformations\u003e",
+      "elementInformations": "\u003celementInformations\u003e\n        \u003celementInformation name=\"manufacturer\" show=\"1\"\u003eCassandraGargoyle\u003c/elementInformation\u003e\n        \u003celementInformation name=\"function\" show=\"1\"\u003eRelay output of a smart home controller\u003c/elementInformation\u003e\n    \u003c/elementInformations\u003e",
+      "informations": "Author: CassandraGargoyle\nLicense: MIT (Portunix Modeler examples)",
+      "terminals": [
+        {
+          "id": "L",
+          "attrs": [
+            [
+              "uuid",
+              "{df6e129b-824b-44cd-bfd8-4cc221f82b9e}"
+            ],
+            [
+              "name",
+              "L"
+            ],
+            [
+              "type",
+              "Generic"
+            ]
+          ]
+        },
+        {
+          "id": "N",
+          "attrs": [
+            [
+              "uuid",
+              "{6d3bdfe3-6dce-4635-9f0a-0311ba3f37be}"
+            ],
+            [
+              "name",
+              "N"
+            ],
+            [
+              "type",
+              "Generic"
+            ]
+          ]
+        },
+        {
+          "id": "A1",
+          "attrs": [
+            [
+              "uuid",
+              "{b7ee3951-d172-4df3-a45e-8461c29b1bfc}"
+            ],
+            [
+              "name",
+              "A1"
+            ],
+            [
+              "type",
+              "Generic"
+            ]
+          ]
+        },
+        {
+          "id": "A2",
+          "attrs": [
+            [
+              "uuid",
+              "{8d4c4cc9-b058-4b8b-950c-4ec712bd2afd}"
+            ],
+            [
+              "name",
+              "A2"
+            ],
+            [
+              "type",
+              "Generic"
+            ]
+          ]
+        }
+      ],
+      "dynamicTexts": [
+        {
+          "attrs": [
+            [
+              "x",
+              "27"
+            ],
+            [
+              "y",
+              "-14"
+            ],
+            [
+              "z",
+              "10"
+            ],
+            [
+              "text_from",
+              "ElementInfo"
+            ],
+            [
+              "uuid",
+              "{b88c7715-ae3b-4883-898c-98d2de618192}"
+            ],
+            [
+              "font",
+              "Sans Serif,9,-1,5,50,0,0,0,0,0"
+            ],
+            [
+              "Halignment",
+              "AlignLeft"
+            ],
+            [
+              "Valignment",
+              "AlignTop"
+            ],
+            [
+              "frame",
+              "false"
+            ],
+            [
+              "text_width",
+              "-1"
+            ],
+            [
+              "rotation",
+              "0"
+            ],
+            [
+              "keep_visual_rotation",
+              "false"
+            ]
+          ],
+          "inner": "\n            \u003ctext\u003e\u003c/text\u003e\n            \u003cinfo_name\u003elabel\u003c/info_name\u003e\n        "
+        },
+        {
+          "attrs": [
+            [
+              "x",
+              "27"
+            ],
+            [
+              "y",
+              "-4"
+            ],
+            [
+              "z",
+              "10"
+            ],
+            [
+              "text_from",
+              "ElementInfo"
+            ],
+            [
+              "uuid",
+              "{c7015bf0-80d7-4c45-bfa5-16db03d9baf3}"
+            ],
+            [
+              "font",
+              "Sans Serif,6,-1,5,50,0,0,0,0,0"
+            ],
+            [
+              "Halignment",
+              "AlignLeft"
+            ],
+            [
+              "Valignment",
+              "AlignTop"
+            ],
+            [
+              "frame",
+              "false"
+            ],
+            [
+              "text_width",
+              "-1"
+            ],
+            [
+              "rotation",
+              "0"
+            ],
+            [
+              "keep_visual_rotation",
+              "false"
+            ]
+          ],
+          "inner": "\n            \u003ctext\u003e\u003c/text\u003e\n            \u003cinfo_name\u003ecomment\u003c/info_name\u003e\n        "
+        }
+      ],
+      "directories": [
+        {
+          "path": ".",
+          "names": {
+            "cs": "Ukázkové prvky Portunix Modeler",
+            "en": "Portunix Modeler example elements"
+          }
+        },
+        {
+          "path": "10_electric",
+          "names": {
+            "cs": "Elektrotechnika",
+            "en": "Electric"
+          }
+        },
+        {
+          "path": "10_electric/99_custom",
+          "names": {
+            "cs": "Vlastní přístroje",
+            "en": "Custom devices"
+          }
+        }
+      ],
+      "conversion": {
+        "pxPerMm": 4,
+        "namespace": "qet",
+        "compliance": "path"
+      }
+    }
+  }
+}

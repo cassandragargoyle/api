@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+// Canonical gRPC contract for the Portunix Modeler (ptx-modeler) symbol conversions.
+//
+// This file is the single source of truth. Consumers vendor an identical copy rather than
+// hand-writing the wire format:
+//   - portunix-plugins  plugins/modeler/proto/modeler.proto   (server, Go; a test checks the copy)
+//
+// The `package` line is part of the wire identity (`portunix.modeler.ModelerSymbolService`)
+// and must not be renamed. Symbol documents travel as JSON bytes that validate against
+// contract/schemas/modeler-symbol.schema.json.
+package portunix.modeler;
+
+option go_package = "portunix.cz/api/modeler";
+option java_package = "cz.portunix.api.modeler";
+option java_multiple_files = true;
+
+// Conversion between QElectroTech elements (.elmt) and modeler symbols (*.msym.json),
+// portunix-plugins #128. Element RPCs are content based (bytes in, bytes out), so editors can
+// convert without shared files; collection and pack RPCs work on paths on the server machine.
+// Every response carries the same warnings as the CLI report (`ptx-modeler symbol ... -f json`).
+service ModelerSymbolService {
+  // .elmt bytes -> *.msym.json bytes
+  rpc ImportElement(ImportElementRequest) returns (ImportElementResponse);
+  // *.msym.json bytes -> .elmt bytes
+  rpc ExportElement(ExportElementRequest) returns (ExportElementResponse);
+  // .elmt file or directory on the server -> symbol pack directory
+  rpc ImportCollection(ImportCollectionRequest) returns (ConversionResponse);
+  // pack directory or *.msym.json file on the server -> .elmt tree or file
+  rpc ExportPack(ExportPackRequest) returns (ConversionResponse);
+
+  rpc Health(HealthRequest) returns (HealthResponse);
+}
+
+// Zero values select the defaults of the CLI.
+message ConversionOptions {
+  string namespace = 1;   // pack namespace, default "qet"
+  double px_per_mm = 2;   // pixels per paper millimetre; import default 4, export default: stored at import
+  string compliance = 3;  // "path" (default) | compliant | derived | vendor | custom
+  string category = 4;    // fixed category instead of the one derived from the path
+  string license = 5;     // SPDX license of imported elements, default CC-BY-3.0 (QElectroTech collection)
+  string license_url = 6; // link to the license terms
+}
+
+// Pinned origin of an imported element (mirrors `origin` of the symbol schema).
+message Origin {
+  string type = 1;        // git | file
+  string url = 2;
+  string revision = 3;    // commit SHA
+  string path = 4;
+  string format = 5;      // elmt
+  string sha256 = 6;
+}
+
+message Warning {
+  string code = 1;        // approximated | transform | style | dropped | opaque | default | duplicate
+  string message = 2;
+}
+
+message ElementReport {
+  string source = 1;
+  string target = 2;
+  string key = 3;
+  repeated Warning warnings = 4;
+  string error = 5;       // empty when the element converted
+}
+
+message ImportElementRequest {
+  bytes elmt = 1;
+  // Path of the element in its collection, e.g. "10_electric/91_en_60617/x.elmt"; it determines
+  // key, category and standard compliance.
+  string path = 2;
+  ConversionOptions options = 3;
+  Origin origin = 4;      // optional base origin (type, url, revision); path, format, sha256 are filled
+}
+
+message ImportElementResponse {
+  bytes msym_json = 1;
+  string key = 2;         // key within the pack (without namespace)
+  repeated Warning warnings = 3;
+}
+
+message ExportElementRequest {
+  bytes msym_json = 1;
+  ConversionOptions options = 2;
+}
+
+message ExportElementResponse {
+  bytes elmt = 1;
+  repeated Warning warnings = 2;
+}
+
+message ImportCollectionRequest {
+  string input_path = 1;  // .elmt file or directory
+  string output_path = 2; // pack directory, or *.msym.json for a single file
+  ConversionOptions options = 3;
+  string root = 4;        // collection root; default the git top level, else the input directory
+  string revision = 5;    // origin revision override
+  string source_url = 6;  // origin repository URL override
+  bool force = 7;         // overwrite existing output
+}
+
+message ExportPackRequest {
+  string input_path = 1;  // pack directory or *.msym.json file
+  string output_path = 2; // element tree directory or .elmt file
+  ConversionOptions options = 3;
+  bool force = 4;
+}
+
+message ConversionResponse {
+  bool ok = 1;            // false when an element failed or the conversion stopped
+  string output_path = 2;
+  Origin origin = 3;
+  int32 converted = 4;
+  int32 failed = 5;
+  int32 warnings = 6;
+  repeated ElementReport elements = 7;
+  string error = 8;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;      // SERVING
+  string version = 2;
+}
