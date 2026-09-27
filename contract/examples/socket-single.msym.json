@@ -1,0 +1,55 @@
+{
+  "format": "portunix.modeler.symbol/v1",
+  "key": "socket.single",
+  "uuid": "2deb726e-26fe-43e0-aff4-0f04941cc97a",
+  "version": "1.0.0",
+  "names": {
+    "cs": "Zásuvka jednoduchá",
+    "en": "Socket outlet, single"
+  },
+  "description": "Single socket outlet, wall mounted",
+  "category": "socket",
+  "placement": "point",
+  "standard": {
+    "compliance": "derived",
+    "references": [
+      {
+        "standard": "IEC 60617",
+        "part": "11"
+      }
+    ],
+    "notes": "Czech drawing practice (ČSN EN 60617)"
+  },
+  "graphics": {
+    "viewBox": [-1.375, -1.6, 2.75, 3.2],
+    "anchor": [0, 0],
+    "color": "#e00000",
+    "svg": "<title>Socket outlet, single</title>\n<path d=\"M-1.375 -1.6 A1.375 1.375 0 0 0 1.375 -1.6 M0 -0.225 L0 1.6\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.18\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>"
+  },
+  "terminals": [
+    {
+      "id": "L",
+      "at": [0, 1.6],
+      "orientation": "s",
+      "type": "power"
+    }
+  ],
+  "texts": [
+    {
+      "field": "label",
+      "at": [1.6, 0.4],
+      "size": 2,
+      "anchor": "start"
+    }
+  ],
+  "properties": {
+    "mount": 300,
+    "prefixes": ["ZS"],
+    "aliases": ["ZÁSUVKA JEDNODUCHÁ"]
+  },
+  "meta": {
+    "author": "CassandraGargoyle",
+    "license": "MIT",
+    "source": "core pack of ptx-modeler (portunix-plugins #124)"
+  }
+}

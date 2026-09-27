@@ -13,6 +13,15 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- **`contract/schemas/modeler-symbol.schema.json`** — symbol element format of
+  the Portunix Modeler (`*.msym.json`, `format: portunix.modeler.symbol/v1`):
+  metadata, embedded SVG fragment restricted to a safe subset, terminals, text
+  fields and standard compliance (e.g. IEC 60617). Examples
+  `socket-single.msym.json` and `sensor-temperature.msym.json`; the
+  `.msym.json` suffix is mapped in `scripts/validate-contracts.mjs`. The plugin
+  embeds an identical copy (`ptx-modeler schema --symbol`). No language module
+  changes (portunix-plugins #124).
+
 - **`contract/proto/scribe.proto`** — canonical gRPC contract for the scribe
   transcript-correction backend (`portunix.scribe.ScribeService`), the service
   counterpart to `contract/schemas/transcript.schema.json`. Servers and clients

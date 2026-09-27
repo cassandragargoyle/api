@@ -1,0 +1,31 @@
+{
+  "format": "portunix.modeler.symbol/v1",
+  "key": "sensor.temperature",
+  "uuid": "d5771407-d04a-498e-a39a-f346fa3b8d35",
+  "version": "1.0.0",
+  "names": {
+    "cs": "Teplotní čidlo",
+    "en": "Temperature sensor"
+  },
+  "category": "sensor",
+  "placement": "point",
+  "standard": {
+    "compliance": "custom",
+    "notes": "No standard symbol referenced; drawn as in Czech electrical practice"
+  },
+  "graphics": {
+    "viewBox": [-1.5, -1.5, 3, 3],
+    "anchor": [0, 0],
+    "color": "#00b000",
+    "svg": "<title>Temperature sensor</title>\n<circle cx=\"0\" cy=\"0\" r=\"1.45\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"0.18\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n<text x=\"0\" y=\"0.55\" font-size=\"1.6\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">t</text>"
+  },
+  "properties": {
+    "prefixes": ["TC", "TS"],
+    "aliases": ["TEPLOTNÍ ČIDLO"]
+  },
+  "meta": {
+    "author": "CassandraGargoyle",
+    "license": "MIT",
+    "source": "core pack of ptx-modeler (portunix-plugins #124)"
+  }
+}

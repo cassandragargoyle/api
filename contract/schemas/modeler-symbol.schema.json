@@ -1,0 +1,308 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/modeler-symbol.schema.json",
+	"$version": "1.0.0",
+	"title": "ModelerSymbol",
+	"description": "One symbol element of a Portunix Modeler symbol pack (ptx-modeler, portunix-plugins #124), inspired by KiCad symbols and QElectroTech .elmt elements: metadata, an embedded SVG fragment, connection points, text field positions and standard compliance (e.g. IEC 60617). Files use the '.msym.json' filename suffix and live at symbols/<key with dots as slashes>.msym.json inside a pack. The file is self-contained, so a viewer needs no other file. Coordinates are paper millimetres with the y axis pointing down.",
+	"type": "object",
+	"required": [
+		"format",
+		"key",
+		"uuid",
+		"names",
+		"category",
+		"standard",
+		"graphics"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"format": {
+			"const": "portunix.modeler.symbol/v1",
+			"description": "Element format identifier; readers reject unknown major versions"
+		},
+		"key": {
+			"type": "string",
+			"pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9][a-z0-9-]*)*$",
+			"description": "Key within the pack, e.g. 'socket.single'; must match the file path (symbols/socket/single.msym.json). The full key used in models is '<pack namespace>.<key>'"
+		},
+		"uuid": {
+			"type": "string",
+			"pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+			"description": "Stable identity of the element (lower-case RFC 4122 form); unique within a pack"
+		},
+		"version": {
+			"type": "string",
+			"description": "Element version, e.g. '1.0.0'"
+		},
+		"names": {
+			"type": "object",
+			"description": "Localized names keyed by language code; 'en' is required",
+			"required": [
+				"en"
+			],
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"additionalProperties": {
+				"type": "string"
+			}
+		},
+		"description": {
+			"type": "string"
+		},
+		"category": {
+			"type": "string",
+			"pattern": "^[a-z][a-z0-9-]*$",
+			"description": "Symbol category: socket, light, control, sensor, security, ..."
+		},
+		"placement": {
+			"enum": [
+				"point",
+				"linear",
+				"area",
+				"modifier"
+			],
+			"default": "point",
+			"description": "How the symbol is anchored in the model: single insertion point, polyline of arbitrary length, physical outline, or qualifier of another symbol"
+		},
+		"standard": {
+			"$ref": "#/$defs/standard"
+		},
+		"graphics": {
+			"$ref": "#/$defs/graphics"
+		},
+		"terminals": {
+			"type": "array",
+			"description": "Connection points (optional in v1, prepared for wiring diagrams); ids are unique",
+			"items": {
+				"$ref": "#/$defs/terminal"
+			}
+		},
+		"texts": {
+			"type": "array",
+			"description": "Text field positions (optional); the 'label' field positions the device designation",
+			"items": {
+				"$ref": "#/$defs/text"
+			}
+		},
+		"properties": {
+			"type": "object",
+			"description": "Modeling defaults",
+			"additionalProperties": false,
+			"properties": {
+				"mount": {
+					"type": "integer",
+					"minimum": 0,
+					"description": "Default mounting height above the finished floor in mm"
+				},
+				"prefixes": {
+					"type": "array",
+					"description": "Designation prefixes, e.g. 'ZS'",
+					"items": {
+						"type": "string"
+					}
+				},
+				"aliases": {
+					"type": "array",
+					"description": "Legend texts recognised by importers (compared case, spacing and diacritics insensitive)",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"meta": {
+			"type": "object",
+			"description": "Free metadata such as author, license and source",
+			"additionalProperties": {
+				"type": "string"
+			}
+		}
+	},
+	"$defs": {
+		"point": {
+			"type": "array",
+			"items": {
+				"type": "number"
+			},
+			"minItems": 2,
+			"maxItems": 2
+		},
+		"standard": {
+			"type": "object",
+			"description": "Relation of the symbol to a drawing standard",
+			"required": [
+				"compliance"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"compliance": {
+					"enum": [
+						"compliant",
+						"derived",
+						"custom",
+						"vendor"
+					],
+					"description": "compliant = drawn exactly per the referenced standard symbol; derived = based on a standard symbol, adapted; custom = no standard symbol exists; vendor = manufacturer symbol"
+				},
+				"references": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/reference"
+					}
+				},
+				"notes": {
+					"type": "string"
+				}
+			},
+			"if": {
+				"properties": {
+					"compliance": {
+						"enum": [
+							"compliant",
+							"derived"
+						]
+					}
+				}
+			},
+			"then": {
+				"required": [
+					"references"
+				],
+				"properties": {
+					"references": {
+						"minItems": 1
+					}
+				}
+			}
+		},
+		"reference": {
+			"type": "object",
+			"required": [
+				"standard"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"standard": {
+					"type": "string",
+					"minLength": 1,
+					"description": "e.g. 'IEC 60617'"
+				},
+				"part": {
+					"type": "string",
+					"description": "Part of the standard, e.g. '11'"
+				},
+				"symbol": {
+					"type": "string",
+					"description": "Symbol identifier within the standard, e.g. 'S00xxx'"
+				},
+				"edition": {
+					"type": "string",
+					"description": "Edition, e.g. 'DB' for the IEC 60617 database"
+				}
+			}
+		},
+		"graphics": {
+			"type": "object",
+			"required": [
+				"viewBox",
+				"svg"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"viewBox": {
+					"type": "array",
+					"description": "minX, minY, width, height in paper millimetres; width and height are positive",
+					"items": {
+						"type": "number"
+					},
+					"minItems": 4,
+					"maxItems": 4
+				},
+				"anchor": {
+					"$ref": "#/$defs/point",
+					"description": "Insertion point in fragment coordinates; default [0, 0]. Terminals and texts use the same coordinates"
+				},
+				"color": {
+					"type": "string",
+					"pattern": "^#[0-9a-fA-F]{6}$",
+					"description": "Default drawing colour; the fragment paints with currentColor"
+				},
+				"svg": {
+					"type": "string",
+					"minLength": 1,
+					"description": "SVG fragment without the <svg> root. Safe subset only: path, line, polyline, polygon, rect, circle, ellipse, text, g, title; no script, no event attributes, no external references (href and url() only to '#...'), no DOCTYPE"
+				}
+			}
+		},
+		"terminal": {
+			"type": "object",
+			"required": [
+				"id",
+				"at"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": "string",
+					"minLength": 1
+				},
+				"at": {
+					"$ref": "#/$defs/point"
+				},
+				"orientation": {
+					"enum": [
+						"n",
+						"e",
+						"s",
+						"w"
+					],
+					"description": "Direction the connection leaves the symbol"
+				},
+				"type": {
+					"enum": [
+						"power",
+						"protective",
+						"signal",
+						"data",
+						"passive"
+					]
+				}
+			}
+		},
+		"text": {
+			"type": "object",
+			"required": [
+				"field",
+				"at"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"field": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Field name, e.g. 'label' for the device designation"
+				},
+				"at": {
+					"$ref": "#/$defs/point"
+				},
+				"size": {
+					"type": "number",
+					"minimum": 0,
+					"description": "Font size in paper millimetres; default 2"
+				},
+				"anchor": {
+					"enum": [
+						"start",
+						"middle",
+						"end"
+					],
+					"default": "start"
+				}
+			}
+		}
+	}
+}
