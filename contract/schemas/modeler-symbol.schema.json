@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/modeler-symbol.schema.json",
-	"$version": "1.1.0",
+	"$version": "1.2.0",
 	"title": "ModelerSymbol",
 	"description": "One symbol element of a Portunix Modeler symbol pack (ptx-modeler, portunix-plugins #124), inspired by KiCad symbols and QElectroTech .elmt elements: metadata, an embedded SVG fragment, connection points, text field positions and standard compliance (e.g. IEC 60617). Files use the '.msym.json' filename suffix and live at symbols/<key with dots as slashes>.msym.json inside a pack. The file is self-contained, so a viewer needs no other file. Coordinates are paper millimetres with the y axis pointing down.",
 	"type": "object",
@@ -151,9 +151,81 @@
 			"additionalProperties": {
 				"type": "string"
 			}
+		},
+		"origin": {
+			"$ref": "#/$defs/origin"
+		},
+		"extensions": {
+			"type": "object",
+			"description": "Tool specific data keyed by namespace, e.g. 'qet' for the QElectroTech data that makes an imported element export back without loss (ptx-modeler, portunix-plugins #128). Readers keep unknown extensions unchanged; renderers ignore them",
+			"propertyNames": {
+				"pattern": "^[a-z][a-z0-9-]*$"
+			},
+			"additionalProperties": {
+				"type": "object"
+			}
 		}
 	},
 	"$defs": {
+		"origin": {
+			"type": "object",
+			"description": "Pinned, machine-resolvable source the symbol was converted from, so a missing symbol can later be fetched, verified by its SHA-256 and converted again (e.g. an element of the QElectroTech collection at a commit)",
+			"required": [
+				"type",
+				"path",
+				"format",
+				"sha256"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"enum": [
+						"git",
+						"file"
+					],
+					"description": "git = file in a git repository pinned to a commit; file = file outside version control"
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"pattern": "^https?://",
+					"description": "Repository URL, e.g. 'https://github.com/qelectrotech/qelectrotech-elements'"
+				},
+				"revision": {
+					"type": "string",
+					"pattern": "^[0-9a-f]{7,64}$",
+					"description": "Commit SHA of the repository (not a branch name)"
+				},
+				"path": {
+					"type": "string",
+					"minLength": 1,
+					"pattern": "^[^/\\\\]",
+					"description": "Slash separated path of the original file in the repository or collection"
+				},
+				"format": {
+					"type": "string",
+					"pattern": "^[a-z0-9][a-z0-9.+-]*$",
+					"description": "Format of the original file, e.g. 'elmt'"
+				},
+				"sha256": {
+					"type": "string",
+					"pattern": "^[0-9a-f]{64}$",
+					"description": "SHA-256 of the original file bytes"
+				}
+			},
+			"if": {
+				"properties": {
+					"type": {
+						"const": "git"
+					}
+				}
+			},
+			"then": {
+				"required": [
+					"revision"
+				]
+			}
+		},
 		"point": {
 			"type": "array",
 			"items": {

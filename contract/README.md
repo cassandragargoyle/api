@@ -67,7 +67,7 @@ authoritative; SVG/glTF drawings are derived views. Coordinates are integer mill
 | ------ | ----------- |
 | [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log` |
 | [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema |
-| [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields, standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) and provenance in `meta` (`author`, `license` as SPDX id, `licenseUrl`, `source`, `sourceUrl`, `attribution`) |
+| [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields, standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) and provenance in `meta` (`author`, `license` as SPDX id, `licenseUrl`, `source`, `sourceUrl`, `attribution`). 1.2.0 (portunix-plugins #128): pinned `origin` (`type` git/file, `url`, `revision`, `path`, `format`, `sha256`) and opaque `extensions` keyed by namespace (e.g. `qet` for lossless QElectroTech round trips) |
 
 Model documents use the **`*.model.json`** filename suffix and operation files the
 **`*.ops.json`** suffix, so tools, editors and AI agents recognize them without inspecting contents.
@@ -166,6 +166,7 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | ----- | ------- | ----------- |
 | [task-platform.proto](proto/task-platform.proto) | `portunix.platform.v1.TaskPlatformService` | Universal task discovery and execution; mirrors `task-manifest` / `task-request` / `task-response` schemas |
 | [scribe.proto](proto/scribe.proto) | `portunix.scribe.ScribeService` | Transcript correction backend (segments, speakers, flags, Markdown export); mirrors [transcript.schema.json](schemas/transcript.schema.json) |
+| [modeler.proto](proto/modeler.proto) | `portunix.modeler.ModelerSymbolService` | Portunix Modeler symbol conversions (portunix-plugins #128): QElectroTech `.elmt` ↔ `*.msym.json` for single elements (bytes) and collections/packs (server paths), with the CLI's conversion warnings; symbols validate against [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) |
 
 ## Examples
 
@@ -201,6 +202,7 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [house.model.json](examples/house.model.json) | The model produced by `ptx-modeler init` + `op apply` of `house.ops.json` (incl. operation log). Validated by `make validate-contract`. |
 | [socket-single.msym.json](examples/socket-single.msym.json) | Symbol element derived from IEC 60617-11 (single socket outlet) with a terminal and a label text field. Validated by `make validate-contract`. |
 | [sensor-temperature.msym.json](examples/sensor-temperature.msym.json) | `custom` symbol element (no standard symbol referenced), as in the ptx-modeler core pack. Validated by `make validate-contract`. |
+| [smart-relay-qet.msym.json](examples/smart-relay-qet.msym.json) | Symbol imported from a QElectroTech `.elmt` element (`ptx-modeler symbol import-elmt`): `data-qet-*` SVG attributes, `extensions.qet` (link type, kind/element informations, terminal and dynamic text data) and a pinned `origin`. Validated by `make validate-contract`. |
 
 ### Opportunity Management Examples
 
