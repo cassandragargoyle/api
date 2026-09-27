@@ -67,12 +67,25 @@ authoritative; SVG/glTF drawings are derived views. Coordinates are integer mill
 | ------ | ----------- |
 | [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log` |
 | [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema |
-| [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields and standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) |
+| [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields, standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) and provenance in `meta` (`author`, `license` as SPDX id, `licenseUrl`, `source`, `sourceUrl`, `attribution`) |
 
 Model documents use the **`*.model.json`** filename suffix and operation files the
 **`*.ops.json`** suffix, so tools, editors and AI agents recognize them without inspecting contents.
 Symbol elements use the **`*.msym.json`** suffix (one self-contained file per symbol at
 `symbols/<category>/<name>.msym.json` inside a symbol pack), so the VS Code viewer can open them directly.
+Their `meta` object carries the provenance of the drawing, so symbols converted from other
+collections keep their attribution when edited or redistributed:
+
+| `meta` field | Meaning |
+| ------------ | ------- |
+| `author` | Author(s) of the drawing, e.g. `The QElectroTech team` |
+| `license` | SPDX license identifier, e.g. `MIT`, `CC-BY-3.0` (`LicenseRef-<name>` when there is none) |
+| `licenseUrl` | http(s) link to the license text or the collection's license terms |
+| `source` | Human-readable origin, e.g. collection and original file path |
+| `sourceUrl` | http(s) link to the original symbol or collection |
+| `attribution` | Notice to show when redistributing, as required by attribution licenses (CC BY) |
+
+All fields are optional; further keys are allowed as free strings.
 
 > **Single source of truth.** The plugin embeds identical copies of all three schemas
 > (`ptx-modeler schema [--ops | --symbol]`); a plugin test fails when they drift from this directory.

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/modeler-symbol.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.1.0",
 	"title": "ModelerSymbol",
 	"description": "One symbol element of a Portunix Modeler symbol pack (ptx-modeler, portunix-plugins #124), inspired by KiCad symbols and QElectroTech .elmt elements: metadata, an embedded SVG fragment, connection points, text field positions and standard compliance (e.g. IEC 60617). Files use the '.msym.json' filename suffix and live at symbols/<key with dots as slashes>.msym.json inside a pack. The file is self-contained, so a viewer needs no other file. Coordinates are paper millimetres with the y axis pointing down.",
 	"type": "object",
@@ -116,7 +116,38 @@
 		},
 		"meta": {
 			"type": "object",
-			"description": "Free metadata such as author, license and source",
+			"description": "Provenance and free metadata. The named fields describe authorship, licensing and origin so that symbols taken from other collections (e.g. the QElectroTech elements under CC BY 3.0) keep their attribution when converted, edited or redistributed. Further keys are allowed as free strings",
+			"properties": {
+				"author": {
+					"type": "string",
+					"description": "Author(s) of the symbol drawing, e.g. 'The QElectroTech team'"
+				},
+				"license": {
+					"type": "string",
+					"pattern": "^[A-Za-z0-9.+-]+$",
+					"description": "SPDX license identifier of the symbol, e.g. 'MIT' or 'CC-BY-3.0'; 'LicenseRef-<name>' for licenses without an SPDX identifier"
+				},
+				"licenseUrl": {
+					"type": "string",
+					"format": "uri",
+					"pattern": "^https?://",
+					"description": "Link to the license text or to the collection's license terms"
+				},
+				"source": {
+					"type": "string",
+					"description": "Where the symbol comes from, human readable, e.g. the collection and the original file path"
+				},
+				"sourceUrl": {
+					"type": "string",
+					"format": "uri",
+					"pattern": "^https?://",
+					"description": "Link to the original symbol or collection"
+				},
+				"attribution": {
+					"type": "string",
+					"description": "Attribution notice to show when the symbol is redistributed, as required by attribution licenses such as CC BY"
+				}
+			},
 			"additionalProperties": {
 				"type": "string"
 			}

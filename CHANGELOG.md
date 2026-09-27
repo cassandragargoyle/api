@@ -13,6 +13,13 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- Provenance fields in the `meta` object of **`modeler-symbol.schema.json`**
+  (`$version` 1.1.0): `author`, `license` (SPDX identifier), `licenseUrl`,
+  `source`, `sourceUrl` and `attribution`, so symbols converted from other
+  collections (QElectroTech elements under CC BY 3.0) keep their attribution.
+  Additive: further `meta` keys stay free strings and existing documents remain
+  valid (portunix-plugins #128).
+
 - **`contract/schemas/modeler-symbol.schema.json`** — symbol element format of
   the Portunix Modeler (`*.msym.json`, `format: portunix.modeler.symbol/v1`):
   metadata, embedded SVG fragment restricted to a safe subset, terminals, text
