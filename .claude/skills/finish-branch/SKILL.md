@@ -19,31 +19,47 @@ Ověř, že branch existuje a obsahuje commity.
 
 ## KROK 2: Merge a úklid
 
-> **Co je PR (Pull Request)?** Žádost o začlenění změn z feature branch do hlavní větve. Používá se pro code review v týmech. Pro solo vývoj lze mergovat přímo.
+> **Co je PR (Pull Request)?** Žádost o začlenění změn z feature branch do hlavní větve. Změny do `main` se v tomto repozitáři začleňují přes PR na GitHubu.
+
+> **Remotes:** `origin` = GitHub (`cassandragargoyle/api`), `gitea` = Gitea. Před pushem ověř `git remote -v`.
 
 Zeptej se uživatele na preferovaný postup:
 
-### Varianta A: Přímý merge (výchozí pro solo vývoj)
+### Varianta A: Pull Request na GitHub (výchozí)
 
-```bash
-git checkout main
-git merge feature/<issue-num>-<popis>
-git branch -d feature/<issue-num>-<popis>
-```
-
-**STOP** - Počkej na potvrzení před provedením merge.
-
-### Varianta B: Pull Request na GitHub
-
-Pokud má issue propojený GitHub issue:
-
-1. Push branch na Gitea: `git push origin <branch>`
-2. Připrav staging pro GitHub přes publish skripty (`scripts/github_02_sync_publish.py`)
-3. Připrav PR popis:
+1. Push branch na GitHub: `git push -u origin <branch>`
+2. Připrav PR popis:
    - **Summary**: Co tento PR dělá
    - **Motivation**: Proč (odkaz na GitHub issue: `Closes #N`)
    - **Changes**: Seznam změn
    - **Testing**: Kroky pro ověření
+3. Vytvoř PR: `gh pr create --base main --head <branch> --title "<commit title>" --body "<popis>"`
+
+**STOP** - Počkej, až uživatel PR zpracuje na webu.
+
+Po merge PR ověř stav (`gh pr view <N> --json state`) a ukliď:
+
+```bash
+git checkout main
+git pull --ff-only
+git branch -d <branch>
+git push origin --delete <branch>   # pokud ji GitHub nesmazal automaticky
+git fetch --prune origin
+```
+
+### Varianta B: Přímý lokální merge (jen na výslovné přání)
+
+Obchází PR review. Použij jen, když to uživatel výslovně chce.
+
+```bash
+git checkout main
+git merge <branch>
+git branch -d <branch>
+```
+
+**STOP** - Počkej na potvrzení před provedením merge.
+
+Rollback před pushem: `git branch <branch> <commit>` a `git reset --hard origin/main`.
 
 ## KROK 3: Aktualizace issue (volitelné)
 
@@ -72,7 +88,7 @@ Přeskoč aktualizaci stavu. Issue zůstává otevřené pro další práci.
 
 Zobraz shrnutí:
 
-- Merge provedený do větve: `<název>`
+- Způsob: PR #N / přímý merge do `<název>`
 - Feature branch smazána: ano/ne
 - Issue status aktualizován: ano/ne/přeskočeno
 - Další kroky (pokud jsou)
