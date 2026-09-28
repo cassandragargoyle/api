@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/modeler-ops.schema.json",
-	"$version": "1.1.0",
+	"$version": "1.2.0",
 	"title": "ModelerOps",
 	"description": "Operations that mutate a Portunix Modeler model (ptx-modeler op apply, portunix-plugins #116). An ops file is a JSON array applied as one transaction: either every operation succeeds and the resulting model validates, or nothing changes and machine-readable violations are returned. The same contract is used by the CLI, AI agents and the editor. Payload shapes are the entity props of modeler-model.schema.json.",
 	"type": "array",
@@ -21,6 +21,7 @@
 						"annotation.add",
 						"circuit.add",
 						"circuit.set",
+						"device.attach",
 						"device.move",
 						"device.place",
 						"device.set",
@@ -145,6 +146,46 @@
 						"required": [
 							"id",
 							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "device.attach"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Attach an absolutely placed point device to the nearest wall face within the tolerance (portunix-plugins #118): the wall becomes its parent, the position becomes offset/side/standoff, the rotation becomes relative to the face; the drawn position and rotation are kept. Rejected with 'no_host_wall' when no wall face is in reach",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": false,
+								"properties": {
+									"wall": {
+										"$ref": "modeler-model.schema.json#/$defs/id",
+										"description": "Host wall; default = the nearest wall face"
+									},
+									"tolerance": {
+										"type": "integer",
+										"description": "Largest distance of the device from the wall face in mm (default 300)",
+										"minimum": 0
+									},
+									"mount": {
+										"type": "integer",
+										"description": "Mounting height in mm; default = the device's own, else the catalog default",
+										"minimum": 0
+									}
+								}
+							}
+						},
+						"required": [
+							"id"
 						]
 					}
 				},

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/modeler-model.schema.json",
-	"$version": "1.1.0",
+	"$version": "1.2.0",
 	"title": "ModelerModel",
 	"description": "Semantic building model of the Portunix Modeler (ptx-modeler, portunix-plugins #116): a flat entity store (storeys, wall graph of junctions and walls, openings, rooms, electrical devices and circuits, imported underlay/annotations, title block) with layers and an operation log. The model is authoritative; SVG/glTF drawings are derived views. Coordinates are integer millimetres with the y axis pointing up. Files use the '.model.json' filename suffix. Mutations are expressed as operations (modeler-ops.schema.json).",
 	"type": "object",
@@ -280,6 +280,11 @@
 						"right"
 					],
 					"description": "Host-relative: wall face"
+				},
+				"standoff": {
+					"type": "integer",
+					"description": "Host-relative: distance of the symbol from the wall face in mm, drawing only (portunix-plugins #118)",
+					"minimum": 0
 				},
 				"at": {
 					"$ref": "#/$defs/point"
