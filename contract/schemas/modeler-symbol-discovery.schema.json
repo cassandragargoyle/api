@@ -25,6 +25,9 @@
 		},
 		{
 			"$ref": "#/$defs/sourceAdded"
+		},
+		{
+			"$ref": "#/$defs/symbolReady"
 		}
 	],
 	"$defs": {
@@ -778,6 +781,74 @@
 				}
 			},
 			"description": "Output of 'symbol source add'"
+		},
+		"symbolReady": {
+			"type": "object",
+			"required": [
+				"kind",
+				"key",
+				"converted",
+				"operation",
+				"command"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"kind": {
+					"const": "symbol-ready"
+				},
+				"key": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Full symbol key to use in models"
+				},
+				"title": {
+					"type": "string"
+				},
+				"source": {
+					"type": "string"
+				},
+				"path": {
+					"type": "string"
+				},
+				"converted": {
+					"type": "boolean",
+					"description": "true when the element was converted into a managed pack"
+				},
+				"pack": {
+					"type": "string",
+					"description": "Managed pack directory the symbol was converted into; loaded automatically"
+				},
+				"license": {
+					"$ref": "https://cassandragargoyle.org/schemas/modeler-symbol-source.schema.json#/$defs/license"
+				},
+				"operation": {
+					"type": "object",
+					"required": [
+						"op",
+						"props"
+					],
+					"additionalProperties": false,
+					"properties": {
+						"op": {
+							"const": "device.place"
+						},
+						"props": {
+							"type": "object",
+							"required": [
+								"symbol"
+							],
+							"additionalProperties": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"command": {
+					"type": "string",
+					"description": "Command that applies operations to a model"
+				}
+			},
+			"description": "Output of 'symbol search --use N': the chosen symbol is usable, converted into a managed pack when needed"
 		}
 	}
 }
