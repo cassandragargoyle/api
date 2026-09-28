@@ -212,7 +212,7 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [kicad-symbols.msrc.json](examples/kicad-symbols.msrc.json) | Curated symbol source: KiCad schematic symbol libraries on GitLab (CC BY-SA 4.0 with the design exception), 223 libraries as categories, tracking issue for the `kicad_sym` converter. Validated by `make validate-contract`. |
 | [search-en-60617.symbol-discovery.json](examples/search-en-60617.symbol-discovery.json) | `ptx-modeler symbol search -f json "EN 60617 07-02-01"`: a `remote-source` result with license-review, fetch, index, convert and use actions. Validated by `make validate-contract`. |
 | [probe-kicad.symbol-discovery.json](examples/probe-kicad.symbol-discovery.json) | `ptx-modeler symbol source probe -f json` of the registered KiCad source (answered offline from the registry, `track` action). Validated by `make validate-contract`. |
-| [ready-jistic.symbol-discovery.json](examples/ready-jistic.symbol-discovery.json) | `ptx-modeler symbol search --use 1 -f json --lang cs jistič`: a QElectroTech element converted into the managed pack, with the symbol key and the `device.place` operation (`kind: symbol-ready`). Validated by `make validate-contract`. |
+| [ready-jistic.symbol-discovery.json](examples/ready-jistic.symbol-discovery.json) | `ptx-modeler symbol search --use N -f json --lang cs jistič`: a QElectroTech element converted into the managed pack, with the symbol key and the `device.place` operation (`kind: symbol-ready`). Validated by `make validate-contract`. |
 
 ### Opportunity Management Examples
 
