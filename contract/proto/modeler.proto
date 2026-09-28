@@ -1,11 +1,19 @@
 syntax = "proto3";
 
+// contract-version: 1.0.0
+//
 // Canonical gRPC contract for the Portunix Modeler (ptx-modeler) symbol conversions and symbol
 // source discovery.
 //
 // This file is the single source of truth. Consumers vendor an identical copy rather than
 // hand-writing the wire format:
-//   - portunix-plugins  plugins/modeler/proto/modeler.proto   (server, Go; a test checks the copy)
+//   - portunix-plugins  plugins/modeler/contract/modeler.proto   (server, Go; versioned snapshot with
+//                       manifest.json, synced by `make contract-sync`, checked by `make contract-check`)
+//
+// The `contract-version` line above is the semver of the modeler contract (this file plus the
+// modeler-*.schema.json and help-ai.schema.json schemas). Additive changes bump the minor version,
+// breaking changes the major version. The plugin reports it via `ptx-modeler contract version`,
+// ModelerContractService and Health (portunix-plugins #144).
 //
 // The `package` line is part of the wire identity (`portunix.modeler.ModelerSymbolService`)
 // and must not be renamed. Symbol documents travel as JSON bytes that validate against
@@ -47,6 +55,18 @@ service ModelerSymbolService {
   rpc DraftSourceIssue(DraftSourceIssueRequest) returns (DiscoveryResponse);
 
   rpc Health(HealthRequest) returns (HealthResponse);
+}
+
+// Versioned snapshot of this contract embedded in the plugin, portunix-plugins #144, so gRPC clients
+// can obtain the .proto and the schemas from a running plugin without a checkout of this repository.
+// Responses equal the CLI (`ptx-modeler contract version|list|show -f json`).
+service ModelerContractService {
+  // Manifest of the snapshot: contract version, source ref/commit and per-file checksums
+  rpc GetContractInfo(GetContractInfoRequest) returns (ContractInfo);
+  rpc ListContractFiles(ListContractFilesRequest) returns (ListContractFilesResponse);
+  // File name (e.g. "modeler.proto") -> content; NOT_FOUND for an unknown name,
+  // INVALID_ARGUMENT for an empty name or a path
+  rpc GetContractFile(GetContractFileRequest) returns (ContractFile);
 }
 
 // Zero values select the defaults of the CLI.
@@ -214,4 +234,50 @@ message HealthRequest {}
 message HealthResponse {
   string status = 1;      // SERVING
   string version = 2;
+  string contract_version = 3; // contract-version of the embedded snapshot
+}
+
+message GetContractInfoRequest {}
+
+message ContractSource {
+  string repository = 1;  // github.com/cassandragargoyle/api
+  string path = 2;        // contract/
+  string ref = 3;         // branch or tag the snapshot was synced from
+  string commit = 4;      // full commit hash
+}
+
+message ContractFileInfo {
+  string name = 1;        // file name inside the snapshot, e.g. modeler-ops.schema.json
+  string kind = 2;        // json-schema | proto
+  int64 size = 3;         // bytes
+  string sha256 = 4;      // hex
+  string path = 5;        // path in the source repository, e.g. contract/schemas/modeler-ops.schema.json
+}
+
+message ContractInfo {
+  string contract = 1;    // modeler
+  string version = 2;     // contract-version
+  ContractSource source = 3;
+  string synced_at = 4;   // RFC 3339
+  repeated ContractFileInfo files = 5;
+  string plugin_version = 6;
+  bytes manifest_json = 7; // the embedded manifest.json, byte-identical
+}
+
+message ListContractFilesRequest {}
+
+message ListContractFilesResponse {
+  string version = 1;     // contract-version
+  repeated ContractFileInfo files = 2;
+}
+
+message GetContractFileRequest {
+  string name = 1;
+}
+
+message ContractFile {
+  string name = 1;
+  string kind = 2;
+  bytes content = 3;      // byte-identical to the file in the snapshot
+  string sha256 = 4;
 }
