@@ -204,8 +204,8 @@
 				},
 				"format": {
 					"type": "string",
-					"pattern": "^[a-z0-9][a-z0-9.+-]*$",
-					"description": "Format of the original file, e.g. 'elmt'"
+					"pattern": "^[a-z0-9][a-z0-9._+-]*$",
+					"description": "Format of the original file, e.g. 'elmt', 'kicad_sym'"
 				},
 				"sha256": {
 					"type": "string",

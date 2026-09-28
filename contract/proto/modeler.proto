@@ -30,6 +30,12 @@ service ModelerSymbolService {
   // pack directory or *.msym.json file on the server -> .elmt tree or file
   rpc ExportPack(ExportPackRequest) returns (ConversionResponse);
 
+  // KiCad schematic symbols (.kicad_sym, KiCad 6+) -> modeler symbols, portunix-plugins #140.
+  // .kicad_sym bytes -> one *.msym.json per symbol and unit
+  rpc ImportKicadSymbol(ImportKicadSymbolRequest) returns (ImportKicadSymbolResponse);
+  // .kicad_sym file, .kicad_symdir directory or checkout on the server -> symbol pack directory
+  rpc ImportKicadLibrary(ImportCollectionRequest) returns (ConversionResponse);
+
   // Symbol source discovery, portunix-plugins #130. Each response carries the same JSON document
   // as the CLI `ptx-modeler symbol ... -f json` (contract/schemas/modeler-symbol-discovery.schema.json).
   // DraftSourceIssue returns the issue draft and the prefilled URL; no RPC creates issues, that
@@ -45,11 +51,11 @@ service ModelerSymbolService {
 
 // Zero values select the defaults of the CLI.
 message ConversionOptions {
-  string namespace = 1;   // pack namespace, default "qet"
-  double px_per_mm = 2;   // pixels per paper millimetre; import default 4, export default: stored at import
-  string compliance = 3;  // "path" (default) | compliant | derived | vendor | custom
-  string category = 4;    // fixed category instead of the one derived from the path
-  string license = 5;     // SPDX license of imported elements, default CC-BY-3.0 (QElectroTech collection)
+  string namespace = 1;   // pack namespace, default "qet" (KiCad: "kicad")
+  double px_per_mm = 2;   // pixels per paper millimetre; import default 4, export default: stored at import (not used by KiCad)
+  string compliance = 3;  // "path" (default) | compliant | derived | vendor | custom (KiCad: custom (default) | vendor)
+  string category = 4;    // fixed category instead of the one derived from the path (KiCad: from the library)
+  string license = 5;     // SPDX license of imported elements, default CC-BY-3.0 (QElectroTech collection; KiCad: CC-BY-SA-4.0)
   string license_url = 6; // link to the license terms
 }
 
@@ -59,7 +65,7 @@ message Origin {
   string url = 2;
   string revision = 3;    // commit SHA
   string path = 4;
-  string format = 5;      // elmt
+  string format = 5;      // elmt | kicad_sym
   string sha256 = 6;
 }
 
@@ -109,6 +115,35 @@ message ImportCollectionRequest {
   string revision = 5;    // origin revision override
   string source_url = 6;  // origin repository URL override
   bool force = 7;         // overwrite existing output
+}
+
+// One .kicad_sym file with the other files of its library, so extends resolves across the files
+// of a .kicad_symdir. The library name comes from path (Device.kicad_sym or
+// Device.kicad_symdir/R.kicad_sym).
+message ImportKicadSymbolRequest {
+  bytes kicad_sym = 1;
+  // Path of the file in its checkout, e.g. "Device.kicad_symdir/R.kicad_sym"; recorded in the origin.
+  string path = 2;
+  string symbol = 3;      // symbol name; empty = every symbol of the file
+  ConversionOptions options = 4;
+  Origin origin = 5;      // optional base origin (type, url, revision); path, format, sha256 are filled
+  repeated KicadFile library_files = 6; // other .kicad_sym files of the same library directory
+}
+
+message KicadFile {
+  string path = 1;
+  bytes kicad_sym = 2;
+}
+
+message ImportKicadSymbolResponse {
+  repeated ImportedSymbol symbols = 1; // a multi-unit symbol gives one symbol per unit
+}
+
+message ImportedSymbol {
+  bytes msym_json = 1;
+  string key = 2;         // key within the pack (without namespace)
+  string source = 3;      // path#symbol
+  repeated Warning warnings = 4;
 }
 
 message ExportPackRequest {
