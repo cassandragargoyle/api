@@ -1,9 +1,9 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/plugin-manifest.schema.json",
-	"$version": "1.1.0",
+	"$version": "1.2.0",
 	"title": "PluginManifest",
-	"description": "Plugin registration manifest for the Unified AI Plugin Platform. Describes plugin identity, runtime requirements, capabilities, commands, AI integration, and optional supported_platforms declaration (v1.1.0+) used by hosting platforms such as Portunix Synapse to discover and embed extension plugins. This is the JSON Schema equivalent of the core PluginService.GetInfo gRPC response (portunix/src/app/plugins/proto/plugin.proto).",
+	"description": "Plugin registration manifest for the Unified AI Plugin Platform. Describes plugin identity, runtime requirements, capabilities, commands, AI integration, optional supported_platforms declaration (v1.1.0+) and optional contract identity (v1.2.0+) used by hosting platforms such as Portunix Synapse to discover and embed extension plugins. This is the JSON Schema equivalent of the core PluginService.GetInfo gRPC response (portunix/src/app/plugins/proto/plugin.proto).",
 	"type": "object",
 	"required": ["name", "version", "description", "plugin"],
 	"properties": {
@@ -212,6 +212,24 @@
 				},
 				"additionalProperties": false
 			}
+		},
+		"contract": {
+			"type": "object",
+			"description": "API contract the plugin embeds and serves (added in schema v1.2.0), so Portunix can show it without starting the plugin. Mirrors the contract manifest of the plugin (e.g. ptx-modeler contract version).",
+			"required": ["name", "version"],
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Contract identifier (e.g. 'modeler')",
+					"pattern": "^[a-z][a-z0-9_-]*$"
+				},
+				"version": {
+					"type": "string",
+					"description": "Semantic version of the contract (e.g. the contract-version line of modeler.proto)",
+					"pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+				}
+			},
+			"additionalProperties": false
 		},
 		"supported_platforms": {
 			"type": "array",

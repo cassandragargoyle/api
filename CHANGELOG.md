@@ -21,6 +21,10 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
   line `// contract-version: 1.0.0` is the semver of the modeler contract,
   read by the plugin's `make contract-sync`. Additive; no language module
   changes (portunix-plugins #144).
+- Optional `contract` object (`name`, `version`) in
+  **`plugin-manifest.schema.json`** (`$version` 1.1.0 → 1.2.0): the API
+  contract a plugin embeds and serves, shown by Portunix without starting the
+  plugin. Additive (portunix-plugins #144).
 - Provenance fields in the `meta` object of **`modeler-symbol.schema.json`**
   (`$version` 1.1.0): `author`, `license` (SPDX identifier), `licenseUrl`,
   `source`, `sourceUrl` and `attribution`, so symbols converted from other
