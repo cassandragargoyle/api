@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-// contract-version: 1.0.0
+// contract-version: 1.1.0
 //
 // Canonical gRPC contract for the Portunix Modeler (ptx-modeler) symbol conversions and symbol
 // source discovery.

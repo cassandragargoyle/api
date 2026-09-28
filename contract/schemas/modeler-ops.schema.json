@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/modeler-ops.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.1.0",
 	"title": "ModelerOps",
 	"description": "Operations that mutate a Portunix Modeler model (ptx-modeler op apply, portunix-plugins #116). An ops file is a JSON array applied as one transaction: either every operation succeeds and the resulting model validates, or nothing changes and machine-readable violations are returned. The same contract is used by the CLI, AI agents and the editor. Payload shapes are the entity props of modeler-model.schema.json.",
 	"type": "array",
@@ -19,6 +19,8 @@
 				"op": {
 					"enum": [
 						"annotation.add",
+						"circuit.add",
+						"circuit.set",
 						"device.move",
 						"device.place",
 						"device.set",
@@ -70,6 +72,78 @@
 						},
 						"required": [
 							"parent",
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "circuit.add"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Add an electrical circuit (no parent); the designation must be unique",
+						"properties": {
+							"props": {
+								"$ref": "modeler-model.schema.json#/$defs/circuit"
+							}
+						},
+						"required": [
+							"props"
+						]
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"op": {
+								"const": "circuit.set"
+							}
+						},
+						"required": [
+							"op"
+						]
+					},
+					"then": {
+						"description": "Change circuit metadata; renaming the designation does not update devices referring to it",
+						"properties": {
+							"props": {
+								"type": "object",
+								"additionalProperties": false,
+								"properties": {
+									"designation": {
+										"type": "string"
+									},
+									"type": {
+										"enum": [
+											"socket",
+											"lighting",
+											"control",
+											"data",
+											"power",
+											"other"
+										]
+									},
+									"board": {
+										"type": "string"
+									},
+									"cable": {
+										"type": "string"
+									},
+									"protection": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"required": [
+							"id",
 							"props"
 						]
 					}

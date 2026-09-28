@@ -1,9 +1,9 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/modeler-model.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.1.0",
 	"title": "ModelerModel",
-	"description": "Semantic building model of the Portunix Modeler (ptx-modeler, portunix-plugins #116): a flat entity store (storeys, wall graph of junctions and walls, openings, rooms, electrical devices, imported underlay/annotations, title block) with layers and an operation log. The model is authoritative; SVG/glTF drawings are derived views. Coordinates are integer millimetres with the y axis pointing up. Files use the '.model.json' filename suffix. Mutations are expressed as operations (modeler-ops.schema.json).",
+	"description": "Semantic building model of the Portunix Modeler (ptx-modeler, portunix-plugins #116): a flat entity store (storeys, wall graph of junctions and walls, openings, rooms, electrical devices and circuits, imported underlay/annotations, title block) with layers and an operation log. The model is authoritative; SVG/glTF drawings are derived views. Coordinates are integer millimetres with the y axis pointing up. Files use the '.model.json' filename suffix. Mutations are expressed as operations (modeler-ops.schema.json).",
 	"type": "object",
 	"required": [
 		"schema",
@@ -258,7 +258,7 @@
 				},
 				"circuit": {
 					"type": "string",
-					"description": "Circuit designation, e.g. 'ZS105'"
+					"description": "Circuit designation, e.g. 'ZS105'; refers to a 'circuit' entity when the model has any"
 				},
 				"variant": {
 					"type": "string",
@@ -309,6 +309,44 @@
 				"room": {
 					"type": "string",
 					"description": "Room number the device belongs to"
+				}
+			}
+		},
+		"circuit": {
+			"type": "object",
+			"description": "Electrical circuit (kind 'circuit', no parent, portunix-plugins #120); devices reference it by 'designation' in their 'circuit' prop",
+			"required": [
+				"designation"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"designation": {
+					"type": "string",
+					"description": "Circuit designation, unique in the model, e.g. 'ZS105'",
+					"minLength": 1
+				},
+				"type": {
+					"enum": [
+						"socket",
+						"lighting",
+						"control",
+						"data",
+						"power",
+						"other"
+					],
+					"description": "Circuit purpose"
+				},
+				"board": {
+					"type": "string",
+					"description": "Designation of the distribution board, e.g. 'RD1'"
+				},
+				"cable": {
+					"type": "string",
+					"description": "Cable type, e.g. 'CYKY-J 3x2.5'"
+				},
+				"protection": {
+					"type": "string",
+					"description": "Protective device, e.g. 'B16'"
 				}
 			}
 		},
@@ -425,6 +463,7 @@
 						"window",
 						"room",
 						"device",
+						"circuit",
 						"underlay",
 						"annotation",
 						"titleblock"
@@ -551,6 +590,22 @@
 						"properties": {
 							"props": {
 								"$ref": "#/$defs/device"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"kind": {
+								"const": "circuit"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"props": {
+								"$ref": "#/$defs/circuit"
 							}
 						}
 					}
