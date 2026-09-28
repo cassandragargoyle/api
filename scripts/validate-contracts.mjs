@@ -40,6 +40,8 @@ const SUFFIX_SCHEMA = [
 	[".model.json", "modeler-model.schema.json"],
 	[".ops.json", "modeler-ops.schema.json"],
 	[".msym.json", "modeler-symbol.schema.json"],
+	[".msrc.json", "modeler-symbol-source.schema.json"],
+	[".symbol-discovery.json", "modeler-symbol-discovery.schema.json"],
 ];
 
 const readJson = (p) => JSON.parse(readFileSync(p, "utf8"));

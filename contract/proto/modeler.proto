@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-// Canonical gRPC contract for the Portunix Modeler (ptx-modeler) symbol conversions.
+// Canonical gRPC contract for the Portunix Modeler (ptx-modeler) symbol conversions and symbol
+// source discovery.
 //
 // This file is the single source of truth. Consumers vendor an identical copy rather than
 // hand-writing the wire format:
@@ -28,6 +29,16 @@ service ModelerSymbolService {
   rpc ImportCollection(ImportCollectionRequest) returns (ConversionResponse);
   // pack directory or *.msym.json file on the server -> .elmt tree or file
   rpc ExportPack(ExportPackRequest) returns (ConversionResponse);
+
+  // Symbol source discovery, portunix-plugins #130. Each response carries the same JSON document
+  // as the CLI `ptx-modeler symbol ... -f json` (contract/schemas/modeler-symbol-discovery.schema.json).
+  // DraftSourceIssue returns the issue draft and the prefilled URL; no RPC creates issues, that
+  // stays with the CLI and the user's own gh credentials.
+  rpc SearchSymbols(SearchSymbolsRequest) returns (DiscoveryResponse);
+  rpc ListSources(ListSourcesRequest) returns (DiscoveryResponse);
+  rpc GetSource(GetSourceRequest) returns (DiscoveryResponse);
+  rpc ProbeSource(ProbeSourceRequest) returns (DiscoveryResponse);
+  rpc DraftSourceIssue(DraftSourceIssueRequest) returns (DiscoveryResponse);
 
   rpc Health(HealthRequest) returns (HealthResponse);
 }
@@ -116,6 +127,51 @@ message ConversionResponse {
   int32 warnings = 6;
   repeated ElementReport elements = 7;
   string error = 8;
+}
+
+// Registry layers and symbol packs on the server machine, like --sources and --catalog of the CLI.
+message DiscoveryScope {
+  repeated string catalogs = 1;  // symbol pack directories
+  repeated string sources = 2;   // directories with *.msrc.json files
+}
+
+message SearchSymbolsRequest {
+  string query = 1;
+  string lang = 2;        // language of the titles, default en
+  string source = 3;      // only this source id ("catalog" = installed packs)
+  string category = 4;
+  string standard = 5;
+  int32 limit = 6;        // default 20
+  DiscoveryScope scope = 7;
+}
+
+message ListSourcesRequest {
+  DiscoveryScope scope = 1;
+}
+
+message GetSourceRequest {
+  string id = 1;
+  DiscoveryScope scope = 2;
+}
+
+message ProbeSourceRequest {
+  string url = 1;
+  bool network = 2;       // network access is opt-in; known sources need none
+  DiscoveryScope scope = 3;
+}
+
+message DraftSourceIssueRequest {
+  string url = 1;         // source to probe, or
+  bytes probe_json = 2;   // a stored probe result (kind "probe")
+  string use_case = 3;
+  string repo = 4;        // default cassandragargoyle/portunix-plugins
+  bool network = 5;
+  DiscoveryScope scope = 6;
+}
+
+message DiscoveryResponse {
+  string kind = 1;        // search | sources | source | probe | issue-draft
+  bytes json = 2;         // the CLI -f json document, byte-identical
 }
 
 message HealthRequest {}

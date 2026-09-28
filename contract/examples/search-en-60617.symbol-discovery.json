@@ -1,0 +1,69 @@
+{
+  "kind": "search",
+  "query": "EN 60617 07-02-01",
+  "scopes": [
+    {
+      "scope": "catalog",
+      "symbols": 61
+    },
+    {
+      "scope": "remote-metadata",
+      "source": "kicad-symbols"
+    },
+    {
+      "scope": "remote-metadata",
+      "source": "qelectrotech-elements"
+    }
+  ],
+  "results": [
+    {
+      "title": "IEC 60617 symbols",
+      "source": "qelectrotech-elements",
+      "path": "10_electric/91_en_60617",
+      "format": "elmt",
+      "availability": "remote-source",
+      "license": {
+        "spdx": "CC-BY-3.0",
+        "url": "https://github.com/qelectrotech/qelectrotech-elements/blob/main/ELEMENTS.LICENSE",
+        "usage": "use and modification in diagrams without conditions; redistribution outside a diagram under CC BY 3.0",
+        "restrictions": [
+          "no-ml-training"
+        ]
+      },
+      "match": {
+        "score": 0.9,
+        "field": "standards",
+        "value": "IEC 60617"
+      },
+      "actions": [
+        {
+          "kind": "license-review",
+          "url": "https://github.com/qelectrotech/qelectrotech-elements/blob/main/ELEMENTS.LICENSE",
+          "explain": "License CC-BY-3.0: use and modification in diagrams without conditions; redistribution outside a diagram under CC BY 3.0. Restrictions: no-ml-training (the symbols must not be used to train machine learning models). Tell the user these terms and get approval before fetching or converting.",
+          "requires": [
+            "confirmation"
+          ]
+        },
+        {
+          "kind": "fetch",
+          "command": "ptx-modeler symbol index build --fetch --network --source qelectrotech-elements",
+          "explain": "shallow clone into /home/user/.portunix/modeler/checkouts/qelectrotech-elements and index it, so search finds single symbols by name (manual alternative: git clone --depth 1 --branch main https://github.com/qelectrotech/qelectrotech-elements DIR, then ptx-modeler symbol index build --source qelectrotech-elements DIR)",
+          "requires": [
+            "network",
+            "license-review"
+          ]
+        },
+        {
+          "kind": "convert",
+          "command": "ptx-modeler symbol import-elmt -o PACK /home/user/.portunix/modeler/checkouts/qelectrotech-elements/10_electric/91_en_60617",
+          "explain": "convert QElectroTech element files to a symbol pack"
+        },
+        {
+          "kind": "use",
+          "command": "ptx-modeler --catalog PACK op apply --ops OPS.json MODEL.model.json",
+          "explain": "place the symbol with a device.place operation"
+        }
+      ]
+    }
+  ]
+}
