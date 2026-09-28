@@ -59,14 +59,15 @@ Transcript documents use the **`*.scribe.json`** filename suffix (tied to scribe
 ### Modeling
 
 Building model of the Portunix Modeler (`ptx-modeler`, portunix-plugins #116): a flat entity
-store (storeys, wall graph of junctions and walls, doors/windows, rooms, electrical devices,
-imported underlay/annotations, title block) with layers and an operation log. The model is
+store (storeys, wall graph of junctions and walls, doors/windows, rooms, electrical devices and
+circuits, imported underlay/annotations, title block) with layers and an operation log. The model is
 authoritative; SVG/glTF drawings are derived views. Coordinates are integer millimetres.
 
 | Schema | Description |
 | ------ | ----------- |
-| [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log` |
-| [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema |
+| [modeler-model.schema.json](schemas/modeler-model.schema.json) | Model document (`schema: portunix.modeler/v1`): `layers` + `entities` (`id`, `kind`, `parent`, `layer`, `props`) + `log`. 1.1.0 (portunix-plugins #120): kind `circuit` (`designation`, `type`, `board`, `cable`, `protection`) referenced by `device.circuit` |
+| [modeler-ops.schema.json](schemas/modeler-ops.schema.json) | Operations (`op apply`): JSON array applied as one transaction; payloads reuse the entity props of the model schema. 1.1.0 (portunix-plugins #120): `circuit.add`, `circuit.set` |
+| [modeler-bom.schema.json](schemas/modeler-bom.schema.json) | Bill of materials / device count (`ptx-modeler bom -f json`, portunix-plugins #120): devices grouped by symbol, room or circuit (`unassigned` last), multiplicity included, variants as separate items, deterministic order |
 | [modeler-symbol.schema.json](schemas/modeler-symbol.schema.json) | Symbol element (`format: portunix.modeler.symbol/v1`, portunix-plugins #124): metadata, embedded SVG fragment (safe subset), terminals, text fields, standard compliance (`compliant`/`derived`/`custom`/`vendor`, e.g. IEC 60617) and provenance in `meta` (`author`, `license` as SPDX id, `licenseUrl`, `source`, `sourceUrl`, `attribution`). 1.2.0 (portunix-plugins #128): pinned `origin` (`type` git/file, `url`, `revision`, `path`, `format`, `sha256`) and opaque `extensions` keyed by namespace (e.g. `qet` for lossless QElectroTech round trips) |
 | [modeler-symbol-source.schema.json](schemas/modeler-symbol-source.schema.json) | Symbol source (`format: portunix.modeler.symbol-source/v1`, portunix-plugins #130): one external symbol collection of the ptx-modeler source registry (e.g. QElectroTech elements, KiCad libraries) with repository, verified license facts (SPDX, usage, restrictions such as `no-ml-training`), formats, domains, standards, searchable categories, index strategy and tracking issue. The support status is computed by the plugin, never stored |
 | [modeler-symbol-discovery.schema.json](schemas/modeler-symbol-discovery.schema.json) | JSON output of the symbol discovery (`ptx-modeler symbol search / sources / index / source probe\|add\|report -f json`, portunix-plugins #130) and of the `ModelerSymbolService` discovery RPCs (byte-identical); `kind` selects search, probe, issue-draft, sources, source, index, source-added or symbol-ready (`symbol search --use N`). Results carry availability levels and complete next-step actions for AI agents |
@@ -75,6 +76,7 @@ Model documents use the **`*.model.json`** filename suffix and operation files t
 **`*.ops.json`** suffix, so tools, editors and AI agents recognize them without inspecting contents.
 Symbol elements use the **`*.msym.json`** suffix (one self-contained file per symbol at
 `symbols/<category>/<name>.msym.json` inside a symbol pack), so the VS Code viewer can open them directly.
+Bills of materials saved as JSON use the **`*.bom.json`** suffix.
 Symbol sources use the **`*.msrc.json`** suffix (`<id>.msrc.json`) and discovery outputs saved to
 files the **`*.symbol-discovery.json`** suffix.
 Their `meta` object carries the provenance of the drawing, so symbols converted from other
@@ -92,7 +94,7 @@ collections keep their attribution when edited or redistributed:
 All fields are optional; further keys are allowed as free strings.
 
 > **Single source of truth.** The plugin embeds identical copies of all modeler schemas and of
-> `help-ai.schema.json` (`ptx-modeler schema [--ops | --symbol | --source | --discovery]`); a plugin
+> `help-ai.schema.json` (`ptx-modeler schema [--ops | --symbol | --source | --discovery | --bom]`); a plugin
 > test fails when they drift from this directory.
 
 ### Opportunity Management (v2)
@@ -203,8 +205,9 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 
 | Example | Description |
 | ------- | ----------- |
-| [house.ops.json](examples/house.ops.json) | Operations creating a sample house: 4 rooms, wall graph with L/T/X joins, doors, windows, host-relative sockets/switches and ceiling lights. Validated by `make validate-contract`. |
+| [house.ops.json](examples/house.ops.json) | Operations creating a sample house: 4 rooms, wall graph with L/T/X joins, doors, windows, socket circuits, host-relative sockets/switches and ceiling lights. Validated by `make validate-contract`. |
 | [house.model.json](examples/house.model.json) | The model produced by `ptx-modeler init` + `op apply` of `house.ops.json` (incl. operation log). Validated by `make validate-contract`. |
+| [house.bom.json](examples/house.bom.json) | `ptx-modeler bom -f json --by circuit` of `house.model.json`: socket circuits with their devices, the rest `unassigned`. Validated by `make validate-contract`. |
 | [socket-single.msym.json](examples/socket-single.msym.json) | Symbol element derived from IEC 60617-11 (single socket outlet) with a terminal and a label text field. Validated by `make validate-contract`. |
 | [sensor-temperature.msym.json](examples/sensor-temperature.msym.json) | `custom` symbol element (no standard symbol referenced), as in the ptx-modeler core pack. Validated by `make validate-contract`. |
 | [smart-relay-qet.msym.json](examples/smart-relay-qet.msym.json) | Symbol imported from a QElectroTech `.elmt` element (`ptx-modeler symbol import-elmt`): `data-qet-*` SVG attributes, `extensions.qet` (link type, kind/element informations, terminal and dynamic text data) and a pinned `origin`. Validated by `make validate-contract`. |

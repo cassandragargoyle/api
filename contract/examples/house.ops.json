@@ -527,6 +527,66 @@
     }
   },
   {
+    "op": "circuit.add",
+    "id": "cir-zs101",
+    "layer": "electrical",
+    "props": {
+      "designation": "ZS101",
+      "type": "socket",
+      "board": "RH",
+      "cable": "CYKY-J 3x2.5",
+      "protection": "B16"
+    }
+  },
+  {
+    "op": "circuit.add",
+    "id": "cir-zs102",
+    "layer": "electrical",
+    "props": {
+      "designation": "ZS102",
+      "type": "socket",
+      "board": "RH",
+      "cable": "CYKY-J 3x2.5",
+      "protection": "B16"
+    }
+  },
+  {
+    "op": "circuit.add",
+    "id": "cir-zs103",
+    "layer": "electrical",
+    "props": {
+      "designation": "ZS103",
+      "type": "power",
+      "board": "RH",
+      "cable": "CYKY-J 5x2.5",
+      "protection": "C16/3"
+    }
+  },
+  {
+    "op": "circuit.add",
+    "id": "cir-zs104",
+    "layer": "electrical",
+    "props": {
+      "designation": "ZS104",
+      "type": "socket",
+      "board": "RH",
+      "cable": "CYKY-J 3x2.5",
+      "protection": "B16"
+    }
+  },
+  {
+    "op": "circuit.add",
+    "id": "cir-zs105",
+    "layer": "electrical",
+    "props": {
+      "designation": "ZS105",
+      "type": "socket",
+      "board": "RH",
+      "cable": "CYKY-J 3x2.5",
+      "protection": "B16"
+    }
+  },
+  {
     "op": "device.place",
     "id": "dev-sw-entry",
     "parent": "w-s1",

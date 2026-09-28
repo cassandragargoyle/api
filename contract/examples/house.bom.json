@@ -1,0 +1,115 @@
+{
+  "format": "portunix.modeler.bom/v1",
+  "model": "Sample house",
+  "by": "circuit",
+  "total": 15,
+  "groups": [
+    {
+      "group": "ZS101",
+      "name": "socket",
+      "count": 2,
+      "items": [
+        {
+          "symbol": "core.socket.single",
+          "name_cs": "Zásuvka jednoduchá",
+          "name_en": "Socket outlet, single",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "group": "ZS102",
+      "name": "socket",
+      "count": 1,
+      "items": [
+        {
+          "symbol": "core.socket.single",
+          "name_cs": "Zásuvka jednoduchá",
+          "name_en": "Socket outlet, single",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "group": "ZS103",
+      "name": "power",
+      "count": 1,
+      "items": [
+        {
+          "symbol": "core.socket.three-phase",
+          "name_cs": "Zásuvka třífázová",
+          "name_en": "Socket outlet, three-phase",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "group": "ZS104",
+      "name": "socket",
+      "count": 1,
+      "items": [
+        {
+          "symbol": "core.socket.single",
+          "name_cs": "Zásuvka jednoduchá",
+          "name_en": "Socket outlet, single",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "group": "ZS105",
+      "name": "socket",
+      "count": 1,
+      "items": [
+        {
+          "symbol": "core.socket.single",
+          "name_cs": "Zásuvka jednoduchá",
+          "name_en": "Socket outlet, single",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "count": 9,
+      "items": [
+        {
+          "symbol": "core.board.power",
+          "name_cs": "Rozváděč silnoproudý",
+          "name_en": "Distribution board, power",
+          "count": 1
+        },
+        {
+          "symbol": "core.control.button-double",
+          "name_cs": "Tlačítko dvojité",
+          "name_en": "Push button, double",
+          "count": 1
+        },
+        {
+          "symbol": "core.control.button-single",
+          "name_cs": "Tlačítko jednoduché",
+          "name_en": "Push button, single",
+          "count": 1
+        },
+        {
+          "symbol": "core.light.ceiling",
+          "name_cs": "Svítidlo stropní",
+          "name_en": "Luminaire, ceiling",
+          "count": 4
+        },
+        {
+          "symbol": "core.light.led-strip",
+          "name_cs": "LED pásek",
+          "name_en": "LED strip",
+          "count": 1
+        },
+        {
+          "symbol": "core.sensor.presence",
+          "name_cs": "Loxone Motion",
+          "name_en": "Presence sensor (Loxone Motion)",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/modeler-bom.schema.json",
+	"$version": "1.0.0",
+	"title": "ModelerBOM",
+	"description": "Bill of materials / device count of a Portunix Modeler model (ptx-modeler bom -f json, portunix-plugins #120). Devices are counted with their multiplicity ('count', e.g. '(2x)') and grouped by symbol, room or circuit; devices with a different variant (e.g. dimming modifier) form separate items. Groups and items are in a deterministic order, so the output is byte-identical across runs. Files use the '.bom.json' filename suffix.",
+	"type": "object",
+	"required": [
+		"format",
+		"by",
+		"total",
+		"groups"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"format": {
+			"const": "portunix.modeler.bom/v1",
+			"description": "Document format identifier"
+		},
+		"model": {
+			"type": "string",
+			"description": "Model name (meta 'name' of the model document)"
+		},
+		"by": {
+			"enum": [
+				"symbol",
+				"room",
+				"circuit"
+			],
+			"description": "Grouping key"
+		},
+		"total": {
+			"type": "integer",
+			"description": "Number of devices in the model, multiplicity included",
+			"minimum": 0
+		},
+		"groups": {
+			"type": "array",
+			"description": "Groups in natural order of 'group'; the 'unassigned' group (devices without a room or circuit) comes last",
+			"items": {
+				"$ref": "#/$defs/group"
+			}
+		}
+	},
+	"$defs": {
+		"group": {
+			"type": "object",
+			"required": [
+				"group",
+				"count",
+				"items"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"group": {
+					"type": "string",
+					"description": "Symbol key, room number or circuit designation; 'unassigned' for devices without a room or circuit"
+				},
+				"name": {
+					"type": "string",
+					"description": "Room name, or circuit type for circuits"
+				},
+				"count": {
+					"type": "integer",
+					"description": "Number of devices in the group, multiplicity included",
+					"minimum": 0
+				},
+				"items": {
+					"type": "array",
+					"description": "Items ordered by symbol key, then variant (no variant first)",
+					"items": {
+						"$ref": "#/$defs/item"
+					}
+				}
+			}
+		},
+		"item": {
+			"type": "object",
+			"required": [
+				"symbol",
+				"count"
+			],
+			"additionalProperties": false,
+			"properties": {
+				"symbol": {
+					"type": "string",
+					"description": "Catalog symbol key, e.g. 'core.socket.single'",
+					"pattern": "^[a-z][a-z0-9-]*\\.[a-z0-9.-]+$"
+				},
+				"name_cs": {
+					"type": "string",
+					"description": "Czech symbol name from the catalog"
+				},
+				"name_en": {
+					"type": "string",
+					"description": "English symbol name from the catalog"
+				},
+				"variant": {
+					"type": "string",
+					"description": "Modifier symbol key, e.g. 'core.modifier.dim-dali'"
+				},
+				"count": {
+					"type": "integer",
+					"description": "Number of devices, multiplicity included",
+					"minimum": 1
+				}
+			}
+		}
+	}
+}
