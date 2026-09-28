@@ -46,21 +46,16 @@
         },
         {
           "kind": "fetch",
-          "command": "git clone --depth 1 --branch main https://github.com/qelectrotech/qelectrotech-elements DIR",
-          "explain": "shallow clone of the source into a local directory",
+          "command": "ptx-modeler symbol index build --fetch --network --source qelectrotech-elements",
+          "explain": "shallow clone into /home/user/.portunix/modeler/checkouts/qelectrotech-elements and index it, so search finds single symbols by name (manual alternative: git clone --depth 1 --branch main https://github.com/qelectrotech/qelectrotech-elements DIR, then ptx-modeler symbol index build --source qelectrotech-elements DIR)",
           "requires": [
             "network",
             "license-review"
           ]
         },
         {
-          "kind": "index",
-          "command": "ptx-modeler symbol index build --source qelectrotech-elements DIR",
-          "explain": "index the local checkout so search finds single symbols by name"
-        },
-        {
           "kind": "convert",
-          "command": "ptx-modeler symbol import-elmt -o PACK DIR/10_electric/91_en_60617",
+          "command": "ptx-modeler symbol import-elmt -o PACK /home/user/.portunix/modeler/checkouts/qelectrotech-elements/10_electric/91_en_60617",
           "explain": "convert QElectroTech element files to a symbol pack"
         },
         {
