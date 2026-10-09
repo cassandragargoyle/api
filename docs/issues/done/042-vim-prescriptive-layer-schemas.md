@@ -2,7 +2,7 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: 📋 Open (unblocked 2026-10-09 — the format specification is released for contract work)
+**Status**: ✅ Implemented (PR #45, 2026-10-09)
 **Created**: 2026-10-09
 **GitHub**: #42
 **Component**: contract
