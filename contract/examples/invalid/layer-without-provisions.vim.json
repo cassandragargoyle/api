@@ -1,0 +1,41 @@
+{
+	"vim_version": "2.1",
+	"document": {
+		"source": "definition-file.pdf"
+	},
+	"layers": {
+		"prescriptive": {
+			"definition": {
+				"identifier": "DF-1234",
+				"edition": "3",
+				"issued": "2025-04-01"
+			},
+			"references": [
+				{
+					"reference_id": "r-1",
+					"scope": "external",
+					"binding": "mandatory",
+					"target": {
+						"identifier": "DF-0456",
+						"clause": "4.1"
+					}
+				},
+				{
+					"reference_id": "r-2",
+					"scope": "internal",
+					"binding": "informative",
+					"target": {
+						"clause": "A.2"
+					}
+				}
+			],
+			"terms": [
+				{
+					"term_id": "t-title-block",
+					"term": "title block",
+					"clause": "3.4"
+				}
+			]
+		}
+	}
+}

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/vim-extraction-field.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.1.0",
 	"title": "VimExtractionField",
 	"description": "Extracted field value with provenance, quality metadata, and alternatives",
 	"type": "object",
@@ -118,6 +118,10 @@
 					"type": "integer",
 					"description": "Revision number (1-based, sequential)",
 					"minimum": 1
+				},
+				"property": {
+					"type": "string",
+					"description": "Name of the changed property (e.g. kind, status); old_value and new_value then hold the value of that property. Absent for a change of the value itself"
 				},
 				"old_value": {
 					"description": "Value before this change"

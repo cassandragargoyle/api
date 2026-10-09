@@ -1,0 +1,204 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/vim-prescriptive.schema.json",
+	"$version": "1.0.0",
+	"title": "VimPrescriptive",
+	"description": "VIM prescriptive layer (VIM 2.1) — what a definition file prescribes: provisions, references to other documents and clauses, and defined terms",
+	"type": "object",
+	"required": ["provisions"],
+	"properties": {
+		"definition": {
+			"$ref": "#/$defs/Definition",
+			"description": "Identity of the definition file"
+		},
+		"provenance": {
+			"$ref": "vim-extraction-source.schema.json#/$defs/Provenance",
+			"description": "Default provenance of all items in the layer"
+		},
+		"provisions": {
+			"type": "array",
+			"description": "Provisions of the definition file, in reading order",
+			"items": {
+				"$ref": "vim-prescriptive-provision.schema.json"
+			}
+		},
+		"references": {
+			"type": "array",
+			"description": "References to other documents and clauses",
+			"items": {
+				"$ref": "#/$defs/Reference"
+			}
+		},
+		"terms": {
+			"type": "array",
+			"description": "Terms that the definition file defines",
+			"items": {
+				"$ref": "#/$defs/Term"
+			}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"Definition": {
+			"type": "object",
+			"description": "Identity of the definition file. A reference in another VIM document can match these values",
+			"properties": {
+				"identifier": {
+					"type": "string",
+					"description": "Designation of the file as its publisher writes it"
+				},
+				"edition": {
+					"type": "string",
+					"description": "Edition, version, or revision"
+				},
+				"issued": {
+					"type": "string",
+					"format": "date",
+					"description": "ISO 8601 date of issue"
+				},
+				"title": {
+					"type": "string",
+					"description": "Title of the file"
+				},
+				"publisher": {
+					"type": "string",
+					"description": "Organization that issued the file"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Reference": {
+			"type": "object",
+			"description": "A link from the definition file to another document or to another clause of the same file",
+			"required": ["reference_id", "scope", "target"],
+			"properties": {
+				"reference_id": {
+					"type": "string",
+					"description": "Identifier, unique in the layer",
+					"minLength": 1
+				},
+				"scope": {
+					"type": "string",
+					"description": "external (another document) or internal (another clause of this file)",
+					"enum": ["external", "internal"]
+				},
+				"binding": {
+					"type": "string",
+					"description": "mandatory (needed to apply the file) or informative",
+					"enum": ["mandatory", "informative"]
+				},
+				"target": {
+					"$ref": "#/$defs/Target",
+					"description": "What the reference points to. An external target has an identifier, an internal target has a clause"
+				},
+				"anchors": {
+					"type": "array",
+					"description": "Places where the reference is written",
+					"items": {
+						"$ref": "vim-prescriptive-provision.schema.json#/$defs/Anchor"
+					}
+				},
+				"confidence": {
+					"type": "number",
+					"description": "Confidence of the producer (0.0-1.0)",
+					"minimum": 0.0,
+					"maximum": 1.0
+				},
+				"provenance": {
+					"$ref": "vim-extraction-source.schema.json#/$defs/Provenance",
+					"description": "Provenance of this reference; overrides the provenance of the layer"
+				}
+			},
+			"allOf": [
+				{
+					"if": {
+						"required": ["scope"],
+						"properties": { "scope": { "const": "external" } }
+					},
+					"then": {
+						"properties": { "target": { "required": ["identifier"] } }
+					}
+				},
+				{
+					"if": {
+						"required": ["scope"],
+						"properties": { "scope": { "const": "internal" } }
+					},
+					"then": {
+						"properties": { "target": { "required": ["clause"] } }
+					}
+				}
+			],
+			"additionalProperties": false
+		},
+		"Target": {
+			"type": "object",
+			"description": "Target of a reference",
+			"properties": {
+				"identifier": {
+					"type": "string",
+					"description": "Designation of the target document, as written"
+				},
+				"edition": {
+					"type": "string",
+					"description": "Edition of the target document. Absent means any edition"
+				},
+				"title": {
+					"type": "string",
+					"description": "Title of the target document"
+				},
+				"clause": {
+					"type": "string",
+					"description": "Clause in the target"
+				},
+				"uri": {
+					"type": "string",
+					"description": "Location of the target document or of its VIM, when known"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Term": {
+			"type": "object",
+			"description": "A term that the definition file defines and that provisions use",
+			"required": ["term_id", "term"],
+			"properties": {
+				"term_id": {
+					"type": "string",
+					"description": "Identifier, unique in the layer",
+					"minLength": 1
+				},
+				"term": {
+					"type": "string",
+					"description": "The term"
+				},
+				"definition": {
+					"type": "string",
+					"description": "Text of the definition. May be left out for licence reasons"
+				},
+				"clause": {
+					"type": "string",
+					"description": "Clause that defines the term"
+				},
+				"anchors": {
+					"type": "array",
+					"description": "Places of the definition in the file",
+					"items": {
+						"$ref": "vim-prescriptive-provision.schema.json#/$defs/Anchor"
+					}
+				},
+				"confidence": {
+					"type": "number",
+					"description": "Confidence of the producer (0.0-1.0)",
+					"minimum": 0.0,
+					"maximum": 1.0
+				},
+				"provenance": {
+					"$ref": "vim-extraction-source.schema.json#/$defs/Provenance",
+					"description": "Provenance of this term; overrides the provenance of the layer"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

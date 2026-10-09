@@ -9,6 +9,7 @@ on:
 env:
   JAVA_VERSION: '21'
   PYTHON_VERSION: '3.13'
+  NODE_VERSION: '22'
 
 jobs:
   build:
@@ -115,10 +116,31 @@ jobs:
         working-directory: python
         run: uv run pytest tests/
 
+  validate-contract:
+    name: Contract Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+
+      - name: Install dependencies
+        working-directory: typescript
+        run: npm ci
+
+      - name: Validate contract examples
+        run: make validate-contract
+
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [build, test, package, test-python]
+    needs: [build, test, package, test-python, validate-contract]
     if: always()
     steps:
       - name: Check job results
@@ -133,6 +155,10 @@ jobs:
           fi
           if [[ "${{ needs.test-python.result }}" != "success" ]]; then
             echo "Python tests failed"
+            exit 1
+          fi
+          if [[ "${{ needs.validate-contract.result }}" != "success" ]]; then
+            echo "Contract validation failed"
             exit 1
           fi
           if [[ "${{ needs.package.result }}" != "success" ]]; then

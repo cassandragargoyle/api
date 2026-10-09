@@ -22,10 +22,18 @@ This directory contains JSON Schema definitions that define the communication co
 
 | Schema | Description |
 | ------ | ----------- |
-| [vim-document.schema.json](schemas/vim-document.schema.json) | VIM v2.0 root document structure |
+| [vim-document.schema.json](schemas/vim-document.schema.json) | VIM root document structure (v2.0, v2.1); the `layers` object is closed |
 | [vim-extraction.schema.json](schemas/vim-extraction.schema.json) | Extraction layer (template ref, sources, merged document) |
 | [vim-extraction-source.schema.json](schemas/vim-extraction-source.schema.json) | Per-source extraction result with provenance |
-| [vim-extraction-field.schema.json](schemas/vim-extraction-field.schema.json) | Extracted field, table, cell definitions |
+| [vim-extraction-field.schema.json](schemas/vim-extraction-field.schema.json) | Extracted field, table, cell definitions; `Revision` (1.1.0: optional `property`) and `BoundingBox` are shared with the prescriptive layer |
+| [vim-prescriptive.schema.json](schemas/vim-prescriptive.schema.json) | Prescriptive layer (VIM 2.1): `definition`, `provenance`, `provisions`, `references`, `terms`; defines `Definition`, `Reference`, `Target`, `Term` |
+| [vim-prescriptive-provision.schema.json](schemas/vim-prescriptive-provision.schema.json) | One provision (`requirement`, `recommendation`, `permission`) with anchors, relations, verification, status and revisions; defines `Anchor`, `Relation`, `Verification` |
+
+The prescriptive layer stores what a **definition file** prescribes (a specification, a
+guideline, a contract). It is optional: a VIM 2.0 document stays valid. `Provenance`,
+`Revision` and `BoundingBox` are not defined again; the new schemas refer to the
+definitions of the extraction layer. VIM documents saved as examples use the
+**`*.vim.json`** filename suffix.
 
 ### Plugin Platform
 
@@ -186,6 +194,14 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [response-error.json](examples/response-error.json) | Error task response |
 | [task-manifest-image-resize.json](examples/task-manifest-image-resize.json) | Task manifest for image resize plugin |
 
+### VIM Examples
+
+| Example | Description |
+| ------- | ----------- |
+| [definition-file.vim.json](examples/definition-file.vim.json) | VIM 2.1 document with the prescriptive layer: four provisions (all three kinds, one without verbatim `text`), an external and an internal reference, a term, relations, verification rules and revisions with `property`. Validated by `make validate-contract`. |
+| [form-extraction.vim.json](examples/form-extraction.vim.json) | VIM 2.0 document with the extraction layer only, with a `Revision` without `property`. Validated by `make validate-contract`. |
+| [invalid/](examples/invalid/) | Negative tests: documents that must **not** validate. Each file is the same small VIM 2.1 document with one defect, named after it (for example `provision-unknown-kind`, `anchor-page-zero`, `reference-external-without-identifier`); one file per rule of the prescriptive schemas. `make validate-contract` fails when one of them validates. |
+
 ### Plugin Platform Examples
 
 | Example | Description |
@@ -244,3 +260,4 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 - [ADR-002: Unified AI Platform Transition](../docs/adr/002-unified-ai-platform-transition.md)
 - [ADR-004: VIM as Universal Result Container](../portunix/portunix-architecture/docs/adr/ADR-004-vim-universal-result-container.md)
 - [VIM v2.0 Format Specification](../portunix/portunix-architecture/docs/architecture/specifications/vim-v2-format.md)
+- [VIM Prescriptive Layer Specification (VIM 2.1)](../portunix/portunix-architecture/docs/architecture/specifications/vim-prescriptive-layer.md)

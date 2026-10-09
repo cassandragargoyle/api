@@ -1,0 +1,166 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/vim-prescriptive-provision.schema.json",
+	"$version": "1.0.0",
+	"title": "VimPrescriptiveProvision",
+	"description": "One provision of the VIM prescriptive layer — a statement of a definition file that prescribes something, with its place in the file, its verification and its audit trail",
+	"type": "object",
+	"required": ["provision_id", "kind", "anchors"],
+	"anyOf": [
+		{ "required": ["text"] },
+		{ "required": ["statement"] }
+	],
+	"properties": {
+		"provision_id": {
+			"type": "string",
+			"description": "Stable identifier, unique in the layer. Opaque for consumers; the recommended form is p-<clause>-<n>, or p-page<page>-<n> without a clause",
+			"minLength": 1
+		},
+		"kind": {
+			"type": "string",
+			"description": "Kind of the provision, following its verbal form: requirement (shall, must), recommendation (should), permission (may, need not)",
+			"enum": ["requirement", "recommendation", "permission"]
+		},
+		"clause": {
+			"type": "string",
+			"description": "Number or label of the clause that holds the provision"
+		},
+		"text": {
+			"type": "string",
+			"description": "Verbatim text of the provision. May be left out when the licence of the definition file does not allow a verbatim copy; at least one of text and statement is present"
+		},
+		"statement": {
+			"type": "string",
+			"description": "The provision in the words of the producer; at least one of text and statement is present"
+		},
+		"text_hash": {
+			"type": "string",
+			"description": "First 16 hexadecimal characters of the SHA-256 hash of the verbatim text, trimmed and with every run of white space replaced by one space. Computed even when text is left out",
+			"pattern": "^[0-9a-f]{16}$"
+		},
+		"anchors": {
+			"type": "array",
+			"description": "Places of the provision in the definition file, at least one",
+			"items": {
+				"$ref": "#/$defs/Anchor"
+			},
+			"minItems": 1
+		},
+		"condition": {
+			"type": "string",
+			"description": "When the provision applies"
+		},
+		"references": {
+			"type": "array",
+			"description": "reference_id values of the layer that the provision uses",
+			"items": { "type": "string" }
+		},
+		"terms": {
+			"type": "array",
+			"description": "term_id values of the layer that the provision uses",
+			"items": { "type": "string" }
+		},
+		"relations": {
+			"type": "array",
+			"description": "Links to other provisions of the layer",
+			"items": {
+				"$ref": "#/$defs/Relation"
+			}
+		},
+		"verification": {
+			"$ref": "#/$defs/Verification",
+			"description": "How the provision can be checked"
+		},
+		"status": {
+			"type": "string",
+			"description": "Quality mark of the item, not the state of a review process: proposed (no person has checked the output of the producer), confirmed, rejected",
+			"enum": ["proposed", "confirmed", "rejected"],
+			"default": "proposed"
+		},
+		"confidence": {
+			"type": "number",
+			"description": "Confidence of the producer (0.0-1.0)",
+			"minimum": 0.0,
+			"maximum": 1.0
+		},
+		"provenance": {
+			"$ref": "vim-extraction-source.schema.json#/$defs/Provenance",
+			"description": "Provenance of this provision; overrides the provenance of the layer"
+		},
+		"revisions": {
+			"type": "array",
+			"description": "Audit trail of changes (ordered by revision number); the property field of a revision names the changed property",
+			"items": {
+				"$ref": "vim-extraction-field.schema.json#/$defs/Revision"
+			}
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"Anchor": {
+			"type": "object",
+			"description": "A place in the definition file. page and bbox are the durable anchor; element_id is valid only together with the physical layer of the same document",
+			"required": ["page"],
+			"properties": {
+				"page": {
+					"type": "integer",
+					"description": "Page number (1-based)",
+					"minimum": 1
+				},
+				"element_type": {
+					"type": "string",
+					"description": "Type of the anchored element",
+					"enum": ["block", "table", "graphic"]
+				},
+				"element_id": {
+					"type": "string",
+					"description": "Identifier of the element in the physical layer of the same document"
+				},
+				"bbox": {
+					"$ref": "vim-extraction-field.schema.json#/$defs/BoundingBox",
+					"description": "Region on the page"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Relation": {
+			"type": "object",
+			"description": "A link from this provision to another provision of the layer",
+			"required": ["provision_id", "relation"],
+			"properties": {
+				"provision_id": {
+					"type": "string",
+					"description": "provision_id of the other provision"
+				},
+				"relation": {
+					"type": "string",
+					"description": "Kind of the link",
+					"enum": ["refines", "depends_on", "exception_to", "conflicts_with"]
+				}
+			},
+			"additionalProperties": false
+		},
+		"Verification": {
+			"type": "object",
+			"description": "How a provision can be checked",
+			"required": ["method"],
+			"properties": {
+				"method": {
+					"type": "string",
+					"description": "automatic (a rule can be evaluated on data without a person), test (the behaviour of the subject must be tested), manual (a person must judge it)",
+					"enum": ["automatic", "test", "manual"]
+				},
+				"subject": {
+					"type": "string",
+					"description": "What is checked (e.g. drawing, software, document)"
+				},
+				"rule": {
+					"type": "object",
+					"description": "Machine-readable rule (open object). No rule language is defined; the content is an agreement between the producer and the checking tool",
+					"additionalProperties": true
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}
