@@ -1,0 +1,247 @@
+{
+	"vim_version": "2.1",
+	"document": {
+		"source": "definition-file.pdf",
+		"pages": 12,
+		"metadata": {
+			"title": "Drawing title block rules",
+			"producer": "example-producer/0.1.0",
+			"inLanguage": "en"
+		}
+	},
+	"layers": {
+		"prescriptive": {
+			"definition": {
+				"identifier": "DF-1234",
+				"edition": "3",
+				"issued": "2025-04-01",
+				"title": "Drawing title block rules",
+				"publisher": "Example Org"
+			},
+			"provenance": {
+				"extraction_method": "llm_extract",
+				"engine": "model-id",
+				"params": {
+					"prompt_version": "3"
+				},
+				"timestamp": "2026-10-09T10:00:00Z"
+			},
+			"provisions": [
+				{
+					"provision_id": "p-5.3.1-1",
+					"kind": "requirement",
+					"clause": "5.3.1",
+					"text_hash": "3b1589fd2fc16eca",
+					"anchors": [
+						{
+							"page": 7,
+							"element_type": "block",
+							"element_id": "block_40"
+						}
+					],
+					"terms": [
+						"t-title-block"
+					],
+					"verification": {
+						"method": "manual",
+						"subject": "drawing"
+					},
+					"status": "confirmed",
+					"confidence": 0.93,
+					"revisions": [
+						{
+							"revision": 1,
+							"property": "status",
+							"old_value": "proposed",
+							"new_value": "confirmed",
+							"actor": "operator",
+							"actor_id": "user:reviewer",
+							"reason": "manual_correction",
+							"timestamp": "2026-10-09T11:30:00Z"
+						}
+					]
+				},
+				{
+					"provision_id": "p-5.3.2-1",
+					"kind": "requirement",
+					"clause": "5.3.2",
+					"text": "The title block shall contain the drawing number.",
+					"text_hash": "1f77c4a6db023bea",
+					"anchors": [
+						{
+							"page": 7,
+							"element_type": "block",
+							"element_id": "block_41",
+							"bbox": {
+								"x": 72.0,
+								"y": 310.5,
+								"width": 451.0,
+								"height": 24.0
+							}
+						}
+					],
+					"statement": "A title block contains a drawing number.",
+					"condition": "Applies to drawings issued for manufacturing.",
+					"references": [
+						"r-1"
+					],
+					"terms": [
+						"t-title-block"
+					],
+					"relations": [
+						{
+							"provision_id": "p-5.3.1-1",
+							"relation": "refines"
+						}
+					],
+					"verification": {
+						"method": "automatic",
+						"subject": "drawing",
+						"rule": {
+							"field": "drawing_number",
+							"check": "present"
+						}
+					},
+					"status": "confirmed",
+					"confidence": 0.82,
+					"revisions": [
+						{
+							"revision": 1,
+							"property": "kind",
+							"old_value": "recommendation",
+							"new_value": "requirement",
+							"actor": "operator",
+							"actor_id": "user:reviewer",
+							"reason": "manual_correction",
+							"comment": "The verbal form is shall",
+							"timestamp": "2026-10-09T11:31:00Z"
+						},
+						{
+							"revision": 2,
+							"property": "status",
+							"old_value": "proposed",
+							"new_value": "confirmed",
+							"actor": "operator",
+							"actor_id": "user:reviewer",
+							"reason": "manual_correction",
+							"timestamp": "2026-10-09T11:32:00Z"
+						}
+					]
+				},
+				{
+					"provision_id": "p-5.3.3-1",
+					"kind": "recommendation",
+					"clause": "5.3.3",
+					"text": "The title block should be placed in the bottom right corner of the sheet.",
+					"text_hash": "3b3db372a57c76d0",
+					"anchors": [
+						{
+							"page": 8,
+							"element_type": "block",
+							"element_id": "block_44"
+						}
+					],
+					"terms": [
+						"t-title-block"
+					],
+					"references": [
+						"r-2"
+					],
+					"verification": {
+						"method": "automatic",
+						"subject": "drawing",
+						"rule": {
+							"field": "title_block.position",
+							"check": "equals",
+							"value": "bottom-right"
+						}
+					},
+					"confidence": 0.77
+				},
+				{
+					"provision_id": "p-5.4.1-1",
+					"kind": "permission",
+					"clause": "5.4.1",
+					"statement": "A drawing with a single revision does not need a revision table.",
+					"text_hash": "9fd70967164c9514",
+					"anchors": [
+						{
+							"page": 9,
+							"bbox": {
+								"x": 72.0,
+								"y": 120.0,
+								"width": 451.0,
+								"height": 36.0
+							}
+						}
+					],
+					"relations": [
+						{
+							"provision_id": "p-5.3.1-1",
+							"relation": "exception_to"
+						}
+					],
+					"verification": {
+						"method": "manual"
+					},
+					"confidence": 0.64,
+					"provenance": {
+						"extraction_method": "manual"
+					}
+				}
+			],
+			"references": [
+				{
+					"reference_id": "r-1",
+					"scope": "external",
+					"binding": "mandatory",
+					"target": {
+						"identifier": "DF-0456",
+						"edition": "2",
+						"title": "Drawing numbering",
+						"clause": "4.1"
+					},
+					"anchors": [
+						{
+							"page": 3,
+							"element_type": "block",
+							"element_id": "block_12"
+						}
+					],
+					"confidence": 0.95
+				},
+				{
+					"reference_id": "r-2",
+					"scope": "internal",
+					"binding": "informative",
+					"target": {
+						"clause": "A.2"
+					},
+					"anchors": [
+						{
+							"page": 8,
+							"element_type": "graphic",
+							"element_id": "graphic_3"
+						}
+					]
+				}
+			],
+			"terms": [
+				{
+					"term_id": "t-title-block",
+					"term": "title block",
+					"definition": "Area of a drawing that holds its identification data.",
+					"clause": "3.4",
+					"anchors": [
+						{
+							"page": 2,
+							"element_type": "block",
+							"element_id": "block_7"
+						}
+					],
+					"confidence": 0.98
+				}
+			]
+		}
+	}
+}

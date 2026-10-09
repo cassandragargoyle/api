@@ -13,6 +13,21 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- **VIM prescriptive layer (VIM 2.1)**: new schemas
+  `contract/schemas/vim-prescriptive.schema.json` (layer, `Definition`,
+  `Reference`, `Target`, `Term`) and
+  `contract/schemas/vim-prescriptive-provision.schema.json` (`Provision`,
+  `Anchor`, `Relation`, `Verification`). The layer stores what a definition
+  file prescribes: provisions, references and defined terms.
+  `vim-document.schema.json` (`$version` 1.0.0 → 1.1.0) gets the optional
+  `layers.prescriptive` property and the `vim_version` value `"2.1"`.
+  `Revision` in `vim-extraction-field.schema.json` (`$version` 1.0.0 → 1.1.0)
+  gets the optional `property` field. Additive: VIM 2.0 documents stay valid
+  (#42).
+- Examples `definition-file.vim.json` and `form-extraction.vim.json`; the
+  `.vim.json` suffix is mapped in `scripts/validate-contracts.mjs`. Documents
+  under `contract/examples/invalid/` are negative tests that must not
+  validate (#42).
 - **`ModelerContractService`** in `contract/proto/modeler.proto`
   (`GetContractInfo`, `ListContractFiles`, `GetContractFile`) and
   `HealthResponse.contract_version`: the modeler plugin serves its embedded,

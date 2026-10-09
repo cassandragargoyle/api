@@ -82,13 +82,17 @@ Sources: [README.md](../README.md), [contract/README.md](../contract/README.md),
 | **Provenance** | The record of where a value comes from and how it was produced. It allows replay and debugging |
 | **Confidence** | A number from 0.0 to 1.0 that says how sure the extraction is |
 | **Revision** | One entry in the change history of a value |
-| **Prescriptive layer** | *Draft, issue #42.* A planned layer that stores what a definition file prescribes |
-| **Definition file** | *Draft, issue #42.* A document that prescribes something, for example a specification, a guideline, or a contract |
-| **Provision** | *Draft, issue #42.* One prescribed item. Its `kind` is `requirement`, `recommendation`, or `permission` |
+| **Prescriptive layer** | The optional layer of VIM 2.1 that stores what a definition file prescribes: provisions, references, and terms |
+| **Definition file** | A document that prescribes something, for example a specification, a guideline, or a contract |
+| **Provision** | One statement of a definition file that prescribes something. Its `kind` is `requirement`, `recommendation`, or `permission` |
+| **Reference** | A link from a definition file to another document (`external`) or to another clause of the same file (`internal`) |
+| **Term** | A term that a definition file defines and that provisions use |
+| **Anchor** | A place in the definition file: a page, and optionally an element of the physical layer and a region |
+| **Verification** | How a provision can be checked: `automatic`, `test`, or `manual`, with an optional machine-readable rule |
 
-Layers 1 to 4 are produced by `vim-parser`. The draft terms can change until the format
-specification is accepted, see
-[issue #42](issues/042-vim-prescriptive-layer-schemas.md).
+Layers 1 to 4 are produced by `vim-parser`. The prescriptive layer is defined by the
+specification *VIM Prescriptive Layer (VIM 2.1)* in portunix-architecture; its shape is not
+yet tested on real definition files.
 
 ## Opportunity Management
 

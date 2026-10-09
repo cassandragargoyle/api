@@ -2,11 +2,14 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: 📋 Open (blocked by the format specification)
+**Status**: 📋 Open (unblocked 2026-10-09 — the format specification is released for contract work)
 **Created**: 2026-10-09
 **GitHub**: #42
 **Component**: contract
-**Related**: portunix-architecture issue 008 (VIM Prescriptive Layer, cross-project tracker),
+**Related**: portunix-architecture specification `docs/architecture/specifications/vim-prescriptive-layer.md`
+(VIM Prescriptive Layer, VIM 2.1 — the binding source for this issue),
+portunix-architecture ADR-010 (VIM Prescriptive Layer),
+portunix-architecture issue 008 (VIM Prescriptive Layer, cross-project tracker),
 portunix-architecture ADR-009 (Criteria for Adding a New VIM Layer),
 portunix-architecture ADR-004 (VIM as Universal Result Container),
 cassandragargoyle/portunix-plugins#159 (Java model),
@@ -29,30 +32,52 @@ The `layers` object in `contract/schemas/vim-document.schema.json` has
 `additionalProperties: false`. No producer can add the new layer without a contract
 change. This issue is that change.
 
-The format specification of the layer is written in portunix-architecture (issue 008,
-Phase 1). **This issue is blocked until that specification is accepted.** The shape below
-is the current draft and can change.
+The format is defined in the specification **VIM Prescriptive Layer (VIM 2.1)** in
+portunix-architecture: `docs/architecture/specifications/vim-prescriptive-layer.md`. The
+specification is a draft that is released for contract work. It is the binding source for
+names, types, required fields, and enum values. When this issue and the specification
+disagree, the specification wins.
 
 ```text
 layers.prescriptive
-├── provisions[]    kind, clause, text, anchors, conditions, verification,
-│                   provenance, confidence, revisions
-├── references[]    target document, edition, kind of reference
-└── terms[]         defined terms that provisions use
+├── definition      identity of the definition file
+├── provenance      default provenance of all items
+├── provisions[]    provision_id, kind, clause, text, statement, text_hash, anchors,
+│                   condition, references, terms, relations, verification, status,
+│                   confidence, provenance, revisions
+├── references[]    reference_id, scope, binding, target, anchors
+└── terms[]         term_id, term, definition, clause, anchors
 ```
+
+The shape is not yet tested on real definition files. A change of the specification
+before the first implementation is possible. Keep the schemas easy to change until the
+model issues start.
 
 ## Scope
 
 ### In scope
 
-- New schema `contract/schemas/vim-prescriptive.schema.json` for the layer
-- New schema `contract/schemas/vim-prescriptive-provision.schema.json` for one provision,
-  including `verification`, `provenance`, and `revisions`
+- New schema `contract/schemas/vim-prescriptive.schema.json`: the layer, `Definition`,
+  `Reference`, `Target`, `Term`
+- New schema `contract/schemas/vim-prescriptive-provision.schema.json`: `Provision`,
+  `Anchor`, `Relation`, `Verification`
 - Change of `contract/schemas/vim-document.schema.json`:
   - property `prescriptive` in `layers`, as a `$ref` to the new schema, optional
   - value `"2.1"` in the `vim_version` enum
-- Enum values: `kind` (`requirement`, `recommendation`, `permission`),
-  `verification.method` (`automatic`, `test`, `manual`)
+- Reuse of existing definitions by `$ref`: `Provenance` from
+  `vim-extraction-source.schema.json`, `Revision` and `BoundingBox` from
+  `vim-extraction-field.schema.json`
+- New optional property `property` (string) on `Revision`
+- Enum values:
+  - `kind`: `requirement`, `recommendation`, `permission`
+  - `status`: `proposed`, `confirmed`, `rejected`
+  - `verification.method`: `automatic`, `test`, `manual`
+  - `relation`: `refines`, `depends_on`, `exception_to`, `conflicts_with`
+  - `scope`: `external`, `internal`
+  - `binding`: `mandatory`, `informative`
+  - `element_type`: `block`, `table`, `graphic`
+- Rule "at least one of `text` and `statement`" on a provision
+- `verification.rule` as an open object
 - At least one valid example document in `contract/examples/`
 - Update of `contract/README.md`
 
@@ -70,8 +95,8 @@ layers.prescriptive
    `vim-document.schema.json`.
 3. The new schemas follow the style of `vim-extraction*.schema.json`: the same `$id`
    pattern, `title`, `description` on every property.
-4. Where the layer needs provenance or revisions, the schemas reuse the shape of the
-   `extraction` layer, or the description says why the shape differs.
+4. `Provenance`, `Revision`, and `BoundingBox` are not defined a second time. The new
+   schemas refer to the existing definitions.
 5. Schema names, property names, and descriptions use neutral words. The layer is not
    bound to one kind of document. The input is called a definition file.
 6. `contract/README.md` lists the new schemas.
@@ -80,4 +105,7 @@ layers.prescriptive
 
 - Validate every file in `contract/examples/` against its schema.
 - Negative test: a provision with an unknown `kind` does not validate.
+- Negative test: a provision without `text` and without `statement` does not validate.
+- Negative test: a provision without `anchors` does not validate.
+- An existing example with a `Revision` without `property` still validates.
 - Negative test: an unknown key in `layers` still does not validate.

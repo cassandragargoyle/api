@@ -1,0 +1,51 @@
+{
+	"vim_version": "2.0",
+	"document": {
+		"source": "form-scan.png",
+		"sources": [
+			{
+				"file": "form-scan.png",
+				"type": "image",
+				"format": "image/png"
+			}
+		]
+	},
+	"layers": {
+		"extraction": {
+			"template_ref": {
+				"template_id": "example-form",
+				"template_version": "1"
+			},
+			"sources": [
+				{
+					"source_id": "src_1",
+					"source_file": "form-scan.png",
+					"provenance": {
+						"extraction_method": "zone_ocr",
+						"engine": "tesseract"
+					},
+					"fields": [
+						{
+							"field_id": "order_number",
+							"label": "Order number",
+							"value": "A-1007",
+							"raw_value": "A-I007",
+							"data_type": "string",
+							"confidence": 0.71,
+							"revisions": [
+								{
+									"revision": 1,
+									"old_value": "A-I007",
+									"new_value": "A-1007",
+									"actor": "rule",
+									"actor_id": "rule:digit_lookalikes",
+									"reason": "character_replacement"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	}
+}

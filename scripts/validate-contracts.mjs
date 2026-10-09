@@ -2,6 +2,7 @@
 // Validate contract example JSON documents against their JSON Schemas (Draft 2020-12).
 // Examples are matched to schemas by filename convention (see SUFFIX_SCHEMA below),
 // so new example files are picked up automatically without editing this script.
+// Documents under an 'invalid' directory are negative tests: they must NOT validate.
 //
 // Run: npm --prefix typescript run validate:contracts   (or: make validate-contract)
 
@@ -43,6 +44,7 @@ const SUFFIX_SCHEMA = [
 	[".msrc.json", "modeler-symbol-source.schema.json"],
 	[".symbol-discovery.json", "modeler-symbol-discovery.schema.json"],
 	[".bom.json", "modeler-bom.schema.json"],
+	[".vim.json", "vim-document.schema.json"],
 ];
 
 const readJson = (p) => JSON.parse(readFileSync(p, "utf8"));
@@ -104,6 +106,19 @@ for (const file of walk(EXAMPLES).sort()) {
 	}
 	const validate = validatorFor(schemaFile);
 	checked++;
+	if (rel.split(path.sep).includes("invalid")) {
+		// Negative test: the document must be rejected; show the first reason
+		if (validate(readJson(file))) {
+			failed++;
+			console.log(`FAIL  [${schemaFile}] ${rel}`);
+			console.log("      expected to be invalid, but it validates");
+		} else {
+			const e = validate.errors[0];
+			const why = `${e.instancePath || "/"} ${e.message}`;
+			console.log(`PASS  [${schemaFile}] ${rel} (invalid as expected: ${why})`);
+		}
+		continue;
+	}
 	if (validate(readJson(file))) {
 		console.log(`PASS  [${schemaFile}] ${rel}`);
 	} else {
