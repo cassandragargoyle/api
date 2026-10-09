@@ -7,9 +7,8 @@
 **Created**: 2026-03-01
 **Labels**: ci, maven, github
 **Related**: #18
-**GitHub Issue**: [cassandragargoyle/api#6](https://github.com/cassandragargoyle/api/issues/6)
 **Repository**: Api
-**GitHub**: #19
+**GitHub**: #19 (the original GitHub issue #6 is a duplicate of this one)
 
 ## Description
 

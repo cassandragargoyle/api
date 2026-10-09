@@ -16,7 +16,7 @@ Management** schema set in depth.
 ## Opportunity Management (v2)
 
 Model introduced in ADR-008 and revised to the **v2 two-spine** shape in
-[issue #015](../../docs/issues/internal/015-opportunity-management-v2-entities.md)
+[issue #015](../../docs/issues/done/015-opportunity-management-v2-entities.md)
 (supersedes the v1 set in #014). The data is a directory-based, git-tracked set
 of JSON documents authored by `ptx-pft` (`pft ideas`) and rendered by the Pilot
 UI. The two spines are:
@@ -82,7 +82,7 @@ threads live together in a `records/` pool.
 
 The [discussion.schema.json](discussion.schema.json) thread evolved from the thin
 2-party v2 chat (`role` ∈ {user, assistant}) to a **structured, multi-actor** model
-([issue #016](../../docs/issues/internal/016-discussion-contract-v3-structured.md)).
+([issue #016](../../docs/issues/done/016-discussion-contract-v3-structured.md)).
 The contract is the source of truth for the Go writer (`ptx-pft`) and the
 TypeScript reader (Pilot `VentureDiscussionView`), and stays SaaS-ready.
 

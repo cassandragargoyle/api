@@ -12,9 +12,9 @@
 ## Summary
 
 Implement the user-preferences abstraction defined in
-[ADR-004](../../adr/004-user-preferences-storage.md) as the **first** language
+[ADR-004](../adr/004-user-preferences-storage.md) as the **first** language
 target: **TypeScript**, in the `typescript/` module being established for `log`
-in [#012](012-typescript-log-module.md). Ship a `preferences` package under the
+in [#012](done/012-typescript-log-module.md). Ship a `preferences` package under the
 `@cassandragargoyle/api` npm package that lets an application persist and restore
 user UI customizations (component sizes, panel layout, view flags) across
 sessions — without coupling to a running application container, so it stays
@@ -202,7 +202,7 @@ application container, breaking unit tests. This issue must demonstrate the fix:
 
 ## Dependencies
 
-- **Blocks on [#012](012-typescript-log-module.md)** — the `typescript/` module,
+- **Blocks on [#012](done/012-typescript-log-module.md)** — the `typescript/` module,
   its build (dual ESM/CJS + `.d.ts`), test runner, and Makefile wiring are created
   there. This issue adds a second package into that module.
 
@@ -219,7 +219,7 @@ application container, breaking unit tests. This issue must demonstrate the fix:
 
 ## References
 
-- [ADR-004: User Preferences Storage Interface](../../adr/004-user-preferences-storage.md)
-- [Issue #012: TypeScript `log` module](012-typescript-log-module.md)
+- [ADR-004: User Preferences Storage Interface](../adr/004-user-preferences-storage.md)
+- [Issue #012: TypeScript `log` module](done/012-typescript-log-module.md)
 - [portunix-vscode README](https://github.com/CassandraGargoyle/portunix-vscode)
   — first consumer (Pilot UI `src/pilot/`)

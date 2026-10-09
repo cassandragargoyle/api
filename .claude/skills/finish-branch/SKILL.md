@@ -67,18 +67,28 @@ Zeptej se uživatele: "Je tímto issue kompletně dokončeno?"
 
 ### Pokud ANO:
 
-Uprav soubor issue v `docs/issues/internal/`:
+1. Uprav soubor issue v `docs/issues/`:
+   - Změň `**Status**: Open` na `**Status**: Implemented`
+   - Přidej datum uzavření
 
-- Změň `**Status:** New` na `**Status:** Implemented`
-- Přidej datum uzavření
+2. Archivuj soubor do `done/` (zachová git historii):
 
-Aktualizuj také `docs/issues/README.md` - změň status v tabulce na ✅ Implemented.
+   ```bash
+   git mv docs/issues/<NNN>-<name>.md docs/issues/done/<NNN>-<name>.md
+   ```
 
-Commitni změnu stavu issue:
+3. Uzavři GitHub issue, pokud ho neuzavřel PR přes `Closes #N` (seznam issues
+   je na GitHubu — žádné README tabulky se needitují):
 
-```text
-docs(#<issue-num>): close issue - implementation complete
-```
+   ```bash
+   gh issue close <N> --repo cassandragargoyle/api --comment "Implemented in <commit/version>."
+   ```
+
+4. Commitni změnu stavu společně s přesunem:
+
+   ```text
+   docs(#<issue-num>): archive issue - implementation complete
+   ```
 
 ### Pokud NE:
 

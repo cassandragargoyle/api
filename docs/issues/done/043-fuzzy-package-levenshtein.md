@@ -1,4 +1,4 @@
-# Issue #010: Add `fuzzy` package with Levenshtein distance (Java, Go, Python)
+# Issue #43: Add `fuzzy` package with Levenshtein distance (Java, Go, Python)
 
 **Type**: Feature
 **Priority**: Medium
@@ -7,6 +7,7 @@
 **Closed**: 2026-05-01
 **Labels**: feature, fuzzy, algorithms, java, go, python, multi-language
 **Repository**: Api
+**GitHub**: #43 (legacy internal number `#010`)
 
 ## Summary
 
@@ -195,7 +196,7 @@ module reaches v2 it would become `github.com/cassandragargoyle/api/go/v2`.
 
 ## References
 
-- [Issue #23: Restructure project layout for multi-language platform](done/023-restructure-multi-language-layout-mvp.md)
-- [Issue #22: Python TelemetryProvider shared module](done/022-python-telemetry-provider.md)
+- [Issue #23: Restructure project layout for multi-language platform](023-restructure-multi-language-layout-mvp.md)
+- [Issue #22: Python TelemetryProvider shared module](022-python-telemetry-provider.md)
   — precedent for a Java↔Python parity package
 - [Wikipedia: Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
