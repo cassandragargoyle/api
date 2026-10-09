@@ -122,6 +122,6 @@ New schemas under `contract/schemas/`:
 
 - [ADR-008: Opportunity Management](https://github.com/CassandraGargoyle/portunix-architecture)
   (`docs/adr/ADR-008-opportunity-management.md`)
-- [GraphView contract](../../../../contract/schemas/graph-view.schema.json) — reused for `backlog.json`
+- [GraphView contract](../../../contract/schemas/graph-view.schema.json) — reused for `backlog.json`
 - Design mock: `portunix-architecture` →
   `docs/architecture/brainstorming/opportunity-management/opportunity-card-mockup.svg`

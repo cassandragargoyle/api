@@ -7,7 +7,7 @@
   // Glob patterns for files to ignore
   "ignores": [
     "docs/adr/**",
-    "docs/issues/internal/**",
+    "docs/issues/**",
     "docs/private/**",
     "docs/notes/**",
     "CLAUDE.md",

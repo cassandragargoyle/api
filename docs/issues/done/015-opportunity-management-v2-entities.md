@@ -181,6 +181,6 @@ their estimation + generic discussion) live in a `records/` pool.
 - [ADR-008: Opportunity Management](https://github.com/CassandraGargoyle/portunix-architecture)
   (`docs/adr/ADR-008-opportunity-management.md`) — to be updated for v2
 - #014 Opportunity Management contracts v1 (extended here)
-- [GraphView contract](../../../../contract/schemas/graph-view.schema.json) — reused for both backlogs
+- [GraphView contract](../../../contract/schemas/graph-view.schema.json) — reused for both backlogs
 - v2 model: `portunix-architecture` →
   `docs/architecture/brainstorming/opportunity-management/journal-20260710-01.json`

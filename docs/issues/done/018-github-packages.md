@@ -21,13 +21,13 @@ criteria of its own.
 The concrete implementation — `distributionManagement`, the
 `.github/workflows/publish.yml` release pipeline, and the first
 published version — landed in issue
-[#19](done/019-github-packages-publishing.md) and is in production.
+[#19](019-github-packages-publishing.md) and is in production.
 Follow-up topics listed at the bottom of this document (BOM module,
 CODEOWNERS, semver/changelog automation, consumer-driven contract
 tests, etc.) are out of scope here; open a new issue if any of them
 should be picked up.
 
-This document is retained under `internal/done/` as the architectural
+This document is retained under `done/` as the architectural
 reference for the chosen approach.
 
 ## Úvodní problém

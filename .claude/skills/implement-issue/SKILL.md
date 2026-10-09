@@ -1,6 +1,6 @@
 ---
 name: implement-issue
-description: Průvodce implementací issue - od přečtení zadání přes vytvoření branch, implementaci kódu, commit až po přípravu PR popisu. Použij, když chce uživatel implementovat interní issue (např. #002).
+description: Průvodce implementací issue - od přečtení zadání přes vytvoření branch, implementaci kódu, commit až po přípravu PR popisu. Použij, když chce uživatel implementovat issue (např. #42).
 ---
 
 # Implementace issue
@@ -17,17 +17,18 @@ Zkontroluj aktuální roli v `CLAUDE.local.md`. Pokud role není **Developer**:
 
 ## KROK 1: Získej issue
 
-Zeptej se mě na číslo interního issue (např. #002). Počkej na mou odpověď.
+Zeptej se mě na číslo issue (např. #42). Číslo přiděluje GitHub. Počkej na mou odpověď.
 
 ## KROK 2: Potvrzení porozumění
 
 Poté, co ti poskytnu issue:
 
-1. Přečti soubor issue z `docs/issues/internal/` (formát: `NNN-popis.md`)
+1. Přečti soubor issue z `docs/issues/` (formát: `NNN-popis.md`, `NNN` = číslo GitHub issue
+   doplněné nulami na tři číslice). Pokud tam není, zkus `docs/issues/done/`.
+   Stav na GitHubu: `gh issue view <N> --repo cassandragargoyle/api`
 2. Přeformuluj issue vlastními slovy
 3. Vysvětli potřebné změny v kódu
-4. Pokud má issue propojený GitHub issue, zmíň ho
-5. Požádej mě o potvrzení
+4. Požádej mě o potvrzení
 
 **STOP** - Počkej na mé výslovné potvrzení než budeš pokračovat.
 
@@ -108,7 +109,7 @@ Po dokončení implementace:
   `git checkout main && git merge <branch> && git push origin main`
 - Smazání feature branch: `git branch -d <branch>`
 - Uzavři issue: `gh issue close N` (nebo automaticky přes `Closes #N` v PR)
-- Archivuj detailní soubor:
-  `git mv docs/issues/internal/N-*.md docs/issues/internal/done/`
+- Archivuj detailní soubor (v souboru nastav `**Status**: Implemented`):
+  `git mv docs/issues/NNN-*.md docs/issues/done/`
 
 Seznam issues je na GitHubu — **žádné přehledové tabulky se needitují.**
