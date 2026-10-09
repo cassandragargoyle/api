@@ -64,10 +64,10 @@
 				{
 					"term_id": "t-title-block",
 					"term": "title block",
-					"clause": "3.4"
+					"clause": "3.4",
+					"synonym": "x"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

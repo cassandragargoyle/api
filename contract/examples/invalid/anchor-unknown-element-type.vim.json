@@ -20,7 +20,7 @@
 					"anchors": [
 						{
 							"page": 7,
-							"element_type": "block",
+							"element_type": "paragraph",
 							"element_id": "block_41"
 						}
 					],
@@ -67,7 +67,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

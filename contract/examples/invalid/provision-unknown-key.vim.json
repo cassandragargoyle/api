@@ -38,7 +38,8 @@
 						"subject": "drawing"
 					},
 					"status": "proposed",
-					"confidence": 0.82
+					"confidence": 0.82,
+					"priority": "high"
 				}
 			],
 			"references": [
@@ -67,7 +68,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

@@ -56,7 +56,7 @@
 					"scope": "internal",
 					"binding": "informative",
 					"target": {
-						"clause": "A.2"
+						"title": "Annex A"
 					}
 				}
 			],
@@ -67,7 +67,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

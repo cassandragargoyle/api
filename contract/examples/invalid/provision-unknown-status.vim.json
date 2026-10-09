@@ -37,7 +37,7 @@
 						"method": "manual",
 						"subject": "drawing"
 					},
-					"status": "proposed",
+					"status": "approved",
 					"confidence": 0.82
 				}
 			],
@@ -67,7 +67,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

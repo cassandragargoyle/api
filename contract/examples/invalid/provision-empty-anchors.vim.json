@@ -17,13 +17,7 @@
 					"clause": "5.3.2",
 					"text": "The title block shall contain the drawing number.",
 					"text_hash": "1f77c4a6db023bea",
-					"anchors": [
-						{
-							"page": 7,
-							"element_type": "block",
-							"element_id": "block_41"
-						}
-					],
+					"anchors": [],
 					"terms": [
 						"t-title-block"
 					],
@@ -67,7 +61,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

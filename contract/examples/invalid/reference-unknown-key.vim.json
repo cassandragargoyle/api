@@ -49,7 +49,8 @@
 					"target": {
 						"identifier": "DF-0456",
 						"clause": "4.1"
-					}
+					},
+					"note": "x"
 				},
 				{
 					"reference_id": "r-2",
@@ -67,7 +68,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

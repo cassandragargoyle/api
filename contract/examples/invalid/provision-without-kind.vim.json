@@ -13,7 +13,6 @@
 			"provisions": [
 				{
 					"provision_id": "p-5.3.2-1",
-					"kind": "requirement",
 					"clause": "5.3.2",
 					"text": "The title block shall contain the drawing number.",
 					"text_hash": "1f77c4a6db023bea",
@@ -67,7 +66,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

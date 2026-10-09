@@ -45,11 +45,7 @@
 				{
 					"reference_id": "r-1",
 					"scope": "external",
-					"binding": "mandatory",
-					"target": {
-						"identifier": "DF-0456",
-						"clause": "4.1"
-					}
+					"binding": "mandatory"
 				},
 				{
 					"reference_id": "r-2",
@@ -67,7 +63,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

@@ -8,7 +8,7 @@
 			"definition": {
 				"identifier": "DF-1234",
 				"edition": "3",
-				"issued": "2025-04-01"
+				"issued": "April 2025"
 			},
 			"provisions": [
 				{
@@ -67,7 +67,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

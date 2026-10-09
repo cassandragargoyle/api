@@ -34,7 +34,6 @@
 						}
 					],
 					"verification": {
-						"method": "manual",
 						"subject": "drawing"
 					},
 					"status": "proposed",
@@ -67,7 +66,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

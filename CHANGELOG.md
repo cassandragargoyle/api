@@ -27,7 +27,9 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 - Examples `definition-file.vim.json` and `form-extraction.vim.json`; the
   `.vim.json` suffix is mapped in `scripts/validate-contracts.mjs`. Documents
   under `contract/examples/invalid/` are negative tests that must not
-  validate (#42).
+  validate, one file per rule of the prescriptive schemas (#42).
+- CI job **Contract Validation** in `.github/workflows/build.yml` runs
+  `make validate-contract` and is part of the quality gate (#42).
 - **`ModelerContractService`** in `contract/proto/modeler.proto`
   (`GetContractInfo`, `ListContractFiles`, `GetContractFile`) and
   `HealthResponse.contract_version`: the modeler plugin serves its embedded,

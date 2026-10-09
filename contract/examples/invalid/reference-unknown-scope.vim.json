@@ -44,7 +44,7 @@
 			"references": [
 				{
 					"reference_id": "r-1",
-					"scope": "external",
+					"scope": "global",
 					"binding": "mandatory",
 					"target": {
 						"identifier": "DF-0456",
@@ -67,7 +67,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

@@ -66,8 +66,8 @@
 					"term": "title block",
 					"clause": "3.4"
 				}
-			]
-		},
-		"custom": {}
+			],
+			"notes": "x"
+		}
 	}
 }

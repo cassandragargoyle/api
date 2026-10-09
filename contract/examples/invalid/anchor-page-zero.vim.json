@@ -19,7 +19,7 @@
 					"text_hash": "1f77c4a6db023bea",
 					"anchors": [
 						{
-							"page": 7,
+							"page": 0,
 							"element_type": "block",
 							"element_id": "block_41"
 						}
@@ -67,7 +67,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

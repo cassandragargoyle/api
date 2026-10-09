@@ -21,7 +21,8 @@
 						{
 							"page": 7,
 							"element_type": "block",
-							"element_id": "block_41"
+							"element_id": "block_41",
+							"line": 12
 						}
 					],
 					"terms": [
@@ -67,7 +68,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

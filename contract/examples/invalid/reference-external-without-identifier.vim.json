@@ -47,7 +47,6 @@
 					"scope": "external",
 					"binding": "mandatory",
 					"target": {
-						"identifier": "DF-0456",
 						"clause": "4.1"
 					}
 				},
@@ -67,7 +66,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

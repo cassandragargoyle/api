@@ -10,37 +10,6 @@
 				"edition": "3",
 				"issued": "2025-04-01"
 			},
-			"provisions": [
-				{
-					"provision_id": "p-5.3.2-1",
-					"kind": "requirement",
-					"clause": "5.3.2",
-					"text": "The title block shall contain the drawing number.",
-					"text_hash": "1f77c4a6db023bea",
-					"anchors": [
-						{
-							"page": 7,
-							"element_type": "block",
-							"element_id": "block_41"
-						}
-					],
-					"terms": [
-						"t-title-block"
-					],
-					"relations": [
-						{
-							"provision_id": "p-5.3.1-1",
-							"relation": "refines"
-						}
-					],
-					"verification": {
-						"method": "manual",
-						"subject": "drawing"
-					},
-					"status": "proposed",
-					"confidence": 0.82
-				}
-			],
 			"references": [
 				{
 					"reference_id": "r-1",
@@ -67,7 +36,6 @@
 					"clause": "3.4"
 				}
 			]
-		},
-		"custom": {}
+		}
 	}
 }

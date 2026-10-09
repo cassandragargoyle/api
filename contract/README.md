@@ -200,7 +200,7 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | ------- | ----------- |
 | [definition-file.vim.json](examples/definition-file.vim.json) | VIM 2.1 document with the prescriptive layer: four provisions (all three kinds, one without verbatim `text`), an external and an internal reference, a term, relations, verification rules and revisions with `property`. Validated by `make validate-contract`. |
 | [form-extraction.vim.json](examples/form-extraction.vim.json) | VIM 2.0 document with the extraction layer only, with a `Revision` without `property`. Validated by `make validate-contract`. |
-| [invalid/](examples/invalid/) | Negative tests: documents that must **not** validate (unknown provision `kind`, provision without `text` and `statement`, provision without `anchors`, unknown key in `layers`). `make validate-contract` fails when one of them validates. |
+| [invalid/](examples/invalid/) | Negative tests: documents that must **not** validate. Each file is the same small VIM 2.1 document with one defect, named after it (for example `provision-unknown-kind`, `anchor-page-zero`, `reference-external-without-identifier`); one file per rule of the prescriptive schemas. `make validate-contract` fails when one of them validates. |
 
 ### Plugin Platform Examples
 
