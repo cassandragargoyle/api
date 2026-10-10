@@ -34,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
+    "markdownlint-cli2": "^0.23.3",
     "prettier": "^3.0.0",
     "rimraf": "^6.0.0",
     "tsup": "^8.0.0",

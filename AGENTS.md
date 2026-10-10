@@ -7,7 +7,7 @@ Instructions for AI coding assistants working in this repository.
 - **Project**: CassandraGargoyle API
 - **Purpose**: Multi-language shared library with entities, utilities, and base abstractions for CassandraGargoyle projects, plus language-independent contracts
 - **Repository**: <https://github.com/cassandragargoyle/api>
-- **Languages**: Java 21 (Maven), Python 3.11+ (uv), Go 1.22+, TypeScript (npm, Node 18+)
+- **Languages**: Java 21 (Maven), Python 3.11+ (uv), Go 1.22+, TypeScript (npm, Node 22+)
 - **Platforms**: Linux, Windows
 - **License**: MIT (see [LICENSE](LICENSE))
 

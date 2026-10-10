@@ -27,7 +27,7 @@ Api/
 ├── java/          # Hlavní API modul (Java, Maven)
 ├── python/        # Sdílené API moduly (Python)
 ├── go/            # Sdílené API moduly (Go)
-├── typescript/    # Sdílené API moduly (TypeScript / React, npm) — vyžaduje Node 18+
+├── typescript/    # Sdílené API moduly (TypeScript / React, npm) — vyžaduje Node 22+
 └── contract/      # Jazykově nezávislé task kontrakty (JSON Schema)
 ```
 
@@ -165,7 +165,7 @@ Tento projekt používá:
 - **TypeScript**: npm pro správu závislostí, `tsup` pro duální ESM/CJS build
   s emitovanými `.d.ts`, Vitest pro testování, ESLint + Prettier pro linting;
   balíček leží v `typescript/` jako `@cassandragargoyle/api` (subpath export
-  `@cassandragargoyle/api/log`) a vyžaduje Node 18+
+  `@cassandragargoyle/api/log`) a vyžaduje Node 22+
 
 ## Licence
 

@@ -16,6 +16,7 @@
 MVN = mvn -f java/pom.xml
 GO = go
 NPM = npm --prefix typescript
+MARKDOWNLINT = typescript/node_modules/.bin/markdownlint-cli2
 
 # Default target
 all: package
@@ -141,10 +142,10 @@ lint-python: | $(PYTHON_VENV)
 	@echo "Running Python linter (ruff)..."
 	$(UV) run --extra dev ruff check python/
 
-## Run Markdown linter
-lint-md:
+## Run Markdown linter (markdownlint-cli2 is a devDependency of the TypeScript module)
+lint-md: | $(MARKDOWNLINT)
 	@echo "Running Markdown linter..."
-	markdownlint-cli2
+	$(NPM) exec -- markdownlint-cli2
 
 # ============================================================================
 # Contract Validation
@@ -219,6 +220,10 @@ vet-go:
 
 # Install node_modules on first use (npm install is idempotent)
 typescript/node_modules:
+	$(NPM) install
+
+# Also installs the linter into a node_modules that existed before it became a dependency
+$(MARKDOWNLINT):
 	$(NPM) install
 
 ## Build TypeScript package (ESM + CJS + .d.ts to typescript/dist)

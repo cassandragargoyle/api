@@ -25,7 +25,7 @@ Api/
 ├── java/          # Core API module (Java, Maven)
 ├── python/        # Shared API modules (Python, uv)
 ├── go/            # Shared API modules (Go modules)
-├── typescript/    # Shared API modules (TypeScript / React, npm) — requires Node 18+
+├── typescript/    # Shared API modules (TypeScript / React, npm) — requires Node 22+
 └── contract/      # Language-independent task contracts (JSON Schema)
 ```
 
@@ -161,7 +161,7 @@ This project uses:
 - **TypeScript**: npm for dependency management, `tsup` for the dual ESM/CJS
   build with emitted `.d.ts`, Vitest for testing, ESLint + Prettier for
   linting; the package lives in `typescript/` as `@cassandragargoyle/api`
-  (subpath export `@cassandragargoyle/api/log`) and requires Node 18+
+  (subpath export `@cassandragargoyle/api/log`) and requires Node 22+
 
 ## License
 

@@ -107,6 +107,18 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 - `plugin.python_version` field in the plugin manifest schema (for bytecode
   wheels).
 
+### Fixed
+
+- `scripts/validate-contracts.mjs`: a document under
+  `contract/examples/invalid/` without a known contract suffix now fails the
+  run. Before, it was skipped and tested nothing.
+- `make lint-md` no longer needs a global `markdownlint-cli2`. The linter is a
+  devDependency of the TypeScript module and the target installs it when it is
+  missing.
+- The documented Node.js requirement of the TypeScript module is now Node 22+
+  (`README.md`, `README.cs.md`, `AGENTS.md`), the version the development
+  tools need and CI uses. Before, the documents said Node 18+.
+
 ## [1.0.0.9] - 2026-05-02
 
 ### Changed

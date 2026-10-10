@@ -100,13 +100,21 @@ let skipped = 0;
 for (const file of walk(EXAMPLES).sort()) {
 	const schemaFile = schemaFor(file);
 	const rel = path.relative(ROOT, file);
+	const negative = rel.split(path.sep).includes("invalid");
 	if (!schemaFile) {
+		if (negative) {
+			// A negative test that matches no schema would test nothing
+			failed++;
+			console.log(`FAIL  [no schema] ${rel}`);
+			console.log("      negative test without a known contract suffix");
+			continue;
+		}
 		skipped++;
 		continue; // example not covered by the Opportunity Management contract suffixes
 	}
 	const validate = validatorFor(schemaFile);
 	checked++;
-	if (rel.split(path.sep).includes("invalid")) {
+	if (negative) {
 		// Negative test: the document must be rejected; show the first reason
 		if (validate(readJson(file))) {
 			failed++;
