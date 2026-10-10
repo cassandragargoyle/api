@@ -2,9 +2,13 @@
 
 Multi-language shared library (Java, Python, Go, TypeScript) providing entities, utilities, and base abstractions for CassandraGargoyle projects.
 
+The repository has a second role: it is the home of the **language-independent contracts** (JSON Schema and gRPC definitions) that CassandraGargoyle and Portunix tools use to exchange data. See [Contracts](#contracts).
+
 ## Documentation
 
-See [docs/contributing/](docs/contributing/) for development guidelines.
+- [docs/contributing/](docs/contributing/) - development guidelines
+- [contract/README.md](contract/README.md) - reference of all contracts
+- [docs/adr/](docs/adr/) - Architecture Decision Records
 
 ## Changelog
 
@@ -16,6 +20,8 @@ See [CHANGELOG.md](CHANGELOG.md) for the release history.
 - **Java:** 21 (Maven, NetBeans Platform)
 - **Python:** ≥ 3.11 (uv-managed)
 - **Go:** ≥ 1.22
+- **TypeScript:** Node ≥ 22 (npm)
+- **Contracts:** JSON Schema Draft 2020-12, Protocol Buffers (gRPC)
 - **Repository**: <https://github.com/cassandragargoyle/api>
 
 ## Project Structure
@@ -26,11 +32,59 @@ Api/
 ├── python/        # Shared API modules (Python, uv)
 ├── go/            # Shared API modules (Go modules)
 ├── typescript/    # Shared API modules (TypeScript / React, npm) — requires Node 22+
-└── contract/      # Language-independent task contracts (JSON Schema)
+└── contract/      # Language-independent contracts (JSON Schema, gRPC proto)
+    ├── schemas/   # JSON Schema definitions (Draft 2020-12)
+    ├── examples/  # Example documents, validated against the schemas
+    └── proto/     # gRPC service definitions
 ```
 
 Each language module is independently buildable and publishable. The
 top-level Makefile orchestrates build, test, and lint across all four.
+The contracts are not part of any language module, see [Contracts](#contracts).
+
+## Contracts
+
+The `contract/` directory defines the data formats and service interfaces that
+are shared between projects. A contract does not belong to one programming
+language: a Java plugin, a Go CLI tool, and a TypeScript VS Code extension read
+and write the same documents.
+
+The contracts are independent of the library code. A project can use them
+without a dependency on any of the language modules.
+
+| Area | Content |
+| ---- | ------- |
+| Task Platform | Task request, task response, error model, task manifest, OCR result |
+| Plugin Platform | Plugin manifest, permissions, health check, `--help-ai` output |
+| VIM (Versatile Information Model) | Document, extraction layer, prescriptive layer |
+| Visualization | 3D node-graph document for the graphlens viewer (`*.glens.json`) |
+| Transcription | Transcript working document (`*.scribe.json`) |
+| Modeling | Building model, operations, bill of materials, symbols, symbol sources |
+| Opportunity Management | Venture, initiative, idea, use-case, product, team, backlog, epic |
+| Competency Model | Competencies, areas, people, resources, evidence, relations |
+| People Registry | People master data and per-project participants and contacts |
+| gRPC services | `task-platform.proto`, `scribe.proto`, `modeler.proto` |
+
+The full list of schemas, filename suffixes, and examples is in
+[contract/README.md](contract/README.md). The design notes of the schemas are in
+[contract/schemas/README.md](contract/schemas/README.md).
+
+### Rules
+
+- Every schema in `contract/schemas/` has at least one valid example in
+  `contract/examples/`
+- Documents in `contract/examples/invalid/` are negative tests, they must not
+  validate
+- Other projects depend on the contracts, so a breaking change must be pointed
+  out and recorded in [CHANGELOG.md](CHANGELOG.md)
+
+### Validation
+
+```bash
+make validate-contract   # validate contract/examples/ against contract/schemas/
+```
+
+CI runs the same check in the **Contract Validation** job.
 
 ## Core Features
 

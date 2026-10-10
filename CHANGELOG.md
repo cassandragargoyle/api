@@ -21,6 +21,8 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
   `LocalPreferencesStore` (`localStorage` in the browser / webview, JSON file
   `~/.<appId>/var/preferences.json` under Node). Reads are synchronous from a
   cache; writes are flushed with a debounce and on exit / page unload (#13).
+- README: new **Contracts** section that describes the language-independent
+  contracts in `contract/` (areas, rules, validation).
 - **VIM prescriptive layer (VIM 2.1)**: new schemas
   `contract/schemas/vim-prescriptive.schema.json` (layer, `Definition`,
   `Reference`, `Target`, `Term`) and
