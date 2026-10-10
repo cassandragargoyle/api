@@ -122,5 +122,3 @@ JUL levels as follows:
 
 ## See also
 
-- Java code style for logging: [`docs/contributing/CODE-STYLE-JAVA.md`](../../../../../../../../docs/contributing/CODE-STYLE-JAVA.md#logging)
-- Python parity module: [`python/src/cassandragargoyle/api/log/`](../../../../../../../../python/src/cassandragargoyle/api/log)

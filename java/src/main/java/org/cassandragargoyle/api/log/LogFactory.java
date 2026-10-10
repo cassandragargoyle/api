@@ -34,7 +34,7 @@ import org.openide.util.Exceptions;
  * appear in a pop-up dialog by default.</li>
  * </ul>
  *
- * @author kurc
+ * @author Zdenek
  */
 public class LogFactory
 {
