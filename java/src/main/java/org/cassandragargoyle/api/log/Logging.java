@@ -602,21 +602,37 @@ public class Logging
 		}
 
 		/**
+		 * Finds the log records that are attached to a throwable or to one of its causes.
+		 * <p>
+		 * The NetBeans Platform attaches extra messages to an exception (for example with
+		 * {@code Exceptions.attachMessage}) through a throwable that also implements
+		 * {@code Callable<LogRecord[]>}. Its {@code call()} method returns the attached
+		 * records, which are named delegates here. The caller prints every delegate after
+		 * the stack trace of the original record.
+		 * <p>
+		 * The method walks the cause chain from {@code t} and returns the records of the
+		 * first throwable that provides them. The throwables below that one are not
+		 * searched.
 		 *
-		 * @param sb
-		 * @param t
-		 * @param beenThere
-		 * @return
+		 * @param sb output buffer of the formatted record, gets a warning when the chain has a cycle
+		 * @param t throwable to examine, {@code null} at the end of the cause chain
+		 * @param beenThere throwables that were already examined, shared by the whole
+		 * {@code printRecord} call tree so that a delegate with the same throwable cannot
+		 * cause an endless recursion
+		 * @return attached log records, or {@code null} when the chain has none or has a cycle
 		 */
 		@SuppressWarnings("CallToThreadDumpStack")
 		private LogRecord[] extractDelegates(StringBuilder sb, Throwable t, Set<Throwable> beenThere)
 		{
+			// add() returns false for a throwable that was examined before
 			if (!beenThere.add(t))
 			{
 				sb.append("warning: cyclic dependency between annotated throwables"); // NOI18N
 				return null;
 			}
 
+			// Raw Callable on purpose, the type argument cannot be checked at runtime,
+			// so the result is tested with instanceof below
 			if (t instanceof Callable)
 			{
 				Object rec = null;
@@ -626,13 +642,16 @@ public class Logging
 				}
 				catch (Exception ex)
 				{
+					// Printed directly, a log call here would enter the formatter again
 					ex.printStackTrace();
 				}
 				if (rec instanceof LogRecord[])
 				{
 					return (LogRecord[]) rec;
 				}
+				// A Callable with another result is not an annotated throwable, continue with its cause
 			}
+			// End of the cause chain without delegates
 			if (t == null)
 			{
 				return null;
