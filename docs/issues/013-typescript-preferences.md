@@ -155,32 +155,32 @@ application container, breaking unit tests. This issue must demonstrate the fix:
 
 ### Phase 1: Core
 
-- [ ] Create `typescript/src/preferences/` with `Preferences`, `PreferencesNode`
-- [ ] Define `PreferencesStore` seam
-- [ ] Implement `MemoryPreferencesStore` (default)
-- [ ] Implement the sync-read / async-flush cache + namespacing + change listeners
+- [x] Create `typescript/src/preferences/` with `Preferences`, `PreferencesNode`
+- [x] Define `PreferencesStore` seam
+- [x] Implement `MemoryPreferencesStore` (default)
+- [x] Implement the sync-read / async-flush cache + namespacing + change listeners
 
 ### Phase 2: Local persistence
 
-- [ ] Implement `LocalPreferencesStore`: `localStorage` (browser) + JSON file (Node)
-- [ ] Debounced flush + flush-on-exit (`beforeunload` / `process` exit hooks)
-- [ ] Isolate Node-only file code so browser bundles tree-shake it
+- [x] Implement `LocalPreferencesStore`: `localStorage` (browser) + JSON file (Node)
+- [x] Debounced flush + flush-on-exit (`beforeunload` / `process` exit hooks)
+- [x] Isolate Node-only file code so browser bundles tree-shake it
 
 ### Phase 3: Tests
 
-- [ ] No-bootstrap unit test (default memory store; read returns default; write/read)
-- [ ] Isolation test (fresh store per test; no cross-test leakage)
-- [ ] Local store round-trip test (browser mock + Node temp file)
-- [ ] Browser-safe import test (no I/O, no `process`/`fs` at import)
-- [ ] Namespacing + typed accessors + listener tests
+- [x] No-bootstrap unit test (default memory store; read returns default; write/read)
+- [x] Isolation test (fresh store per test; no cross-test leakage)
+- [x] Local store round-trip test (browser mock + Node temp file)
+- [x] Browser-safe import test (no I/O, no `process`/`fs` at import)
+- [x] Namespacing + typed accessors + listener tests
 
 ### Phase 4: Packaging & docs
 
-- [ ] Add `./preferences` subpath to the package `exports` map (ESM/CJS/types)
-- [ ] `typescript/src/preferences/README.md`
-- [ ] Ensure `make test-typescript` / `build-typescript` cover the new package
-- [ ] Update root `README.md` Core Features with a "Preferences" section
-- [ ] Note portunix-vscode `src/pilot/` as first consumer
+- [x] Add `./preferences` subpath to the package `exports` map (ESM/CJS/types)
+- [x] `typescript/src/preferences/README.md`
+- [x] Ensure `make test-typescript` / `build-typescript` cover the new package
+- [x] Update root `README.md` Core Features with a "Preferences" section
+- [x] Note portunix-vscode `src/pilot/` as first consumer
 
 ## Acceptance Criteria
 

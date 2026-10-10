@@ -47,7 +47,7 @@ import org.cassandragargoyle.api.software.OSType;
 public interface Software extends Entity
 {
 	/**
-	 * Check if is software instaled on local platform (operating system, image or container).
+	 * Checks whether the software is installed on the local platform (operating system, image, or container)
 	 * @return
 	 */
 	boolean isInstalled(Object checkMethod);
