@@ -68,7 +68,7 @@ public class Logging
 	{
 
 		java.util.Properties sysProps = System.getProperties();
-		//TODO:ZK nefunguje
+		// TODO: ZK Not working
 		sysProps.setProperty("java.util.logging.SimpleFormatter.format", "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$-6s %2$s %5$s%6$s%n");
 
 		Logger logger = Logger.getLogger(""); // NOI18N
@@ -408,9 +408,9 @@ public class Logging
 
 		static Handler getInternal(Handler h)
 		{
-			if (h instanceof NonCloseHandler)
+			if (h instanceof NonCloseHandler nonCloseHandler)
 			{
-				return ((NonCloseHandler) h).delegate;
+				return nonCloseHandler.delegate;
 			}
 			return h;
 		}
@@ -681,9 +681,9 @@ public class Logging
 				{
 					String thrownMsg = record.getThrown().getMessage();
 					if (thrownMsg.startsWith("Dangerous reflection access to sun.misc.GC"
-						+ " by class org.apache.cxf.common.logging.JDKBugHacks detected!")
+											 + " by class org.apache.cxf.common.logging.JDKBugHacks detected!")
 						|| thrownMsg.startsWith("Dangerous reflection access to sun.misc.GC$Daemon"
-						+ " by class java.lang.Thread$1 detected!"))
+												+ " by class java.lang.Thread$1 detected!"))
 					{
 						return false;
 					}

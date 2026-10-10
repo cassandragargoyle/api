@@ -6,7 +6,7 @@ package org.cassandragargoyle.api.log;
 
 /**
  * Interface LogSkipException
- * @author kurc
+ * @author Zdenek
  * @since 2024-11-09
  */
 public interface LogSkipException
