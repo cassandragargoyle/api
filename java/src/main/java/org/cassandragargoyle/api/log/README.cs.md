@@ -12,13 +12,12 @@ výstupní formát, stejné aliasy úrovní — takže výstup z Java a Python
 komponent vypadá identicky a je zpracovatelný stejnými nástroji.
 
 > **Pozn.:** Tento dokument je překladem
-> [README.md](README.md). Při rozporu má přednost anglická verze
-> (oficiální jazyk projektu).
+> [README.md](README.md). Při rozporu má přednost anglická verze (oficiální jazyk projektu).
 
 ## Veřejné API
 
 | Typ | Druh | Účel |
-| --- | --- | --- |
+| --- | ---- | ---- |
 | [`LogFactory`](LogFactory.java) | utility class | Vytváří instance `Logger` napojené na resource bundle volající třídy a poskytuje pomocnou metodu `args(...)` pro parametrizovaná volání |
 | [`Logging`](Logging.java) | utility class | Inicializuje JUL handlery (konzole + rotující per-PID soubor), nastavuje úrovně, dodává projektový formátovač a výchozí filtr |
 | [`LogSkipException`](LogSkipException.java) | marker interface | Třídy výjimek označené tímto rozhraním filtr potlačí a do logu se nedostanou |
@@ -122,6 +121,3 @@ Podle Javadocu [`LogFactory`](LogFactory.java) projekt přiřazuje JUL úrovním
 - `SEVERE` — lokalizovaná chyba, ve výchozím nastavení do dialogu
 
 ## Související
-
-- Java code style pro logování: [`docs/contributing/CODE-STYLE-JAVA.md`](../../../../../../../../docs/contributing/CODE-STYLE-JAVA.md#logging)
-- Python parity modul: [`python/src/cassandragargoyle/api/log/`](../../../../../../../../python/src/cassandragargoyle/api/log)
