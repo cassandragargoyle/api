@@ -1,9 +1,9 @@
 import { defineConfig } from "tsup";
 
 // Dual ESM + CJS build with emitted .d.ts declarations.
-// Two entry points so the package exposes both `.` and `./log` subpaths.
+// One entry point per subpath export: `.`, `./log` and `./preferences`.
 export default defineConfig({
-  entry: ["src/index.ts", "src/log/index.ts"],
+  entry: ["src/index.ts", "src/log/index.ts", "src/preferences/index.ts"],
   format: ["esm", "cjs"],
   dts: true,
   clean: true,

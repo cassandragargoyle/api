@@ -13,6 +13,14 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- **TypeScript `preferences` module** (`@cassandragargoyle/api/preferences`),
+  the first implementation of ADR-004: `Preferences` facade with namespaced
+  `PreferencesNode` (typed `get*` / `put*` with defaults, `remove`, change
+  listeners), the `PreferencesStore` backend seam, `MemoryPreferencesStore`
+  (default, no application bootstrap needed in unit tests) and
+  `LocalPreferencesStore` (`localStorage` in the browser / webview, JSON file
+  `~/.<appId>/var/preferences.json` under Node). Reads are synchronous from a
+  cache; writes are flushed with a debounce and on exit / page unload (#13).
 - **VIM prescriptive layer (VIM 2.1)**: new schemas
   `contract/schemas/vim-prescriptive.schema.json` (layer, `Definition`,
   `Reference`, `Target`, `Term`) and

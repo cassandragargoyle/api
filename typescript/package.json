@@ -1,7 +1,7 @@
 {
   "name": "@cassandragargoyle/api",
   "version": "1.0.0.9",
-  "description": "Shared TypeScript API modules for CassandraGargoyle (log package)",
+  "description": "Shared TypeScript API modules for CassandraGargoyle (log and preferences packages)",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -18,6 +18,11 @@
       "types": "./dist/log/index.d.ts",
       "import": "./dist/log/index.js",
       "require": "./dist/log/index.cjs"
+    },
+    "./preferences": {
+      "types": "./dist/preferences/index.d.ts",
+      "import": "./dist/preferences/index.js",
+      "require": "./dist/preferences/index.cjs"
     }
   },
   "scripts": {

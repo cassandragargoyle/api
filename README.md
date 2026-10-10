@@ -87,6 +87,21 @@ top-level Makefile orchestrates build, test, and lint across all four.
 - The TypeScript module is isomorphic: a console transport for the browser /
   React webview and an optional Node-only rolling file transport
 
+### Preferences
+
+- User preferences storage for UI customizations (component sizes, panel
+  layout, view flags) that must survive a restart, see
+  [ADR-004](docs/adr/004-user-preferences-storage.md)
+- Namespaced nodes with typed accessors and defaults, change listeners
+- The storage backend is injected (`PreferencesStore`); the default is an
+  in-memory store, so preferences work in a unit test without an application
+  bootstrap
+- `LocalPreferencesStore` persists to `localStorage` in the browser / webview
+  and to a JSON file under Node; reads are synchronous, writes are flushed
+  asynchronously and on exit
+- TypeScript only for now (`@cassandragargoyle/api/preferences`,
+  [README](typescript/src/preferences/README.md)); Java, Python and Go follow
+
 ### CLI Support
 
 - Command-line interface implementation
@@ -161,7 +176,8 @@ This project uses:
 - **TypeScript**: npm for dependency management, `tsup` for the dual ESM/CJS
   build with emitted `.d.ts`, Vitest for testing, ESLint + Prettier for
   linting; the package lives in `typescript/` as `@cassandragargoyle/api`
-  (subpath export `@cassandragargoyle/api/log`) and requires Node 22+
+  (subpath exports `@cassandragargoyle/api/log` and
+  `@cassandragargoyle/api/preferences`) and requires Node 22+
 
 ## License
 
