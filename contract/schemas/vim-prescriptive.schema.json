@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/vim-prescriptive.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.0.1",
 	"title": "VimPrescriptive",
 	"description": "VIM prescriptive layer (VIM 2.1) — what a definition file prescribes: provisions, references to other documents and clauses, and defined terms",
 	"type": "object",
@@ -74,7 +74,7 @@
 			"properties": {
 				"reference_id": {
 					"type": "string",
-					"description": "Identifier, unique in the layer",
+					"description": "Identifier, unique in the layer. Checked by the identifier check of the contract validation, not by this schema",
 					"minLength": 1
 				},
 				"scope": {
@@ -165,7 +165,7 @@
 			"properties": {
 				"term_id": {
 					"type": "string",
-					"description": "Identifier, unique in the layer",
+					"description": "Identifier, unique in the layer. Checked by the identifier check of the contract validation, not by this schema",
 					"minLength": 1
 				},
 				"term": {

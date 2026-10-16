@@ -1,8 +1,11 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: MIT
 // Validate contract example JSON documents against their JSON Schemas (Draft 2020-12).
 // Examples are matched to schemas by filename convention (see SUFFIX_SCHEMA below),
 // so new example files are picked up automatically without editing this script.
 // Documents under an 'invalid' directory are negative tests: they must NOT validate.
+// Some contracts have rules that JSON Schema cannot express; their extra checks
+// (see EXTRA_CHECKS below) run after the schema check on every accepted document.
 //
 // Run: npm --prefix typescript run validate:contracts   (or: make validate-contract)
 
@@ -10,6 +13,7 @@ import { createRequire } from "node:module";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { checkVimIdentifiers } from "./vim-identifier-check.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
@@ -46,6 +50,19 @@ const SUFFIX_SCHEMA = [
 	[".bom.json", "modeler-bom.schema.json"],
 	[".vim.json", "vim-document.schema.json"],
 ];
+
+// Map schema filename -> extra check. A check returns a list of {path, message}
+const EXTRA_CHECKS = new Map([["vim-document.schema.json", checkVimIdentifiers]]);
+
+// Return the problems of the document: schema errors first, then the extra check
+function problemsOf(schemaFile, doc) {
+	const validate = validatorFor(schemaFile);
+	if (!validate(doc)) {
+		return validate.errors.map((e) => ({ path: e.instancePath || "/", message: e.message }));
+	}
+	const extra = EXTRA_CHECKS.get(schemaFile);
+	return extra ? extra(doc) : [];
+}
 
 const readJson = (p) => JSON.parse(readFileSync(p, "utf8"));
 
@@ -112,27 +129,26 @@ for (const file of walk(EXAMPLES).sort()) {
 		skipped++;
 		continue; // example not covered by the Opportunity Management contract suffixes
 	}
-	const validate = validatorFor(schemaFile);
+	const problems = problemsOf(schemaFile, readJson(file));
 	checked++;
 	if (negative) {
 		// Negative test: the document must be rejected; show the first reason
-		if (validate(readJson(file))) {
+		if (problems.length === 0) {
 			failed++;
 			console.log(`FAIL  [${schemaFile}] ${rel}`);
 			console.log("      expected to be invalid, but it validates");
 		} else {
-			const e = validate.errors[0];
-			const why = `${e.instancePath || "/"} ${e.message}`;
+			const why = `${problems[0].path} ${problems[0].message}`;
 			console.log(`PASS  [${schemaFile}] ${rel} (invalid as expected: ${why})`);
 		}
 		continue;
 	}
-	if (validate(readJson(file))) {
+	if (problems.length === 0) {
 		console.log(`PASS  [${schemaFile}] ${rel}`);
 	} else {
 		failed++;
 		console.log(`FAIL  [${schemaFile}] ${rel}`);
-		for (const e of validate.errors) console.log(`      ${e.instancePath || "/"} ${e.message}`);
+		for (const e of problems) console.log(`      ${e.path} ${e.message}`);
 	}
 }
 

@@ -13,6 +13,14 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- **VIM identifier check** (`scripts/vim-identifier-check.mjs`): checks the rules of
+  the prescriptive layer that JSON Schema cannot express. `provision_id`,
+  `reference_id`, and `term_id` are unique in the layer, and every value of
+  `provisions[].references`, `provisions[].terms`, and
+  `provisions[].relations[].provision_id` has a target in the layer.
+  `make validate-contract` runs it after the schema check; other projects can
+  import `checkVimIdentifiers()`. Six negative examples in
+  `contract/examples/invalid/` (#51).
 - **TypeScript `preferences` module** (`@cassandragargoyle/api/preferences`),
   the first implementation of ADR-004: `Preferences` facade with namespaced
   `PreferencesNode` (typed `get*` / `put*` with defaults, `remove`, change
@@ -116,6 +124,21 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 - `deploy-local` and `finish-branch` skills.
 - `plugin.python_version` field in the plugin manifest schema (for bytecode
   wheels).
+
+### Changed
+
+- **Breaking (contract)**: `vim-document.schema.json` (`$version` 1.1.0 → 1.2.0)
+  binds the layers to `vim_version`, as the VIM specification requires. A
+  document with `layers.prescriptive` must have `vim_version` `"2.1"`, a
+  document with `layers.extraction` must have `"2.0"` or `"2.1"`. Such
+  documents with an older version validated before and are rejected now.
+  Documents without these layers are not affected. Producers that keep the
+  default version `"1.5"` of the Java and Python models must set the version
+  when they write a layer. Two negative examples in
+  `contract/examples/invalid/` (#51).
+- `vim-prescriptive.schema.json` and `vim-prescriptive-provision.schema.json`
+  (`$version` 1.0.0 → 1.0.1): the descriptions of the identifiers and links
+  name the identifier check; no rule change (#51).
 
 ### Fixed
 

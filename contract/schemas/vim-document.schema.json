@@ -1,11 +1,33 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/vim-document.schema.json",
-	"$version": "1.1.0",
+	"$version": "1.2.0",
 	"title": "VimDocument",
-	"description": "VIM root document structure (v2.0, v2.1) — universal result container for the Portunix ecosystem",
+	"description": "VIM root document structure (v2.0, v2.1) — universal result container for the Portunix ecosystem. A layer binds the document to the versions that define it: the prescriptive layer requires vim_version 2.1, the extraction layer 2.0 or 2.1",
 	"type": "object",
 	"required": ["vim_version", "document", "layers"],
+	"allOf": [
+		{
+			"description": "The prescriptive layer exists since VIM 2.1",
+			"if": {
+				"required": ["layers"],
+				"properties": { "layers": { "required": ["prescriptive"] } }
+			},
+			"then": {
+				"properties": { "vim_version": { "const": "2.1" } }
+			}
+		},
+		{
+			"description": "The extraction layer exists since VIM 2.0",
+			"if": {
+				"required": ["layers"],
+				"properties": { "layers": { "required": ["extraction"] } }
+			},
+			"then": {
+				"properties": { "vim_version": { "enum": ["2.0", "2.1"] } }
+			}
+		}
+	],
 	"properties": {
 		"vim_version": {
 			"type": "string",
