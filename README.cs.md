@@ -8,6 +8,47 @@ Multi-jazyková sdílená knihovna (Java, Python, Go, TypeScript) poskytující 
 
 Vývojové pokyny najdete v [docs/contributing/](docs/contributing/).
 
+## Chcete se naučit programovat?
+
+Chcete-li se naučit programovat, pořiďte si vlastní kopii tohoto projektu a začněte s ní
+experimentovat. Skutečný kód je malý, otestovaný a zdokumentovaný, takže ho můžete měnit, spouštět
+testy a sledovat, co se stane.
+
+1. Založte si zdarma účet na [GitHubu](https://github.com/).
+2. Otevřete <https://github.com/cassandragargoyle/api> a klikněte na **Fork**. GitHub vytvoří kopii
+   projektu ve vašem účtu. Svou kopii můžete libovolně měnit, původní projekt zůstane beze změny.
+3. Stáhněte si svou kopii do počítače (`<your-name>` nahraďte svým uživatelským jménem na GitHubu):
+
+   ```bash
+   git clone https://github.com/<your-name>/api.git
+   cd api
+   ```
+
+4. Pro pokusy si vytvořte větev, ať se můžete kdykoli vrátit:
+
+   ```bash
+   git switch -c my-experiments
+   ```
+
+5. Spusťte testy jednoho jazyka, například Javy (potřebujete Javu 21 a Maven):
+
+   ```bash
+   make test-java
+   ```
+
+6. Něco změňte, spusťte testy znovu a podívejte se, co se rozbilo.
+
+Některé části kódu mají dokumentaci napsanou jako kapitolu učebnice pro začátečníky. Vysvětlují kód
+krok za krokem, s obrázky a cvičeními. Začněte třeba tady:
+
+- [Levenshteinova vzdálenost](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md) (anglicky) - jak program zjistí, jak moc se liší
+  dvě slova, a jak se z tabulky na papíře stane kód v Javě
+- [Logování](java/src/main/java/org/cassandragargoyle/api/log/README.md) (anglicky) - jak si program vede deník o tom, co dělá,
+  s úrovněmi logování, vláknem na pozadí a šesti pastmi, které překvapí začátečníky
+
+Až budete chtít poslat změnu zpět do původního projektu, přečtěte si
+[pokyny pro přispěvatele](CONTRIBUTING.md).
+
 ## Změny (Changelog)
 
 Historii verzí najdete v [CHANGELOG.md](CHANGELOG.md).
@@ -66,6 +107,8 @@ Api/
 - K dispozici ve všech třech jazykových modulech
   (`org.cassandragargoyle.api.fuzzy`, `cassandragargoyle.api.fuzzy`,
   `github.com/cassandragargoyle/api/go/fuzzy`)
+- Vysvětlení pro začátečníky s obrázky a cvičeními (anglicky):
+  [Levenshtein.md](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md)
 
 ### Telemetrie (OpenTelemetry)
 
@@ -81,6 +124,8 @@ Api/
 
 - Vlastní logovací framework
 - Implementace log factory patternu
+- Vysvětlení pro začátečníky s obrázky a cvičeními (anglicky):
+  [log/README.md](java/src/main/java/org/cassandragargoyle/api/log/README.md)
 - Zpracování výjimek během logování
 - Identické logovací API napříč Java, Python a TypeScript
   (`org.cassandragargoyle.api.log`, `cassandragargoyle.api.log`,
