@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: Low
-**Status**: Open
+**Status**: ✅ Implemented (PR #54, 2026-10-16)
 **Created**: 2026-10-11
+**Closed**: 2026-10-16
 **GitHub**: #51
 **Component**: contract
 **Related**: #42 (schemas for the prescriptive layer),
