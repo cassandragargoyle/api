@@ -26,6 +26,15 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
   Czech `README.cs.md` is translated again from the new version.
 - `contract/README.md`: figures of the contract directory, of the VIM layers
   and their `vim_version` values, and of the validation flow.
+- `java/src/main/java/org/cassandragargoyle/api/util/README.md`: a textbook
+  chapter for the Java `util` package (`StringUtil`, `Base64Encoder`,
+  `DateUtil`, `PreferencesUtil`, `OsDetector`, `SystemUtil`) with figures, a
+  tested example program, exercises, and a list of known traps in the code;
+  Czech translation in `README.cs.md`.
+- `java/src/main/java/org/cassandragargoyle/api/telemetry/README.md`: a
+  textbook chapter for `TelemetryProvider` and `ExporterType` with figures, a
+  tested example program, exercises, and a list of known traps in the code.
+- Javadoc for `Base64Encoder`, `StringUtil`, `SystemUtil`, `BaseClass`, and `Edge`.
 - **VIM identifier check** (`scripts/vim-identifier-check.mjs`): checks the rules of
   the prescriptive layer that JSON Schema cannot express. `provision_id`,
   `reference_id`, and `term_id` are unique in the layer, and every value of

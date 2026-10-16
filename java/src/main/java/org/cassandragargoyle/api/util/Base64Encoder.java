@@ -1,20 +1,43 @@
-/**
+/*
+ * SPDX-License-Identifier: MIT
  * This file is part of CassandraGargoyle Community Project
  * Licensed under the MIT License - see LICENSE file for details
  */
 package org.cassandragargoyle.api.util;
 
-/**
- * Class Base64Encoder
+/*
+ * Base64 encoder and decoder with the standard alphabet of RFC 4648
  *
+ * <p>
+ * Base64 writes any bytes as printable ASCII text. Every 3 input bytes (24 bits) become
+ * 4 output characters of 6 bits each, so the text is about 4/3 of the size of the data.
+ * When the input length is not a multiple of 3, the output ends with one or two {@code '='}
+ * padding characters. For example {@code "Man"} becomes {@code "TWFu"}, {@code "Ma"}
+ * becomes {@code "TWE="}, and {@code "M"} becomes {@code "TQ=="}
+ *
+ * <p>
+ * The output is the same as from {@link java.util.Base64#getEncoder()}: the alphabet is
+ * {@code A-Z a-z 0-9 + /}, there are no line breaks, and the padding is always written.
+ * The decoder accepts only this form. It rejects line breaks, spaces, the URL-safe
+ * characters {@code -} and {@code _}, and input without padding. New code can use
+ * {@link java.util.Base64} directly; this class stays for the existing callers
+ *
+ * <p>
+ * The class has only static methods and is thread-safe, because the lookup tables are
+ * filled once when the class loads and are never changed after that
+ *
+ * @author Zdenek
+ * @since 2026-03-19
  */
 public class Base64Encoder
 {
+	/** Prevents instances, the class has only static methods */
 	private Base64Encoder()
 	{
 		throw new IllegalStateException("Utility class.");
 	}
 
+	/** Encode table: 6-bit value (0 to 63) to its Base64 character */
 	private static final char[] MAP1 = new char[64];
 
 	static
@@ -36,6 +59,7 @@ public class Base64Encoder
 		MAP1[i++] = '/';
 	}
 
+	/** Decode table: ASCII character to its 6-bit value, -1 for characters outside the alphabet */
 	private static final byte[] MAP2 = new byte[128];
 
 	static
@@ -50,16 +74,42 @@ public class Base64Encoder
 		}
 	}
 
+	/**
+	 * Encodes the text of a string as Base64
+	 *
+	 * <p>
+	 * The string is turned into bytes with the default charset of the platform, which is
+	 * UTF-8 since Java 18. Use {@link #decodeString(String)} to get the string back
+	 *
+	 * @param s text to encode, must not be {@code null}
+	 * @return Base64 text with padding, for example {@code "TWFu"} for {@code "Man"}
+	 * @throws NullPointerException if {@code s} is {@code null}
+	 */
 	public static String encodeString(String s)
 	{
 		return new String(encode(s.getBytes()));
 	}
 
+	/**
+	 * Encodes all bytes of an array as Base64
+	 *
+	 * @param in bytes to encode, must not be {@code null}
+	 * @return Base64 characters with padding; the length is a multiple of 4
+	 * @throws NullPointerException if {@code in} is {@code null}
+	 */
 	public static char[] encode(byte[] in)
 	{
 		return encode(in, in.length);
 	}
 
+	/**
+	 * Encodes the first {@code iLen} bytes of an array as Base64
+	 *
+	 * @param in   bytes to encode, must not be {@code null}
+	 * @param iLen number of bytes from the start of {@code in} to encode, from 0 to {@code in.length}
+	 * @return Base64 characters with padding; the length is {@code ((iLen + 2) / 3) * 4}
+	 * @throws ArrayIndexOutOfBoundsException if {@code iLen} is greater than {@code in.length}
+	 */
 	public static char[] encode(byte[] in, int iLen)
 	{
 		int oDataLen = (iLen * 4 + 2) / 3;       // output length without padding
@@ -69,15 +119,18 @@ public class Base64Encoder
 		int op = 0;
 		while (ip < iLen)
 		{
+			// Read up to 3 bytes; & 0xff turns a negative byte into 0 to 255, a missing byte is 0
 			int i0 = in[ip++] & 0xff;
 			int i1 = ip < iLen ? in[ip++] & 0xff : 0;
 			int i2 = ip < iLen ? in[ip++] & 0xff : 0;
+			// Cut the 24 bits into four 6-bit values
 			int o0 = i0 >>> 2;
 			int o1 = ((i0 & 3) << 4) | (i1 >>> 4);
 			int o2 = ((i1 & 0xf) << 2) | (i2 >>> 6);
 			int o3 = i2 & 0x3F;
 			out[op++] = MAP1[o0];
 			out[op++] = MAP1[o1];
+			// Positions after the real data get the padding character
 			out[op] = op < oDataLen ? MAP1[o2] : '=';
 			op++;
 			out[op] = op < oDataLen ? MAP1[o3] : '=';
@@ -86,16 +139,50 @@ public class Base64Encoder
 		return out;
 	}
 
+	/**
+	 * Decodes Base64 text into a string
+	 *
+	 * <p>
+	 * The decoded bytes are turned into a string with the default charset of the platform,
+	 * the same charset that {@link #encodeString(String)} uses. Bytes that are not valid in
+	 * that charset become replacement characters
+	 *
+	 * @param s Base64 text with padding, must not be {@code null}
+	 * @return the decoded text, for example {@code "Man"} for {@code "TWFu"}
+	 * @throws IllegalArgumentException if the length is not a multiple of 4 or the text has a
+	 *                                  character outside the Base64 alphabet
+	 */
 	public static String decodeString(String s)
 	{
 		return new String(decode(s));
 	}
 
+	/**
+	 * Decodes Base64 text into bytes
+	 *
+	 * @param s Base64 text with padding, must not be {@code null}
+	 * @return the decoded bytes
+	 * @throws IllegalArgumentException if the length is not a multiple of 4 or the text has a
+	 *                                  character outside the Base64 alphabet
+	 */
 	public static byte[] decode(String s)
 	{
 		return decode(s.toCharArray());
 	}
 
+	/**
+	 * Decodes Base64 characters into bytes
+	 *
+	 * <p>
+	 * The input length must be a multiple of 4. The {@code '='} padding is allowed only at
+	 * the end. An empty array gives an empty result
+	 *
+	 * @param in Base64 characters with padding, must not be {@code null}
+	 * @return the decoded bytes; the length is 3 bytes for every 4 characters, minus 1 for
+	 *         every padding character
+	 * @throws IllegalArgumentException if the length is not a multiple of 4 or the input has a
+	 *                                  character outside the Base64 alphabet
+	 */
 	public static byte[] decode(char[] in)
 	{
 		int iLen = in.length;
@@ -103,6 +190,7 @@ public class Base64Encoder
 		{
 			throw new IllegalArgumentException("Length of Base64 encoded input string is not a multiple of 4.");
 		}
+		// Ignore the padding at the end
 		while (iLen > 0 && in[iLen - 1] == '=')
 		{
 			iLen--;
@@ -113,6 +201,7 @@ public class Base64Encoder
 		int op = 0;
 		while (ip < iLen)
 		{
+			// Read up to 4 characters; a missing character counts as 'A', which is the value 0
 			int i0 = in[ip++];
 			int i1 = in[ip++];
 			int i2 = ip < iLen ? in[ip++] : 'A';
@@ -129,10 +218,12 @@ public class Base64Encoder
 			{
 				throw new IllegalArgumentException("Illegal character in Base64 encoded data.");
 			}
+			// Join four 6-bit values into three bytes
 			int o0 = (b0 << 2) | (b1 >>> 4);
 			int o1 = ((b1 & 0xf) << 4) | (b2 >>> 2);
 			int o2 = ((b2 & 3) << 6) | b3;
 			out[op++] = (byte) o0;
+			// The last group can hold only 1 or 2 bytes
 			if (op < oLen)
 			{
 				out[op++] = (byte) o1;

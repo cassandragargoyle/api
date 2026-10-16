@@ -45,6 +45,10 @@ krok za krokem, s obrázky a cvičeními. Začněte třeba tady:
   dvě slova, a jak se z tabulky na papíře stane kód v Javě
 - [Logování](java/src/main/java/org/cassandragargoyle/api/log/README.md) (anglicky) - jak si program vede deník o tom, co dělá,
   s úrovněmi logování, vláknem na pozadí a šesti pastmi, které překvapí začátečníky
+- [Pomocné třídy](java/src/main/java/org/cassandragargoyle/api/util/README.md) (anglicky) - krabice s malými nástroji:
+  escape znaky, Base64 s bitovými posuny, přestupné roky, uložená nastavení a šest skutečných chyb ve skutečném kódu
+- [Telemetrie](java/src/main/java/org/cassandragargoyle/api/telemetry/README.md) (anglicky) - jak program změří, který
+  krok je pomalý, pomocí trace a spanů, návrhový vzor builder, vzorkování a pět pastí v kódu
 
 Až budete chtít poslat změnu zpět do původního projektu, přečtěte si
 [pokyny pro přispěvatele](CONTRIBUTING.md).
@@ -98,6 +102,8 @@ Api/
 - **Preferences Utilities:** správa uživatelských preferencí
 - **Base64 Encoding:** kódování dat
 - **OS Detection:** detekce a identifikace operačního systému
+- Vysvětlení pro začátečníky s obrázky a cvičeními (anglicky):
+  [util/README.md](java/src/main/java/org/cassandragargoyle/api/util/README.md)
 
 ### Fuzzy porovnávání řetězců
 
@@ -119,6 +125,8 @@ Api/
   (`OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_SERVICE_NAME`)
 - W3C TraceContext propagace pro distribuované systémy
 - Trace logging na CLI přes `enableTraceLogging()`
+- Vysvětlení pro začátečníky s obrázky a cvičeními (anglicky):
+  [telemetry/README.md](java/src/main/java/org/cassandragargoyle/api/telemetry/README.md)
 
 ### Logování
 
