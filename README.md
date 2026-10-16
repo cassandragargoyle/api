@@ -10,6 +10,48 @@ The repository has a second role: it is the home of the **language-independent c
 - [contract/README.md](contract/README.md) - reference of all contracts
 - [docs/adr/](docs/adr/) - Architecture Decision Records
 
+## Learning to Program
+
+Do you want to learn to program? Get your own copy of this project and start to experiment with
+it. The real code is small, tested, and documented, so you can change it, run the tests, and see
+what happens.
+
+1. Create a free account on [GitHub](https://github.com/).
+2. Open <https://github.com/cassandragargoyle/api> and click **Fork**. GitHub makes a copy of the
+   project in your account. You can change your copy as you like; the original project stays as
+   it is.
+3. Download your copy to your computer (replace `<your-name>` with your GitHub user name):
+
+   ```bash
+   git clone https://github.com/<your-name>/api.git
+   cd api
+   ```
+
+4. Make a branch for your experiments, so you can always go back:
+
+   ```bash
+   git switch -c my-experiments
+   ```
+
+5. Run the tests of one language, for example Java (needs Java 21 and Maven):
+
+   ```bash
+   make test-java
+   ```
+
+6. Change something, run the tests again, and see what breaks.
+
+Some parts of the code have documentation written as a textbook chapter for beginners. They explain
+the code step by step, with pictures and exercises. Start with:
+
+- [Levenshtein distance](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md) - how a program finds out how different two words
+  are, and how a table on paper turns into Java code
+- [Logging](java/src/main/java/org/cassandragargoyle/api/log/README.md) - how a program keeps a diary of what it does, with
+  log levels, a background thread, and six traps that surprise beginners
+
+When you are ready to send a change back to the original project, read the
+[contributing guidelines](CONTRIBUTING.md).
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for the release history.
@@ -120,6 +162,8 @@ CI runs the same check in the **Contract Validation** job.
   CJK, emoji)
 - Available in all three language modules (`org.cassandragargoyle.api.fuzzy`,
   `cassandragargoyle.api.fuzzy`, `github.com/cassandragargoyle/api/go/fuzzy`)
+- Beginner-friendly explanation with pictures and exercises:
+  [Levenshtein.md](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md)
 
 ### Telemetry (OpenTelemetry)
 
@@ -138,6 +182,8 @@ CI runs the same check in the **Contract Validation** job.
   (`dd/MM/yyyy HH:mm:ss.SSS LEVEL [logger.name]: message`) and terse level
   aliases
 - Log factory pattern (`LogFactory`)
+- Beginner-friendly explanation with pictures and exercises:
+  [log/README.md](java/src/main/java/org/cassandragargoyle/api/log/README.md)
 - The TypeScript module is isomorphic: a console transport for the browser /
   React webview and an optional Node-only rolling file transport
 

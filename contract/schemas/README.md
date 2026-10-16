@@ -146,3 +146,13 @@ schemas by filename convention:
 ```bash
 make validate-contract          # or: npm --prefix typescript run validate:contracts
 ```
+
+Some rules cannot be expressed in JSON Schema. The validation runs an extra check
+after the schema for these contracts:
+
+| Schema | Extra check |
+| ------ | ----------- |
+| `vim-document.schema.json` | [`scripts/vim-identifier-check.mjs`](../../scripts/vim-identifier-check.mjs): unique identifiers and existing link targets of the prescriptive layer |
+
+A document under `examples/invalid/` passes as a negative test when the schema or the
+extra check rejects it.

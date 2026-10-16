@@ -1,0 +1,76 @@
+{
+	"vim_version": "2.0",
+	"document": {
+		"source": "definition-file.pdf"
+	},
+	"layers": {
+		"prescriptive": {
+			"definition": {
+				"identifier": "DF-1234",
+				"edition": "3",
+				"issued": "2025-04-01"
+			},
+			"provisions": [
+				{
+					"provision_id": "p-5.3.1-1",
+					"kind": "requirement",
+					"clause": "5.3.1",
+					"text": "Every drawing shall have a title block.",
+					"anchors": [
+						{
+							"page": 7,
+							"element_type": "block",
+							"element_id": "block_531"
+						}
+					],
+					"terms": [
+						"t-title-block"
+					]
+				},
+				{
+					"provision_id": "p-5.3.2-1",
+					"kind": "requirement",
+					"clause": "5.3.2",
+					"text": "The title block shall contain the drawing number.",
+					"anchors": [
+						{
+							"page": 7,
+							"element_type": "block",
+							"element_id": "block_532"
+						}
+					],
+					"references": [
+						"r-1"
+					],
+					"terms": [
+						"t-title-block"
+					],
+					"relations": [
+						{
+							"provision_id": "p-5.3.1-1",
+							"relation": "refines"
+						}
+					]
+				}
+			],
+			"references": [
+				{
+					"reference_id": "r-1",
+					"scope": "external",
+					"binding": "mandatory",
+					"target": {
+						"identifier": "DF-0456",
+						"clause": "4.1"
+					}
+				}
+			],
+			"terms": [
+				{
+					"term_id": "t-title-block",
+					"term": "title block",
+					"clause": "3.4"
+				}
+			]
+		}
+	}
+}

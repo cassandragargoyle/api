@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/vim-prescriptive-provision.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.0.1",
 	"title": "VimPrescriptiveProvision",
 	"description": "One provision of the VIM prescriptive layer — a statement of a definition file that prescribes something, with its place in the file, its verification and its audit trail",
 	"type": "object",
@@ -13,7 +13,7 @@
 	"properties": {
 		"provision_id": {
 			"type": "string",
-			"description": "Stable identifier, unique in the layer. Opaque for consumers; the recommended form is p-<clause>-<n>, or p-page<page>-<n> without a clause",
+			"description": "Stable identifier, unique in the layer (checked by the identifier check of the contract validation, not by this schema). Opaque for consumers; the recommended form is p-<clause>-<n>, or p-page<page>-<n> without a clause",
 			"minLength": 1
 		},
 		"kind": {
@@ -52,12 +52,12 @@
 		},
 		"references": {
 			"type": "array",
-			"description": "reference_id values of the layer that the provision uses",
+			"description": "reference_id values of the layer that the provision uses; each value must exist in the layer (identifier check)",
 			"items": { "type": "string" }
 		},
 		"terms": {
 			"type": "array",
-			"description": "term_id values of the layer that the provision uses",
+			"description": "term_id values of the layer that the provision uses; each value must exist in the layer (identifier check)",
 			"items": { "type": "string" }
 		},
 		"relations": {
@@ -130,7 +130,7 @@
 			"properties": {
 				"provision_id": {
 					"type": "string",
-					"description": "provision_id of the other provision"
+					"description": "provision_id of the other provision; must exist in the layer (identifier check)"
 				},
 				"relation": {
 					"type": "string",
