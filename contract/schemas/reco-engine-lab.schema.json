@@ -1,0 +1,506 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/reco-engine-lab.schema.json",
+	"$version": "1.0.0",
+	"title": "RecoEngineLab",
+	"description": "Lab document of one recognition engine (OCR engine, detector, classifier, segmenter, form pipeline): the engine, its training, validation, and test samples with ground truth, the methodology, the commands of each phase, the metrics, and the location of the run records. Read by Reco Studio (Engine Lab, portunix-reco-studio #55) and ptx-reco. Files using this format use the '.recolab.json' filename suffix. Paths are relative to the folder of the document. Run records are separate '*.run.json' files (reco-run.schema.json). Issue: cassandragargoyle/api #56.",
+	"type": "object",
+	"required": ["meta", "engine", "datasets", "commands"],
+	"properties": {
+		"meta": {
+			"$ref": "#/$defs/Meta"
+		},
+		"engine": {
+			"$ref": "#/$defs/Engine"
+		},
+		"datasets": {
+			"type": "object",
+			"description": "Named sample sets; the key is the dataset name used by the '{dataset.<name>}' placeholder and by the run records",
+			"minProperties": 1,
+			"propertyNames": {
+				"$ref": "#/$defs/Name"
+			},
+			"additionalProperties": {
+				"$ref": "#/$defs/Dataset"
+			}
+		},
+		"methodology": {
+			"$ref": "#/$defs/Methodology"
+		},
+		"commands": {
+			"type": "object",
+			"description": "How to run each phase; at least one phase is defined",
+			"minProperties": 1,
+			"properties": {
+				"prepare": {
+					"$ref": "#/$defs/Command"
+				},
+				"train": {
+					"$ref": "#/$defs/Command"
+				},
+				"test": {
+					"$ref": "#/$defs/Command"
+				},
+				"evaluate": {
+					"$ref": "#/$defs/Command"
+				}
+			},
+			"additionalProperties": false
+		},
+		"metrics": {
+			"type": "object",
+			"description": "Metrics to compute and show; the key is the metric name used in the run records and the per-sample results",
+			"propertyNames": {
+				"$ref": "#/$defs/Name"
+			},
+			"additionalProperties": {
+				"$ref": "#/$defs/Metric"
+			}
+		},
+		"runs": {
+			"type": "object",
+			"description": "Location of the run records",
+			"required": ["location"],
+			"properties": {
+				"location": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Folder or glob of the '*.run.json' files, relative to the document (e.g. 'runs/*.run.json')"
+				}
+			},
+			"additionalProperties": false
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"Name": {
+			"type": "string",
+			"pattern": "^[a-z][a-z0-9_-]*$",
+			"description": "Lower-case name of a dataset, config role, metric, or component"
+		},
+		"Path": {
+			"type": "string",
+			"minLength": 1,
+			"description": "Path or glob relative to the folder of the document"
+		},
+		"Sha256": {
+			"type": "string",
+			"pattern": "^[0-9a-f]{64}$",
+			"description": "Lower-case hexadecimal SHA-256"
+		},
+		"Meta": {
+			"type": "object",
+			"required": ["title"],
+			"properties": {
+				"version": {
+					"type": "string",
+					"description": "Version of the document (semver), independent of the schema $version"
+				},
+				"title": {
+					"type": "string",
+					"minLength": 1
+				},
+				"description": {
+					"type": "string"
+				},
+				"author": {
+					"type": "string"
+				},
+				"created": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"updated": {
+					"type": "string",
+					"format": "date-time"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Engine": {
+			"type": "object",
+			"description": "The engine that is tested and compared as one unit. A simple engine has 'implementation'; a composite engine (for example a form pipeline) has 'components'",
+			"required": ["id", "name", "kind", "version"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"pattern": "^[a-z0-9][a-z0-9._-]*$",
+					"description": "Stable engine identifier"
+				},
+				"name": {
+					"type": "string",
+					"minLength": 1
+				},
+				"kind": {
+					"type": "string",
+					"enum": ["ocr", "detector", "classifier", "segmenter", "form", "other"]
+				},
+				"version": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Version of the engine as a whole"
+				},
+				"description": {
+					"type": "string"
+				},
+				"implementation": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Implementation of a simple engine (e.g. 'tesseract', 'paddleocr', 'trocr')"
+				},
+				"model": {
+					"$ref": "#/$defs/Path",
+					"description": "Model file or folder of a simple engine"
+				},
+				"base_model": {
+					"type": "string",
+					"description": "Model that the engine is trained from (e.g. 'trocr-small-handwritten')"
+				},
+				"components": {
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/Component"
+					}
+				},
+				"config": {
+					"type": "array",
+					"description": "Files that change the output of the engine (e.g. a template); the run records store their checksums",
+					"items": {
+						"$ref": "#/$defs/ConfigFile"
+					}
+				}
+			},
+			"anyOf": [
+				{
+					"required": ["implementation"]
+				},
+				{
+					"required": ["components"]
+				}
+			],
+			"additionalProperties": false
+		},
+		"Component": {
+			"type": "object",
+			"required": ["name", "implementation"],
+			"properties": {
+				"name": {
+					"$ref": "#/$defs/Name",
+					"description": "Component name, referenced by the 'component' of a field result"
+				},
+				"implementation": {
+					"type": "string",
+					"minLength": 1
+				},
+				"model": {
+					"type": "string",
+					"description": "Model name or path relative to the document"
+				},
+				"version": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"ConfigFile": {
+			"type": "object",
+			"required": ["role", "path"],
+			"properties": {
+				"role": {
+					"$ref": "#/$defs/Name",
+					"description": "Role of the file (e.g. 'template'), used by the '{config.<role>}' placeholder"
+				},
+				"path": {
+					"$ref": "#/$defs/Path"
+				},
+				"description": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Dataset": {
+			"type": "object",
+			"required": ["role", "location"],
+			"properties": {
+				"role": {
+					"type": "string",
+					"enum": ["train", "validation", "test"]
+				},
+				"description": {
+					"type": "string"
+				},
+				"location": {
+					"$ref": "#/$defs/Path",
+					"description": "Folder or glob of the samples"
+				},
+				"sample_format": {
+					"type": "string",
+					"description": "Media type or name of the sample format (e.g. 'image/tiff')"
+				},
+				"ground_truth": {
+					"type": "object",
+					"required": ["location", "format"],
+					"properties": {
+						"location": {
+							"$ref": "#/$defs/Path",
+							"description": "Folder or glob of the ground-truth files"
+						},
+						"format": {
+							"type": "string",
+							"minLength": 1,
+							"description": "Format of the ground truth, same values as 'prediction_format' (e.g. 'reco-export-xml')"
+						}
+					},
+					"additionalProperties": false
+				},
+				"sample_count": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"sha256": {
+					"$ref": "#/$defs/Sha256",
+					"description": "Dataset checksum: SHA-256 of the sorted lines '<relative path> <SHA-256 of the file>'"
+				}
+			},
+			"if": {
+				"properties": {
+					"role": {
+						"enum": ["validation", "test"]
+					}
+				}
+			},
+			"then": {
+				"required": ["ground_truth"]
+			},
+			"additionalProperties": false
+		},
+		"Methodology": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"type": "string",
+					"description": "Free-text description of the procedure"
+				},
+				"steps": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": ["name"],
+						"properties": {
+							"name": {
+								"type": "string",
+								"minLength": 1
+							},
+							"description": {
+								"type": "string"
+							}
+						},
+						"additionalProperties": false
+					}
+				},
+				"split": {
+					"type": "object",
+					"description": "How the samples are split into the datasets",
+					"properties": {
+						"method": {
+							"type": "string",
+							"description": "Split method (e.g. 'random', 'by-document', 'fixed')"
+						},
+						"ratios": {
+							"type": "object",
+							"propertyNames": {
+								"enum": ["train", "validation", "test"]
+							},
+							"additionalProperties": {
+								"type": "number",
+								"minimum": 0,
+								"maximum": 1
+							}
+						},
+						"seed": {
+							"type": "integer"
+						}
+					},
+					"additionalProperties": false
+				},
+				"parameters": {
+					"type": "object",
+					"description": "Training parameters (hyperparameters); free-form",
+					"additionalProperties": true
+				},
+				"stop_criteria": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"evaluation_protocol": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Command": {
+			"description": "How to run one phase; 'runner' selects the form. Exit code 0 means success",
+			"type": "object",
+			"required": ["runner"],
+			"properties": {
+				"runner": {
+					"type": "string",
+					"enum": ["portunix-plugin", "exec"]
+				}
+			},
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"runner": {
+								"const": "portunix-plugin"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/$defs/PluginCommand"
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"runner": {
+								"const": "exec"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/$defs/ExecCommand"
+					}
+				}
+			]
+		},
+		"PluginCommand": {
+			"type": "object",
+			"description": "The host runs 'portunix <plugin> <args...>'",
+			"required": ["runner", "plugin", "args"],
+			"properties": {
+				"runner": {
+					"const": "portunix-plugin"
+				},
+				"plugin": {
+					"type": "string",
+					"pattern": "^[a-z0-9][a-z0-9-]*$",
+					"description": "Plugin name, the 'name' of its manifest (plugin-manifest.schema.json)"
+				},
+				"min_version": {
+					"type": "string",
+					"pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+([.-][0-9A-Za-z.-]+)?$",
+					"description": "Lowest plugin version that the command needs"
+				},
+				"args": {
+					"$ref": "#/$defs/Arguments"
+				},
+				"cwd": {
+					"$ref": "#/$defs/Cwd"
+				},
+				"env": {
+					"$ref": "#/$defs/Env"
+				},
+				"progress": {
+					"$ref": "#/$defs/Progress"
+				},
+				"description": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"ExecCommand": {
+			"type": "object",
+			"description": "The host runs 'argv' directly, for engines that are not Portunix plugins",
+			"required": ["runner", "argv"],
+			"properties": {
+				"runner": {
+					"const": "exec"
+				},
+				"argv": {
+					"$ref": "#/$defs/Arguments",
+					"minItems": 1
+				},
+				"cwd": {
+					"$ref": "#/$defs/Cwd"
+				},
+				"env": {
+					"$ref": "#/$defs/Env"
+				},
+				"progress": {
+					"$ref": "#/$defs/Progress"
+				},
+				"description": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Arguments": {
+			"type": "array",
+			"description": "Arguments, not a shell string. Placeholders: {doc_dir}, {run_dir}, {run_id}, {dataset.<name>}, {config.<role>}, {model}, {baseline_run_dir}",
+			"items": {
+				"type": "string"
+			}
+		},
+		"Cwd": {
+			"type": "string",
+			"description": "Working directory relative to the document (default '.')"
+		},
+		"Env": {
+			"type": "object",
+			"description": "Extra environment variables",
+			"propertyNames": {
+				"pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+			},
+			"additionalProperties": {
+				"type": "string"
+			}
+		},
+		"Progress": {
+			"type": "object",
+			"required": ["format"],
+			"properties": {
+				"format": {
+					"type": "string",
+					"enum": ["jsonl-stdout", "none"],
+					"description": "'jsonl-stdout': the command writes lines such as {\"progress\":0.4,\"message\":\"...\"} to stdout"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Metric": {
+			"type": "object",
+			"required": ["direction"],
+			"properties": {
+				"label": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"direction": {
+					"type": "string",
+					"enum": ["higher_is_better", "lower_is_better"]
+				},
+				"target": {
+					"type": "number",
+					"description": "Value that the engine should reach"
+				},
+				"unit": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

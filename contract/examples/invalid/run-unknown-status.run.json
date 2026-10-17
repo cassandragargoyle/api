@@ -1,0 +1,15 @@
+{
+	"run_id": "run-001",
+	"type": "test",
+	"status": "done",
+	"started": "2026-10-17T10:00:00Z",
+	"finished": "2026-10-17T10:01:00Z",
+	"engine": {
+		"version": "1.0.0"
+	},
+	"datasets": {
+		"test": {
+			"sample_count": 1
+		}
+	}
+}

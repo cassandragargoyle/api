@@ -1,0 +1,218 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/reco-run.schema.json",
+	"$version": "1.0.0",
+	"title": "RecoRun",
+	"description": "Record of one training or test run of the engine of a lab document (reco-engine-lab.schema.json). Written by the tool that runs the engine. Files using this format use the '.run.json' filename suffix. Paths are relative to the folder of the run record. The per-sample results ('*.samples.jsonl', reco-run-sample.schema.json) and the training history ('*.history.jsonl', one HistoryLine per line) are separate files. Two runs are compared only when their datasets have the same checksum. Issue: cassandragargoyle/api #56.",
+	"type": "object",
+	"required": ["run_id", "type", "status", "started", "engine", "datasets"],
+	"properties": {
+		"run_id": {
+			"$ref": "#/$defs/RunId"
+		},
+		"type": {
+			"type": "string",
+			"enum": ["training", "test"]
+		},
+		"status": {
+			"type": "string",
+			"enum": ["running", "succeeded", "failed", "cancelled"],
+			"description": "'cancelled' is written by the host that stopped the run"
+		},
+		"started": {
+			"type": "string",
+			"format": "date-time"
+		},
+		"finished": {
+			"type": "string",
+			"format": "date-time"
+		},
+		"exit_code": {
+			"type": "integer",
+			"description": "Exit code of the command; 0 means success"
+		},
+		"lab": {
+			"type": "string",
+			"description": "Path of the lab document ('*.recolab.json')"
+		},
+		"engine": {
+			"$ref": "#/$defs/EngineState"
+		},
+		"datasets": {
+			"type": "object",
+			"description": "Datasets that the run used; the key is the dataset name of the lab document",
+			"minProperties": 1,
+			"propertyNames": {
+				"$ref": "#/$defs/Name"
+			},
+			"additionalProperties": {
+				"type": "object",
+				"properties": {
+					"sha256": {
+						"$ref": "#/$defs/Sha256",
+						"description": "Dataset checksum, same rule as in the lab document"
+					},
+					"sample_count": {
+						"type": "integer",
+						"minimum": 0
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"parameters": {
+			"type": "object",
+			"description": "Parameters that the run used; free-form",
+			"additionalProperties": true
+		},
+		"metrics": {
+			"$ref": "#/$defs/MetricValues",
+			"description": "Summary metric values of the run"
+		},
+		"baseline_run": {
+			"$ref": "#/$defs/RunId",
+			"description": "Run that this run is compared with"
+		},
+		"files": {
+			"type": "object",
+			"properties": {
+				"samples": {
+					"type": "string",
+					"pattern": "\\.samples\\.jsonl$",
+					"description": "Per-sample results"
+				},
+				"history": {
+					"type": "string",
+					"pattern": "\\.history\\.jsonl$",
+					"description": "Training history"
+				},
+				"log": {
+					"type": "string"
+				},
+				"artifacts": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"message": {
+			"type": "string",
+			"description": "Short text for the user, for example the reason of a failure"
+		}
+	},
+	"if": {
+		"properties": {
+			"status": {
+				"enum": ["succeeded", "failed", "cancelled"]
+			}
+		}
+	},
+	"then": {
+		"required": ["finished"]
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"RunId": {
+			"type": "string",
+			"pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+		},
+		"Name": {
+			"type": "string",
+			"pattern": "^[a-z][a-z0-9_-]*$"
+		},
+		"Sha256": {
+			"type": "string",
+			"pattern": "^[0-9a-f]{64}$"
+		},
+		"MetricValues": {
+			"type": "object",
+			"description": "Metric values by metric name of the lab document",
+			"propertyNames": {
+				"$ref": "#/$defs/Name"
+			},
+			"additionalProperties": {
+				"type": "number"
+			}
+		},
+		"EngineState": {
+			"type": "object",
+			"description": "The engine exactly as it was used by the run",
+			"required": ["version"],
+			"properties": {
+				"version": {
+					"type": "string",
+					"minLength": 1
+				},
+				"model_sha256": {
+					"$ref": "#/$defs/Sha256"
+				},
+				"components": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": ["name"],
+						"properties": {
+							"name": {
+								"$ref": "#/$defs/Name"
+							},
+							"version": {
+								"type": "string"
+							},
+							"model_sha256": {
+								"$ref": "#/$defs/Sha256"
+							}
+						},
+						"additionalProperties": false
+					}
+				},
+				"config": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": ["role", "path", "sha256"],
+						"properties": {
+							"role": {
+								"$ref": "#/$defs/Name"
+							},
+							"path": {
+								"type": "string",
+								"minLength": 1
+							},
+							"sha256": {
+								"$ref": "#/$defs/Sha256"
+							}
+						},
+						"additionalProperties": false
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"HistoryLine": {
+			"type": "object",
+			"description": "One line of a '*.history.jsonl' file: the metric values after one training step",
+			"required": ["step", "metrics"],
+			"properties": {
+				"step": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"epoch": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"time": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"metrics": {
+					"$ref": "#/$defs/MetricValues"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

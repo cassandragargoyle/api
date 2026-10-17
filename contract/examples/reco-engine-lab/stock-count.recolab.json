@@ -1,0 +1,184 @@
+{
+	"meta": {
+		"version": "1.0.0",
+		"title": "Stock count sheet recognition",
+		"description": "Recognition of the handwritten stock count sheet: digit fields with trocr, the header text with tesseract, checkboxes by dot count. The template defines the zones and the exported fields.",
+		"author": "CassandraGargoyle",
+		"created": "2026-10-13T12:00:00Z",
+		"updated": "2026-10-17T09:00:00Z"
+	},
+	"engine": {
+		"id": "stock-count-reco",
+		"name": "Stock count recognition",
+		"kind": "form",
+		"version": "1.3.0",
+		"description": "Form pipeline of portunix-reco with the stock-count template",
+		"components": [
+			{
+				"name": "digits",
+				"implementation": "trocr",
+				"model": "models/trocr-stock-count",
+				"version": "1.3.0",
+				"description": "Handwritten digits, fine-tuned from trocr-small-handwritten"
+			},
+			{
+				"name": "text",
+				"implementation": "tesseract",
+				"version": "5.4"
+			}
+		],
+		"config": [
+			{
+				"role": "template",
+				"path": "stock-count.reco-template.json",
+				"description": "Zones and exported fields"
+			}
+		]
+	},
+	"datasets": {
+		"train": {
+			"role": "train",
+			"location": "samples/train/*.tif",
+			"sample_format": "image/tiff",
+			"ground_truth": {
+				"location": "samples/train/*.gold.xml",
+				"format": "reco-export-xml"
+			},
+			"sample_count": 480
+		},
+		"validation": {
+			"role": "validation",
+			"location": "samples/validation/*.tif",
+			"sample_format": "image/tiff",
+			"ground_truth": {
+				"location": "samples/validation/*.gold.xml",
+				"format": "reco-export-xml"
+			},
+			"sample_count": 60
+		},
+		"test": {
+			"role": "test",
+			"description": "Fixed test set, never used for training",
+			"location": "samples/test/*.tif",
+			"sample_format": "image/tiff",
+			"ground_truth": {
+				"location": "samples/test/*.gold.xml",
+				"format": "reco-export-xml"
+			},
+			"sample_count": 2,
+			"sha256": "d8eeb55ee2b46faf0188de29140728819f4c771dd3577e8698c53e39deb3c343"
+		}
+	},
+	"methodology": {
+		"description": "Fine-tune the digit model on the train set, select the best checkpoint by field accuracy on the validation set, then run the full form pipeline on the fixed test set and compare the export with the gold files field by field.",
+		"steps": [
+			{
+				"name": "prepare",
+				"description": "Align the scans to the template and cut the digit cells"
+			},
+			{
+				"name": "train",
+				"description": "Fine-tune the digits component"
+			},
+			{
+				"name": "test",
+				"description": "Recognize the test set with the full pipeline"
+			},
+			{
+				"name": "evaluate",
+				"description": "Compare the export with the gold files per field"
+			}
+		],
+		"split": {
+			"method": "by-document",
+			"ratios": {
+				"train": 0.8,
+				"validation": 0.1,
+				"test": 0.1
+			},
+			"seed": 42
+		},
+		"parameters": {
+			"epochs": 20,
+			"batch_size": 16,
+			"learning_rate": 0.00005
+		},
+		"stop_criteria": [
+			"20 epochs",
+			"no better validation field_accuracy for 3 epochs"
+		],
+		"evaluation_protocol": "A field is correct when the exported value is equal to the gold value; an empty gold value expects an empty export"
+	},
+	"commands": {
+		"prepare": {
+			"runner": "portunix-plugin",
+			"plugin": "reco-worker",
+			"min_version": "0.4.0",
+			"args": ["prepare", "--template", "{config.template}", "--input", "{dataset.train}", "--out", "{run_dir}"],
+			"progress": {
+				"format": "jsonl-stdout"
+			}
+		},
+		"train": {
+			"runner": "portunix-plugin",
+			"plugin": "reco-worker",
+			"min_version": "0.4.0",
+			"args": ["train", "--component", "digits", "--train", "{dataset.train}", "--validation", "{dataset.validation}", "--out", "{run_dir}"],
+			"env": {
+				"OMP_NUM_THREADS": "4"
+			},
+			"progress": {
+				"format": "jsonl-stdout"
+			}
+		},
+		"test": {
+			"runner": "portunix-plugin",
+			"plugin": "reco-worker",
+			"min_version": "0.4.0",
+			"args": ["test", "--template", "{config.template}", "--model", "{model}", "--input", "{dataset.test}", "--out", "{run_dir}"],
+			"progress": {
+				"format": "jsonl-stdout"
+			}
+		},
+		"evaluate": {
+			"runner": "exec",
+			"argv": ["python", "tools/evaluate_export.py", "--gold", "{dataset.test}", "--run", "{run_dir}", "--baseline", "{baseline_run_dir}"],
+			"cwd": ".",
+			"progress": {
+				"format": "none"
+			}
+		}
+	},
+	"metrics": {
+		"field_accuracy": {
+			"label": "Field accuracy",
+			"description": "Share of fields with a correct value",
+			"direction": "higher_is_better",
+			"target": 0.98
+		},
+		"document_accuracy": {
+			"label": "Document accuracy",
+			"description": "Share of sheets with all fields correct",
+			"direction": "higher_is_better",
+			"target": 0.9
+		},
+		"cer": {
+			"label": "Character error rate",
+			"direction": "lower_is_better",
+			"target": 0.02
+		},
+		"flag_recall": {
+			"label": "Flag recall",
+			"description": "Share of wrong fields that the engine marked as suspicious",
+			"direction": "higher_is_better",
+			"target": 0.95
+		},
+		"loss": {
+			"label": "Training loss",
+			"direction": "lower_is_better"
+		}
+	},
+	"runs": {
+		"location": "runs/*.run.json"
+	}
+}

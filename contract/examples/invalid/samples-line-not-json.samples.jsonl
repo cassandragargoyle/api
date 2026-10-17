@@ -1,0 +1,2 @@
+{"sample": "samples/a.png", "prediction_value": "42", "prediction_format": "label", "metrics": {"accuracy": 1}}
+{"sample": "samples/b.png",

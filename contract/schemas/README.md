@@ -11,7 +11,7 @@ explicitly documented as free-form.
 
 For the platform-wide index (task platform, VIM, plugin platform, visualization)
 see [`../README.md`](../README.md). This file documents the **Opportunity
-Management** schema set in depth.
+Management** and the **Recognition Engine Lab** schema sets in depth.
 
 ## Opportunity Management (v2)
 
@@ -138,6 +138,80 @@ derived `*.glens.json`.
 - **SaaS-readiness** — every entity carries reserved `tenantId`/`workspaceId`
   (nullable, no behavior in the local store) for a future multi-tenant layer.
 
+## Recognition Engine Lab
+
+Contract for training, testing, and comparing a recognition engine
+([issue #56](../../docs/issues/done/056-reco-engine-lab-contract.md), consumer:
+portunix-reco-studio #55). The contract describes how to call an engine, it does not depend on
+one.
+
+| Schema | Suffix | Written by |
+| ------ | ------ | ---------- |
+| [reco-engine-lab.schema.json](reco-engine-lab.schema.json) | `*.recolab.json` | a person |
+| [reco-run.schema.json](reco-run.schema.json) | `*.run.json` | the tool that runs the engine |
+| [reco-run-sample.schema.json](reco-run-sample.schema.json) | `*.samples.jsonl` (one line per sample) | the `evaluate` phase |
+| [reco-run.schema.json](reco-run.schema.json) `#/$defs/HistoryLine` | `*.history.jsonl` (one line per step) | the `train` phase |
+
+Paths in the lab document are relative to its folder. Paths in a run record and in its
+`.jsonl` files are relative to the folder of the run record. The lab document points to the
+run records with `runs.location` (for example `runs/*.run.json`).
+
+### Engine
+
+The engine is the unit that is tested and compared. A simple engine has `implementation` and
+`model`. A composite engine, for example a form pipeline, has named `components`; the result of a
+field names the component that recognized it. `engine.config` lists the files that change the
+output, each with a `role` (for example `template`). A run record stores the checksum of each of
+these files, so a changed template is visible in the comparison.
+
+### Commands
+
+Each phase (`prepare`, `train`, `test`, `evaluate`) has a `runner`:
+
+| Runner | The host runs | Required fields |
+| ------ | ------------- | --------------- |
+| `portunix-plugin` | `portunix <plugin> <args...>` | `plugin` (the `name` of the plugin manifest), `args`; optional `min_version` |
+| `exec` | `argv` directly, for engines that are not Portunix plugins | `argv` |
+
+Both runners take an optional `cwd` (relative to the lab document, default `.`), `env`, and
+`progress`. Arguments are arrays, not shell strings. Exit code `0` means success. A cancelled
+run is stopped by the host, which writes `status: "cancelled"`. With `progress.format`
+`jsonl-stdout`, the command writes lines such as `{"progress":0.4,"message":"..."}` to stdout;
+with `none` it reports no progress.
+
+The host replaces these placeholders in `args` and `argv`. The schema does not check unknown
+placeholders.
+
+| Placeholder | Value |
+| ----------- | ----- |
+| `{doc_dir}` | Folder of the lab document |
+| `{run_dir}` | Output folder of the run |
+| `{run_id}` | Identifier of the run |
+| `{dataset.<name>}` | `location` of the dataset `<name>` |
+| `{config.<role>}` | `path` of the config file with this `role` |
+| `{model}` | `engine.model` |
+| `{baseline_run_dir}` | Output folder of the `baseline_run` |
+
+### Dataset checksum
+
+`sha256` of a dataset is the SHA-256 of a text with one line per sample file:
+`<path relative to the lab document> <SHA-256 of the file>`, sorted, each line ending with
+`\n`. Runs are compared only when their datasets have the same checksum. The field is optional.
+
+### Per-sample results and comparison
+
+`prediction_format` names the format of the output of one sample. Known values:
+
+| Value | Format |
+| ----- | ------ |
+| `reco-export-xml` | Export of portunix-reco with a form template (FormData XSD in portunix-reco) |
+| `ocr-result` | [ocr-result.schema.json](ocr-result.schema.json) |
+| `label` | Short value in `prediction_value`, for example a class label |
+
+A tool compares two runs per sample (`sample`) and field (`field`): **improved** (wrong, then
+correct), **regressed** (correct, then wrong), **changed and still wrong**, **unchanged**. The
+comparison is not stored; a run can name the run it is compared with in `baseline_run`.
+
 ## Validating examples
 
 Contract examples under [`../examples/`](../examples/) are validated against these
@@ -156,3 +230,7 @@ after the schema for these contracts:
 
 A document under `examples/invalid/` passes as a negative test when the schema or the
 extra check rejects it.
+
+A `.jsonl` file is checked line by line, and an error names the line (`line 2: /fields/0 ...`).
+A negative `.jsonl` test passes when at least one line is rejected. A suffix can map to a part
+of a schema (`*.history.jsonl` to `reco-run.schema.json#/$defs/HistoryLine`).

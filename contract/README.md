@@ -92,6 +92,26 @@ Transcript documents use the **`*.scribe.json`** filename suffix (tied to scribe
 
 > **Provisional.** The shape may still change once reconciled against a real transcript sample (portunix-plugins #113, criterion 15); `schema_version` tracks that evolution. The transcript Markdown (front matter with `source` + `[mm:ss]` segments) is a lighter, related convention shared with `vox` and is not (yet) a formal schema here.
 
+### Recognition Engine Lab
+
+| Schema | Description |
+| ------ | ----------- |
+| [reco-engine-lab.schema.json](schemas/reco-engine-lab.schema.json) | Lab document of one recognition engine: engine (simple or composite with `components`, `config` files such as a template), datasets with ground truth, methodology, commands of the phases `prepare`, `train`, `test`, `evaluate` (runner `portunix-plugin` or `exec`), metrics, and the location of the run records |
+| [reco-run.schema.json](schemas/reco-run.schema.json) | Record of one training or test run: status, engine version and checksums, dataset checksums, parameters, summary metrics, `baseline_run`, and the files of the run; `$defs/HistoryLine` is one line of the training history |
+| [reco-run-sample.schema.json](schemas/reco-run-sample.schema.json) | One line of the per-sample results: sample, ground truth, prediction and its `prediction_format`, metrics, and the results per field |
+
+| Suffix | File |
+| ------ | ---- |
+| `*.recolab.json` | Lab document, written by a person |
+| `*.run.json` | Run record, written by the tool that runs the engine |
+| `*.samples.jsonl` | Per-sample results of a run, one JSON document per line |
+| `*.history.jsonl` | Training history of a run, one JSON document per line |
+
+Reco Studio (Engine Lab, portunix-reco-studio #55) and `ptx-reco` read and write these files.
+The placeholders of the commands, the dataset checksum, the `prediction_format` values, and the
+comparison of two runs are described in
+[schemas/README.md](schemas/README.md#recognition-engine-lab) (issue #56).
+
 ### Modeling
 
 Building model of the Portunix Modeler (`ptx-modeler`, portunix-plugins #116): a flat entity
@@ -248,6 +268,14 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | Example | Description |
 | ------- | ----------- |
 | [voices.glens.json](examples/voices.glens.json) | Small voices graph for the graphlens 3D viewer |
+
+### Recognition Engine Lab Examples
+
+| Example | Description |
+| ------- | ----------- |
+| [reco-engine-lab/stock-count.recolab.json](examples/reco-engine-lab/stock-count.recolab.json) | Lab document of the stock count form pipeline (`trocr` digits + `tesseract` text, template as `config`), with train, validation, and test datasets, plugin commands of `reco-worker` and an `exec` evaluate command. The samples and the model are not part of the example. Validated by `make validate-contract`. |
+| [reco-engine-lab/runs/](examples/reco-engine-lab/runs/) | A training run with its `*.history.jsonl`, and two test runs with their `*.samples.jsonl`; the second test run has the first one as `baseline_run` and shows improved, regressed, and changed fields. The per-sample results list only some fields to stay short. Validated by `make validate-contract`. |
+| [invalid/](examples/invalid/) | Negative tests with the prefixes `recolab-`, `run-`, `samples-`, and `history-`: one small document with one defect, named after it (for example `recolab-exec-command-without-argv`, `run-succeeded-without-finished`, `samples-line-not-json`). |
 
 ### Modeling Examples
 

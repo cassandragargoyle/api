@@ -13,6 +13,17 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 
 ### Added
 
+- **Recognition Engine Lab contract** (#56): `reco-engine-lab.schema.json`
+  (`*.recolab.json`) describes one recognition engine (simple or composite),
+  its datasets with ground truth, the methodology, the commands of each phase
+  (runner `portunix-plugin` or `exec`, placeholders, progress on stdout), and
+  the metrics. `reco-run.schema.json` (`*.run.json`, training history
+  `*.history.jsonl`) records one run, and `reco-run-sample.schema.json`
+  (`*.samples.jsonl`) holds the results per sample and field, so that two runs
+  can be compared. Examples for the stock count form pipeline and negative
+  examples in `contract/examples/`. `scripts/validate-contracts.mjs` now
+  validates `.jsonl` files line by line and can map a suffix to a part of a
+  schema.
 - **Textbook documentation for beginners**:
   `java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md` explains
   `Levenshtein.java` step by step for secondary school students who learn to
