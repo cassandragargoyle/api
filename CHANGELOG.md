@@ -14,11 +14,12 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 ### Added
 
 - **Textbook documentation for beginners**:
-  `java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md` explains
+  `java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md` explains
   `Levenshtein.java` step by step for secondary school students who learn to
   program, with embedded figures, a runnable example, and exercises. A new
   **Learning to Program** section in `README.md` and `README.cs.md` describes
-  how to fork the project and links to this kind of documentation.
+  how to fork the project and links to this kind of documentation. Czech
+  translation in `README.cs.md` next to it.
 - The README of the Java `log` package is rewritten as a textbook chapter
   with figures, a tested example program, traps, and exercises; the
   developer reference is kept at the end and corrected (the default filter
@@ -26,6 +27,15 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
   Czech `README.cs.md` is translated again from the new version.
 - `contract/README.md`: figures of the contract directory, of the VIM layers
   and their `vim_version` values, and of the validation flow.
+- `java/src/main/java/org/cassandragargoyle/api/util/README.md`: a textbook
+  chapter for the Java `util` package (`StringUtil`, `Base64Encoder`,
+  `DateUtil`, `PreferencesUtil`, `OsDetector`, `SystemUtil`) with figures, a
+  tested example program, exercises, and a list of known traps in the code;
+  Czech translation in `README.cs.md`.
+- `java/src/main/java/org/cassandragargoyle/api/telemetry/README.md`: a
+  textbook chapter for `TelemetryProvider` and `ExporterType` with figures, a
+  tested example program, exercises, and a list of known traps in the code.
+- Javadoc for `Base64Encoder`, `StringUtil`, `SystemUtil`, `BaseClass`, and `Edge`.
 - **VIM identifier check** (`scripts/vim-identifier-check.mjs`): checks the rules of
   the prescriptive layer that JSON Schema cannot express. `provision_id`,
   `reference_id`, and `term_id` are unique in the layer, and every value of

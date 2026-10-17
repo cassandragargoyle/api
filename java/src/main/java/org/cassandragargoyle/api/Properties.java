@@ -1,6 +1,7 @@
 /*
- *  This file is part of CassandraGargoyle Community Project
- *  Licensed under the MIT License - see LICENSE file for details
+ * SPDX-License-Identifier: MIT
+ * This file is part of CassandraGargoyle Community Project
+ * Licensed under the MIT License - see LICENSE file for details
  */
 package org.cassandragargoyle.api;
 
@@ -24,10 +25,10 @@ import org.cassandragargoyle.api.util.StringUtil;
  * <ul>
  * <li>a "modified" flag flipped on every write (see {@link #isModified()})</li>
  * <li>a cached count of non-null values (refreshed lazily on writes that
- *     could change it)</li>
+ * could change it)</li>
  * <li>a {@link PropertyChangeSupport} that fires Java-Beans
- *     {@code PropertyChange} events on every {@link #set(String, Object)}
- *     and {@link #addToList(String, Entity)} mutation</li>
+ * {@code PropertyChange} events on every {@link #set(String, Object)}
+ * and {@link #addToList(String, Entity)} mutation</li>
  * </ul>
  *
  * <p>
@@ -47,6 +48,7 @@ import org.cassandragargoyle.api.util.StringUtil;
  * propagate {@link ClassCastException} for present-but-wrong-type values.
  *
  * @author Zdenek
+ * @since 2024-08-16
  */
 public class Properties
 {

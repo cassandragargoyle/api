@@ -44,10 +44,14 @@ what happens.
 Some parts of the code have documentation written as a textbook chapter for beginners. They explain
 the code step by step, with pictures and exercises. Start with:
 
-- [Levenshtein distance](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md) - how a program finds out how different two words
+- [Levenshtein distance](java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md) - how a program finds out how different two words
   are, and how a table on paper turns into Java code
 - [Logging](java/src/main/java/org/cassandragargoyle/api/log/README.md) - how a program keeps a diary of what it does, with
   log levels, a background thread, and six traps that surprise beginners
+- [Utility classes](java/src/main/java/org/cassandragargoyle/api/util/README.md) - a toolbox of small helpers: escape
+  characters, Base64 with bit shifts, leap years, saved settings, and six real bugs to find in real code
+- [Telemetry](java/src/main/java/org/cassandragargoyle/api/telemetry/README.md) - how a program measures which step is
+  slow with traces and spans, the builder pattern, sampling, and five traps in the code
 
 When you are ready to send a change back to the original project, read the
 [contributing guidelines](CONTRIBUTING.md).
@@ -154,6 +158,8 @@ CI runs the same check in the **Contract Validation** job.
 - **Preferences Utilities:** Application preferences management
 - **Base64 Encoding:** Data encoding utilities
 - **OS Detection:** Operating system detection and identification
+- Beginner-friendly explanation with pictures and exercises:
+  [util/README.md](java/src/main/java/org/cassandragargoyle/api/util/README.md)
 
 ### Fuzzy String Matching
 
@@ -163,7 +169,7 @@ CI runs the same check in the **Contract Validation** job.
 - Available in all three language modules (`org.cassandragargoyle.api.fuzzy`,
   `cassandragargoyle.api.fuzzy`, `github.com/cassandragargoyle/api/go/fuzzy`)
 - Beginner-friendly explanation with pictures and exercises:
-  [Levenshtein.md](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md)
+  [fuzzy/README.md](java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md)
 
 ### Telemetry (OpenTelemetry)
 
@@ -173,6 +179,8 @@ CI runs the same check in the **Contract Validation** job.
 - Builder pattern with environment-variable overrides
   (`OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_SERVICE_NAME`)
 - W3C TraceContext propagation; Java + Python parity
+- Beginner-friendly explanation with pictures and exercises:
+  [telemetry/README.md](java/src/main/java/org/cassandragargoyle/api/telemetry/README.md)
 
 ### Logging
 

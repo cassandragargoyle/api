@@ -1,4 +1,5 @@
 /*
+ * SPDX-License-Identifier: MIT
  * This file is part of CassandraGargoyle Community Project
  * Licensed under the MIT License - see LICENSE file for details
  */
@@ -13,10 +14,10 @@ import org.cassandragargoyle.api.software.OSType;
 
 /**
  * Interface SoftwareManager
- * 
+ *
  * There are many English terms used for software. These terms can vary depending on context or specific area of use.
  * Here is an overview of common terms:
- * 
+ *
  * Software – general term for computer programs.
  * Application – program designed for a specific task or user need (e.g., text processor, web browser).
  * Program – set of instructions that perform a specific task.

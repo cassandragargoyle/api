@@ -1,6 +1,7 @@
 /*
- *  This file is part of CassandraGargoyle Community Project
- *  Licensed under the MIT License - see LICENSE file for details
+ * SPDX-License-Identifier: MIT
+ * This file is part of CassandraGargoyle Community Project
+ * Licensed under the MIT License - see LICENSE file for details
  */
 package org.cassandragargoyle.api.entity;
 
@@ -10,7 +11,8 @@ import java.util.Set;
 /**
  * Property-backed implementation of {@link Diagram}
  *
- * <p>Nodes, edges, and sub-diagrams are not held in dedicated fields but stored
+ * <p>
+ * Nodes, edges, and sub-diagrams are not held in dedicated fields but stored
  * in the inherited property map of {@link AbstractEntity} under the keys
  * {@code "nodes"}, {@code "edges"}, and {@code "diagrams"}. Collections are
  * created lazily on first access, so an empty diagram allocates no sets.
@@ -41,7 +43,8 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 	/**
 	 * Find a direct child node by its name (linear scan, sub-diagrams not searched)
 	 *
-	 * <p>Not part of the {@link Diagram} interface — convenience accessor; returns
+	 * <p>
+	 * Not part of the {@link Diagram} interface — convenience accessor; returns
 	 * {@code null} when no node with the given name exists.
 	 */
 	public Entity getNode(String name)

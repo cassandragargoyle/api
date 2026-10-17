@@ -1,13 +1,15 @@
 /*
- *  This file is part of CassandraGargoyle Community Project
- *  Licensed under the MIT License - see LICENSE file for details
+ * SPDX-License-Identifier: MIT
+ * This file is part of CassandraGargoyle Community Project
+ * Licensed under the MIT License - see LICENSE file for details
  */
 package org.cassandragargoyle.api.entity;
 
 /**
  * Concrete implementation of a graph edge connecting two Entity nodes
  *
- * <p>Stores endpoint references (node1, node2) as named properties
+ * <p>
+ * Stores endpoint references (node1, node2) as named properties
  * in the underlying {@link AbstractEntity} property map. The edge name
  * is derived automatically as "node1Name-node2Name" when constructed
  * from two entities.
