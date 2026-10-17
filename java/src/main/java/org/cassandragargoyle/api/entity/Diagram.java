@@ -1,4 +1,5 @@
 /*
+ * SPDX-License-Identifier: MIT
  * This file is part of CassandraGargoyle Community Project
  * Licensed under the MIT License - see LICENSE file for details
  */
@@ -9,7 +10,8 @@ import java.util.Set;
 /**
  * Graph-based diagram composed of nodes, edges, and nested sub-diagrams
  *
- * <p>Supports hierarchical composition: a diagram can contain child diagrams,
+ * <p>
+ * Supports hierarchical composition: a diagram can contain child diagrams,
  * and methods {@link #getAllNodes()} / {@link #getAllEdges()} traverse the
  * full hierarchy recursively.
  *

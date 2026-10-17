@@ -44,7 +44,7 @@ what happens.
 Some parts of the code have documentation written as a textbook chapter for beginners. They explain
 the code step by step, with pictures and exercises. Start with:
 
-- [Levenshtein distance](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md) - how a program finds out how different two words
+- [Levenshtein distance](java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md) - how a program finds out how different two words
   are, and how a table on paper turns into Java code
 - [Logging](java/src/main/java/org/cassandragargoyle/api/log/README.md) - how a program keeps a diary of what it does, with
   log levels, a background thread, and six traps that surprise beginners
@@ -169,7 +169,7 @@ CI runs the same check in the **Contract Validation** job.
 - Available in all three language modules (`org.cassandragargoyle.api.fuzzy`,
   `cassandragargoyle.api.fuzzy`, `github.com/cassandragargoyle/api/go/fuzzy`)
 - Beginner-friendly explanation with pictures and exercises:
-  [Levenshtein.md](java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md)
+  [fuzzy/README.md](java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md)
 
 ### Telemetry (OpenTelemetry)
 

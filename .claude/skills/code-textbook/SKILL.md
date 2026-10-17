@@ -13,7 +13,7 @@ knows basic programming (variables, `if`, loops, arrays) and wants to understand
 professional developer must still find the document correct and useful.
 
 The reference example is
-[`java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md`](../../../java/src/main/java/org/cassandragargoyle/api/fuzzy/Levenshtein.md).
+[`java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md`](../../../java/src/main/java/org/cassandragargoyle/api/fuzzy/README.md).
 Read it before you start, and follow its structure and tone.
 
 If no file is given, ask which source file or package to document.
@@ -49,7 +49,7 @@ If no file is given, ask which source file or package to document.
 
 ## File and frontmatter
 
-- Put the file next to the code: `<ClassName>.md` for one class, `README.md` for a package
+- Put the file next to the code as `README.md` of the package, also when it explains one class
 - Frontmatter per `docs/contributing/MARKDOWN-FRONTMATTER.md`:
 
   ```yaml

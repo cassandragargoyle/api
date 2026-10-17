@@ -14,7 +14,7 @@ related:
   - PreferencesUtil.java
   - OsDetector.java
   - SystemUtil.java
-  - ../fuzzy/Levenshtein.md
+  - ../fuzzy/README.md
 tags:
   - textbook
   - utility-class
@@ -119,7 +119,7 @@ look at four ideas that you can use in your own programs.
 | `bytesToHexString` | write bytes as hexadecimal numbers |
 | `escapeForXml`, `appendHtmlEscaped` | make text safe for XML or HTML |
 | `longHash` | compute a 64-bit hash of a text |
-| `levenshteinDistance` | count the edits between two texts (see [Levenshtein.md](../fuzzy/Levenshtein.md)) |
+| `levenshteinDistance` | count the edits between two texts (see [fuzzy/README.md](../fuzzy/README.md)) |
 
 ### Step 1: a number from text, with a default value
 
@@ -624,7 +624,7 @@ without a lock; the older `java.text.SimpleDateFormat` cannot.
 | `toInt`, `isLeapYear`, `toDayCount`, `fromDayCount` | O(1) | O(1) | the same few steps for any input |
 | `toString`, `fromString`, `escapeForXml`, `longHash` | O(n) | O(n) | one pass over n characters |
 | `Base64Encoder.encode` | O(n) | O(n) | 3,000,000 bytes give exactly 4,000,000 characters |
-| `levenshteinDistance` | O(n·m) | O(n) | see [Levenshtein.md](../fuzzy/Levenshtein.md) |
+| `levenshteinDistance` | O(n·m) | O(n) | see [fuzzy/README.md](../fuzzy/README.md) |
 | `execute`, `countRunningProcesses` | depends on the other program | the whole output | starting a process takes milliseconds |
 
 O(1) means "the time does not grow with the input". O(n) means "twice as much input, about twice the

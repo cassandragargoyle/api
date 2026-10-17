@@ -122,7 +122,7 @@ mnoho míst najednou. Proto je kapitola 9 o pastech.
 | `bytesToHexString` | zapíše bajty jako šestnáctková čísla |
 | `escapeForXml`, `appendHtmlEscaped` | upraví text, aby byl bezpečný v XML nebo HTML |
 | `longHash` | spočítá 64bitový hash textu |
-| `levenshteinDistance` | spočítá úpravy mezi dvěma texty (viz [Levenshtein.md](../fuzzy/Levenshtein.md)) |
+| `levenshteinDistance` | spočítá úpravy mezi dvěma texty (viz [fuzzy/README.md](../fuzzy/README.md)) |
 
 ### Krok 1: číslo z textu s výchozí hodnotou
 
@@ -621,7 +621,7 @@ zámku; starší `java.text.SimpleDateFormat` ne.
 | `toInt`, `isLeapYear`, `toDayCount`, `fromDayCount` | O(1) | O(1) | stejných pár kroků pro jakýkoli vstup |
 | `toString`, `fromString`, `escapeForXml`, `longHash` | O(n) | O(n) | jeden průchod n znaky |
 | `Base64Encoder.encode` | O(n) | O(n) | 3 000 000 bajtů dá přesně 4 000 000 znaků |
-| `levenshteinDistance` | O(n·m) | O(n) | viz [Levenshtein.md](../fuzzy/Levenshtein.md) |
+| `levenshteinDistance` | O(n·m) | O(n) | viz [fuzzy/README.md](../fuzzy/README.md) |
 | `execute`, `countRunningProcesses` | podle druhého programu | celý výstup | spuštění procesu trvá milisekundy |
 
 O(1) znamená „čas neroste se vstupem“. O(n) znamená „dvakrát víc vstupu, zhruba dvakrát víc času“.
