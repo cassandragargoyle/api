@@ -2,12 +2,13 @@
 
 **Type**: Feature
 **Priority**: Medium
-**Status**: Open
+**Status**: ✅ Implemented (PR #58, 2026-10-17)
 **Created**: 2026-10-17
+**Closed**: 2026-10-17
 **GitHub**: #56
 **Component**: contract
 **Related**: cassandragargoyle/portunix-reco-studio#55 (Engine Lab component, consumer of this
-contract), [ocr-result.schema.json](../../contract/schemas/ocr-result.schema.json)
+contract), [ocr-result.schema.json](../../../contract/schemas/ocr-result.schema.json)
 
 ## Summary
 

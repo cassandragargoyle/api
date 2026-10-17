@@ -141,7 +141,7 @@ derived `*.glens.json`.
 ## Recognition Engine Lab
 
 Contract for training, testing, and comparing a recognition engine
-([issue #56](../../docs/issues/056-reco-engine-lab-contract.md), consumer:
+([issue #56](../../docs/issues/done/056-reco-engine-lab-contract.md), consumer:
 portunix-reco-studio #55). The contract describes how to call an engine, it does not depend on
 one.
 
