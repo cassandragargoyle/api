@@ -6,6 +6,7 @@
 // Documents under an 'invalid' directory are negative tests: they must NOT validate.
 // Some contracts have rules that JSON Schema cannot express; their extra checks
 // (see EXTRA_CHECKS below) run after the schema check on every accepted document.
+// A JSON Lines file ('.jsonl') is validated line by line: every line is one document.
 //
 // Run: npm --prefix typescript run validate:contracts   (or: make validate-contract)
 
@@ -49,6 +50,10 @@ const SUFFIX_SCHEMA = [
 	[".symbol-discovery.json", "modeler-symbol-discovery.schema.json"],
 	[".bom.json", "modeler-bom.schema.json"],
 	[".vim.json", "vim-document.schema.json"],
+	[".recolab.json", "reco-engine-lab.schema.json"],
+	[".run.json", "reco-run.schema.json"],
+	[".samples.jsonl", "reco-run-sample.schema.json"],
+	[".history.jsonl", "reco-run.schema.json#/$defs/HistoryLine"],
 ];
 
 // Map schema filename -> extra check. A check returns a list of {path, message}
@@ -66,12 +71,32 @@ function problemsOf(schemaFile, doc) {
 
 const readJson = (p) => JSON.parse(readFileSync(p, "utf8"));
 
+// Return the problems of the file; a '.jsonl' file is checked line by line
+function problemsOfFile(schemaFile, file) {
+	if (!file.endsWith(".jsonl")) return problemsOf(schemaFile, readJson(file));
+	const lines = readFileSync(file, "utf8").split(/\r?\n/);
+	if (lines.at(-1) === "") lines.pop();
+	const problems = [];
+	lines.forEach((line, i) => {
+		const where = `line ${i + 1}: `;
+		let doc;
+		try {
+			doc = JSON.parse(line);
+		} catch (e) {
+			problems.push({ path: where + "/", message: `is not JSON (${e.message})` });
+			return;
+		}
+		for (const p of problemsOf(schemaFile, doc)) problems.push({ ...p, path: where + p.path });
+	});
+	return problems;
+}
+
 function walk(dir) {
 	const out = [];
 	for (const name of readdirSync(dir)) {
 		const full = path.join(dir, name);
 		if (statSync(full).isDirectory()) out.push(...walk(full));
-		else if (name.endsWith(".json")) out.push(full);
+		else if (name.endsWith(".json") || name.endsWith(".jsonl")) out.push(full);
 	}
 	return out;
 }
@@ -99,15 +124,23 @@ for (const name of readdirSync(SCHEMAS)) {
 	if (schema.$id) ajv.addSchema(schema);
 }
 
+// A schema name can point into a schema with a fragment (e.g. 'x.schema.json#/$defs/Line')
 const validators = new Map();
-function validatorFor(schemaFile) {
-	if (!validators.has(schemaFile)) {
+function validatorFor(schemaName) {
+	if (!validators.has(schemaName)) {
+		const [schemaFile, fragment] = schemaName.split("#");
 		const schema = readJson(path.join(SCHEMAS, schemaFile));
-		// Reuse the preloaded compiled schema when it declares an $id; fall back to compile otherwise.
-		const validate = (schema.$id && ajv.getSchema(schema.$id)) || ajv.compile(schema);
-		validators.set(schemaFile, validate);
+		let validate;
+		if (fragment) {
+			validate = ajv.getSchema(`${schema.$id}#${fragment}`);
+			if (!validate) throw new Error(`unknown schema fragment: ${schemaName}`);
+		} else {
+			// Reuse the preloaded compiled schema when it declares an $id; fall back to compile otherwise.
+			validate = (schema.$id && ajv.getSchema(schema.$id)) || ajv.compile(schema);
+		}
+		validators.set(schemaName, validate);
 	}
-	return validators.get(schemaFile);
+	return validators.get(schemaName);
 }
 
 let checked = 0;
@@ -129,7 +162,7 @@ for (const file of walk(EXAMPLES).sort()) {
 		skipped++;
 		continue; // example not covered by the Opportunity Management contract suffixes
 	}
-	const problems = problemsOf(schemaFile, readJson(file));
+	const problems = problemsOfFile(schemaFile, file);
 	checked++;
 	if (negative) {
 		// Negative test: the document must be rejected; show the first reason

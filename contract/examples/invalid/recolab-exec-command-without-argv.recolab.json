@@ -1,0 +1,30 @@
+{
+	"meta": {
+		"title": "Minimal lab"
+	},
+	"engine": {
+		"id": "digits",
+		"name": "Digits",
+		"kind": "ocr",
+		"version": "1.0.0",
+		"implementation": "tesseract"
+	},
+	"datasets": {
+		"test": {
+			"role": "test",
+			"location": "samples/*.png",
+			"ground_truth": {
+				"location": "samples/*.txt",
+				"format": "text"
+			}
+		}
+	},
+	"commands": {
+		"test": {
+			"runner": "exec",
+			"progress": {
+				"format": "none"
+			}
+		}
+	}
+}

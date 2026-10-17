@@ -108,7 +108,8 @@ Decided on 2026-10-17.
 
 ### Commands
 
-- Each phase has a `runner`, and the runner decides the required fields (`oneOf` in the schema):
+- Each phase has a `runner`, and the runner decides the required fields (`if`/`then` on
+  `runner` in the schema, so an error names the real cause):
   - `portunix-plugin` (preferred): the host runs `portunix <plugin> <args...>`; required
     `plugin` (the `name` from `plugin-manifest.schema.json`) and `args`; optional `min_version`,
     so the host can report a missing or old plugin before it starts the run

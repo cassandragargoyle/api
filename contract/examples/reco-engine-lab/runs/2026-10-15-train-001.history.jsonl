@@ -1,0 +1,6 @@
+{"step": 30, "epoch": 1, "metrics": {"loss": 0.612, "field_accuracy": 0.871}}
+{"step": 60, "epoch": 2, "metrics": {"loss": 0.344, "field_accuracy": 0.924}}
+{"step": 90, "epoch": 3, "metrics": {"loss": 0.205, "field_accuracy": 0.962}}
+{"step": 120, "epoch": 4, "metrics": {"loss": 0.161, "field_accuracy": 0.958}}
+{"step": 150, "epoch": 5, "metrics": {"loss": 0.134, "field_accuracy": 0.960}}
+{"step": 180, "epoch": 6, "time": "2026-10-15T09:12:30Z", "metrics": {"loss": 0.118, "field_accuracy": 0.957}}

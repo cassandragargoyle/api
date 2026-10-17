@@ -1,0 +1,103 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/reco-run-sample.schema.json",
+	"$version": "1.0.0",
+	"title": "RecoRunSample",
+	"description": "One line of a '*.samples.jsonl' file: the result of one sample in a run (reco-run.schema.json). Paths are relative to the folder of the run record. With 'fields', two runs can be compared per sample and field (improved, regressed, changed and still wrong, unchanged); the tool computes the comparison, it is not stored. Issue: cassandragargoyle/api #56.",
+	"type": "object",
+	"required": ["sample"],
+	"properties": {
+		"sample": {
+			"type": "string",
+			"minLength": 1,
+			"description": "Sample path; identifies the sample when two runs are compared"
+		},
+		"ground_truth": {
+			"type": "string",
+			"description": "Ground-truth file of the sample"
+		},
+		"prediction": {
+			"type": "string",
+			"description": "Output file of the engine for the sample"
+		},
+		"prediction_value": {
+			"type": ["string", "number", "boolean", "null"],
+			"description": "Short output of the engine (e.g. a class label) instead of an output file"
+		},
+		"prediction_format": {
+			"type": "string",
+			"pattern": "^[a-z0-9][a-z0-9.-]*$",
+			"description": "Format of the output; known values: 'reco-export-xml', 'ocr-result', 'label'"
+		},
+		"metrics": {
+			"$ref": "#/$defs/MetricValues"
+		},
+		"fields": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/FieldResult"
+			}
+		},
+		"error": {
+			"type": "string",
+			"description": "Why the engine gave no result for the sample"
+		}
+	},
+	"not": {
+		"required": ["prediction", "prediction_value"]
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"MetricValues": {
+			"type": "object",
+			"description": "Metric values by metric name of the lab document",
+			"propertyNames": {
+				"type": "string",
+				"pattern": "^[a-z][a-z0-9_-]*$"
+			},
+			"additionalProperties": {
+				"type": "number"
+			}
+		},
+		"FieldResult": {
+			"type": "object",
+			"description": "Result of one field (for example one zone of a form template)",
+			"required": ["field", "correct"],
+			"properties": {
+				"field": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Field name (e.g. the 'export_name' of a template zone); identifies the field when two runs are compared"
+				},
+				"zone_id": {
+					"type": "string",
+					"description": "Zone of the field, so a viewer can show it on the sample"
+				},
+				"component": {
+					"type": "string",
+					"pattern": "^[a-z][a-z0-9_-]*$",
+					"description": "Engine component that recognized the field"
+				},
+				"expected": {
+					"type": ["string", "null"],
+					"description": "Value from the ground truth; '' for an empty field"
+				},
+				"predicted": {
+					"type": ["string", "null"],
+					"description": "Value from the engine; null when the engine gave no value"
+				},
+				"correct": {
+					"type": "boolean"
+				},
+				"flagged": {
+					"type": "boolean",
+					"description": "The engine marked the value as suspicious"
+				},
+				"metrics": {
+					"$ref": "#/$defs/MetricValues"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

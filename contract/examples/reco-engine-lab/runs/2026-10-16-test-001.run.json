@@ -1,0 +1,45 @@
+{
+	"run_id": "2026-10-16-test-001",
+	"type": "test",
+	"status": "succeeded",
+	"started": "2026-10-16T10:00:00Z",
+	"finished": "2026-10-16T10:00:42Z",
+	"exit_code": 0,
+	"lab": "../stock-count.recolab.json",
+	"engine": {
+		"version": "1.2.0",
+		"model_sha256": "1b2f9e3a4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7",
+		"components": [
+			{
+				"name": "digits",
+				"version": "1.2.0"
+			},
+			{
+				"name": "text",
+				"version": "5.4"
+			}
+		],
+		"config": [
+			{
+				"role": "template",
+				"path": "../stock-count.reco-template.json",
+				"sha256": "5be82916fe84ba28a4287cd92538d983775e2df222c4c58598496bcb68386fd1"
+			}
+		]
+	},
+	"datasets": {
+		"test": {
+			"sha256": "d8eeb55ee2b46faf0188de29140728819f4c771dd3577e8698c53e39deb3c343",
+			"sample_count": 2
+		}
+	},
+	"metrics": {
+		"field_accuracy": 0.9697,
+		"document_accuracy": 0,
+		"flag_recall": 0.5
+	},
+	"files": {
+		"samples": "2026-10-16-test-001.samples.jsonl",
+		"log": "2026-10-16-test-001.log"
+	}
+}
