@@ -126,19 +126,13 @@ jobs:
         id: pkg
         run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
-      # npm accepts only semver, so the four-part project version MAJOR.MINOR.PATCH.BUILD
-      # maps to MAJOR.MINOR.BUILD on npm; PATCH must be 0 for the mapping to stay unique
+      # A vX.Y.Z tag that does not match package.json is a mistake, fail instead of publishing
       - name: Verify tag matches package version
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          IFS=. read -r MAJOR MINOR PATCH BUILD EXTRA <<< "${GITHUB_REF_NAME#v}"
-          if [ -z "$BUILD" ] || [ -n "$EXTRA" ] || [ "$PATCH" != "0" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME is not vMAJOR.MINOR.0.BUILD, it cannot be mapped to an npm version"
-            exit 1
-          fi
-          NPM_VERSION="$MAJOR.$MINOR.$BUILD"
-          if [ "$NPM_VERSION" != "${{ steps.pkg.outputs.version }}" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME maps to $NPM_VERSION, but package.json has ${{ steps.pkg.outputs.version }}"
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [ "$TAG_VERSION" != "${{ steps.pkg.outputs.version }}" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version ${{ steps.pkg.outputs.version }}"
             exit 1
           fi
 

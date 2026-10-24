@@ -47,6 +47,10 @@ first publish, choose one of these options:
 
 Record the decision (an ADR if the version scheme of all modules changes).
 
+**Decision (2026-10-24)**: option 1. All modules move to semver `MAJOR.MINOR.PATCH`, the next
+version is `1.1.0`, see [ADR-005](../adr/005-semantic-versioning.md). Option 2 was implemented
+first and then replaced, because the version mapping was hard to follow.
+
 ## Scope
 
 ### In scope

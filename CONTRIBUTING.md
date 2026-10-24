@@ -120,16 +120,17 @@ Architectural decisions are recorded in
 
 ## Releasing
 
-A tag `vMAJOR.MINOR.PATCH.BUILD` (for example `v1.0.0.9`) on `main` starts
-`.github/workflows/publish.yml`, which publishes:
+All modules have the same semver version `MAJOR.MINOR.PATCH`
+([ADR-005](docs/adr/005-semantic-versioning.md)). A tag `vMAJOR.MINOR.PATCH`
+(for example `v1.1.0`) on `main` starts `.github/workflows/publish.yml`, which
+publishes:
 
 - the Java module to GitHub Packages
 - the Python module to PyPI
 - the TypeScript module to npmjs.com as `@cassandragargoyle/api`
 
-npm accepts only semver, so the npm version is `MAJOR.MINOR.BUILD` and `PATCH`
-must be `0`: tag `v1.0.0.9` needs `"version": "1.0.9"` in
-`typescript/package.json`, otherwise the npm job fails. The job skips a version
+The tag must match `"version"` in `typescript/package.json`, otherwise the npm
+job fails. The Go module gets its own tag `go/vMAJOR.MINOR.PATCH`. The job skips a version
 that is already on npmjs.com. A manual run of the workflow (`workflow_dispatch`)
 runs only the npm job; with `dry_run` it builds and packs without a publish.
 

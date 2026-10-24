@@ -1,6 +1,6 @@
 {
   "name": "@cassandragargoyle/api",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Shared TypeScript API modules for CassandraGargoyle (log and preferences packages)",
   "license": "MIT",
   "keywords": [

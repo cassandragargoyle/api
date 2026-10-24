@@ -36,9 +36,8 @@ Documentation of the modules:
 
 ## Version
 
-The project uses the four-part version `MAJOR.MINOR.PATCH.BUILD` for all modules. npm accepts
-only semver, so the npm version is `MAJOR.MINOR.BUILD`: project version `1.0.0.9` is
-`1.0.9` on npm.
+The package uses semver and has the same version as the Java, Python, and Go modules of the
+project.
 
 ## License
 

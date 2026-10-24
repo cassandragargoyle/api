@@ -14,6 +14,7 @@ An Architecture Decision Record (ADR) captures an important architectural decisi
 | [ADR-002](002-unified-ai-platform-transition.md) | Portunix Transition to Unified AI Platform | Proposed | 2026-03-19 |
 | [ADR-003](003-remove-persistence-module.md) | Remove Persistence Module | Accepted | 2026-03-19 |
 | [ADR-004](004-user-preferences-storage.md) | User Preferences Storage Interface | Proposed | 2026-07-05 |
+| [ADR-005](005-semantic-versioning.md) | Semantic Versioning for All Modules | Accepted | 2026-10-24 |
 
 ## Status Legend
 
