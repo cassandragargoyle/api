@@ -13,6 +13,8 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-24
+
 ### Changed
 
 - **Versioning** (#59): all modules move from the four-part version
@@ -248,7 +250,8 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 - Renamed the `persistance` module to `persistence` (#003).
 - Strip `-SNAPSHOT` from `pom.xml` versions before publishing (#002).
 
-[Unreleased]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.9...HEAD
+[Unreleased]: https://github.com/CassandraGargoyle/api/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.9...v1.1.0
 [1.0.0.9]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.8...v1.0.0.9
 [1.0.0.8]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.3...v1.0.0.8
 [1.0.0.3]: https://github.com/CassandraGargoyle/api/releases/tag/v1.0.0.3

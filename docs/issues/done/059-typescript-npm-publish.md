@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: Open
+**Status**: Implemented (2026-10-24, released in 1.1.0)
 **Created**: 2026-10-24
+**Closed**: 2026-10-24
 **GitHub**: #59
 **Component**: typescript, build-infra
 **Related**: cassandragargoyle/react-components (`.github/workflows/publish.yml`, reference setup)
@@ -48,7 +49,7 @@ first publish, choose one of these options:
 Record the decision (an ADR if the version scheme of all modules changes).
 
 **Decision (2026-10-24)**: option 1. All modules move to semver `MAJOR.MINOR.PATCH`, the next
-version is `1.1.0`, see [ADR-005](../adr/005-semantic-versioning.md). Option 2 was implemented
+version is `1.1.0`, see [ADR-005](../../adr/005-semantic-versioning.md). Option 2 was implemented
 first and then replaced, because the version mapping was hard to follow.
 
 ## Scope
