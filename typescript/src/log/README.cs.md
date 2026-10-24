@@ -29,16 +29,21 @@ vyžádání, takže bundly pro prohlížeč souborový kód tree-shakingem odst
 
 ## Instalace
 
-Ve verzi v1 se balíček konzumuje přes lokální pack / file dependency (bez registru):
+Balíček je publikovaný na npmjs.com:
+
+```bash
+npm install @cassandragargoyle/api
+```
+
+Pro lokální build, který ještě není publikovaný, použij lokální pack:
 
 ```bash
 cd typescript
 npm install
-npm run build       # vytvoří dist/ (ESM + CJS + .d.ts)
-npm pack            # vytvoří cassandragargoyle-api-<version>.tgz
+npm pack            # vytvoří dist/ a cassandragargoyle-api-<version>.tgz
 ```
 
-Poté v konzumentovi (např. portunix-vscode `src/pilot/`):
+Poté v konzumentovi:
 
 ```bash
 npm install /cesta/k/cassandragargoyle-api-<version>.tgz

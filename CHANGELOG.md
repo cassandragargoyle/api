@@ -8,11 +8,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 This project uses a four-part version scheme (`MAJOR.MINOR.PATCH.BUILD`) shared
 across the Java, Python, Go and TypeScript modules. The Go module is tagged with
 a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
+npm accepts only semver, so the TypeScript package uses `MAJOR.MINOR.BUILD`
+(project version `1.0.0.9` is `1.0.9` on npm).
 
 ## [Unreleased]
 
 ### Added
 
+- **npm package** (#59): the TypeScript module is published on npmjs.com as
+  `@cassandragargoyle/api` by a new `publish-npm` job in
+  `.github/workflows/publish.yml` (npm Trusted Publishing with provenance, no
+  npm token). The job also runs on a manual `workflow_dispatch`, with a
+  `dry_run` option. The npm version is `MAJOR.MINOR.BUILD` of the project
+  version; release steps in `CONTRIBUTING.md`.
 - **Recognition Engine Lab contract** (#56): `reco-engine-lab.schema.json`
   (`*.recolab.json`) describes one recognition engine (simple or composite),
   its datasets with ground truth, the methodology, the commands of each phase

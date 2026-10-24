@@ -1,13 +1,30 @@
 {
   "name": "@cassandragargoyle/api",
-  "version": "1.0.0.9",
+  "version": "1.0.9",
   "description": "Shared TypeScript API modules for CassandraGargoyle (log and preferences packages)",
   "license": "MIT",
+  "keywords": [
+    "cassandragargoyle",
+    "logging",
+    "preferences"
+  ],
+  "homepage": "https://github.com/cassandragargoyle/api/tree/main/typescript#readme",
+  "bugs": {
+    "url": "https://github.com/cassandragargoyle/api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cassandragargoyle/api.git",
+    "directory": "typescript"
+  },
   "type": "module",
   "sideEffects": false,
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -27,10 +44,16 @@
   },
   "scripts": {
     "build": "tsup",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint . && prettier --check .",
     "validate:contracts": "node ../scripts/validate-contracts.mjs",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepack": "node -e \"require('fs').copyFileSync('../LICENSE', 'LICENSE')\" && npm run build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

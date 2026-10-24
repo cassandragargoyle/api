@@ -285,7 +285,8 @@ This project uses:
   build with emitted `.d.ts`, Vitest for testing, ESLint + Prettier for
   linting; the package lives in `typescript/` as `@cassandragargoyle/api`
   (subpath exports `@cassandragargoyle/api/log` and
-  `@cassandragargoyle/api/preferences`) and requires Node 22+
+  `@cassandragargoyle/api/preferences`) and requires Node 22+; it is published
+  on npmjs.com as `@cassandragargoyle/api` (see [Releasing](CONTRIBUTING.md#releasing))
 
 ## License
 

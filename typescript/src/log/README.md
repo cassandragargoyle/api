@@ -25,16 +25,21 @@ requested, so browser bundles tree-shake the filesystem code away.
 
 ## Installation
 
-For v1 the package is consumed via a local pack / file dependency (no registry):
+The package is published on npmjs.com:
+
+```bash
+npm install @cassandragargoyle/api
+```
+
+For a local build that is not published yet, use a local pack:
 
 ```bash
 cd typescript
 npm install
-npm run build       # emits dist/ (ESM + CJS + .d.ts)
-npm pack            # produces cassandragargoyle-api-<version>.tgz
+npm pack            # builds dist/ and produces cassandragargoyle-api-<version>.tgz
 ```
 
-Then in the consumer (e.g. portunix-vscode `src/pilot/`):
+Then in the consumer:
 
 ```bash
 npm install /path/to/cassandragargoyle-api-<version>.tgz
