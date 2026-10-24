@@ -62,7 +62,7 @@ See [CHANGELOG.md](CHANGELOG.md) for the release history.
 
 ## Project Information
 
-- **Version:** 1.0.0.9-SNAPSHOT
+- **Version:** 1.1.0-SNAPSHOT
 - **Java:** 21 (Maven, NetBeans Platform)
 - **Python:** ≥ 3.11 (uv-managed)
 - **Go:** ≥ 1.22
@@ -280,12 +280,13 @@ This project uses:
   formatting; the module lives in `go/` with import path
   `github.com/cassandragargoyle/api/go` (release tags use the `go/` prefix
   per the [submodule tagging rule](https://go.dev/ref/mod#vcs-version),
-  e.g. `go/v1.0.0.8`)
+  e.g. `go/v1.1.0`)
 - **TypeScript**: npm for dependency management, `tsup` for the dual ESM/CJS
   build with emitted `.d.ts`, Vitest for testing, ESLint + Prettier for
   linting; the package lives in `typescript/` as `@cassandragargoyle/api`
   (subpath exports `@cassandragargoyle/api/log` and
-  `@cassandragargoyle/api/preferences`) and requires Node 22+
+  `@cassandragargoyle/api/preferences`) and requires Node 22+; it is published
+  on npmjs.com as `@cassandragargoyle/api` (see [Releasing](CONTRIBUTING.md#releasing))
 
 ## License
 

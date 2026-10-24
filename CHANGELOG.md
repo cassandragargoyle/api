@@ -5,14 +5,30 @@
 All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-This project uses a four-part version scheme (`MAJOR.MINOR.PATCH.BUILD`) shared
-across the Java, Python, Go and TypeScript modules. The Go module is tagged with
-a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
+This project uses [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`)
+shared across the Java, Python, Go and TypeScript modules, see
+[ADR-005](docs/adr/005-semantic-versioning.md). The Go module is tagged with a
+`go/` prefix per the Go submodule tagging rule (e.g. `go/v1.1.0`). Versions up
+to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-24
+
+### Changed
+
+- **Versioning** (#59): all modules move from the four-part version
+  `MAJOR.MINOR.PATCH.BUILD` to semver `MAJOR.MINOR.PATCH`, so that the version
+  is valid for npm and Go ([ADR-005](docs/adr/005-semantic-versioning.md)). The
+  next version is `1.1.0`, tags are `v1.1.0` and `go/v1.1.0`.
+
 ### Added
 
+- **npm package** (#59): the TypeScript module is published on npmjs.com as
+  `@cassandragargoyle/api` by a new `publish-npm` job in
+  `.github/workflows/publish.yml` (npm Trusted Publishing with provenance, no
+  npm token). The job also runs on a manual `workflow_dispatch`, with a
+  `dry_run` option. Release steps in `CONTRIBUTING.md`.
 - **Recognition Engine Lab contract** (#56): `reco-engine-lab.schema.json`
   (`*.recolab.json`) describes one recognition engine (simple or composite),
   its datasets with ground truth, the methodology, the commands of each phase
@@ -234,7 +250,8 @@ a `go/` prefix per the Go submodule tagging rule (e.g. `go/v1.0.0.8`).
 - Renamed the `persistance` module to `persistence` (#003).
 - Strip `-SNAPSHOT` from `pom.xml` versions before publishing (#002).
 
-[Unreleased]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.9...HEAD
+[Unreleased]: https://github.com/CassandraGargoyle/api/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.9...v1.1.0
 [1.0.0.9]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.8...v1.0.0.9
 [1.0.0.8]: https://github.com/CassandraGargoyle/api/compare/v1.0.0.3...v1.0.0.8
 [1.0.0.3]: https://github.com/CassandraGargoyle/api/releases/tag/v1.0.0.3

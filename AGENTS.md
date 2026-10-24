@@ -91,7 +91,7 @@ Notes:
 
 - Features that exist in more than one module (`fuzzy`, `log`, `telemetry`) must behave the same in every module
 - When you change such a feature in one language, change the other languages too, or state clearly what is left
-- The module versions are kept the same in `java/pom.xml`, `python/pyproject.toml`, and `typescript/package.json`
+- The module versions are kept the same in `java/pom.xml`, `python/pyproject.toml`, and `typescript/package.json`, and they follow semver `MAJOR.MINOR.PATCH` ([ADR-005](docs/adr/005-semantic-versioning.md))
 
 ### Contracts
 

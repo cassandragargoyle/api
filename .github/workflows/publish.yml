@@ -1,17 +1,26 @@
-name: Publish to GitHub Packages
+name: Publish
 
 on:
   push:
     tags:
       - 'v*'
+  # Manual run publishes only the npm package (the Java and Python jobs need a tag)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Build and pack the npm package without publishing'
+        type: boolean
+        default: false
 
 env:
   JAVA_VERSION: '21'
   PYTHON_VERSION: '3.13'
+  NODE_VERSION: '22'
 
 jobs:
   publish:
     name: Publish
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,6 +53,7 @@ jobs:
 
   publish-python:
     name: Publish Python Package
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
@@ -69,3 +79,80 @@ jobs:
       - name: Publish to PyPI
         working-directory: python
         run: uv publish --trusted-publishing always
+
+  # npm Trusted Publishing: the job proves who it is with a GitHub OIDC token (id-token: write)
+  # and npm exchanges it for a short-lived publish credential. No npm token is stored in the
+  # repository secrets, and npm attaches provenance to every version it publishes this way.
+  # The trusted publisher (this repository, publish.yml) is configured on npmjs.com, in the
+  # package's settings
+  publish-npm:
+    name: Publish npm Package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        working-directory: typescript
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: typescript/package-lock.json
+
+      # Trusted Publishing needs npm 11.5.1 or newer
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Read package version
+        id: pkg
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      # A vX.Y.Z tag that does not match package.json is a mistake, fail instead of publishing
+      - name: Verify tag matches package version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [ "$TAG_VERSION" != "${{ steps.pkg.outputs.version }}" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version ${{ steps.pkg.outputs.version }}"
+            exit 1
+          fi
+
+      # Skip the publish if this version is already on the registry, so a re-run
+      # does not fail; npmjs.com answers anonymous reads, so this needs no credential
+      - name: Check if version already published
+        id: published
+        run: |
+          if npm view "@cassandragargoyle/api@${{ steps.pkg.outputs.version }}" version >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version ${{ steps.pkg.outputs.version }} already published, skipping"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # prepack copies LICENSE from the repository root and builds dist/
+      - name: Publish (dry run)
+        if: steps.published.outputs.exists == 'false' && inputs.dry_run
+        run: npm publish --dry-run
+
+      - name: Publish
+        if: steps.published.outputs.exists == 'false' && !inputs.dry_run
+        run: npm publish

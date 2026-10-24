@@ -118,6 +118,31 @@ Architectural decisions are recorded in
   motivation. For substantial changes, propose an ADR in
   [`docs/adr/`](docs/adr/) alongside the request.
 
+## Releasing
+
+All modules have the same semver version `MAJOR.MINOR.PATCH`
+([ADR-005](docs/adr/005-semantic-versioning.md)). A tag `vMAJOR.MINOR.PATCH`
+(for example `v1.1.0`) on `main` starts `.github/workflows/publish.yml`, which
+publishes:
+
+- the Java module to GitHub Packages
+- the Python module to PyPI
+- the TypeScript module to npmjs.com as `@cassandragargoyle/api`
+
+The tag must match `"version"` in `typescript/package.json`, otherwise the npm
+job fails. The Go module gets its own tag `go/vMAJOR.MINOR.PATCH`. The job skips a version
+that is already on npmjs.com. A manual run of the workflow (`workflow_dispatch`)
+runs only the npm job; with `dry_run` it builds and packs without a publish.
+
+The npm job uses npm Trusted Publishing (GitHub OIDC), so no npm token is
+stored in the repository. One-time setup on npmjs.com:
+
+1. An owner of the `@cassandragargoyle` scope publishes the first version
+   manually: `cd typescript && npm publish`
+2. In the package settings, add a trusted publisher: GitHub Actions,
+   repository `cassandragargoyle/api`, workflow `publish.yml`
+3. Optionally, in the package settings, disallow publishing with tokens
+
 ## Security
 
 For security-sensitive reports, please **do not open a public issue**.

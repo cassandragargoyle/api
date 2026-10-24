@@ -59,7 +59,7 @@ Historii verzí najdete v [CHANGELOG.md](CHANGELOG.md).
 
 ## Informace o projektu
 
-- **Verze:** 1.0.0.9-SNAPSHOT
+- **Verze:** 1.1.0-SNAPSHOT
 - **Java:** 21 (Maven, NetBeans Platform)
 - **Python:** ≥ 3.11 (spravováno přes uv)
 - **Go:** ≥ 1.22
@@ -214,7 +214,7 @@ Tento projekt používá:
   formátování; modul leží v `go/` s import path
   `github.com/cassandragargoyle/api/go` (release tagy používají prefix `go/`
   podle [pravidla pro submoduly](https://go.dev/ref/mod#vcs-version),
-  např. `go/v1.0.0.8`)
+  např. `go/v1.1.0`)
 - **TypeScript**: npm pro správu závislostí, `tsup` pro duální ESM/CJS build
   s emitovanými `.d.ts`, Vitest pro testování, ESLint + Prettier pro linting;
   balíček leží v `typescript/` jako `@cassandragargoyle/api` (subpath export
