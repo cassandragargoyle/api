@@ -1,0 +1,111 @@
+{
+  "languages": ["en", "cs"],
+  "template": "../template/book.html.j2",
+  "stylesheet": "../template/book.css",
+  "style": "style.json",
+  "cover_image": "images/book-cover.webp",
+  "cover_art": "covers/vim.svg.j2",
+  "output_dir": "docs/book/vim",
+  "diagram_cache": "dist/book/.diagrams",
+  "file_name": "vim-book-{lang}.pdf",
+  "repository_url": "https://github.com/cassandragargoyle/api",
+  "code_style": "friendly",
+  "figure_captions": true,
+  "drop_translation_note": true,
+  "strip_sections": [],
+
+  "meta": {
+    "en": {
+      "title": "VIM",
+      "subtitle": "The Layered Information Model: how a document learns to say what it means",
+      "kicker": "CassandraGargoyle · Portunix ecosystem",
+      "author": "CassandraGargoyle Community"
+    },
+    "cs": {
+      "title": "VIM",
+      "subtitle": "Vrstvený informační model: jak se dokument učí říct, co znamená",
+      "kicker": "CassandraGargoyle · ekosystém Portunix",
+      "author": "Komunita CassandraGargoyle"
+    }
+  },
+
+  "labels": {
+    "en": {
+      "contents": "Contents",
+      "part": "Part",
+      "chapter": "Chapter",
+      "figure": "Figure",
+      "version": "Version",
+      "built": "Built",
+      "fallback": "This chapter is not translated yet; the English text is shown.",
+      "cover_physical": "what is there",
+      "cover_structural": "what it looks like",
+      "cover_semantic": "what it means",
+      "cover_toc": "how to find it",
+      "cover_extraction": "what the form holds",
+      "cover_prescriptive": "what it requires"
+    },
+    "cs": {
+      "contents": "Obsah",
+      "part": "Část",
+      "chapter": "Kapitola",
+      "figure": "Obrázek",
+      "version": "Verze",
+      "built": "Sestaveno",
+      "fallback": "Tato kapitola zatím není přeložena; je uveden anglický text.",
+      "cover_physical": "co tam je",
+      "cover_structural": "jak to vypadá",
+      "cover_semantic": "co to znamená",
+      "cover_toc": "jak to najít",
+      "cover_extraction": "co nese formulář",
+      "cover_prescriptive": "co předepisuje"
+    }
+  },
+
+  "parts": [
+    {
+      "title": { "en": "Prologue", "cs": "Prolog" },
+      "intro": {
+        "en": "One question about one invoice, asked twice: once of plain text and once of a layered model.",
+        "cs": "Jedna otázka nad jednou fakturou, položená dvakrát: jednou prostému textu, jednou vrstvenému modelu."
+      },
+      "chapters": [
+        { "source": "chapters/00-who-is-the-customer.md" }
+      ]
+    },
+    {
+      "title": { "en": "How VIM Grew", "cs": "Jak VIM rostl" },
+      "intro": {
+        "en": "The idea behind the layers, and nine months in which a parser for invoices became a shared model of the whole ecosystem.",
+        "cs": "Myšlenka vrstev a devět měsíců, během kterých se z parseru faktur stal společný model celého ekosystému."
+      },
+      "chapters": [
+        { "source": "chapters/01-sheets-of-glass.md" },
+        { "source": "chapters/02-from-1-0-to-2-1.md" }
+      ]
+    },
+    {
+      "title": { "en": "Inside VIM", "cs": "Uvnitř VIM" },
+      "intro": {
+        "en": "What a vim.json holds, the machine that writes it, and the contract that keeps every producer and reader honest.",
+        "cs": "Co obsahuje vim.json, stroj, který ho píše, a kontrakt, který drží všechny výrobce i čtenáře v poctivosti."
+      },
+      "chapters": [
+        { "source": "chapters/03-inside-a-vim-json.md" },
+        { "source": "chapters/04-the-machine-that-reads.md" },
+        { "source": "chapters/05-a-promise-in-json-schema.md" }
+      ]
+    },
+    {
+      "title": { "en": "Working with VIM", "cs": "Práce s VIM" },
+      "intro": {
+        "en": "From a PDF to a checked vim.json in a few commands, and the open questions that shape the next versions.",
+        "cs": "Od PDF ke zkontrolovanému vim.json několika příkazy a otevřené otázky, které tvarují další verze."
+      },
+      "chapters": [
+        { "source": "chapters/06-your-first-vim-json.md" },
+        { "source": "chapters/07-where-vim-is-going.md" }
+      ]
+    }
+  ]
+}

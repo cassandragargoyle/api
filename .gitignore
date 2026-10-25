@@ -291,3 +291,6 @@ CLAUDE.local.md
 /docs/contributing/CLAUDE-TEMPLATE.md
 /.claude/commands/preflight.md
 /.claude/skills/deploy-github/
+
+# Debugging HTML of the PDF books (scripts/build-book-pdf.py --html)
+docs/book/**/*.html

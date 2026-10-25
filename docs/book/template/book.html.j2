@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ meta.title }} — {{ meta.subtitle }}</title>
+  <meta name="author" content="{{ meta.author }}">
+  <meta name="description" content="{{ meta.subtitle }}">
+  <meta name="generator" content="scripts/build-book-pdf.py">
+  <style>{{ pygments_css | safe }}</style>
+</head>
+<body>
+
+{# Cover: the image of the book, or the drawn picture that the book names in cover_art #}
+<section class="cover{% if cover_image %} cover--image{% endif %}">
+  {% if cover_image %}<img class="cover-image" src="{{ cover_image }}" alt="">{% endif %}
+  <div class="cover-kicker">{{ meta.kicker }}</div>
+  <h1 class="cover-title{% if single %} cover-title--single{% endif %}">{{ meta.title }}</h1>
+  <div class="cover-subtitle">{{ meta.subtitle }}</div>
+  {% if not cover_image and cover_art %}
+  {% include cover_art %}
+  {% endif %}
+  <div class="cover-foot">
+    <div>{{ meta.author }}</div>
+    <div>{{ labels.version }} {{ version }} · {{ labels.built }} {{ build_date }}</div>
+  </div>
+</section>
+
+{% if not single %}
+<nav class="toc">
+  <h1 class="toc-title">{{ labels.contents }}</h1>
+  {% for part in parts %}
+    <div class="toc-part"><a href="#part{{ part.number }}">
+      <span class="toc-part-no">{{ labels.part }} {{ part.number }}</span>
+      {{ part.title }}</a></div>
+    <ol class="toc-chapters">
+      {% for ch in part.chapters %}
+        <li><a href="#{{ ch.slug }}"><span class="toc-ch-no">{{ ch.number }}</span>{{ ch.title }}</a></li>
+      {% endfor %}
+    </ol>
+  {% endfor %}
+</nav>
+{% endif %}
+
+{% for part in parts %}
+{% if part.title %}
+<section class="part" id="part{{ part.number }}">
+  <div class="part-no">{{ labels.part }} {{ part.number }}</div>
+  <h1 class="part-title">{{ part.title }}</h1>
+  {% if part.intro %}<p class="part-intro">{{ part.intro }}</p>{% endif %}
+  <ol class="part-chapters">
+    {% for ch in part.chapters %}<li>{{ ch.number }} · {{ ch.title }}</li>{% endfor %}
+  </ol>
+</section>
+{% endif %}
+
+  {% for ch in part.chapters %}
+<article class="chapter" id="{{ ch.slug }}">
+  <header class="chapter-head">
+    {% if not single %}<div class="chapter-no">{{ labels.chapter }} {{ ch.number }}</div>{% endif %}
+    <h1 class="chapter-title">{{ ch.title }}</h1>
+  </header>
+  {% if ch.fallback %}<p class="fallback-note">{{ labels.fallback }}</p>{% endif %}
+  {{ ch.html | safe }}
+</article>
+  {% endfor %}
+{% endfor %}
+
+</body>
+</html>
