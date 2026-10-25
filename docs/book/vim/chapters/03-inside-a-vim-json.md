@@ -157,8 +157,8 @@ it gets 1.0.
 
 ## What the Parser Got Wrong
 
-An honest book has to show the other half too. The same file contains three mistakes, and
-each of them teaches something.
+An honest book has to show the other side of the coin too. The same file contains three
+mistakes, and each of them opens a new direction.
 
 **The title swallowed the supplier.** Block `block_1` contains the title *Invoice
 2026-0042*, the supplier's address and the issue date, because they stand in one column
