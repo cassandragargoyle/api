@@ -14,16 +14,16 @@ related:
 
 # Who Is the Customer?
 
-## One Question, Asked Twice
+## A Question Without a Sure Answer
 
-On the last day of January 2026, someone in the team asked a language model a very simple
+At the end of January 2026, someone in the team asked a language model a very simple
 question about an electricity bill: *who is the customer on this document?* The bill was
 in Czech; this edition gives its labels and its anonymized names in English.
 
 A person needs half a second for the answer. The name stands right there, under the word
 *Customer*, in the upper left corner of the page. Next to it, in a second column, there is
-the word *Addressee*, with the same name and the same address under it. Any
-child who can read would point at the right block.
+the word *Addressee*, with the same name and the same address under it. Any child who can
+read would point at the right block.
 
 The model got the document as plain text, the way most tools still pass a PDF on: one line
 after another, from the top of the page to the bottom. It read for a while and then gave an
@@ -34,19 +34,31 @@ line. A hundred lines later, the name appeared twice on one line, and so did the
 The two columns of the page had been flattened into one stream of words. The confidence of
 the answer: **low**.
 
-A few minutes later the same question went to the same model about the same bill. This
-time the document came as a `vim.json` file. The answer was short: John Newman, with his
-address, and the confidence was **high**. The model also explained why. In the file there
-was a block of type `labeled_content` with the header *Customer* and the name under it, and
-a separate block with the header *Addressee*. A layer above it held an entity of type
+## From Doubt to a Model
+
+That honest *cannot be determined* is where VIM begins. Nothing was missing from the bill.
+Everything a person needs was on the page: the columns, the labels, the name under the
+right label. It was lost on the way, when the page became a stream of text. The machine
+was not too weak to understand; it had been given too little to understand from.
+
+So the team stopped asking how to make the reader smarter and started asking a different
+question: how do we keep what the page shows? The answer was a model that does not flatten
+the page. It keeps the text with its position, it keeps the blocks with their labels, and
+on top of them it writes what they mean, every value with a pointer back to where it came
+from. The team called it VIM, and its first version was written in a few intense days.
+
+Then the same question went to the same model about the same bill once more. This time the
+document came as a `vim.json` file. The answer was short: John Newman, with his address,
+and the confidence was **high**. The model also explained why. In the file there was a
+block of type `labeled_content` with the header *Customer* and the name under it, and a
+separate block with the header *Addressee*. A layer above it held an entity of type
 `customer` that pointed back to the first block. Nothing had to be guessed.
 
 ![The same two-column header as plain text and as two labeled blocks of the structural layer](../images/fulltext-vs-vim.en.svg)
 
-Both results are still kept in the repository of the parser, side by side, as the first
+Both answers are still kept in the repository of the parser, side by side, as the first
 experiment of a small research apparatus. They are not a benchmark. They are one question
-about one anonymized document. But they show in a few lines the whole reason for this
-book.
+about one anonymized document. But they show in a few lines what VIM is for.
 
 ## The Problem Is Not the PDF
 
@@ -108,13 +120,20 @@ editor Vim at once. The two have nothing in common except three letters. The VIM
 book is a data model; its files end with `.vim.json`, and nobody has to learn how to exit
 it.
 
-## What This Book Is About
+## Why This Book
 
-This book tells the story of VIM: how a parser for invoices, written in a few intense days
-at the end of January 2026, grew within nine months into the shared result container of a
-whole ecosystem of document tools. It shows what a `vim.json` contains, layer by layer, on
-a real file produced by the real parser. It looks inside the machine that writes it, and at
-the contract in this repository that tells every producer and every reader what they may
+VIM was built by a small team for its own tools, and for months its idea lived in source
+code, architecture decisions and the heads of a few people. But the question of the
+customer is not a question of one team. Anyone who passes documents to a machine, or to a
+language model, meets it sooner or later. This book exists so that the idea of VIM can
+reach more people than the few who built it: the idea that a document should not be
+flattened, but read in layers, with every value able to say where it came from.
+
+The book tells the story of VIM: how a parser for invoices, written at the end of January
+2026, grew within nine months into the shared result container of a whole ecosystem of
+document tools. It shows what a `vim.json` contains, layer by layer, on a real file
+produced by the real parser. It looks inside the machine that writes it, and at the
+contract in this repository that tells every producer and every reader what they may
 expect. And it shows how to make your first `vim.json` and how to check it.
 
 The next chapter starts with the idea itself: what it means to read a document in layers.

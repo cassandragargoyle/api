@@ -137,6 +137,42 @@ p a, li a, td a { color: #1f6fb2; }
   line-height: 1.7;
 }
 
+/* Dedication: a quiet page of its own after the cover */
+
+@page dedication {
+  margin: 0;
+  @top-left { content: none; border: none; }
+  @top-right { content: none; border: none; }
+  @bottom-right { content: none; }
+}
+.dedication {
+  page: dedication;
+  page-break-after: always;
+  padding: 105mm 40mm 0 60mm;
+  font-style: italic;
+  font-size: 12pt;
+  line-height: 1.7;
+  color: var(--ink);
+  hyphens: none;
+  bookmark-level: none;
+}
+.dedication { position: relative; height: 297mm; box-sizing: border-box; }
+.dedication p { margin: 0 0 4mm 0; }
+.imprint {
+  position: absolute;
+  left: 60mm;
+  bottom: 40mm;
+  font: normal 8.5pt "Noto Sans", "DejaVu Sans", sans-serif;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.dedication p:first-child {
+  font-size: 14pt;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 6mm;
+}
+
 /* Table of contents */
 
 .toc { page-break-after: always; }

@@ -129,6 +129,12 @@ every value say where it came from and how sure we are.
 A document that went through VIM can say what it means. That was the promise of the name,
 and it is the promise that the next versions will keep working on.
 
+> VIM was made with the help of artificial intelligence, for people who live in the age of
+> artificial intelligence, and for artificial intelligence itself: one model that a person
+> and a machine can read alike.
+>
+> — Zdeněk Kurc
+
 ## Sources
 
 - Catalog entries I-PDF-001, I-PDF-002 and I-PDF-003 and challenge C001: `README.md`,

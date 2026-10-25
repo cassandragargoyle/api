@@ -121,6 +121,12 @@ hodnotu říct, odkud pochází a jak moc si jsme jistí.
 Dokument, který prošel VIM, umí říct, co znamená. To byl slib jména a na tom slibu budou
 pracovat i další verze.
 
+> VIM vznikl s pomocí umělé inteligence, pro člověka, který žije v době umělé inteligence,
+> a také pro umělou inteligenci samotnou: jeden model, který umí stejně dobře číst člověk i
+> stroj.
+>
+> — Zdeněk Kurc
+
 ## Prameny
 
 - Položky katalogu I-PDF-001, I-PDF-002 a I-PDF-003 a výzva C001: `README.md`,

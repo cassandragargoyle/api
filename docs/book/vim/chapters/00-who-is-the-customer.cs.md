@@ -14,10 +14,10 @@ last_updated: 2026-10-25
 
 > Český překlad [00-who-is-the-customer.md](00-who-is-the-customer.md). Anglická verze je autoritativní.
 
-## Jedna otázka, položená dvakrát
+## Otázka bez jisté odpovědi
 
-Poslední lednový den roku 2026 položil někdo z týmu jazykovému modelu velmi jednoduchou
-otázku nad vyúčtováním elektřiny: *kdo je na tomto dokumentu zákazník?*
+Na konci ledna 2026 položil někdo z týmu jazykovému modelu velmi jednoduchou otázku nad
+vyúčtováním elektřiny: *kdo je na tomto dokumentu zákazník?*
 
 Člověku stačí na odpověď půl vteřiny. Jméno stojí přímo tam, pod slovem *Zákazník*, v levém
 horním rohu stránky. Vedle, ve druhém sloupci, je slovo *Adresát* a pod ním totéž jméno a
@@ -31,18 +31,31 @@ sloupců se slila do jednoho řádku. O sto řádků níž se jméno objevilo dv
 řádku a adresa také. Dva sloupce stránky se zploštily do jednoho proudu slov. Jistota
 odpovědi: **nízká**.
 
-O několik minut později dostal tentýž model tutéž otázku nad tímtéž vyúčtováním. Tentokrát
-přišel dokument jako soubor `vim.json`. Odpověď byla krátká: Ing. Jan Novák, s adresou, a
-jistota **vysoká**. Model k tomu vysvětlil proč. V souboru byl blok typu `labeled_content`
-se záhlavím *Zákazník* a se jménem pod ním a vedle samostatný blok se záhlavím *Adresát*. O
-vrstvu výš ležela entita typu `customer`, která ukazovala zpět na první blok. Nic se nemuselo
-hádat.
+## Od pochybnosti k modelu
+
+Tím poctivým *nelze s jistotou určit* začíná VIM. Na vyúčtování nic nechybělo. Všechno, co
+člověk potřebuje, na stránce bylo: sloupce, popisky, jméno pod správným popiskem. Ztratilo
+se to cestou, když se ze stránky stal proud textu. Stroj nebyl příliš slabý, aby porozuměl;
+dostal příliš málo, z čeho by porozuměl.
+
+Tým se proto přestal ptát, jak udělat čtenáře chytřejším, a začal se ptát jinak: jak
+uchovat to, co stránka ukazuje? Odpovědí byl model, který stránku nezplošťuje. Uchová text
+i s jeho polohou, uchová bloky i s jejich popisky a nad ně zapíše, co znamenají, každou
+hodnotu s odkazem zpět na místo, odkud pochází. Tým mu dal jméno VIM a jeho první verze
+vznikla během několika horečných dní.
+
+Pak dostal tentýž model tutéž otázku nad tímtéž vyúčtováním ještě jednou. Tentokrát přišel
+dokument jako soubor `vim.json`. Odpověď byla krátká: Ing. Jan Novák, s adresou, a jistota
+**vysoká**. Model k tomu vysvětlil proč. V souboru byl blok typu `labeled_content` se
+záhlavím *Zákazník* a se jménem pod ním a vedle samostatný blok se záhlavím *Adresát*. O
+vrstvu výš ležela entita typu `customer`, která ukazovala zpět na první blok. Nic se
+nemuselo hádat.
 
 ![Totéž dvousloupcové záhlaví jako prostý text a jako dva popsané bloky strukturální vrstvy](../images/fulltext-vs-vim.cs.svg)
 
-Oba výsledky jsou dodnes uložené v repozitáři parseru vedle sebe jako první pokus malé
+Obě odpovědi jsou dodnes uložené v repozitáři parseru vedle sebe jako první pokus malé
 výzkumné aparatury. Nejsou benchmarkem. Jsou jednou otázkou nad jedním anonymizovaným
-dokumentem. Na několika řádcích ale ukazují celý důvod, proč tato kniha vznikla.
+dokumentem. Na několika řádcích ale ukazují, k čemu VIM je.
 
 ## Problém není v PDF
 
@@ -101,14 +114,21 @@ Jméno má ještě jednu malou past. Čtenář, který pracuje s textovými edit
 vybaví editor Vim. Kromě tří písmen nemají nic společného. VIM z této knihy je datový model;
 jeho soubory končí příponou `.vim.json` a nikdo se nemusí učit, jak z něj odejít.
 
-## O čem je tato kniha
+## Proč tato kniha
 
-Kniha vypráví příběh VIM: jak se parser faktur, napsaný během několika horečných dní na
-konci ledna 2026, za devět měsíců proměnil ve společný kontejner výsledků celého ekosystému
-nástrojů pro dokumenty. Ukazuje, co obsahuje `vim.json`, vrstvu po vrstvě, na skutečném
-souboru ze skutečného parseru. Nahlíží do stroje, který ho píše, a na kontrakt v tomto
-repozitáři, který každému výrobci i každému čtenáři říká, co smí očekávat. A ukazuje, jak
-vyrobit první vlastní `vim.json` a jak ho zkontrolovat.
+VIM postavil malý tým pro své vlastní nástroje a jeho myšlenka celé měsíce žila ve
+zdrojovém kódu, v architektonických rozhodnutích a v hlavách několika lidí. Otázka
+zákazníka ale není otázkou jednoho týmu. Potká ji dříve či později každý, kdo předává
+dokumenty stroji nebo jazykovému modelu. Tato kniha vznikla, aby se myšlenka VIM dostala k
+více lidem než jen k těm několika, kteří ho postavili: myšlenka, že dokument se nemá
+zplošťovat, ale číst ve vrstvách, a že každá hodnota má umět říct, odkud pochází.
+
+Kniha vypráví příběh VIM: jak se parser faktur, napsaný na konci ledna 2026, za devět
+měsíců proměnil ve společný kontejner výsledků celého ekosystému nástrojů pro dokumenty.
+Ukazuje, co obsahuje `vim.json`, vrstvu po vrstvě, na skutečném souboru ze skutečného
+parseru. Nahlíží do stroje, který ho píše, a na kontrakt v tomto repozitáři, který každému
+výrobci i každému čtenáři říká, co smí očekávat. A ukazuje, jak vyrobit první vlastní
+`vim.json` a jak ho zkontrolovat.
 
 Další kapitola začíná samotnou myšlenkou: co znamená číst dokument ve vrstvách.
 

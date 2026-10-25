@@ -1,5 +1,8 @@
 {
-  "languages": ["en", "cs"],
+  "languages": [
+    "en",
+    "cs"
+  ],
   "template": "../template/book.html.j2",
   "stylesheet": "../template/book.css",
   "style": "style.json",
@@ -13,22 +16,34 @@
   "figure_captions": true,
   "drop_translation_note": true,
   "strip_sections": [],
-
   "meta": {
     "en": {
       "title": "VIM",
       "subtitle": "The Layered Information Model: how a document learns to say what it means",
       "kicker": "CassandraGargoyle · Portunix ecosystem",
-      "author": "CassandraGargoyle Community"
+      "author": "CassandraGargoyle Community",
+      "dedication": [
+        "For my daughter Mariana.",
+        "I believe that one day she will find this book on her journey through life, and that she will use some of the principles written in it: to look beneath the surface, to keep what is there apart from what it means, and always to ask where a thing came from."
+      ],
+      "main_authors": [
+        "Zdeněk Kurc"
+      ]
     },
     "cs": {
       "title": "VIM",
       "subtitle": "Vrstvený informační model: jak se dokument učí říct, co znamená",
       "kicker": "CassandraGargoyle · ekosystém Portunix",
-      "author": "Komunita CassandraGargoyle"
+      "author": "Komunita CassandraGargoyle",
+      "dedication": [
+        "Své dceři Marianě.",
+        "Věřím, že tuto knihu jednou objeví na své cestě životem a že využije některé z principů, které jsou v ní zapsané: dívat se pod povrch, oddělovat to, co tam je, od toho, co to znamená, a vždycky se ptát, odkud věc pochází."
+      ],
+      "main_authors": [
+        "Zdeněk Kurc"
+      ]
     }
   },
-
   "labels": {
     "en": {
       "contents": "Contents",
@@ -43,7 +58,9 @@
       "cover_semantic": "what it means",
       "cover_toc": "how to find it",
       "cover_extraction": "what the form holds",
-      "cover_prescriptive": "what it requires"
+      "cover_prescriptive": "what it requires",
+      "author": "Author",
+      "main_authors": "Main authors"
     },
     "cs": {
       "contents": "Obsah",
@@ -58,53 +75,82 @@
       "cover_semantic": "co to znamená",
       "cover_toc": "jak to najít",
       "cover_extraction": "co nese formulář",
-      "cover_prescriptive": "co předepisuje"
+      "cover_prescriptive": "co předepisuje",
+      "author": "Autor",
+      "main_authors": "Hlavní autoři"
     }
   },
-
   "parts": [
     {
-      "title": { "en": "Prologue", "cs": "Prolog" },
+      "title": {
+        "en": "Prologue",
+        "cs": "Prolog"
+      },
       "intro": {
-        "en": "One question about one invoice, asked twice: once of plain text and once of a layered model.",
-        "cs": "Jedna otázka nad jednou fakturou, položená dvakrát: jednou prostému textu, jednou vrstvenému modelu."
+        "en": "It began with a simple question that a machine could not answer with certainty: who is the customer on this bill? The team set out to give back to machines what plain text had lost, and VIM was the answer. This book exists so that the idea of VIM can reach more people than the few who built it.",
+        "cs": "Začalo to jednoduchou otázkou, na kterou stroj nedokázal s jistotou odpovědět: kdo je na tomto vyúčtování zákazník? Tým se pustil do hledání, jak strojům vrátit to, co prostý text ztratil, a odpovědí se stal VIM. Tato kniha vznikla, aby se myšlenka VIM dostala k více lidem než jen k těm několika, kteří ho postavili."
       },
       "chapters": [
-        { "source": "chapters/00-who-is-the-customer.md" }
+        {
+          "source": "chapters/00-who-is-the-customer.md"
+        }
       ]
     },
     {
-      "title": { "en": "How VIM Grew", "cs": "Jak VIM rostl" },
+      "title": {
+        "en": "How VIM Grew",
+        "cs": "Jak VIM rostl"
+      },
       "intro": {
         "en": "The idea behind the layers, and nine months in which a parser for invoices became a shared model of the whole ecosystem.",
         "cs": "Myšlenka vrstev a devět měsíců, během kterých se z parseru faktur stal společný model celého ekosystému."
       },
       "chapters": [
-        { "source": "chapters/01-sheets-of-glass.md" },
-        { "source": "chapters/02-from-1-0-to-2-1.md" }
+        {
+          "source": "chapters/01-sheets-of-glass.md"
+        },
+        {
+          "source": "chapters/02-from-1-0-to-2-1.md"
+        }
       ]
     },
     {
-      "title": { "en": "Inside VIM", "cs": "Uvnitř VIM" },
+      "title": {
+        "en": "Inside VIM",
+        "cs": "Uvnitř VIM"
+      },
       "intro": {
         "en": "What a vim.json holds, the machine that writes it, and the contract that keeps every producer and reader honest.",
         "cs": "Co obsahuje vim.json, stroj, který ho píše, a kontrakt, který drží všechny výrobce i čtenáře v poctivosti."
       },
       "chapters": [
-        { "source": "chapters/03-inside-a-vim-json.md" },
-        { "source": "chapters/04-the-machine-that-reads.md" },
-        { "source": "chapters/05-a-promise-in-json-schema.md" }
+        {
+          "source": "chapters/03-inside-a-vim-json.md"
+        },
+        {
+          "source": "chapters/04-the-machine-that-reads.md"
+        },
+        {
+          "source": "chapters/05-a-promise-in-json-schema.md"
+        }
       ]
     },
     {
-      "title": { "en": "Working with VIM", "cs": "Práce s VIM" },
+      "title": {
+        "en": "Working with VIM",
+        "cs": "Práce s VIM"
+      },
       "intro": {
         "en": "From a PDF to a checked vim.json in a few commands, and the open questions that shape the next versions.",
         "cs": "Od PDF ke zkontrolovanému vim.json několika příkazy a otevřené otázky, které tvarují další verze."
       },
       "chapters": [
-        { "source": "chapters/06-your-first-vim-json.md" },
-        { "source": "chapters/07-where-vim-is-going.md" }
+        {
+          "source": "chapters/06-your-first-vim-json.md"
+        },
+        {
+          "source": "chapters/07-where-vim-is-going.md"
+        }
       ]
     }
   ]

@@ -70,6 +70,8 @@ system. The HTML of `--html` is not in Git.
 | `drop_translation_note` | Leaves out the blockquote under the H1 of a translation |
 | `figure_captions` | An image alone in a paragraph becomes "Figure N.M" with its alt text as caption |
 | `labels` | Fixed texts of the template per language, including the texts of the drawn cover |
+| `meta.<lang>.dedication` | Optional dedication, a list of paragraphs; printed on its own page after the cover |
+| `meta.<lang>.main_authors` | Optional list of the main authors; printed with the author (`meta.author`) at the foot of the page after the cover |
 
 When a translation is missing, the English chapter is used and the chapter shows a note.
 

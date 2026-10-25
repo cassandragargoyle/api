@@ -25,6 +25,18 @@
   </div>
 </section>
 
+{# The page after the cover: the dedication, and at its foot the imprint with the authors #}
+{% if (meta.dedication or meta.main_authors) and not single %}
+<section class="dedication">
+  {% for line in meta.dedication or [] %}<p>{{ line }}</p>{% endfor %}
+  <div class="imprint">
+    <div>{{ labels.author }}: {{ meta.author }}</div>
+    {% if meta.main_authors %}<div>{{ labels.main_authors }}: {{ meta.main_authors | join(", ") }}</div>{% endif %}
+    <div>{{ labels.version }} {{ version }} · {{ labels.built }} {{ build_date }}</div>
+  </div>
+</section>
+{% endif %}
+
 {% if not single %}
 <nav class="toc">
   <h1 class="toc-title">{{ labels.contents }}</h1>
