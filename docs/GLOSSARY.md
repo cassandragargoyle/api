@@ -75,7 +75,7 @@ Sources: [README.md](../README.md), [contract/README.md](../contract/README.md),
 | **Structural layer** | Layer 2. Logical grouping of the raw data |
 | **Semantic layer** | Layer 3. Interpreted meaning |
 | **TOC layer** | Layer 4. Table of contents |
-| **Extraction layer** | Layer 5. Structured values extracted from forms and zones. The `reco` plugin produces it |
+| **Extraction layer** | Layer 5. Structured values extracted from forms and zones. The `reco` plugin is its planned producer; today `reco` can write the layer but does not fill it |
 | **Template** | The definition of the fields and zones to extract. The extraction layer refers to it with `template_ref` |
 | **Source** | One input of an extraction (a file or a page) together with its raw result |
 | **Field** | One extracted value with its label, data type, confidence, and position |
