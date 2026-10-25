@@ -69,7 +69,7 @@ Sources: [README.md](../README.md), [contract/README.md](../contract/README.md),
 
 | Term | Meaning |
 | ---- | ------- |
-| **VIM** | Versatile Information Model. The universal result container of the Portunix ecosystem. One VIM document holds the metadata of a source document and its layers |
+| **VIM** | Layered Information Model, from the Czech original *Vrstvený Informační Model*. The universal result container of the Portunix ecosystem. One VIM document holds the metadata of a source document and its layers |
 | **Layer** | One optional part of a VIM document. Each layer holds one view of the same source document. The `layers` object is closed, so a new layer needs a contract change |
 | **Physical layer** | Layer 1. Raw data with coordinates |
 | **Structural layer** | Layer 2. Logical grouping of the raw data |

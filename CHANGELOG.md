@@ -13,6 +13,13 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ## [Unreleased]
 
+### Changed
+
+- **VIM name**: VIM is the *Layered Information Model* (Czech original
+  *Vrstvený Informační Model*) in `README.md`, `contract/README.md` and
+  `docs/GLOSSARY.md`; the former expansion "Versatile Information Model" is no
+  longer used. Documentation only, the schemas do not change.
+
 ## [1.1.0] - 2026-10-24
 
 ### Changed
