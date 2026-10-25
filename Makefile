@@ -6,7 +6,7 @@
         clean-install clean-package \
         build-java test-java clean-java \
         lint lint-java lint-md lint-python \
-        validate-contract \
+        validate-contract book book-figures \
         venv test-python build-python install-python lock \
         clean-python clean-venv \
         test-go vet-go \
@@ -148,6 +148,18 @@ lint-md: | $(MARKDOWNLINT)
 	$(NPM) exec -- markdownlint-cli2
 
 # ============================================================================
+# Books (docs/book/)
+# ============================================================================
+
+## Build all PDF books in docs/book/ in all languages
+book:
+	uv run scripts/build-book-pdf.py
+
+## Generate the SVG figures of the VIM book
+book-figures:
+	python3 scripts/generate-book-vim-figures.py
+
+# ============================================================================
 # Contract Validation
 # ============================================================================
 
@@ -283,6 +295,10 @@ help:
 	@echo "  make lint-python       - Run Python linter (ruff)"
 	@echo "  make lint-typescript   - Run TypeScript linter (ESLint + Prettier)"
 	@echo "  make lint-md           - Run Markdown linter (markdownlint-cli2)"
+	@echo ""
+	@echo "Books:"
+	@echo "  make book              - Build all PDF books in docs/book/ (needs uv)"
+	@echo "  make book-figures      - Generate the SVG figures of the VIM book"
 	@echo ""
 	@echo "Contract Validation:"
 	@echo "  make validate-contract - Validate contract examples against JSON Schemas"

@@ -135,6 +135,9 @@ do. Tell the user about this when the document is mainly read on GitHub.
 - Add a link from the feature description in `README.md`, if the feature has one
 - Do not change the code itself. When you find a bug or a confusing behavior, describe it to the
   user and suggest an issue
+- A document can also become a chapter of a PDF book: add its path to a `docs/book/<book>/book.json`
+  (see [`docs/book/README.md`](../../../docs/book/README.md)); a story-like chapter written for a
+  book follows the `book-chapter` skill instead
 
 ## Report
 

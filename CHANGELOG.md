@@ -13,6 +13,26 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ## [Unreleased]
 
+### Changed
+
+- **VIM name**: VIM is the *Layered Information Model* (Czech original
+  *Vrstvený Informační Model*) in `README.md`, `contract/README.md` and
+  `docs/GLOSSARY.md`; the former expansion "Versatile Information Model" is no
+  longer used. Documentation only, the schemas do not change.
+
+### Added
+
+- **VIM book** (`docs/book/vim/`): a book in English and Czech about the
+  Layered Information Model, its history, layers, parser, contract and use,
+  with figures computed from a real `vim.json` of a synthetic sample invoice
+  (`docs/book/vim/samples/`) and a prompt for a generated cover image.
+- **Book generator** taken over from portunix-reco-studio:
+  `scripts/build-book-pdf.py` (Markdown to PDF with WeasyPrint, Mermaid
+  diagrams, several books under `docs/book/*/book.json`), the shared template
+  and writing style in `docs/book/`, `scripts/generate-book-vim-figures.py`,
+  and the Makefile targets `book` and `book-figures`.
+- `book-chapter` skill for writing chapters of these books.
+
 ## [1.1.0] - 2026-10-24
 
 ### Changed

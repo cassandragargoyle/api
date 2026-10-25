@@ -1,0 +1,1167 @@
+{
+  "vim_version" : "1.4",
+  "document" : {
+    "source" : "faktura-2026-0042.pdf",
+    "pages" : 1,
+    "metadata" : {
+      "encodingFormat" : "application/pdf",
+      "contentSize" : 11122,
+      "inLanguage" : "cs",
+      "producer" : "WeasyPrint 70.0",
+      "additionalProperties" : {
+        "pageCount" : "1"
+      }
+    }
+  },
+  "layers" : {
+    "physical" : {
+      "blocks" : [ {
+        "id" : "block_1",
+        "bbox" : {
+          "right" : 326.0177,
+          "bottom" : 239.35461,
+          "x" : 112.94291,
+          "y" : 119.86712,
+          "width" : 213.0748,
+          "height" : 119.487495
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Faktura 2026-0042",
+          "bbox" : {
+            "right" : 326.0177,
+            "bottom" : 131.50684,
+            "x" : 112.94291,
+            "y" : 119.86712,
+            "width" : 213.0748,
+            "height" : 11.639716
+          },
+          "page" : 1,
+          "font_size" : 26.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Dodavatel",
+          "bbox" : {
+            "right" : 178.26411,
+            "bottom" : 162.08362,
+            "x" : 115.19291,
+            "y" : 155.6819,
+            "width" : 63.071205,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Sklo a vrstvy s.r.o.",
+          "bbox" : {
+            "right" : 215.95941,
+            "bottom" : 174.88782,
+            "x" : 115.19291,
+            "y" : 168.4861,
+            "width" : 100.7665,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "Polní 7",
+          "bbox" : {
+            "right" : 151.75528,
+            "bottom" : 187.69202,
+            "x" : 115.19291,
+            "y" : 181.2903,
+            "width" : 36.56237,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "110 00 Praha 1",
+          "bbox" : {
+            "right" : 199.08618,
+            "bottom" : 200.49622,
+            "x" : 115.19291,
+            "y" : 194.0945,
+            "width" : 83.89327,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "Datum vystavení",
+          "bbox" : {
+            "right" : 217.68027,
+            "bottom" : 226.55042,
+            "x" : 112.94291,
+            "y" : 220.1487,
+            "width" : 104.73736,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "15. 10. 2026",
+          "bbox" : {
+            "right" : 182.89981,
+            "bottom" : 239.35461,
+            "x" : 112.94291,
+            "y" : 232.9529,
+            "width" : 69.9569,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_2",
+        "bbox" : {
+          "right" : 211.26953,
+          "bottom" : 304.1944,
+          "x" : 113.69291,
+          "y" : 269.1843,
+          "width" : 97.57662,
+          "height" : 35.0101
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Položka",
+          "bbox" : {
+            "right" : 161.78278,
+            "bottom" : 275.586,
+            "x" : 113.69291,
+            "y" : 269.1843,
+            "width" : 48.089867,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Skleněná deska A",
+          "bbox" : {
+            "right" : 211.24754,
+            "bottom" : 289.8902,
+            "x" : 113.69291,
+            "y" : 283.4885,
+            "width" : 97.554634,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "Skleněná deska B",
+          "bbox" : {
+            "right" : 211.26953,
+            "bottom" : 304.1944,
+            "x" : 113.69291,
+            "y" : 297.7927,
+            "width" : 97.57662,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_3",
+        "bbox" : {
+          "right" : 217.00928,
+          "bottom" : 347.56067,
+          "x" : 112.94291,
+          "y" : 328.35477,
+          "width" : 104.06637,
+          "height" : 19.205902
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Celkem k úhradě",
+          "bbox" : {
+            "right" : 217.00928,
+            "bottom" : 334.75647,
+            "x" : 112.94291,
+            "y" : 328.35477,
+            "width" : 104.06637,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "1 250,00 CZK",
+          "bbox" : {
+            "right" : 187.8386,
+            "bottom" : 347.56067,
+            "x" : 112.94291,
+            "y" : 341.15897,
+            "width" : 74.89568,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_4",
+        "bbox" : {
+          "right" : 383.50406,
+          "bottom" : 200.49622,
+          "x" : 299.13782,
+          "y" : 155.6819,
+          "width" : 84.36624,
+          "height" : 44.814316
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Odběratel",
+          "bbox" : {
+            "right" : 361.03204,
+            "bottom" : 162.08362,
+            "x" : 299.13782,
+            "y" : 155.6819,
+            "width" : 61.894226,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Jana Příkladová",
+          "bbox" : {
+            "right" : 383.50406,
+            "bottom" : 174.88782,
+            "x" : 299.13782,
+            "y" : 168.4861,
+            "width" : 84.36624,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "Lipová 12",
+          "bbox" : {
+            "right" : 352.7824,
+            "bottom" : 187.69202,
+            "x" : 299.13782,
+            "y" : 181.2903,
+            "width" : 53.644592,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "602 00 Brno",
+          "bbox" : {
+            "right" : 366.69678,
+            "bottom" : 200.49622,
+            "x" : 299.13782,
+            "y" : 194.0945,
+            "width" : 67.55896,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_5",
+        "bbox" : {
+          "right" : 457.21014,
+          "bottom" : 304.1944,
+          "x" : 264.41687,
+          "y" : 269.1843,
+          "width" : 192.79327,
+          "height" : 35.0101
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "MnožstvíCenaCelkem",
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 275.586,
+            "x" : 264.41687,
+            "y" : 269.1843,
+            "width" : 192.79327,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "2",
+          "bbox" : {
+            "right" : 271.41254,
+            "bottom" : 289.8902,
+            "x" : 264.41687,
+            "y" : 283.4885,
+            "width" : 6.9956665,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "300,00600,00",
+          "bbox" : {
+            "right" : 450.43442,
+            "bottom" : 289.8902,
+            "x" : 351.11603,
+            "y" : 283.4885,
+            "width" : 99.31839,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "1",
+          "bbox" : {
+            "right" : 271.41254,
+            "bottom" : 304.1944,
+            "x" : 264.41687,
+            "y" : 297.7927,
+            "width" : 6.9956665,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "650,00650,00",
+          "bbox" : {
+            "right" : 450.43442,
+            "bottom" : 304.1944,
+            "x" : 351.11603,
+            "y" : 297.7927,
+            "width" : 99.31839,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      } ],
+      "barcodes" : [ {
+        "id" : "barcode_1",
+        "bbox" : {
+          "right" : 197.04001,
+          "bottom" : 445.19998,
+          "x" : 128.16,
+          "y" : 376.31998,
+          "width" : 68.88,
+          "height" : 68.88
+        },
+        "page" : 1,
+        "format" : "QR_CODE",
+        "raw_content" : "SPD*1.0*ACC:CZ6508000000192000145399*AM:1250.00*CC:CZK*X-VS:20260042*MSG:Faktura 2026-0042"
+      } ],
+      "tables" : [ {
+        "id" : "table-1",
+        "page" : 1,
+        "bbox" : {
+          "right" : 457.21014,
+          "bottom" : 353.96237,
+          "x" : 112.94291,
+          "y" : 131.50684,
+          "width" : 344.26724,
+          "height" : 222.45554
+        },
+        "rows" : 12,
+        "columns" : 4,
+        "confidence" : 0.79999995,
+        "cells" : [ {
+          "row" : 0,
+          "column" : 0,
+          "text" : "Faktura 202",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 248.1196,
+            "bottom" : 143.14655,
+            "x" : 112.94291,
+            "y" : 131.50684,
+            "width" : 135.1767,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 0,
+          "column" : 1,
+          "text" : "6-004",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 312.09802,
+            "bottom" : 143.14655,
+            "x" : 248.1196,
+            "y" : 131.50684,
+            "width" : 63.978424,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 0,
+          "column" : 2,
+          "text" : "2",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 326.0177,
+            "bottom" : 143.14655,
+            "x" : 312.09802,
+            "y" : 131.50684,
+            "width" : 13.919678,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 0,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 143.14655,
+            "x" : 399.49377,
+            "y" : 131.50684,
+            "width" : 57.71637,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 1,
+          "column" : 0,
+          "text" : "Dodavatel",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 178.26411,
+            "bottom" : 168.48534,
+            "x" : 115.19291,
+            "y" : 162.08362,
+            "width" : 63.071205,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 1,
+          "column" : 1,
+          "text" : "Od",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 316.36304,
+            "bottom" : 168.48534,
+            "x" : 299.13782,
+            "y" : 162.08362,
+            "width" : 17.22522,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 1,
+          "column" : 2,
+          "text" : "běratel",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 361.03204,
+            "bottom" : 168.48534,
+            "x" : 316.36304,
+            "y" : 162.08362,
+            "width" : 44.669006,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 1,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 168.48534,
+            "x" : 399.49377,
+            "y" : 162.08362,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 0,
+          "text" : "Sklo a vrstvy s.r.o.",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 215.95941,
+            "bottom" : 181.28954,
+            "x" : 115.19291,
+            "y" : 174.88782,
+            "width" : 100.7665,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 1,
+          "text" : "Jan",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 316.09906,
+            "bottom" : 181.28954,
+            "x" : 299.13782,
+            "y" : 174.88782,
+            "width" : 16.961243,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 2,
+          "text" : "a Příkladová",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 383.50406,
+            "bottom" : 181.28954,
+            "x" : 316.09906,
+            "y" : 174.88782,
+            "width" : 67.405,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 181.28954,
+            "x" : 399.49377,
+            "y" : 174.88782,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 0,
+          "text" : "Polní 7",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 151.75528,
+            "bottom" : 194.09373,
+            "x" : 115.19291,
+            "y" : 187.69202,
+            "width" : 36.56237,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 1,
+          "text" : "Lip",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 315.3071,
+            "bottom" : 194.09373,
+            "x" : 299.13782,
+            "y" : 187.69202,
+            "width" : 16.169281,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 2,
+          "text" : "ová 12",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 352.7824,
+            "bottom" : 194.09373,
+            "x" : 315.3071,
+            "y" : 187.69202,
+            "width" : 37.47531,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 194.09373,
+            "x" : 399.49377,
+            "y" : 187.69202,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 0,
+          "text" : "110 00 Praha 1",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 199.08618,
+            "bottom" : 206.89793,
+            "x" : 115.19291,
+            "y" : 200.49622,
+            "width" : 83.89327,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 1,
+          "text" : "60",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 313.12915,
+            "bottom" : 206.89793,
+            "x" : 299.13782,
+            "y" : 200.49622,
+            "width" : 13.991333,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 2,
+          "text" : "2 00 Brno",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 366.69678,
+            "bottom" : 206.89793,
+            "x" : 313.12915,
+            "y" : 200.49622,
+            "width" : 53.567627,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 206.89793,
+            "x" : 399.49377,
+            "y" : 200.49622,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 0,
+          "text" : "Datum vystavení",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 217.68027,
+            "bottom" : 232.95213,
+            "x" : 112.94291,
+            "y" : 226.55042,
+            "width" : 104.73736,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 311.26428,
+            "bottom" : 232.95213,
+            "x" : 238.12544,
+            "y" : 226.55042,
+            "width" : 73.13884,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 399.49377,
+            "bottom" : 232.95213,
+            "x" : 311.26428,
+            "y" : 226.55042,
+            "width" : 88.22949,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 232.95213,
+            "x" : 399.49377,
+            "y" : 226.55042,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 0,
+          "text" : "15. 10. 2026",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 182.89981,
+            "bottom" : 245.75633,
+            "x" : 112.94291,
+            "y" : 239.35461,
+            "width" : 69.9569,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 311.26428,
+            "bottom" : 245.75633,
+            "x" : 238.12544,
+            "y" : 239.35461,
+            "width" : 73.13884,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 399.49377,
+            "bottom" : 245.75633,
+            "x" : 311.26428,
+            "y" : 239.35461,
+            "width" : 88.22949,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 245.75633,
+            "x" : 399.49377,
+            "y" : 239.35461,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 0,
+          "text" : "Položka",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 161.78278,
+            "bottom" : 281.9877,
+            "x" : 113.69291,
+            "y" : 275.586,
+            "width" : 48.089867,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 1,
+          "text" : "Množstv",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 316.12558,
+            "bottom" : 281.9877,
+            "x" : 264.41687,
+            "y" : 275.586,
+            "width" : 51.70871,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 2,
+          "text" : "íCena",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 381.9037,
+            "bottom" : 281.9877,
+            "x" : 316.12558,
+            "y" : 275.586,
+            "width" : 65.77811,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 3,
+          "text" : "Celkem",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 281.9877,
+            "x" : 411.95813,
+            "y" : 275.586,
+            "width" : 45.252014,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 0,
+          "text" : "Skleněná deska A",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 211.24754,
+            "bottom" : 296.2919,
+            "x" : 113.69291,
+            "y" : 289.8902,
+            "width" : 97.554634,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 1,
+          "text" : "2",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 271.41254,
+            "bottom" : 296.2919,
+            "x" : 264.41687,
+            "y" : 289.8902,
+            "width" : 6.9956665,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 2,
+          "text" : "300,00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 389.59232,
+            "bottom" : 296.2919,
+            "x" : 351.11603,
+            "y" : 289.8902,
+            "width" : 38.476288,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 3,
+          "text" : "600,00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 450.43442,
+            "bottom" : 296.2919,
+            "x" : 411.95813,
+            "y" : 289.8902,
+            "width" : 38.476288,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 0,
+          "text" : "Skleněná deska B",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 211.26953,
+            "bottom" : 310.5961,
+            "x" : 113.69291,
+            "y" : 304.1944,
+            "width" : 97.57662,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 1,
+          "text" : "1",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 271.41254,
+            "bottom" : 310.5961,
+            "x" : 264.41687,
+            "y" : 304.1944,
+            "width" : 6.9956665,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 2,
+          "text" : "650,00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 389.59232,
+            "bottom" : 310.5961,
+            "x" : 351.11603,
+            "y" : 304.1944,
+            "width" : 38.476288,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 3,
+          "text" : "650,00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 450.43442,
+            "bottom" : 310.5961,
+            "x" : 411.95813,
+            "y" : 304.1944,
+            "width" : 38.476288,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 0,
+          "text" : "Celkem k úhradě",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 217.00928,
+            "bottom" : 341.15817,
+            "x" : 112.94291,
+            "y" : 334.75647,
+            "width" : 104.06637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 311.26428,
+            "bottom" : 341.15817,
+            "x" : 238.12544,
+            "y" : 334.75647,
+            "width" : 73.13884,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 399.49377,
+            "bottom" : 341.15817,
+            "x" : 311.26428,
+            "y" : 334.75647,
+            "width" : 88.22949,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 341.15817,
+            "x" : 399.49377,
+            "y" : 334.75647,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 0,
+          "text" : "1 250,00 CZK",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 187.8386,
+            "bottom" : 353.96237,
+            "x" : 112.94291,
+            "y" : 347.56067,
+            "width" : 74.89568,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 311.26428,
+            "bottom" : 353.96237,
+            "x" : 238.12544,
+            "y" : 347.56067,
+            "width" : 73.13884,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 399.49377,
+            "bottom" : 353.96237,
+            "x" : 311.26428,
+            "y" : 347.56067,
+            "width" : 88.22949,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 457.21014,
+            "bottom" : 353.96237,
+            "x" : 399.49377,
+            "y" : 347.56067,
+            "width" : 57.71637,
+            "height" : 6.401716
+          }
+        } ]
+      } ],
+      "graphics" : [ {
+        "id" : "graphic_1",
+        "page" : 1,
+        "bbox" : {
+          "right" : 212.15552,
+          "bottom" : 480.73486,
+          "x" : 112.94291,
+          "y" : 381.52228,
+          "width" : 99.2126,
+          "height" : 99.2126
+        },
+        "element_type" : "IMAGE",
+        "format" : "png",
+        "width_px" : 294,
+        "height_px" : 294,
+        "color_space" : "DeviceRGB",
+        "bits_per_component" : 8,
+        "image_type" : "embedded"
+      } ],
+      "fulltext" : {
+        "content" : "Faktura 2026-0042\n\nDodavatel\nSklo a vrstvy s.r.o.\nPolní 7\n110 00 Praha 1\n\nOdběratel\nJana Příkladová\nLipová 12\n602 00 Brno\n\nDatum vystavení\n15. 10. 2026\n\nPoložka Množství Cena Celkem\nSkleněná deska A 2 300,00 600,00\nSkleněná deska B 1 650,00 650,00\n\nCelkem k úhradě\n1 250,00 CZK\n\n\n\tFaktura 2026-0042",
+        "wordCount" : 50,
+        "characterCount" : 298
+      }
+    },
+    "structural" : {
+      "blocks" : [ {
+        "id" : "block_1",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "Faktura 2026-0042",
+        "content" : [ "Dodavatel", "Sklo a vrstvy s.r.o.", "Polní 7", "110 00 Praha 1", "Datum vystavení", "15. 10. 2026" ]
+      }, {
+        "id" : "block_2",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "Položka",
+        "content" : [ "Skleněná deska A", "Skleněná deska B" ]
+      }, {
+        "id" : "block_3",
+        "type" : "content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : null,
+        "content" : [ "Celkem k úhradě", "1 250,00 CZK" ]
+      }, {
+        "id" : "block_4",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "Odběratel",
+        "content" : [ "Jana Příkladová", "Lipová 12", "602 00 Brno" ]
+      }, {
+        "id" : "block_5",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "MnožstvíCenaCelkem",
+        "content" : [ "2", "300,00600,00", "1", "650,00650,00" ]
+      } ],
+      "barcodes" : [ {
+        "id" : "barcode_1",
+        "format" : "QR_CODE",
+        "content_type" : "spayd",
+        "nearby_blocks" : [ "block_2", "block_3", "block_5" ],
+        "confidence" : 1.0
+      } ]
+    },
+    "semantic" : {
+      "entities" : [ {
+        "type" : "invoice",
+        "source_block" : "block_1",
+        "fields" : {
+          "postal_address" : "110 00 Praha 1",
+          "city" : "15. 10. 2026",
+          "street" : "Sklo a vrstvy s.r.o.",
+          "name" : "Dodavatel"
+        },
+        "confidence" : 0.8
+      }, {
+        "type" : "customer",
+        "source_block" : "block_4",
+        "fields" : {
+          "postal_address" : "602 00 Brno",
+          "street" : "Lipová 12",
+          "name" : "Jana Příkladová"
+        },
+        "confidence" : 0.8
+      } ],
+      "payments" : [ {
+        "type" : "payment",
+        "source_barcode" : "barcode_1",
+        "format" : "spayd",
+        "fields" : {
+          "account" : "CZ6508000000192000145399",
+          "amount" : 1250.0,
+          "currency" : "CZK",
+          "variable_symbol" : "20260042",
+          "constant_symbol" : null,
+          "specific_symbol" : null,
+          "message" : "Faktura 2026-0042",
+          "recipient_name" : null
+        },
+        "confidence" : 1.0
+      } ]
+    },
+    "toc" : {
+      "entries" : [ {
+        "title" : "Faktura 2026-0042",
+        "page" : 1,
+        "level" : 1,
+        "block_id" : "block_1",
+        "confidence" : 0.95,
+        "source" : "heuristic"
+      }, {
+        "title" : "Odběratel",
+        "page" : 1,
+        "level" : 2,
+        "block_id" : "block_4",
+        "confidence" : 0.7999999999999999,
+        "source" : "heuristic"
+      }, {
+        "title" : "Položka",
+        "page" : 1,
+        "level" : 2,
+        "block_id" : "block_2",
+        "confidence" : 0.7999999999999999,
+        "source" : "heuristic"
+      }, {
+        "title" : "MnožstvíCenaCelkem",
+        "page" : 1,
+        "level" : 2,
+        "block_id" : "block_5",
+        "confidence" : 0.7999999999999999,
+        "source" : "heuristic"
+      } ]
+    }
+  }
+}

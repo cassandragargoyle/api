@@ -20,7 +20,7 @@ This directory contains JSON Schema definitions that define the communication co
 | [task-manifest.schema.json](schemas/task-manifest.schema.json) | Plugin task capability manifest |
 | [ocr-result.schema.json](schemas/ocr-result.schema.json) | Standardized OCR result with text positioning |
 
-### VIM (Versatile Information Model)
+### VIM (Layered Information Model)
 
 | Schema | Description |
 | ------ | ----------- |

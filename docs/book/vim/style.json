@@ -1,0 +1,160 @@
+{
+  "page": {
+    "size": "A4",
+    "margin": "22mm 20mm 22mm 22mm"
+  },
+  "fonts": {
+    "body": "\"Noto Serif\", \"DejaVu Serif\", serif",
+    "heading": "\"Noto Sans\", \"DejaVu Sans\", sans-serif",
+    "mono": "\"DejaVu Sans Mono\", monospace",
+    "size": "10pt"
+  },
+  "colors": {
+    "ink": "#1d2a3a",
+    "muted": "#5f6b7a",
+    "rule": "#d6dce4",
+    "accent": "#e5484d",
+    "accent-2": "#2f9e6a",
+    "paper-tint": "#f4f6f9",
+    "code-bg": "#f6f8fa"
+  },
+  "mermaid": {
+    "cli": "@mermaid-js/mermaid-cli@11.4.2",
+    "scale": 3,
+    "chrome": "",
+    "config": {
+      "theme": "base",
+      "themeVariables": {
+        "fontFamily": "Noto Sans, DejaVu Sans, sans-serif",
+        "fontSize": "17px",
+        "primaryColor": "#f4f6f9",
+        "primaryBorderColor": "#1d2a3a",
+        "primaryTextColor": "#1d2a3a",
+        "lineColor": "#5f6b7a",
+        "clusterBkg": "#fbfcfd",
+        "clusterBorder": "#d6dce4"
+      },
+      "flowchart": {
+        "curve": "basis",
+        "padding": 14,
+        "nodeSpacing": 30,
+        "rankSpacing": 42,
+        "wrappingWidth": 420
+      },
+      "markdownAutoWrap": false
+    }
+  },
+  "tables": {
+    "font_size": "8.6pt",
+    "wide": {
+      "min_columns": 4,
+      "font_size": "7.8pt"
+    },
+    "header_nowrap": true,
+    "columns": {},
+    "rules": [
+      {
+        "id": "layers",
+        "comment": "VIM layers: the layer keys stay on one line",
+        "match": {
+          "column": 1,
+          "header": [
+            "Layer",
+            "Vrstva"
+          ]
+        },
+        "columns": {
+          "1": {
+            "width": "28mm",
+            "nowrap": true
+          }
+        }
+      },
+      {
+        "id": "commands",
+        "comment": "Command line entry points: the command names stay on one line",
+        "match": {
+          "column": 1,
+          "header": [
+            "Command",
+            "Příkaz"
+          ]
+        },
+        "columns": {
+          "1": {
+            "nowrap": true
+          }
+        }
+      },
+      {
+        "id": "versions",
+        "comment": "Format versions: the version stays on one line",
+        "match": {
+          "column": 1,
+          "header": [
+            "Version",
+            "Verze"
+          ]
+        },
+        "columns": {
+          "1": {
+            "width": "16mm",
+            "nowrap": true
+          }
+        }
+      },
+      {
+        "id": "dates",
+        "comment": "Timeline tables: the date stays on one line",
+        "match": {
+          "column": 1,
+          "header": [
+            "Date",
+            "Datum"
+          ]
+        },
+        "columns": {
+          "1": {
+            "width": "24mm",
+            "nowrap": true
+          }
+        }
+      },
+      {
+        "id": "ladder",
+        "comment": "Gates and criteria of the decision ladder: the names stay on one line",
+        "match": {
+          "column": 1,
+          "header": [
+            "Gate",
+            "Brána",
+            "Criterion",
+            "Kritérium"
+          ]
+        },
+        "columns": {
+          "1": {
+            "width": "30mm",
+            "nowrap": true
+          }
+        }
+      },
+      {
+        "id": "problems",
+        "comment": "Catalog problems of the research lab",
+        "match": {
+          "column": 1,
+          "header": [
+            "Problem",
+            "Problém"
+          ]
+        },
+        "columns": {
+          "1": {
+            "width": "40mm"
+          }
+        }
+      }
+    ]
+  }
+}

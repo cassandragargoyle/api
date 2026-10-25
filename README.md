@@ -102,7 +102,7 @@ without a dependency on any of the language modules.
 | ---- | ------- |
 | Task Platform | Task request, task response, error model, task manifest, OCR result |
 | Plugin Platform | Plugin manifest, permissions, health check, `--help-ai` output |
-| VIM (Versatile Information Model) | Document, extraction layer, prescriptive layer |
+| VIM (Layered Information Model) | Document, extraction layer, prescriptive layer |
 | Visualization | 3D node-graph document for the graphlens viewer (`*.glens.json`) |
 | Transcription | Transcript working document (`*.scribe.json`) |
 | Modeling | Building model, operations, bill of materials, symbols, symbol sources |

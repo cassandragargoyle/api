@@ -25,6 +25,7 @@ Human-oriented documentation: [README.md](README.md), [CONTRIBUTING.md](CONTRIBU
 | `docs/adr/` | Architecture Decision Records |
 | `docs/contributing/` | Code style, testing, Git, and issue guidelines |
 | `docs/issues/` | Issue write-ups named `NNN-short-name.md`; finished ones in `docs/issues/done/` |
+| `docs/book/` | PDF books from Markdown chapters (EN and CS), for example the VIM book; see [docs/book/README.md](docs/book/README.md) |
 | `scripts/` | Helper scripts (for example `validate-contracts.mjs`) |
 | `.claude/` | Claude Code roles, commands, and skills |
 
@@ -46,6 +47,7 @@ Other targets:
 - `make lint-md` - Markdown lint (`markdownlint-cli2`), also part of `make lint`
 - `make venv` - create `python/.venv` and install the dev dependencies
 - `make lock` - refresh `python/uv.lock` after a dependency change in `python/pyproject.toml`
+- `make book` - build the PDF books in `docs/book/` (needs `uv`, Pango, and for diagrams Node.js and Chrome)
 
 Notes:
 
