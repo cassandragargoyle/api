@@ -153,8 +153,8 @@ Platba byla dekódována ze standardního formátu se všemi povinnými poli, a 
 
 ## Kde se parser spletl
 
-Poctivá kniha musí ukázat i druhou polovinu. Tentýž soubor obsahuje tři chyby a každá něco
-učí.
+Poctivá kniha musí ukázat i druhou stranu mince. Tentýž soubor obsahuje tři chyby a každá
+otevírá nový obzor.
 
 **Nadpis spolkl dodavatele.** Blok `block_1` obsahuje nadpis *Faktura 2026-0042*, adresu
 dodavatele i datum vystavení, protože stojí v jednom sloupci blízko sebe. Strukturální

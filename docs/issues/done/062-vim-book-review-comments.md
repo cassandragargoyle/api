@@ -2,8 +2,9 @@
 
 **Type**: Task
 **Priority**: Medium
-**Status**: Open
+**Status**: Implemented
 **Created**: 2026-10-25
+**Closed**: 2026-10-25
 **GitHub**: #62
 **Component**: docs
 **Related**: #61
@@ -27,8 +28,8 @@ comment is applied, mark it as done.
 
 | No. | Chapter | Place | Comment | State |
 | --- | ------- | ----- | ------- | ----- |
-| 1 | 3 Inside a vim.json, section *What the Parser Got Wrong* | EN: "An honest book has to show the other half too." CS: "Poctivá kniha musí ukázat i druhou polovinu." | "The other half" does not read well. Use an image people know: the other side of the coin (CS: *druhou stranu mince*) or the other side of the face (CS: *druhou tvář*). | Open |
-| 2 | 3 Inside a vim.json, section *What the Parser Got Wrong* | EN: "The same file contains three mistakes, and each of them teaches something." CS: "Tentýž soubor obsahuje tři chyby a každá něco učí." | Not "teaches": each mistake opens a new horizon or points in a new direction (CS: *každá otevírá nový obzor nebo směr*). | Open |
+| 1 | 3 Inside a vim.json, section *What the Parser Got Wrong* | EN: "An honest book has to show the other half too." CS: "Poctivá kniha musí ukázat i druhou polovinu." | "The other half" does not read well. Use an image people know: the other side of the coin (CS: *druhou stranu mince*) or the other side of the face (CS: *druhou tvář*). | Done: "the other side of the coin", CS *druhou stranu mince* |
+| 2 | 3 Inside a vim.json, section *What the Parser Got Wrong* | EN: "The same file contains three mistakes, and each of them teaches something." CS: "Tentýž soubor obsahuje tři chyby a každá něco učí." | Not "teaches": each mistake opens a new horizon or points in a new direction (CS: *každá otevírá nový obzor nebo směr*). | Done: "opens a new direction", CS *otevírá nový obzor* |
 
 ## Scope
 
