@@ -36,6 +36,11 @@ that book.
   tension before the answer
 - **Look back and around.** Connect a feature to the history of its field, to a habit of
   the people who do the work, or to what the AI era changes and what it forgets
+- **Tell stories from history.** Stories and parallels from history are welcome and make a
+  chapter worth reading: show that an idea is older than its code (the table of contents
+  and the list of sources in the first book of Pliny's *Natural History* are a layer
+  over a text, almost two thousand years before VIM). Every such story must be true and
+  must be listed in *Sources*, see [Facts and Sources](#facts-and-sources)
 - **Reflective sentences are welcome.** For example: *"When we look closer at form
   recognition, we find a varied and very interesting world, one that is often overlooked
   in the age of AI, when we chase new goals and forget the processes and skills we had
@@ -55,6 +60,7 @@ that book.
 | Invented anecdotes about real people or companies | Real, verified events, or a clearly hypothetical scene ("imagine a processing centre ...") |
 | Idioms and slang that a non-native reader does not know | Rich but plain language; images that work in any culture |
 | Long technical detail in the story | A short mention in the story; the detail in a later section or chapter |
+| Identifiers in the running text ("ADR-009 decided", "issue #51", "I-PDF-002", "criterion C3") | What was decided and when ("the decision of October 2026 about new layers"); the identifier goes to *Sources* |
 
 ### Example
 
@@ -78,7 +84,8 @@ A story is only as good as its facts. History and numbers in the book must be tr
 - **Mark uncertainty in the text.** Use "around", "roughly", "in the late 1980s" when the
   sources differ or are not exact; do not invent precision
 - **Name the source.** A chapter with history ends with a section *Sources* (*Prameny*)
-  that lists the links; the reader can check every claim
+  that lists the links; the reader can check every claim. This applies to every story and
+  parallel from history, not only to numbers and dates
 - **Experience of the team is welcome**, but it is written as experience ("in the
   processing centres of that time, people remember ..."), not as a measured fact
 - **Technical facts** (file names, commands, behaviour) come from the code and stay in
@@ -89,6 +96,28 @@ A story is only as good as its facts. History and numbers in the book must be tr
   says so; a book that only shows successes is a brochure
 - **Public content only.** `docs/` is public: no real personal data, no customer documents,
   no names of partners that the team does not name in public; make synthetic samples
+
+## Written to Be Heard
+
+A chapter must read well aloud, because the book may also become an audiobook, and because
+a text that sounds right is also easier to read.
+
+- **No identifiers in the running text, where it is possible.** Numbers of architecture
+  decisions (ADR-004), issues and pull requests (#51), catalog entries (I-PDF-002),
+  challenges (C001) and short codes of criteria (G1, C3) do not go into sentences. Name the
+  thing by what it is and when it happened: "the architecture decision of March 2026 that
+  made VIM a universal container", "the multi-column problem of the catalog", "the
+  criterion of revisions". The identifiers go to *Sources*, where a reader who wants to
+  check them finds them
+- **Tables name, they do not code.** A table of gates or criteria gets a short name per
+  row ("Provenance", "Revisions"), not an ID column, so that the text can refer to the
+  row by its name
+- **Code names stay, but stay few.** A field name such as `vim_version` or a layer key such
+  as `prescriptive` is part of the subject and stays in `code`; do not pile several of them
+  into one sentence
+- **A sentence carries one parenthesis at most**, and never one that holds only a code
+- **Figures are explained in the text.** The text says what a figure shows, so a listener
+  who cannot see it does not lose the thread
 
 ## Structure of a Chapter
 
@@ -109,7 +138,14 @@ Each version must read as if it was written in its own language: Czech sentences
 own rhythm, word order and images. The facts, the structure and the headings stay the same
 in both versions, so the chapters match in the contents and in the cross references.
 
+Examples belong to the language of the edition. The English edition has English labels,
+names and addresses (*Customer*, *Jane Sample*, *Prague*), the Czech edition Czech ones
+(*Odběratel*, *Jana Příkladová*, *Praha*). When a sample document is shown, each edition
+gets its own sample in its language, run through the same tool, and the chapter says that
+the other edition uses the twin. When the source of a story was in another language (a
+Czech bill in an English chapter), the chapter says so and gives the labels translated.
+
 ---
 
 **Created**: 2026-10-19 (portunix-reco-studio), taken over 2026-10-25
-**Version**: 1.1
+**Version**: 1.2
