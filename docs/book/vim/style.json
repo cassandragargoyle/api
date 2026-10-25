@@ -121,17 +121,37 @@
         }
       },
       {
-        "id": "criteria",
+        "id": "ladder",
+        "comment": "Gates and criteria of the decision ladder: the names stay on one line",
         "match": {
           "column": 1,
           "header": [
-            "ID"
+            "Gate",
+            "Brána",
+            "Criterion",
+            "Kritérium"
           ]
         },
         "columns": {
           "1": {
-            "width": "10mm",
+            "width": "30mm",
             "nowrap": true
+          }
+        }
+      },
+      {
+        "id": "problems",
+        "comment": "Catalog problems of the research lab",
+        "match": {
+          "column": 1,
+          "header": [
+            "Problem",
+            "Problém"
+          ]
+        },
+        "columns": {
+          "1": {
+            "width": "40mm"
           }
         }
       }

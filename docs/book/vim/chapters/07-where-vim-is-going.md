@@ -41,29 +41,30 @@ problem and lives for a long time; it is not closed just because one experiment 
 condition and a written verdict. The first three catalog entries are exactly the problems
 that any reader of PDFs meets sooner or later:
 
-| ID | Problem | What goes wrong |
-| --- | ------- | --------------- |
-| I-PDF-001 | Page footers | Page numbers, running titles and copyright lines appear in the text at every page break |
-| I-PDF-002 | Multi-column layout | Text read in stored order zig-zags between the columns |
-| I-PDF-003 | Tables across page breaks | One logical table becomes two, with the header row twice |
+| Problem | What goes wrong |
+| ------- | --------------- |
+| Page footers | Page numbers, running titles and copyright lines appear in the text at every page break |
+| Multi-column layout | Text read in stored order zig-zags between the columns |
+| Tables across page breaks | One logical table becomes two, with the header row twice |
 
-The first challenge, C001, compares `vim-parser` with Marker, an open-source converter
+The first challenge compares `vim-parser` with Marker, an open-source converter
 from PDF to Markdown, on these three problems. At the time of writing it is a stub: the
 pipeline is defined, the runs have not started. That is not a weakness of the lab. It is
 its method: first agree on what will be measured and what counts as a win, then measure.
 
-The melted columns of our invoice belong to the family of I-PDF-002, and the table that
-the detector found over a large part of the page belongs to the family of I-PDF-003. The sample
+The melted columns of our invoice belong to the family of the multi-column problem, and
+the table that the detector found over a large part of the page to the family of the
+table problem. The sample
 of this book could become a small entry in that collection.
 
 ## Questions Left Open on Purpose
 
-Good architecture decisions do not pretend to know everything. The ADRs of VIM end with
+Good architecture decisions do not pretend to know everything. The architecture decisions of VIM end with
 open questions, and they are worth listing, because they show where the format will grow.
 
 **A place for experiments.** The `layers` object is closed, and a new layer needs a schema
 and two implementations. That protects consumers, but it leaves no place for content that
-is not yet stable enough for a contract. ADR-009 names a possible *extension area* for such
+is not yet stable enough for a contract. The decision about new layers names a possible *extension area* for such
 content and leaves it as a separate decision.
 
 **A registry of layers.** With six layers, the list of layers with their owners and
@@ -73,11 +74,11 @@ be needed.
 **A language for rules.** A provision of the prescriptive layer can say that it is checked
 automatically, and it carries a `rule` object. What may be written in that object is not
 fixed by the contract; tools must agree on it outside. A small rule language is an open
-question of ADR-010, together with the format of the assessment document that records the
+question of the decision that created the prescriptive layer, together with the format of the assessment document that records the
 result of a compliance check.
 
 **The home of the LLM producer.** The prescriptive layer is written by a producer that uses
-a language model. Where that producer lives, and how it is run, is also still open; ADR-010
+a language model. Where that producer lives, and how it is run, is also still open; the same decision
 suggests that tools which use a language model at development time run as Claude Code
 skills.
 
@@ -96,8 +97,8 @@ simply look?
 The experiment of the prologue is the first answer. The same model, given the same
 document, was unsure with plain text and sure with the layers. Structure is not a crutch
 for weak readers; it is how a strong reader shows its work. The second answer is
-provenance. A model that answers *Jana Příkladová* is useful. A system that answers *Jana
-Příkladová, page 1, block 4, confidence 0.8, found by matching the label Odběratel* can be
+provenance. A model that answers *Jane Sample* is useful. A system that answers *Jane Sample,
+page 1, block 4, confidence 0.8, found by matching the label Customer* can be
 checked, corrected and trusted. When we look closer at the reading of documents, we find
 a varied world of small, patient skills: grouping, labelling, measuring, doubting. It is
 easy to overlook them when we chase new goals. VIM keeps them, and it keeps them in a form
@@ -107,6 +108,16 @@ The prescriptive layer points to the third answer. There, a language model is in
 as a producer, and the format makes room for it honestly: every provision it proposes
 starts as `proposed`, and only a person makes it `confirmed`. The model brings speed; the
 layers bring evidence; the person brings the final word.
+
+The Czech author Lukáš Sedláček, in his book about people in the age of AI, recalls a
+distinction made by the French anthropologist Claude Lévi-Strauss. There is *wild*
+thinking, free and associative, which looks for likenesses without fixed rules, and there
+is *domesticated* thinking, which keeps strictly to categories and gave us science, law
+and, in the end, AI itself. Domesticated thinking alone, Sedláček writes, would not be
+capable of innovation without the wild one. VIM is a small place where the two meet. The
+heuristics of the parser and the language model of the prescriptive layer guess, associate
+and propose. The closed schema, the stable identifiers and the person who confirms keep the
+order. Neither half would be enough alone.
 
 ## Back to the Glass
 
@@ -120,7 +131,11 @@ and it is the promise that the next versions will keep working on.
 
 ## Sources
 
-- `README.md`, `docs/catalog/pdf/` and `challenges/C001-pdf-vs-marker/` of
+- Catalog entries I-PDF-001, I-PDF-002 and I-PDF-003 and challenge C001: `README.md`,
+  `docs/catalog/pdf/` and `challenges/C001-pdf-vs-marker/` of
   `portunix-vim-parser-research-lab`
 - ADR-009 and ADR-010, section *Open Questions*, `portunix-architecture`
 - `src/ptx_reco/vim/README.md` of `portunix-reco`
+- Lukáš Sedláček, *Nazí v AI době* (2025, ISBN 978-80-53061-04-9): the introduction (pages
+  13 to 16) and the passage on wild and domesticated thinking (pages 21 and 22)
+- Claude Lévi-Strauss, *La Pensée sauvage* (1962), in English *The Savage Mind*

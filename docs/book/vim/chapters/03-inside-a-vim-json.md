@@ -8,7 +8,7 @@ language: en
 created: 2026-10-25
 last_updated: 2026-10-25
 related:
-  - ../samples/faktura-2026-0042.pdf.vim.json
+  - ../samples/invoice-2026-0042.pdf.vim.json
   - ../../../../contract/examples/form-extraction.vim.json
   - ../../../../contract/examples/definition-file.vim.json
 ---
@@ -18,20 +18,21 @@ related:
 ## A Small Invoice
 
 To look inside VIM, we need a document. For this book we made one: a one-page invoice
-from an invented glass company, *Sklo a vrstvy s.r.o.* (Glass and Layers Ltd.), to an
-invented customer in Brno. It has a title, two address blocks side by side, an issue date,
+from an invented glass company, *Glass & Layers Ltd.* in Prague, to an invented customer
+in Brno. It has a title, two address blocks side by side, an issue date,
 a small table with two items, a total and a QR code for payment in the Czech SPAYD format.
 Every name and number in it is made up, so it can be printed in a public book.
 
 We gave the PDF to the real parser, version 0.1.8, with its default settings:
 
 ```bash
-java -jar vim-parser-0.1.8-SNAPSHOT.jar auto -o faktura-2026-0042.pdf.vim.json faktura-2026-0042.pdf
+java -jar vim-parser-0.1.8-SNAPSHOT.jar auto -o invoice-2026-0042.pdf.vim.json invoice-2026-0042.pdf
 ```
 
 The result is a JSON file of about 31 kilobytes. Everything in this chapter is copied from
 it; only long arrays are shortened. The PDF, the `vim.json` and the script that made the
-invoice are stored next to the book, so you can repeat the run.
+invoice are stored next to the book, so you can repeat the run. The Czech edition of the
+book uses the same invoice in Czech, and the parser makes the same decisions on both.
 
 ## The Envelope
 
@@ -41,12 +42,12 @@ Every VIM document has the same three parts at the top:
 {
   "vim_version" : "1.4",
   "document" : {
-    "source" : "faktura-2026-0042.pdf",
+    "source" : "invoice-2026-0042.pdf",
     "pages" : 1,
     "metadata" : {
       "encodingFormat" : "application/pdf",
-      "contentSize" : 11122,
-      "inLanguage" : "cs",
+      "contentSize" : 11205,
+      "inLanguage" : "en",
       "producer" : "WeasyPrint 70.0"
     }
   },
@@ -57,8 +58,8 @@ Every VIM document has the same three parts at the top:
 `vim_version` says `"1.4"` because the document has a table of contents layer; the
 previous chapter explained this habit of the 1.x line. `document` describes the source:
 its file name, its page count and metadata with names taken from the Schema.org
-vocabulary (`encodingFormat`, `inLanguage`). The parser detected the language as Czech by
-itself. And `layers` holds the sheets of glass.
+vocabulary (`encodingFormat`, `inLanguage`). The parser detected the language as English
+by itself. And `layers` holds the sheets of glass.
 
 ## The Physical Layer: What Is There
 
@@ -72,12 +73,12 @@ together. Here is the start of the block with the customer:
   "bbox" : { "x" : 299.1, "y" : 155.7, "width" : 84.4, "height" : 44.8 },
   "page" : 1,
   "text_elements" : [ {
-    "text" : "Odběratel",
+    "text" : "Customer",
     "font_size" : 14.0,
     "font_name" : "UWGIWA+DejaVu-Sans-Bold",
     "confidence" : 1.0
   }, {
-    "text" : "Jana Příkladová",
+    "text" : "Jane Sample",
     "font_name" : "XKQQSR+DejaVu-Sans"
   } ]
 }
@@ -96,7 +97,7 @@ The barcode is kept exactly as it was decoded, with its position:
   "id" : "barcode_1",
   "page" : 1,
   "format" : "QR_CODE",
-  "raw_content" : "SPD*1.0*ACC:CZ6508000000192000145399*AM:1250.00*CC:CZK*X-VS:20260042*MSG:Faktura 2026-0042"
+  "raw_content" : "SPD*1.0*ACC:CZ6508000000192000145399*AM:1250.00*CC:CZK*X-VS:20260042*MSG:Invoice 2026-0042"
 }
 ```
 
@@ -117,8 +118,8 @@ The structural layer gives each physical block a shape. It keeps the same IDs:
   "type" : "labeled_content",
   "significance" : "primary",
   "page" : 1,
-  "header" : "Odběratel",
-  "content" : [ "Jana Příkladová", "Lipová 12", "602 00 Brno" ]
+  "header" : "Customer",
+  "content" : [ "Jane Sample", "12 Linden Street", "602 00 Brno" ]
 }
 ```
 
@@ -135,7 +136,7 @@ On the semantic layer, the parser turns blocks into entities and codes into paym
 "entities" : [ {
   "type" : "customer",
   "source_block" : "block_4",
-  "fields" : { "name" : "Jana Příkladová", "street" : "Lipová 12", "postal_address" : "602 00 Brno" },
+  "fields" : { "name" : "Jane Sample", "street" : "12 Linden Street", "postal_address" : "602 00 Brno" },
   "confidence" : 0.8
 } ],
 "payments" : [ {
@@ -143,14 +144,14 @@ On the semantic layer, the parser turns blocks into entities and codes into paym
   "source_barcode" : "barcode_1",
   "format" : "spayd",
   "fields" : { "account" : "CZ6508000000192000145399", "amount" : 1250.0,
-               "currency" : "CZK", "variable_symbol" : "20260042", "message" : "Faktura 2026-0042" },
+               "currency" : "CZK", "variable_symbol" : "20260042", "message" : "Invoice 2026-0042" },
   "confidence" : 1.0
 } ]
 ```
 
 Two things are worth noticing. First, every semantic result points to its source:
 `source_block` or `source_barcode`. Second, the confidences differ. The customer was found
-by matching the label *Odběratel* against known headers, which is a heuristic, so it gets
+by matching the label *Customer* against known headers, which is a heuristic, so it gets
 0.8. The payment was decoded from a standard format with all required fields present, so
 it gets 1.0.
 
@@ -159,19 +160,19 @@ it gets 1.0.
 An honest book has to show the other half too. The same file contains three mistakes, and
 each of them teaches something.
 
-**The title swallowed the supplier.** Block `block_1` contains the title *Faktura
+**The title swallowed the supplier.** Block `block_1` contains the title *Invoice
 2026-0042*, the supplier's address and the issue date, because they stand in one column
 close to each other. The structural layer therefore took the title as the header of the
 whole block, and the semantic layer produced an entity of type `invoice` whose `name` is
-*Dodavatel* (supplier) and whose `city` is *15. 10. 2026*. The confidence is still 0.8: the
+*Supplier* and whose `city` is *15 October 2026*. The confidence is still 0.8: the
 heuristic does not know that it was fooled.
 
-**The table columns melted.** In the physical block of the table, the cells *300,00* and
-*600,00* became one string, `300,00600,00`, because the parser glued characters on one line
+**The table columns melted.** In the physical block of the table, the cells *300.00* and
+*600.00* became one string, `300.00600.00`, because the parser glued characters on one line
 without a space between columns. The table detector, working separately, found a grid of
-twelve rows and four columns over a large part of the page, with cells like *Faktura 202* and
-*6-004*. The full text from the metadata extractor, on the other hand, has the table rows
-right: *Skleněná deska A 2 300,00 600,00*.
+twelve rows and four columns over a large part of the page, with cells like *Invoice 20* and
+*26-004*. The full text from the metadata extractor, on the other hand, has the table rows
+right: *Glass panel A 2 300.00 600.00*.
 
 **The table of contents found headings in an invoice.** The `toc` layer lists the title and
 three block headers as entries, with the source `heuristic`. For an invoice this is noise;

@@ -25,7 +25,7 @@ druhý nepřečte.
 
 Odpovědí ekosystému je **kontrakt**: popis formátu, který není kódem v žádném jazyce, který
 umí zkontrolovat stroj a který žije na jednom místě. Pro VIM je tím místem tento repozitář,
-adresář `contract/schemas/`. Rozhodlo o tom ADR-004 v březnu 2026. V říjnu 2026 s ním obě
+adresář `contract/schemas/`. Umístilo ho sem rozhodnutí z března 2026, které z VIM udělalo univerzální kontejner. V říjnu 2026 s ním obě
 implementace srovnaly své modely a javový parser dostal test, který porovnává jeho model
 preskriptivní vrstvy se schématy.
 
@@ -108,55 +108,63 @@ zprávou *no reference with reference_id 'r-9'*.
 
 Uzavřený objekt `layers` otevírá otázku, kterou dříve či později potká každý formát: když
 přijde nová informace, kam patří? Čárové kódy se staly kolekcí ve fyzické vrstvě. Obsah
-knihy se stal vlastní vrstvou. O každém případu se rozhodovalo zvlášť a ADR-009 si všimlo,
+knihy se stal vlastní vrstvou. O každém případu se rozhodovalo zvlášť a architektonické rozhodnutí o nových vrstvách z
+října 2026 si všimlo,
 že špatné rozhodnutí je drahé oběma směry. Zbytečná vrstva potřebuje schéma tady, oddíl ve
 specifikaci, model v Javě, model v Pythonu, podporu ve vizualizéru a zlaté testovací
 soubory: jen javový model extrakční vrstvy má 25 tříd a každá vrstva se platí dvakrát.
 Chybějící vrstva zase vtlačí cizí model do vrstvy s jiným významem.
 
-Odpovědí je **rozhodovací žebřík**. Nová informace zvolí první příčku, která sedí:
+Roku 1939 přemýšlel pilot a spisovatel Antoine de Saint-Exupéry v knize *Země lidí* o
+tvaru letadel a napsal větu, kterou inženýři rádi citují dodnes:
+
+> Zdá se, že dokonalosti není dosaženo tehdy, když už není co přidat, ale když už není co
+> odebrat.
+
+Formát, který chce vydržet, potřebuje stejnou kázeň. Odpovědí VIM je **rozhodovací
+žebřík**. Nová informace zvolí první příčku, která sedí:
 
 ```mermaid
-%% caption: Rozhodovací žebřík ADR-009: nová vrstva VIM je poslední příčka, až po třech branách a alespoň dvou ze čtyř kritérií
+%% caption: Rozhodovací žebřík: nová vrstva VIM je poslední příčka, až po třech branách a alespoň dvou ze čtyř kritérií
 flowchart TD
-    n["Nový druh informace"] --> g{"Brány G1 až G3<br/>všechny platí?"}
+    n["Nový druh informace"] --> g{"Platí všechny<br/>tři brány?"}
     g -- ne --> s4["Příčka 4: mimo VIM,<br/>vlastní dokument s odkazy do VIM"]
     g -- ano --> e{"Sedí na existující<br/>prvek?"}
     e -- ano --> s1["Příčka 1: volitelné pole"]
-    e -- ne --> c{"Dvě nebo více<br/>kritérií C1 až C4?"}
+    e -- ne --> c{"Dvě nebo více<br/>ze čtyř kritérií?"}
     c -- ne --> s2["Příčka 2: kolekce ve vrstvě<br/>se správnou hloubkou interpretace"]
-    c -- ano --> s3["Příčka 3: nová vrstva,<br/>o které rozhodne vlastní ADR"]
+    c -- ano --> s3["Příčka 3: nová vrstva,<br/>s vlastním rozhodnutím"]
 ```
 
 Tři **brány** rozhodují, zda informace do VIM vůbec patří:
 
-| ID | Brána |
-| --- | ----- |
-| G1 | Je výsledkem porozumění souboru: odvozená z dokumentu, bez něj nedává smysl |
-| G2 | Každá položka může nést původ: zdroj, stránku, oblast nebo ID jiného prvku |
-| G3 | Je užitečná i jinému spotřebiteli než svému výrobci |
+| Brána | Otázka |
+| ----- | ------ |
+| Porozumění | Je výsledkem porozumění souboru, odvozená z dokumentu a bez něj nedává smysl? |
+| Původ | Umí každá položka ukázat na zdroj, stránku, oblast nebo jiný prvek? |
+| Užitek | Je užitečná i jinému spotřebiteli než svému výrobci? |
 
 Čtyři **kritéria** rozhodují, zda potřebuje vlastní vrstvu; alespoň dvě musí být „ano“:
 
-| ID | Kritérium |
-| --- | --------- |
-| C1 | Má jiného výrobce nebo jiný životní cyklus než výstup vim-parseru |
-| C2 | Vyroste ve vlastní doménový model s několika typy entit a vztahy |
-| C3 | Bude mít revize nebo stav: hodnoty se po vytvoření mění |
-| C4 | Kotví do více než jedné vrstvy nebo druhu prvků |
+| Kritérium | „Ano“ znamená |
+| --------- | ------------- |
+| Výrobce | Píše ji jiný nástroj, nebo vzniká v jinou dobu než výstup vim-parseru |
+| Doménový model | Vyroste ve vlastní model s několika typy entit a vztahy |
+| Revize | Její hodnoty se po vytvoření mění: oprava, kontrola, stav |
+| Kotvy | Její položky ukazují do více než jedné vrstvy nebo druhu prvků |
 
-Dvě malá pravidla drží počítání poctivé. Když jsou revize jediným důvodem jiného životního
-cyklu, počítají se C1 a C3 jako jedno „ano“. A na kritéria se odpovídá pro příštích dvanáct
+Dvě malá pravidla drží počítání poctivé. Když jsou revize jediným důvodem, proč informace
+vzniká v jinou dobu, počítají se výrobce a revize jako jedno „ano“. A na kritéria se odpovídá pro příštích dvanáct
 měsíců, ne pro každou možnou budoucnost: „možná později“ je „ne“.
 
 Žebřík byl vyzkoušen na historii a výsledek je poučný. Vrstva `extraction` získá tři „ano“ a
 vrstvou by se stala znovu. Platby SPAYD nezískají žádné a jsou právem kolekcí. A vrstva
 `toc` také nezíská žádné: podle těchto pravidel by byla kolekcí ve strukturální vrstvě.
-Vrstvou zůstává, protože přesun by bez užitku rozbil všechny existující čtenáře. ADR to říká
+Vrstvou zůstává, protože přesun by bez užitku rozbil všechny existující čtenáře. Rozhodnutí to říká
 otevřeně a dodává, že `toc` není precedentem.
 
 Prvním kandidátem, který vyšplhal celý žebřík, byla vrstva `prescriptive`, která odpověděla
-„ano“ na všechny tři brány i všechna čtyři kritéria. Její ADR také ukazuje, co musí každá
+„ano“ na všechny tři brány i všechna čtyři kritéria. Její rozhodnutí také ukazuje, co musí každá
 nová vrstva přinést: je volitelná, na jiné vrstvy odkazuje přes ID, místo aby je kopírovala,
 její klíč je jedno anglické podstatné jméno malými písmeny, její schéma přichází **před**
 jakýmkoli kódem a má plán pro obě implementace.
@@ -180,3 +188,8 @@ prohlédnout si ho, zkontrolovat a číst z vlastního kódu.
   `make validate-contract` (25. října 2026)
 - [CHANGELOG.md](../../../../CHANGELOG.md): #42 a #51
 - ADR-004 a ADR-009, `portunix-architecture`
+- Antoine de Saint-Exupéry, *Terre des hommes* (1939, česky *Země lidí*), kapitola III;
+  český překlad citátu je vlastní, podle originálu *« Il semble que la perfection soit
+  atteinte non quand il n'y a plus rien à ajouter, mais quand il n'y a plus rien à
+  retrancher. »*:
+  [Terre des hommes](https://www.techno-science.net/fr/definitions/terre-des-hommes)

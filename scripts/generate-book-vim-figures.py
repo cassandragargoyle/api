@@ -6,7 +6,8 @@
 """Generate the SVG figures of the VIM book in English and Czech.
 
 The figures of the sample invoice are computed from the real output of vim-parser
-(``docs/book/vim/samples/faktura-2026-0042.pdf.vim.json``); the other figures are drawn
+(``docs/book/vim/samples/invoice-2026-0042.pdf.vim.json`` for English,
+``faktura-2026-0042.pdf.vim.json`` for Czech); the other figures are drawn
 from the facts of the chapters. Every figure is written as ``<name>.en.svg`` and
 ``<name>.cs.svg`` into ``docs/book/vim/images/``.
 
@@ -21,7 +22,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BOOK_DIR = REPO_ROOT / "docs" / "book" / "vim"
-SAMPLE = BOOK_DIR / "samples" / "faktura-2026-0042.pdf.vim.json"
+SAMPLES = BOOK_DIR / "samples"
 OUT_DIR = BOOK_DIR / "images"
 
 FONT = "font-family='Noto Sans, DejaVu Sans, sans-serif'"
@@ -44,6 +45,8 @@ LAYER_COLORS = {
 
 TEXTS = {
     "en": {
+        "sample": "invoice-2026-0042.pdf.vim.json",
+        "person": ["John Newman", "45 Main Street", "120 00 Prague 2"],
         "flat_title": "Plain text",
         "flat_note": "the columns are gone",
         "vim_title": "VIM, structural layer",
@@ -61,7 +64,7 @@ TEXTS = {
         "refers": "refers by ID",
         "since": "since",
         "provenance": "provenance: file, page, bbox, confidence, method",
-        "page": "page 1 of faktura-2026-0042.pdf, redrawn from the physical layer",
+        "page": "page 1 of invoice-2026-0042.pdf, redrawn from the physical layer",
         "entity": "semantic entity",
         "payment": "semantic payment",
         "raw": "raw_value",
@@ -84,6 +87,8 @@ TEXTS = {
         "year": "2026",
     },
     "cs": {
+        "sample": "faktura-2026-0042.pdf.vim.json",
+        "person": ["Ing. Jan Novák", "Hlavní 123/45", "120 00 Praha 2"],
         "flat_title": "Prostý text",
         "flat_note": "sloupce zmizely",
         "vim_title": "VIM, strukturální vrstva",
@@ -170,8 +175,7 @@ def fig_fulltext_vs_vim(t: dict) -> str:
     b.append(text(30, 36, t["flat_title"], 16, weight="bold"))
     b.append(text(30, 56, t["flat_note"], 12, MUTED))
     b.append(box(30, 70, 300, 150, fill=TINT))
-    lines = [f"{t['customer']} {t['addressee']}", "Ing. Jan Novák Ing. Jan Novák",
-             "Hlavní 123/45 Hlavní 123/45", "120 00 Praha 2 120 00 Praha 2"]
+    lines = [f"{t['customer']} {t['addressee']}"] + [f"{s} {s}" for s in t["person"]]
     for i, s in enumerate(lines):
         b.append(text(46, 100 + i * 30, s, 13, mono=True))
     b.append(text(400, 36, t["vim_title"], 16, weight="bold"))
@@ -181,7 +185,7 @@ def fig_fulltext_vs_vim(t: dict) -> str:
         x = 400 + i * 160
         b.append(box(x, 70, 148, 150, fill=color, stroke=color, opacity=0.08))
         b.append(text(x + 12, 96, header, 13, color, weight="bold"))
-        for j, s in enumerate(["Ing. Jan Novák", "Hlavní 123/45", "120 00 Praha 2"]):
+        for j, s in enumerate(t["person"]):
             b.append(text(x + 12, 126 + j * 26, s, 12.5))
     b.append(arrow(336, 145, 392, 145))
     return svg(730, 240, "".join(b), f"{t['flat_title']} / {t['vim_title']}")
@@ -236,7 +240,7 @@ def fig_timeline(t: dict) -> str:
 
 def fig_sample_page(t: dict) -> str:
     """The sample invoice redrawn from the physical layer, with blocks and their meaning"""
-    doc = json.loads(SAMPLE.read_text(encoding="utf-8"))
+    doc = json.loads((SAMPLES / t["sample"]).read_text(encoding="utf-8"))
     layers = doc["layers"]
     scale = 1.15
 

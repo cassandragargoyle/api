@@ -23,6 +23,17 @@ block is the supplier, that one is the customer, this grid is the list of items.
 comes meaning: the number at the bottom right is the total, in Czech crowns, and the black
 square is a QR code with which the bill can be paid.
 
+Or watch the same person over a page of classified ads in a newspaper. Dozens of small
+notices stand in narrow columns, one after another: a flat to let, a used bicycle, a lost
+cat. Between them sit boxed advertisements in bold type, a small photograph of a car, the
+logo of a shop, a thin rule that separates one section from the next. The eyes do not read
+this page line by line either. They first see the columns, the boxes and the pictures.
+Then they group: these four lines are one notice, this frame is an advertisement and not a
+notice, this picture belongs to the car below it, this heading opens the section of flats.
+Only then comes meaning: the price, the phone number, the size of the flat. A machine that
+reads the page from left to right, top to bottom, would mix the end of one notice with the
+start of another and put the slogan of an advertisement in the middle of a phone number.
+
 Reading is not one act. It is at least three, and each one stands on the one below it. If
 we want a machine to keep the result of reading, it is natural to keep all three, and to
 keep them apart. Imagine three sheets of glass laid over the page. On the lowest one, you
@@ -34,8 +45,9 @@ This picture is VIM.
 
 ## Five Principles
 
-The design notes of VIM name five principles. They are worth reading slowly, because every
-later decision in the format goes back to one of them.
+Before the first line of code, the authors of VIM wrote down five rules that a good
+result of reading must follow. They are worth reading slowly, because every later decision
+about the format goes back to one of them.
 
 **Separate content, structure and meaning.** The text `123 456` is content. The fact that
 it sits in a cell, in a column, in a table, is structure. The fact that it is a net amount
@@ -70,7 +82,7 @@ remember:
 | `semantic` | What does it mean? | Entities such as a customer or a supplier, payments read from QR codes, word stems for search |
 
 The order is the depth of interpretation. The physical layer interprets almost nothing: it
-says that the string *Odběratel* stands at a certain position in bold. The structural layer
+says that the string *Customer* stands at a certain position in bold. The structural layer
 interprets a little: it says that this bold string is the label of a block with three lines
 under it. The semantic layer interprets the most: it says that the block describes the
 customer, and it says so with a confidence of 0.8, not 1.0.
@@ -118,6 +130,38 @@ layer. A long PDF book may have `physical`, `structural` and `toc`. A reader ign
 layers it does not know. This is what lets very different tools share one container
 without stepping on each other.
 
+## Layers Older Than Computers
+
+It would be easy to think that layers over a document are an invention of the computer age.
+They are not. Open almost any book and look at its first pages. Before the first chapter,
+the author or the publisher tells you what the book is about, how it is divided and where
+to find each part. That short text is not the content of the book. It is a description
+that stands above the content and points into it: a layer.
+
+The idea is very old. Around the year 77, the Roman writer Pliny the Elder dedicated his
+*Natural History* to the future emperor Titus. The work had thirty-seven books, and Pliny
+gave the whole first book to a summary of the others: a list of the contents of each book,
+so that a busy reader could find a topic without reading everything. Next to the contents,
+he listed the authorities he had drawn from, more than four hundred names in the lists that
+survive. A table of contents and a list of sources, in one book written almost two thousand
+years ago. In the words of this book: a `toc` layer, and provenance.
+
+Later centuries added more layers of the same kind. In England, alphabetical indexes at the
+back of books appeared in the late sixteenth century; an index printed in 1595 in Thomas
+North's translation of Plutarch's *Lives* is one of the early examples. In 1658 a book of
+the acts of Parliament closed with *An Alphabetical Table of the most material contents of
+the whole book*. An index is a small semantic layer: it says which pages are about which
+idea, and it points to the place with a page number, the way a VIM entity points to its
+block.
+
+The habit is alive today. A Czech book about people in the age of artificial intelligence,
+published in 2025, opens with an introduction in which the author walks the reader through
+all seven chapters, one after another, before the first of them begins.
+
+VIM did not invent these layers. It gives them a form that a machine can write, read and
+check, and it adds what a printed index never had: the confidence of every entry and the
+method that produced it.
+
 ## A Model, Not a File Format
 
 There is one more idea in the design notes that is easy to miss. The *perfect format*, the
@@ -139,3 +183,10 @@ the next chapter.
   `plugins/vim-parser/README.md` in `portunix-plugins`
 - VIM format specification v1.5 and v2.0, `docs/architecture/` in `portunix-architecture`
 - ADR-009 *Criteria for Adding a New VIM Layer* (9 October 2026), `portunix-architecture`
+- [Natural History (Pliny)](https://en.wikipedia.org/wiki/Natural_History_(Pliny)): Book I
+  as preface, list of contents and lists of authorities; the first books written in AD 77
+- Lukáš Sedláček, *Nazí v AI době* (2025, ISBN 978-80-53061-04-9), introduction, pages 13
+  to 16
+- [Index (publishing)](https://en.wikipedia.org/wiki/Index_(publishing)): early indexes in
+  English books, North's Plutarch (1595) and Scobell's *Acts and Ordinances of Parliament*
+  (1658)

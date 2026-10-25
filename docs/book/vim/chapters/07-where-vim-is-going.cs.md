@@ -39,29 +39,29 @@ měření: verzované, opakovatelné srovnání s jasnou podmínkou vítězství
 První tři položky katalogu jsou přesně ty problémy, na které dříve či později narazí každý,
 kdo čte PDF:
 
-| ID | Problém | Co se pokazí |
-| --- | ------- | ------------ |
-| I-PDF-001 | Zápatí stránek | Čísla stránek, živá záhlaví a řádky s copyrightem se objevují v textu na každém zlomu stránky |
-| I-PDF-002 | Vícesloupcová sazba | Text čtený v uloženém pořadí kličkuje mezi sloupci |
-| I-PDF-003 | Tabulky přes zlom stránky | Z jedné logické tabulky jsou dvě a řádek záhlaví je tam dvakrát |
+| Problém | Co se pokazí |
+| ------- | ------------ |
+| Zápatí stránek | Čísla stránek, živá záhlaví a řádky s copyrightem se objevují v textu na každém zlomu stránky |
+| Vícesloupcová sazba | Text čtený v uloženém pořadí kličkuje mezi sloupci |
+| Tabulky přes zlom stránky | Z jedné logické tabulky jsou dvě a řádek záhlaví je tam dvakrát |
 
-První výzva, C001, porovnává `vim-parser` s nástrojem Marker, open source převodníkem z PDF
+První výzva porovnává `vim-parser` s nástrojem Marker, open source převodníkem z PDF
 do Markdownu, právě na těchto třech problémech. V době psaní je to kostra: pipeline je
 definovaná, běhy ještě nezačaly. To není slabina laboratoře. Je to její metoda: nejdřív se
 dohodnout, co se bude měřit a co se počítá jako vítězství, a teprve potom měřit.
 
-Slité sloupce naší faktury patří do rodiny I-PDF-002 a tabulka, kterou detektor našel přes
-velkou část stránky, do rodiny I-PDF-003. Vzorek z této knihy by se mohl stát malou
+Slité sloupce naší faktury patří do rodiny problému vícesloupcové sazby a tabulka, kterou
+detektor našel přes velkou část stránky, do rodiny problému tabulek. Vzorek z této knihy by se mohl stát malou
 položkou té sbírky.
 
 ## Otázky nechané otevřené záměrně
 
-Dobrá architektonická rozhodnutí nepředstírají, že vědí všechno. ADR o VIM končí otevřenými
+Dobrá architektonická rozhodnutí nepředstírají, že vědí všechno. Architektonická rozhodnutí o VIM končí otevřenými
 otázkami a vyplatí se je vyjmenovat, protože ukazují, kudy bude formát růst.
 
 **Místo pro pokusy.** Objekt `layers` je uzavřený a nová vrstva potřebuje schéma a dvě
 implementace. To chrání spotřebitele, ale nenechává místo pro obsah, který ještě není dost
-stabilní na kontrakt. ADR-009 zmiňuje možnou *oblast rozšíření* pro takový obsah a nechává ji
+stabilní na kontrakt. Rozhodnutí o nových vrstvách zmiňuje možnou *oblast rozšíření* pro takový obsah a nechává ji
 jako samostatné rozhodnutí.
 
 **Registr vrstev.** Při šesti vrstvách se seznam vrstev s jejich vlastníky a výrobci
@@ -69,11 +69,11 @@ pohodlně vejde do specifikace formátu. Při více vrstvách může být potře
 
 **Jazyk pro pravidla.** Ustanovení preskriptivní vrstvy může říct, že se ověřuje
 automaticky, a nese objekt `rule`. Co smí v tomto objektu stát, kontrakt neurčuje; nástroje
-se na tom musí dohodnout mimo něj. Malý jazyk pravidel je otevřenou otázkou ADR-010, spolu s
+se na tom musí dohodnout mimo něj. Malý jazyk pravidel je otevřenou otázkou rozhodnutí, které zavedlo preskriptivní vrstvu, spolu s
 formátem dokumentu hodnocení, který zaznamená výsledek kontroly souladu.
 
 **Domov výrobce s jazykovým modelem.** Preskriptivní vrstvu píše výrobce, který používá
-jazykový model. Kde tento výrobce žije a jak se spouští, je také stále otevřené; ADR-010
+jazykový model. Kde tento výrobce žije a jak se spouští, je také stále otevřené; totéž rozhodnutí
 navrhuje, aby nástroje, které používají jazykový model během vývoje, běžely jako skilly
 Claude Code.
 
@@ -102,6 +102,15 @@ formát mu poctivě dělá místo: každé ustanovení, které navrhne, začín�
 teprve člověk ho udělá `confirmed`. Model přináší rychlost, vrstvy přinášejí důkazy, člověk
 přináší poslední slovo.
 
+Lukáš Sedláček ve své knize o člověku v době umělé inteligence připomíná rozlišení
+francouzského antropologa Clauda Lévi-Strausse. Existuje myšlení *divoké*, volné a
+asociativní, které hledá podobnosti bez pevných pravidel, a myšlení *domestikované*, které
+se přísně drží kategorií a dalo nám vědu, právní řád a nakonec i samotnou AI.
+Domestikované myšlení by podle Sedláčka nebylo bez divokého schopné žádné inovace. VIM je
+malé místo, kde se obě setkávají. Heuristiky parseru a jazykový model preskriptivní vrstvy
+hádají, spojují a navrhují. Uzavřené schéma, stabilní identifikátory a člověk, který
+potvrzuje, drží řád. Ani jedna polovina by sama nestačila.
+
 ## Zpátky ke sklu
 
 Začínali jsme třemi skleněnými tabulemi nad stránkou. O devět měsíců později jich je šest a
@@ -114,7 +123,11 @@ pracovat i další verze.
 
 ## Prameny
 
-- `README.md`, `docs/catalog/pdf/` a `challenges/C001-pdf-vs-marker/` repozitáře
+- Položky katalogu I-PDF-001, I-PDF-002 a I-PDF-003 a výzva C001: `README.md`,
+  `docs/catalog/pdf/` a `challenges/C001-pdf-vs-marker/` repozitáře
   `portunix-vim-parser-research-lab`
 - ADR-009 a ADR-010, oddíl *Open Questions*, `portunix-architecture`
 - `src/ptx_reco/vim/README.md` v `portunix-reco`
+- Lukáš Sedláček, *Nazí v AI době* (2025, ISBN 978-80-53061-04-9): úvod (strany 13 až 16)
+  a pasáž o divokém a domestikovaném myšlení (strany 21 a 22)
+- Claude Lévi-Strauss, *La Pensée sauvage* (1962), česky *Myšlení přírodních národů*

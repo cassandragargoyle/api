@@ -9,7 +9,7 @@ created: 2026-10-25
 last_updated: 2026-10-25
 related:
   - ../samples/make-sample-invoice.py
-  - ../samples/faktura-2026-0042.pdf.vim.json
+  - ../samples/invoice-2026-0042.pdf.vim.json
   - 05-a-promise-in-json-schema.md
 ---
 
@@ -33,7 +33,7 @@ ZIP files. Inside Portunix, the same parser runs as `portunix vim-parser`; outsi
 the JAR directly. Before you run anything, ask the parser what it would do:
 
 ```bash
-java -jar vim-parser-0.1.8-SNAPSHOT.jar auto --dry-run faktura-2026-0042.pdf
+java -jar vim-parser-0.1.8-SNAPSHOT.jar auto --dry-run invoice-2026-0042.pdf
 ```
 
 The answer is the execution plan you saw in the chapter about the machine that reads:
@@ -44,7 +44,7 @@ missing from the list, its ZIP file is missing from `plugins/`.
 ## Step 2: Make the File
 
 ```bash
-java -jar vim-parser-0.1.8-SNAPSHOT.jar auto -o faktura-2026-0042.pdf.vim.json faktura-2026-0042.pdf
+java -jar vim-parser-0.1.8-SNAPSHOT.jar auto -o invoice-2026-0042.pdf.vim.json invoice-2026-0042.pdf
 ```
 
 With `-o` the result goes to the given file; without it, to the standard output. The option
@@ -66,12 +66,12 @@ useful other options of the `auto` command are:
 A `vim.json` of one page has hundreds of lines. Before you read them, look at the picture:
 
 ```bash
-java -jar vim-parser-0.1.8-SNAPSHOT.jar visualize faktura-2026-0042.pdf.vim.json
+java -jar vim-parser-0.1.8-SNAPSHOT.jar visualize invoice-2026-0042.pdf.vim.json
 ```
 
 The visualizer prints a single HTML page with a tab for each layer; with `-o` or `-w` it
 writes the page to a file. Open it in a browser, switch to the structural tab and find the
-block with the header *Odběratel*. Then switch to the physical tab and find the same block
+block with the header *Customer*. Then switch to the physical tab and find the same block
 by its ID. You are now doing by hand what
 every consumer of VIM does in code: following an ID from a higher layer down to the
 evidence.
@@ -82,15 +82,15 @@ For a quick look from the command line, `jq` is enough. The headers of all struc
 blocks:
 
 ```bash
-jq -r '.layers.structural.blocks[] | "\(.id)\t\(.header)"' faktura-2026-0042.pdf.vim.json
+jq -r '.layers.structural.blocks[] | "\(.id)\t\(.header)"' invoice-2026-0042.pdf.vim.json
 ```
 
 ```text
-block_1	Faktura 2026-0042
-block_2	Položka
+block_1	Invoice 2026-0042
+block_2	Item
 block_3	null
-block_4	Odběratel
-block_5	MnožstvíCenaCelkem
+block_4	Customer
+block_5	QuantityPriceTotal
 ```
 
 The output shows the strengths and the weaknesses of the third chapter at a glance: the
@@ -107,7 +107,7 @@ page and the position of the block the answer came from. Then it reads the payme
 import json
 from pathlib import Path
 
-doc = json.loads(Path("faktura-2026-0042.pdf.vim.json").read_text(encoding="utf-8"))
+doc = json.loads(Path("invoice-2026-0042.pdf.vim.json").read_text(encoding="utf-8"))
 layers = doc["layers"]
 
 # Who is the customer, and where on the page does it come from?
@@ -124,7 +124,7 @@ for payment in layers.get("semantic", {}).get("payments", []):
 ```
 
 ```text
-Jana Příkladová | page 1 | bbox 299.13782 155.6819 | confidence 0.8
+Jane Sample | page 1 | bbox 299.13782 155.6819 | confidence 0.8
 1250.0 CZK to CZ6508000000192000145399 VS 20260042
 ```
 
@@ -213,7 +213,7 @@ need, write the layer you own, and leave the rest alone.
    Check such a change with `--dry-run` first.
 2. There is no entity of type `supplier`. The supplier's address landed in `block_1`
    together with the title, and the entity made from that block has the type `invoice` and
-   the name *Dodavatel*. The semantic layer is a heuristic, and on this layout it fails.
+   the name *Supplier*. The semantic layer is a heuristic, and on this layout it fails.
 3. `/vim_version '1.5' is not one of ['2.0', '2.1']`. The extraction layer exists since
    version 2.0, so the document must say `"2.0"` or `"2.1"`.
 4. The entity of type `invoice` from `block_1` has the confidence 0.8, the same as the

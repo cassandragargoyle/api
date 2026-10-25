@@ -22,6 +22,17 @@ Nejdřív vezmou stránku jako obraz: tučný řádek nahoře, dva bloky textu v
 je seznam položek. Teprve potom přichází význam: číslo vpravo dole je celková částka, v
 korunách, a černý čtverec je QR kód, kterým se dá faktura zaplatit.
 
+Nebo pozorujte téhož člověka nad stránkou řádkové inzerce v novinách. Desítky drobných
+inzerátů stojí v úzkých sloupcích jeden za druhým: pronájem bytu, ojeté kolo, ztracená
+kočka. Mezi nimi jsou zarámované reklamy tučným písmem, malá fotografie auta, logo obchodu,
+tenká linka, která odděluje jednu rubriku od druhé. Ani tuto stránku oči nečtou řádek po
+řádku. Nejdřív uvidí sloupce, rámečky a obrázky. Pak seskupují: tyto čtyři řádky jsou
+jeden inzerát, tento rámeček je reklama, a ne inzerát, tento obrázek patří k autu pod ním,
+tento nadpis otevírá rubriku bytů. Teprve potom přichází význam: cena, telefonní číslo,
+velikost bytu. Stroj, který by stránku četl zleva doprava a shora dolů, by smíchal konec
+jednoho inzerátu se začátkem dalšího a slogan reklamy by vložil doprostřed telefonního
+čísla.
+
 Čtení není jeden úkon. Jsou to nejméně tři a každý stojí na tom pod ním. Chceme-li, aby stroj
 výsledek čtení uchoval, je přirozené uchovat všechny tři a držet je od sebe. Představte si
 tři skleněné tabule položené přes stránku. Na nejspodnější obtáhnete, co tam opravdu je. Na
@@ -33,8 +44,9 @@ Tento obraz je VIM.
 
 ## Pět principů
 
-Návrhové poznámky VIM jmenují pět principů. Vyplatí se je číst pomalu, protože každé
-pozdější rozhodnutí o formátu se k některému z nich vrací.
+Ještě před prvním řádkem kódu sepsali autoři VIM pět pravidel, která musí dobrý výsledek
+čtení splňovat. Vyplatí se je číst pomalu, protože každé pozdější rozhodnutí o formátu se
+k některému z nich vrací.
 
 **Odděl obsah, strukturu a význam.** Text `123 456` je obsah. To, že leží v buňce, ve
 sloupci, v tabulce, je struktura. To, že jde o částku bez DPH v korunách, je význam. Tři
@@ -114,6 +126,36 @@ Všechny vrstvy jsou volitelné. Dokument ze skeneru obrázků může mít jen v
 které nezná, ignoruje. Právě to dovoluje velmi rozdílným nástrojům sdílet jeden kontejner,
 aniž by si šlapaly na prsty.
 
+## Vrstvy starší než počítače
+
+Bylo by snadné myslet si, že vrstvy nad dokumentem jsou vynálezem počítačové doby. Nejsou.
+Otevřete téměř jakoukoli knihu a podívejte se na její první stránky. Ještě před první
+kapitolou vám autor nebo nakladatel řekne, o čem kniha je, jak je rozdělená a kde najdete
+kterou část. Tento krátký text není obsahem knihy. Je to popis, který stojí nad obsahem a
+ukazuje do něj: vrstva.
+
+Ta myšlenka je velmi stará. Kolem roku 77 věnoval římský spisovatel Plinius starší svou
+*Přírodní historii* budoucímu císaři Titovi. Dílo mělo třicet sedm knih a Plinius celou
+první knihu vyhradil přehledu ostatních: seznamu obsahu každé knihy, aby zaneprázdněný
+čtenář našel téma, aniž by musel číst všechno. Vedle obsahu vyjmenoval autority, ze kterých
+čerpal, v dochovaných seznamech přes čtyři sta jmen. Obsah a seznam pramenů v jedné knize,
+napsané téměř před dvěma tisíci lety. Řečeno slovy této knihy: vrstva `toc` a původ.
+
+Pozdější staletí přidala další vrstvy téhož druhu. V Anglii se abecední rejstříky na konci
+knih objevily koncem šestnáctého století; rejstřík vytištěný roku 1595 v překladu
+Plútarchových *Životopisů* od Thomase Northe patří k raným příkladům. Roku 1658 končila
+kniha parlamentních zákonů *Abecední tabulkou nejpodstatnějšího obsahu celé knihy*.
+Rejstřík je malá sémantická vrstva: říká, které stránky jsou o které myšlence, a na místo
+ukazuje číslem stránky, tak jako entita VIM ukazuje na svůj blok.
+
+Ten zvyk žije dodnes. Česká kniha o člověku v době umělé inteligence, vydaná roku 2025,
+začíná úvodem, ve kterém autor provede čtenáře všemi sedmi kapitolami, jednou po druhé,
+dřív než první z nich začne.
+
+VIM tyto vrstvy nevymyslel. Dává jim tvar, který umí stroj zapsat, přečíst a zkontrolovat,
+a přidává, co tištěný rejstřík nikdy neměl: spolehlivost každé položky a metodu, která ji
+vytvořila.
+
 ## Model, ne formát souboru
 
 V návrhových poznámkách je ještě jedna myšlenka, kterou je snadné přehlédnout. *Dokonalý
@@ -133,3 +175,9 @@ tabule. Jak se to stalo a v jakém pořadí, vypráví další kapitola.
   `plugins/vim-parser/README.md` v `portunix-plugins`
 - Specifikace formátu VIM v1.5 a v2.0, `docs/architecture/` v `portunix-architecture`
 - ADR-009 *Criteria for Adding a New VIM Layer* (9. října 2026), `portunix-architecture`
+- [Natural History (Pliny)](https://en.wikipedia.org/wiki/Natural_History_(Pliny)): první
+  kniha jako předmluva, seznam obsahu a seznamy autorit; první knihy napsány roku 77
+- Lukáš Sedláček, *Nazí v AI době* (2025, ISBN 978-80-53061-04-9), úvod, strany 13 až 16
+- [Index (publishing)](https://en.wikipedia.org/wiki/Index_(publishing)): rané rejstříky v
+  anglických knihách, Northův Plútarchos (1595) a Scobellovy *Acts and Ordinances of
+  Parliament* (1658)

@@ -30,7 +30,8 @@ java -jar vim-parser-0.1.8-SNAPSHOT.jar auto -o faktura-2026-0042.pdf.vim.json f
 
 Výsledkem je soubor JSON o zhruba 31 kilobajtech. Všechno v této kapitole je z něj
 okopírované, jen dlouhá pole jsou zkrácena. PDF, `vim.json` i skript, který fakturu vyrobil,
-leží vedle knihy, takže si běh můžete zopakovat.
+leží vedle knihy, takže si běh můžete zopakovat. Anglické vydání knihy používá tutéž fakturu
+v angličtině a parser se nad oběma rozhoduje stejně.
 
 ## Obálka
 

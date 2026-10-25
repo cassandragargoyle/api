@@ -26,8 +26,8 @@ they make a file that one program writes and the other cannot read.
 
 The answer of the ecosystem is a **contract**: a description of the format that is not
 code in any language, that a machine can check, and that lives in one place. For VIM that
-place is this repository, the directory `contract/schemas/`. ADR-004 decided it in March
-2026. In October 2026 both implementations aligned their models with it, and the Java
+place is this repository, the directory `contract/schemas/`. The decision of March 2026
+that made VIM a universal container put it here. In October 2026 both implementations aligned their models with it, and the Java
 parser got a test that compares its model of the prescriptive layer with the schemas.
 
 ## What the Contract Holds
@@ -110,57 +110,66 @@ rules to their own documents. In the run above, the example
 The closed `layers` object raises a question that every format meets sooner or later: when
 new information arrives, where does it go? Barcodes became a collection inside the physical
 layer. The table of contents became a layer of its own. Each decision was made alone, and
-ADR-009 noticed that a wrong decision is expensive in both directions. An unnecessary layer
+the architecture decision about new layers, written in October 2026, noticed that a wrong decision is expensive in both directions. An unnecessary layer
 needs a schema here, a section in the specification, a model in Java, a model in Python,
 support in the visualizer and golden test files: the Java model of the extraction layer
 alone has 25 classes, and every layer is paid for twice. A missing layer, on the other
 hand, presses a foreign model into a layer with another meaning.
 
-The answer is a **decision ladder**. New information takes the first step that fits:
+In 1939, the pilot and writer Antoine de Saint-Exupéry thought about the shape of
+aeroplanes in his book *Wind, Sand and Stars* and wrote a sentence that engineers still
+like to quote:
+
+> It seems that perfection is reached not when there is nothing more to add, but when
+> there is nothing more to take away.
+
+A format that wants to last needs the same discipline. The answer of VIM is a
+**decision ladder**. New information takes the first step that fits:
 
 ```mermaid
-%% caption: The decision ladder of ADR-009: a new VIM layer is the last step, after three gates and at least two of four criteria
+%% caption: The decision ladder: a new VIM layer is the last step, after three gates and at least two of four criteria
 flowchart TD
-    n["New kind of information"] --> g{"Gates G1 to G3<br/>all hold?"}
+    n["New kind of information"] --> g{"All three<br/>gates hold?"}
     g -- no --> s4["Step 4: outside VIM,<br/>an own document that refers to VIM"]
     g -- yes --> e{"Fits an existing<br/>element?"}
     e -- yes --> s1["Step 1: optional field"]
-    e -- no --> c{"Two or more of<br/>criteria C1 to C4?"}
+    e -- no --> c{"Two or more of<br/>the four criteria?"}
     c -- no --> s2["Step 2: collection in the layer<br/>of the right interpretation depth"]
-    c -- yes --> s3["Step 3: new layer,<br/>decided by its own ADR"]
+    c -- yes --> s3["Step 3: new layer,<br/>with its own decision"]
 ```
 
 The three **gates** decide whether the information belongs to VIM at all:
 
-| ID | Gate |
-| --- | ---- |
-| G1 | It is a result of understanding the file: derived from the document, meaningless without it |
-| G2 | Every item can carry provenance: a source, a page, a region or the ID of another element |
-| G3 | It is useful to a consumer other than its producer |
+| Gate | Question |
+| ---- | -------- |
+| Comprehension | Is it a result of understanding the file, derived from the document and meaningless without it? |
+| Provenance | Can every item point to a source, a page, a region or another element? |
+| Use | Is it useful to a consumer other than its producer? |
 
 The four **criteria** decide whether it needs a layer of its own; at least two must be
 "yes":
 
-| ID | Criterion |
-| --- | --------- |
-| C1 | It has a different producer or life cycle than the output of vim-parser |
-| C2 | It will grow into its own domain model with several entity types and relations |
-| C3 | It will have revisions or state: values change after production |
-| C4 | It anchors into more than one layer or kind of element |
+| Criterion | A "yes" means |
+| --------- | ------------- |
+| Producer | Another tool writes it, or it is written at another time than the output of vim-parser |
+| Domain model | It will grow into its own model with several entity types and relations |
+| Revisions | Its values change after production: correction, review, state |
+| Anchors | Its items point into more than one layer or kind of element |
 
-Two small rules keep the count honest. When revisions are the only reason for a different
-life cycle, C1 and C3 count as one "yes". And the criteria are answered for the next twelve
+Two small rules keep the count honest. When revisions are the only reason why the
+information is written at another time, the producer and the revisions count as one
+"yes". And the criteria are answered for the next twelve
 months, not for every possible future: "maybe later" is a "no".
 
 The ladder was tested against history, and the result is instructive. The `extraction`
 layer scores three "yes" and would be a layer again. The SPAYD payments score none and are
 rightly a collection. And the `toc` layer scores none: under these rules it would be a
 collection in the structural layer. It stays a layer, because moving it would break every
-existing reader for no gain. The ADR says so plainly and adds that `toc` is not a
+existing reader for no gain. The decision says so plainly and adds that `toc` is not a
 precedent.
 
 The first candidate to climb the whole ladder was the `prescriptive` layer, which answered
-"yes" to all three gates and all four criteria. Its ADR also shows what every new layer
+"yes" to all three gates and all four criteria. Its decision also shows what every new layer
 must bring: it is optional, it refers to other layers by ID instead of copying them, its
 key is one lower-case English noun, its schema comes **before** any code, and it has a plan
 for both implementations.
@@ -185,3 +194,8 @@ The next part of the book leaves the inside of VIM and shows how to use it: how 
   output of `make validate-contract` (25 October 2026)
 - [CHANGELOG.md](../../../../CHANGELOG.md): #42 and #51
 - ADR-004 and ADR-009, `portunix-architecture`
+- Antoine de Saint-Exupéry, *Terre des hommes* (1939, in English *Wind, Sand and Stars*),
+  chapter III; the English wording of the quote is a translation of the original *« Il
+  semble que la perfection soit atteinte non quand il n'y a plus rien à ajouter, mais quand
+  il n'y a plus rien à retrancher. »*:
+  [Terre des hommes](https://www.techno-science.net/fr/definitions/terre-des-hommes)

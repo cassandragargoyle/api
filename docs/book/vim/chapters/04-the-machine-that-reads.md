@@ -61,7 +61,7 @@ sample invoice of the previous chapter, the parser answers:
 ```text
 VIM Parser - Execution Plan
 ============================
-Input: faktura-2026-0042.pdf (10,9 KB, 1 page)
+Input: invoice-2026-0042.pdf (10,9 KB, 1 page)
 
 Discovered plugins: 8
 Auto-enabled: 7
@@ -142,7 +142,7 @@ blocks and a switch that hides auxiliary blocks such as page numbers. It runs on
 file, so it works for any producer of VIM, not only for this parser:
 
 ```bash
-portunix vim-parser visualize faktura-2026-0042.pdf.vim.json
+portunix vim-parser visualize invoice-2026-0042.pdf.vim.json
 ```
 
 For the people who maintain the parser, there is a second kind of sight: since March 2026,

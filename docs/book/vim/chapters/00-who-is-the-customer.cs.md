@@ -52,7 +52,8 @@ na každé obrazovce a na každé tiskárně, a v roce 2008 se z něj stala mezi
 ISO 32000. Tuto práci dělá velmi dobře. PDF ví, kde stojí každý znak. Neví, že znaky pod
 slovem *Zákazník* tvoří jméno, ani že to jméno patří zákazníkovi, a ne adresátovi.
 
-Návrhové poznámky VIM to říkají přímo: *PDF je jen symptom*. Skutečným problémem je
+Když autoři VIM poprvé sepsali svou myšlenku, v krátkém textu, kterému tato kniha říká
+*návrhové poznámky*, napsali to přímo: *PDF je jen symptom*. Skutečným problémem je
 **ztráta významu, když data putují mezi systémy**. Typický řetěz vypadá takto:
 
 ```text
@@ -75,7 +76,7 @@ verzi formátu ALTO, XML, které zaznamenává, kde na naskenované stránce sto
 O tom, co slovo znamená, ale neříká nic. Jiné formáty zase výborně popisují význam a o
 stránce nevědí nic.
 
-Návrhové poznámky VIM z toho vyvozují závěr ve dvou větách, kterými celý koncept začíná:
+Návrhové poznámky shrnují závěr do dvou vět a celá myšlenka VIM začíná právě jimi:
 
 > Neexistuje jeden univerzální formát pro všechny soubory.
 > Existuje univerzální vrstvený model pro reprezentaci informace.

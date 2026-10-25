@@ -1,0 +1,1167 @@
+{
+  "vim_version" : "1.4",
+  "document" : {
+    "source" : "invoice-2026-0042.pdf",
+    "pages" : 1,
+    "metadata" : {
+      "encodingFormat" : "application/pdf",
+      "contentSize" : 11205,
+      "inLanguage" : "en",
+      "producer" : "WeasyPrint 70.0",
+      "additionalProperties" : {
+        "pageCount" : "1"
+      }
+    }
+  },
+  "layers" : {
+    "physical" : {
+      "blocks" : [ {
+        "id" : "block_1",
+        "bbox" : {
+          "right" : 320.29782,
+          "bottom" : 239.35461,
+          "x" : 112.94291,
+          "y" : 119.86712,
+          "width" : 207.35492,
+          "height" : 119.487495
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Invoice 2026-0042",
+          "bbox" : {
+            "right" : 320.29782,
+            "bottom" : 131.50684,
+            "x" : 112.94291,
+            "y" : 119.86712,
+            "width" : 207.35492,
+            "height" : 11.639716
+          },
+          "page" : 1,
+          "font_size" : 26.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Supplier",
+          "bbox" : {
+            "right" : 167.1216,
+            "bottom" : 162.08362,
+            "x" : 115.19291,
+            "y" : 155.6819,
+            "width" : 51.928688,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Glass & Layers Ltd.",
+          "bbox" : {
+            "right" : 221.37119,
+            "bottom" : 174.88782,
+            "x" : 115.19291,
+            "y" : 168.4861,
+            "width" : 106.178276,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "7 Field Lane",
+          "bbox" : {
+            "right" : 181.18996,
+            "bottom" : 187.69202,
+            "x" : 115.19291,
+            "y" : 181.2903,
+            "width" : 65.99705,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "110 00 Prague 1",
+          "bbox" : {
+            "right" : 206.09286,
+            "bottom" : 200.49622,
+            "x" : 115.19291,
+            "y" : 194.0945,
+            "width" : 90.899956,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "Issue date",
+          "bbox" : {
+            "right" : 177.25705,
+            "bottom" : 226.55042,
+            "x" : 112.94291,
+            "y" : 220.1487,
+            "width" : 64.31414,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "15 October 2026",
+          "bbox" : {
+            "right" : 205.9328,
+            "bottom" : 239.35461,
+            "x" : 112.94291,
+            "y" : 232.9529,
+            "width" : 92.98989,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_2",
+        "bbox" : {
+          "right" : 188.54456,
+          "bottom" : 304.1944,
+          "x" : 113.69291,
+          "y" : 269.1843,
+          "width" : 74.85165,
+          "height" : 35.0101
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Item",
+          "bbox" : {
+            "right" : 141.96165,
+            "bottom" : 275.586,
+            "x" : 113.69291,
+            "y" : 269.1843,
+            "width" : 28.268745,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Glass panel A",
+          "bbox" : {
+            "right" : 188.52255,
+            "bottom" : 289.8902,
+            "x" : 113.69291,
+            "y" : 283.4885,
+            "width" : 74.82964,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "Glass panel B",
+          "bbox" : {
+            "right" : 188.54456,
+            "bottom" : 304.1944,
+            "x" : 113.69291,
+            "y" : 297.7927,
+            "width" : 74.85165,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_3",
+        "bbox" : {
+          "right" : 187.8386,
+          "bottom" : 347.56067,
+          "x" : 112.94291,
+          "y" : 328.35477,
+          "width" : 74.89568,
+          "height" : 19.205902
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Total due",
+          "bbox" : {
+            "right" : 169.99738,
+            "bottom" : 334.75647,
+            "x" : 112.94291,
+            "y" : 328.35477,
+            "width" : 57.054466,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "1,250.00 CZK",
+          "bbox" : {
+            "right" : 187.8386,
+            "bottom" : 347.56067,
+            "x" : 112.94291,
+            "y" : 341.15897,
+            "width" : 74.89568,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_4",
+        "bbox" : {
+          "right" : 390.43372,
+          "bottom" : 200.49622,
+          "x" : 299.13782,
+          "y" : 155.6819,
+          "width" : 91.2959,
+          "height" : 44.814316
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "Customer",
+          "bbox" : {
+            "right" : 358.74417,
+            "bottom" : 162.08362,
+            "x" : 299.13782,
+            "y" : 155.6819,
+            "width" : 59.606354,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "Jane Sample",
+          "bbox" : {
+            "right" : 367.60974,
+            "bottom" : 174.88782,
+            "x" : 299.13782,
+            "y" : 168.4861,
+            "width" : 68.471924,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "12 Linden Street",
+          "bbox" : {
+            "right" : 390.43372,
+            "bottom" : 187.69202,
+            "x" : 299.13782,
+            "y" : 181.2903,
+            "width" : 91.2959,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "602 00 Brno",
+          "bbox" : {
+            "right" : 366.69678,
+            "bottom" : 200.49622,
+            "x" : 299.13782,
+            "y" : 194.0945,
+            "width" : 67.55896,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      }, {
+        "id" : "block_5",
+        "bbox" : {
+          "right" : 451.78656,
+          "bottom" : 304.1944,
+          "x" : 246.88756,
+          "y" : 269.1843,
+          "width" : 204.899,
+          "height" : 35.0101
+        },
+        "page" : 1,
+        "text_elements" : [ {
+          "text" : "QuantityPriceTotal",
+          "bbox" : {
+            "right" : 443.37195,
+            "bottom" : 275.586,
+            "x" : 246.88756,
+            "y" : 269.1843,
+            "width" : 196.48439,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "UWGIWA+DejaVu-Sans-Bold",
+          "confidence" : 1.0
+        }, {
+          "text" : "2",
+          "bbox" : {
+            "right" : 253.88324,
+            "bottom" : 289.8902,
+            "x" : 246.88756,
+            "y" : 283.4885,
+            "width" : 6.995682,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "300.00600.00",
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 289.8902,
+            "x" : 343.53787,
+            "y" : 283.4885,
+            "width" : 108.24869,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "1",
+          "bbox" : {
+            "right" : 253.88324,
+            "bottom" : 304.1944,
+            "x" : 246.88756,
+            "y" : 297.7927,
+            "width" : 6.995682,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        }, {
+          "text" : "650.00650.00",
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 304.1944,
+            "x" : 343.53787,
+            "y" : 297.7927,
+            "width" : 108.24869,
+            "height" : 6.401716
+          },
+          "page" : 1,
+          "font_size" : 14.0,
+          "font_name" : "XKQQSR+DejaVu-Sans",
+          "confidence" : 1.0
+        } ]
+      } ],
+      "barcodes" : [ {
+        "id" : "barcode_1",
+        "bbox" : {
+          "right" : 197.04001,
+          "bottom" : 445.19998,
+          "x" : 128.16,
+          "y" : 376.31998,
+          "width" : 68.88,
+          "height" : 68.88
+        },
+        "page" : 1,
+        "format" : "QR_CODE",
+        "raw_content" : "SPD*1.0*ACC:CZ6508000000192000145399*AM:1250.00*CC:CZK*X-VS:20260042*MSG:Invoice 2026-0042"
+      } ],
+      "tables" : [ {
+        "id" : "table-1",
+        "page" : 1,
+        "bbox" : {
+          "right" : 451.78656,
+          "bottom" : 353.96237,
+          "x" : 112.94291,
+          "y" : 131.50684,
+          "width" : 338.84366,
+          "height" : 222.45554
+        },
+        "rows" : 12,
+        "columns" : 4,
+        "confidence" : 0.59999996,
+        "cells" : [ {
+          "row" : 0,
+          "column" : 0,
+          "text" : "Invoice 20",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 228.48007,
+            "bottom" : 143.14655,
+            "x" : 112.94291,
+            "y" : 131.50684,
+            "width" : 115.53716,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 0,
+          "column" : 1,
+          "text" : "26-004",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 306.37817,
+            "bottom" : 143.14655,
+            "x" : 228.48007,
+            "y" : 131.50684,
+            "width" : 77.8981,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 0,
+          "column" : 2,
+          "text" : "2",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 320.29782,
+            "bottom" : 143.14655,
+            "x" : 306.37817,
+            "y" : 131.50684,
+            "width" : 13.919647,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 0,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : true,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 143.14655,
+            "x" : 396.45596,
+            "y" : 131.50684,
+            "width" : 55.330597,
+            "height" : 11.639716
+          }
+        }, {
+          "row" : 1,
+          "column" : 0,
+          "text" : "Supplier",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 167.1216,
+            "bottom" : 168.48534,
+            "x" : 115.19291,
+            "y" : 162.08362,
+            "width" : 51.928688,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 1,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 168.48534,
+            "x" : 217.71056,
+            "y" : 162.08362,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 1,
+          "column" : 2,
+          "text" : "Customer",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 358.74417,
+            "bottom" : 168.48534,
+            "x" : 299.13782,
+            "y" : 162.08362,
+            "width" : 59.606354,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 1,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 168.48534,
+            "x" : 396.45596,
+            "y" : 162.08362,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 0,
+          "text" : "Glass & Layers Ltd",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 217.87335,
+            "bottom" : 181.28954,
+            "x" : 115.19291,
+            "y" : 174.88782,
+            "width" : 102.68044,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 1,
+          "text" : ".",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 221.37119,
+            "bottom" : 181.28954,
+            "x" : 217.87335,
+            "y" : 174.88782,
+            "width" : 3.4978333,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 2,
+          "text" : "Jane Sample",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 367.60974,
+            "bottom" : 181.28954,
+            "x" : 299.13782,
+            "y" : 174.88782,
+            "width" : 68.471924,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 2,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 181.28954,
+            "x" : 396.45596,
+            "y" : 174.88782,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 0,
+          "text" : "7 Field Lane",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 181.18996,
+            "bottom" : 194.09373,
+            "x" : 115.19291,
+            "y" : 187.69202,
+            "width" : 65.99705,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 194.09373,
+            "x" : 217.71056,
+            "y" : 187.69202,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 2,
+          "text" : "12 Linden Street",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 390.43372,
+            "bottom" : 194.09373,
+            "x" : 299.13782,
+            "y" : 187.69202,
+            "width" : 91.2959,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 3,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 194.09373,
+            "x" : 396.45596,
+            "y" : 187.69202,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 0,
+          "text" : "110 00 Prague 1",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 206.09286,
+            "bottom" : 206.89793,
+            "x" : 115.19291,
+            "y" : 200.49622,
+            "width" : 90.899956,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 206.89793,
+            "x" : 217.71056,
+            "y" : 200.49622,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 2,
+          "text" : "602 00 Brno",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 366.69678,
+            "bottom" : 206.89793,
+            "x" : 299.13782,
+            "y" : 200.49622,
+            "width" : 67.55896,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 4,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 206.89793,
+            "x" : 396.45596,
+            "y" : 200.49622,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 0,
+          "text" : "Issue date",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 177.25705,
+            "bottom" : 232.95213,
+            "x" : 112.94291,
+            "y" : 226.55042,
+            "width" : 64.31414,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 232.95213,
+            "x" : 217.71056,
+            "y" : 226.55042,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 396.45596,
+            "bottom" : 232.95213,
+            "x" : 298.71057,
+            "y" : 226.55042,
+            "width" : 97.74539,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 5,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 232.95213,
+            "x" : 396.45596,
+            "y" : 226.55042,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 0,
+          "text" : "15 October 2026",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 205.9328,
+            "bottom" : 245.75633,
+            "x" : 112.94291,
+            "y" : 239.35461,
+            "width" : 92.98989,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 245.75633,
+            "x" : 217.71056,
+            "y" : 239.35461,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 396.45596,
+            "bottom" : 245.75633,
+            "x" : 298.71057,
+            "y" : 239.35461,
+            "width" : 97.74539,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 6,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 245.75633,
+            "x" : 396.45596,
+            "y" : 239.35461,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 0,
+          "text" : "Item",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 141.96165,
+            "bottom" : 281.9877,
+            "x" : 113.69291,
+            "y" : 275.586,
+            "width" : 28.268745,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 1,
+          "text" : "Quantity",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 300.7852,
+            "bottom" : 281.9877,
+            "x" : 246.88756,
+            "y" : 275.586,
+            "width" : 53.89763,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 2,
+          "text" : "Price",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 374.77652,
+            "bottom" : 281.9877,
+            "x" : 343.53787,
+            "y" : 275.586,
+            "width" : 31.238647,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 7,
+          "column" : 3,
+          "text" : "Total",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 443.37195,
+            "bottom" : 281.9877,
+            "x" : 413.3103,
+            "y" : 275.586,
+            "width" : 30.061646,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 0,
+          "text" : "Glass panel A",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 188.52255,
+            "bottom" : 296.2919,
+            "x" : 113.69291,
+            "y" : 289.8902,
+            "width" : 74.82964,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 1,
+          "text" : "2",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 253.88324,
+            "bottom" : 296.2919,
+            "x" : 246.88756,
+            "y" : 289.8902,
+            "width" : 6.995682,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 2,
+          "text" : "300.00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 382.01413,
+            "bottom" : 296.2919,
+            "x" : 343.53787,
+            "y" : 289.8902,
+            "width" : 38.476257,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 8,
+          "column" : 3,
+          "text" : "600.00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 296.2919,
+            "x" : 413.3103,
+            "y" : 289.8902,
+            "width" : 38.476257,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 0,
+          "text" : "Glass panel B",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 188.54456,
+            "bottom" : 310.5961,
+            "x" : 113.69291,
+            "y" : 304.1944,
+            "width" : 74.85165,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 1,
+          "text" : "1",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 253.88324,
+            "bottom" : 310.5961,
+            "x" : 246.88756,
+            "y" : 304.1944,
+            "width" : 6.995682,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 2,
+          "text" : "650.00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 382.01413,
+            "bottom" : 310.5961,
+            "x" : 343.53787,
+            "y" : 304.1944,
+            "width" : 38.476257,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 9,
+          "column" : 3,
+          "text" : "650.00",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 310.5961,
+            "x" : 413.3103,
+            "y" : 304.1944,
+            "width" : 38.476257,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 0,
+          "text" : "Total due",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 169.99738,
+            "bottom" : 341.15817,
+            "x" : 112.94291,
+            "y" : 334.75647,
+            "width" : 57.054466,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 341.15817,
+            "x" : 217.71056,
+            "y" : 334.75647,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 396.45596,
+            "bottom" : 341.15817,
+            "x" : 298.71057,
+            "y" : 334.75647,
+            "width" : 97.74539,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 10,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 341.15817,
+            "x" : 396.45596,
+            "y" : 334.75647,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 0,
+          "text" : "1,250.00 CZK",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 187.8386,
+            "bottom" : 353.96237,
+            "x" : 112.94291,
+            "y" : 347.56067,
+            "width" : 74.89568,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 1,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 298.71057,
+            "bottom" : 353.96237,
+            "x" : 217.71056,
+            "y" : 347.56067,
+            "width" : 81.000015,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 2,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 396.45596,
+            "bottom" : 353.96237,
+            "x" : 298.71057,
+            "y" : 347.56067,
+            "width" : 97.74539,
+            "height" : 6.401716
+          }
+        }, {
+          "row" : 11,
+          "column" : 3,
+          "text" : "",
+          "isHeader" : false,
+          "bbox" : {
+            "right" : 451.78656,
+            "bottom" : 353.96237,
+            "x" : 396.45596,
+            "y" : 347.56067,
+            "width" : 55.330597,
+            "height" : 6.401716
+          }
+        } ]
+      } ],
+      "graphics" : [ {
+        "id" : "graphic_1",
+        "page" : 1,
+        "bbox" : {
+          "right" : 212.15552,
+          "bottom" : 480.73486,
+          "x" : 112.94291,
+          "y" : 381.52228,
+          "width" : 99.2126,
+          "height" : 99.2126
+        },
+        "element_type" : "IMAGE",
+        "format" : "png",
+        "width_px" : 294,
+        "height_px" : 294,
+        "color_space" : "DeviceRGB",
+        "bits_per_component" : 8,
+        "image_type" : "embedded"
+      } ],
+      "fulltext" : {
+        "content" : "Invoice 2026-0042\n\nSupplier\nGlass & Layers Ltd.\n7 Field Lane\n110 00 Prague 1\n\nCustomer\nJane Sample\n12 Linden Street\n602 00 Brno\n\nIssue date\n15 October 2026\n\nItem Quantity Price Total\nGlass panel A 2 300.00 600.00\nGlass panel B 1 650.00 650.00\n\nTotal due\n1,250.00 CZK\n\n\n\tInvoice 2026-0042",
+        "wordCount" : 50,
+        "characterCount" : 287
+      }
+    },
+    "structural" : {
+      "blocks" : [ {
+        "id" : "block_1",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "Invoice 2026-0042",
+        "content" : [ "Supplier", "Glass & Layers Ltd.", "7 Field Lane", "110 00 Prague 1", "Issue date", "15 October 2026" ]
+      }, {
+        "id" : "block_2",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "Item",
+        "content" : [ "Glass panel A", "Glass panel B" ]
+      }, {
+        "id" : "block_3",
+        "type" : "content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : null,
+        "content" : [ "Total due", "1,250.00 CZK" ]
+      }, {
+        "id" : "block_4",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "Customer",
+        "content" : [ "Jane Sample", "12 Linden Street", "602 00 Brno" ]
+      }, {
+        "id" : "block_5",
+        "type" : "labeled_content",
+        "significance" : "primary",
+        "page" : 1,
+        "header" : "QuantityPriceTotal",
+        "content" : [ "2", "300.00600.00", "1", "650.00650.00" ]
+      } ],
+      "barcodes" : [ {
+        "id" : "barcode_1",
+        "format" : "QR_CODE",
+        "content_type" : "spayd",
+        "nearby_blocks" : [ "block_2", "block_3", "block_5" ],
+        "confidence" : 1.0
+      } ]
+    },
+    "semantic" : {
+      "entities" : [ {
+        "type" : "invoice",
+        "source_block" : "block_1",
+        "fields" : {
+          "postal_address" : "110 00 Prague 1",
+          "city" : "15 October 2026",
+          "street" : "Glass & Layers Ltd.",
+          "name" : "Supplier"
+        },
+        "confidence" : 0.8
+      }, {
+        "type" : "customer",
+        "source_block" : "block_4",
+        "fields" : {
+          "postal_address" : "602 00 Brno",
+          "street" : "12 Linden Street",
+          "name" : "Jane Sample"
+        },
+        "confidence" : 0.8
+      } ],
+      "payments" : [ {
+        "type" : "payment",
+        "source_barcode" : "barcode_1",
+        "format" : "spayd",
+        "fields" : {
+          "account" : "CZ6508000000192000145399",
+          "amount" : 1250.0,
+          "currency" : "CZK",
+          "variable_symbol" : "20260042",
+          "constant_symbol" : null,
+          "specific_symbol" : null,
+          "message" : "Invoice 2026-0042",
+          "recipient_name" : null
+        },
+        "confidence" : 1.0
+      } ]
+    },
+    "toc" : {
+      "entries" : [ {
+        "title" : "Invoice 2026-0042",
+        "page" : 1,
+        "level" : 1,
+        "block_id" : "block_1",
+        "confidence" : 0.95,
+        "source" : "heuristic"
+      }, {
+        "title" : "Customer",
+        "page" : 1,
+        "level" : 2,
+        "block_id" : "block_4",
+        "confidence" : 0.7999999999999999,
+        "source" : "heuristic"
+      }, {
+        "title" : "Item",
+        "page" : 1,
+        "level" : 2,
+        "block_id" : "block_2",
+        "confidence" : 0.7999999999999999,
+        "source" : "heuristic"
+      }, {
+        "title" : "QuantityPriceTotal",
+        "page" : 1,
+        "level" : 2,
+        "block_id" : "block_5",
+        "confidence" : 0.7999999999999999,
+        "source" : "heuristic"
+      } ]
+    }
+  }
+}
