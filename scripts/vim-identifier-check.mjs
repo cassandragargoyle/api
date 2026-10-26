@@ -6,6 +6,7 @@
 // - provisions[].references[] holds reference_id values of the layer
 // - provisions[].terms[] holds term_id values of the layer
 // - provisions[].relations[].provision_id holds a provision_id of the layer
+// - terms[].references[] holds reference_id values of the layer
 //
 // Run it after the schema check, on a document that the schema accepts.
 // Other projects can import checkVimIdentifiers() and use the same rules.
@@ -48,6 +49,14 @@ export function checkVimIdentifiers(doc) {
 					path: `${at}/relations/${j}/provision_id`,
 					message: `no provision with provision_id '${relation.provision_id}'`,
 				});
+			}
+		});
+	});
+
+	terms.forEach((term, i) => {
+		(term.references ?? []).forEach((id, j) => {
+			if (!referenceIds.has(id)) {
+				errors.push({ path: `${base}/terms/${i}/references/${j}`, message: `no reference with reference_id '${id}'` });
 			}
 		});
 	});
