@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/vim-prescriptive-provision.schema.json",
-	"$version": "1.0.1",
+	"$version": "1.0.2",
 	"title": "VimPrescriptiveProvision",
 	"description": "One provision of the VIM prescriptive layer — a statement of a definition file that prescribes something, with its place in the file, its verification and its audit trail",
 	"type": "object",
@@ -18,7 +18,7 @@
 		},
 		"kind": {
 			"type": "string",
-			"description": "Kind of the provision, following its verbal form: requirement (shall, must), recommendation (should), permission (may, need not)",
+			"description": "Kind of the provision, following its meaning: requirement, recommendation, or permission. The verbal form (shall or must, should, may or need not) is only a hint; a design report or a drawing states most requirements without a modal verb",
 			"enum": ["requirement", "recommendation", "permission"]
 		},
 		"clause": {
@@ -99,7 +99,7 @@
 	"$defs": {
 		"Anchor": {
 			"type": "object",
-			"description": "A place in the definition file. page and bbox are the durable anchor; element_id is valid only together with the physical layer of the same document",
+			"description": "A place in the definition file. page and bbox are the durable anchor; element_id is valid only together with the physical layer of the same document. A producer always writes bbox",
 			"required": ["page"],
 			"properties": {
 				"page": {
@@ -114,11 +114,11 @@
 				},
 				"element_id": {
 					"type": "string",
-					"description": "Identifier of the element in the physical layer of the same document"
+					"description": "Identifier of the element in the physical layer of the same document. Written only when the element is not much larger than the provision; a parser block often holds a whole page body"
 				},
 				"bbox": {
 					"$ref": "vim-extraction-field.schema.json#/$defs/BoundingBox",
-					"description": "Region on the page"
+					"description": "Region of the provision on the page. Always written; it is the precise anchor when element_id is left out"
 				}
 			},
 			"additionalProperties": false

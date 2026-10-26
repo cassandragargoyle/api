@@ -1,0 +1,117 @@
+{
+	"vim_version": "2.1",
+	"document": {
+		"source": "drawing-E-01.pdf",
+		"pages": 1,
+		"metadata": {
+			"title": "Electrical installation, ground floor",
+			"producer": "example-producer/0.1.0",
+			"inLanguage": "cs"
+		}
+	},
+	"layers": {
+		"prescriptive": {
+			"definition": {
+				"identifier": "E-01",
+				"edition": "B",
+				"issued": "2008-11",
+				"title": "Elektroinstalace, 1. NP",
+				"publisher": "Example Design Office",
+				"language": "cs"
+			},
+			"provenance": {
+				"extraction_method": "llm_extract",
+				"engine": "model-id",
+				"timestamp": "2026-10-26T10:00:00Z"
+			},
+			"provisions": [
+				{
+					"provision_id": "p-page1-1",
+					"kind": "requirement",
+					"text": "Vodiče v kabelových žlabech uložit dle ČSN 33 2000-5-52.",
+					"text_hash": "4325fe6f6917f2e3",
+					"statement": "Conductors in cable trays are installed according to ČSN 33 2000-5-52.",
+					"anchors": [
+						{
+							"page": 1,
+							"element_type": "block",
+							"bbox": {
+								"x": 1020.0,
+								"y": 640.0,
+								"width": 310.0,
+								"height": 18.0
+							}
+						}
+					],
+					"references": [
+						"r-1"
+					],
+					"terms": [
+						"t-cable-tray"
+					],
+					"verification": {
+						"method": "manual",
+						"subject": "installation"
+					},
+					"status": "proposed",
+					"confidence": 0.74
+				},
+				{
+					"provision_id": "p-page1-2",
+					"kind": "requirement",
+					"text": "Dveře rozvodny otevírat ve směru úniku.",
+					"text_hash": "7c571ad70cf2b24d",
+					"statement": "The doors of the switch room open in the direction of escape.",
+					"anchors": [
+						{
+							"page": 1,
+							"element_type": "block",
+							"bbox": {
+								"x": 1020.0,
+								"y": 662.0,
+								"width": 250.0,
+								"height": 18.0
+							}
+						}
+					],
+					"references": [
+						"r-2"
+					],
+					"verification": {
+						"method": "manual",
+						"subject": "drawing"
+					},
+					"status": "proposed",
+					"confidence": 0.68
+				}
+			],
+			"references": [
+				{
+					"reference_id": "r-1",
+					"scope": "external",
+					"binding": "mandatory",
+					"target": {
+						"identifier": "ČSN 33 2000-5-52"
+					}
+				},
+				{
+					"reference_id": "r-2",
+					"scope": "external",
+					"binding": "mandatory",
+					"target": {
+						"title": "the fire safety drawings of this project"
+					}
+				}
+			],
+			"terms": [
+				{
+					"term_id": "t-cable-tray",
+					"term": "kabelový žlab",
+					"references": [
+						"r-9"
+					]
+				}
+			]
+		}
+	}
+}

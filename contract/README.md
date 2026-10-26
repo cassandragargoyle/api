@@ -56,6 +56,7 @@ identifier rules of the prescriptive layer are checked in a second step,
 | Every value of `provisions[].references` is a `reference_id` of the layer | identifier check |
 | Every value of `provisions[].terms` is a `term_id` of the layer | identifier check |
 | Every `provisions[].relations[].provision_id` is a `provision_id` of the layer | identifier check |
+| Every value of `terms[].references` is a `reference_id` of the layer | identifier check |
 
 `make validate-contract` runs both steps on every `*.vim.json` document. The check is a
 plain ES module without dependencies; another project can import `checkVimIdentifiers()`
@@ -251,8 +252,9 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | Example | Description |
 | ------- | ----------- |
 | [definition-file.vim.json](examples/definition-file.vim.json) | VIM 2.1 document with the prescriptive layer: four provisions (all three kinds, one without verbatim `text`), an external and an internal reference, a term, relations, verification rules and revisions with `property`. Validated by `make validate-contract`. |
+| [drawing-definition-file.vim.json](examples/drawing-definition-file.vim.json) | VIM 2.1 document of a bilingual drawing: Czech verbatim `text` with English `statement` (`definition.language`), a month of issue (`issued: "2008-11"`), an external reference known only by its `title`, a term defined in a referenced standard (`terms[].references`), and anchors with `bbox` and without `element_id`. |
 | [form-extraction.vim.json](examples/form-extraction.vim.json) | VIM 2.0 document with the extraction layer only, with a `Revision` without `property`. Validated by `make validate-contract`. |
-| [invalid/](examples/invalid/) | Negative tests: documents that must **not** validate. Each file is the same small VIM 2.1 document with one defect, named after it (for example `provision-unknown-kind`, `anchor-page-zero`, `reference-external-without-identifier`); one file per rule of the prescriptive schemas, of the version rules (`prescriptive-wrong-vim-version`, `extraction-wrong-vim-version`, the latter a VIM 1.5 document with the extraction layer), and of the identifier check (`provision-duplicate-id`, `relation-without-target` and others). `make validate-contract` fails when the schema and the identifier check both accept one of them. |
+| [invalid/](examples/invalid/) | Negative tests: documents that must **not** validate. Each file is the same small VIM 2.1 document with one defect, named after it (for example `provision-unknown-kind`, `anchor-page-zero`, `reference-external-without-identifier-and-title`); one file per rule of the prescriptive schemas, of the version rules (`prescriptive-wrong-vim-version`, `extraction-wrong-vim-version`, the latter a VIM 1.5 document with the extraction layer), and of the identifier check (`provision-duplicate-id`, `relation-without-target` and others). `make validate-contract` fails when the schema and the identifier check both accept one of them. |
 
 ### Plugin Platform Examples
 

@@ -15,6 +15,22 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Changed
 
+- **VIM prescriptive layer** (#64, from a shape test on a design report and a
+  drawing; all changes are additive or relax a constraint, `vim_version` stays
+  `"2.1"`): `vim-prescriptive.schema.json` 1.1.0 —
+  an `external` reference target needs `identifier` **or** `title`;
+  `definition.issued` accepts a year, a year and month, or a full date
+  (`2008`, `2008-11`, `2008-11-01`); new optional `terms[].references`
+  (terms defined in a referenced document, checked by
+  `scripts/vim-identifier-check.mjs`) and `definition.language` (BCP 47 tag of
+  the verbatim text). `vim-prescriptive-provision.schema.json` 1.0.2 —
+  descriptions only: `kind` follows the meaning of a provision, an anchor
+  always has `bbox`, and `element_id` only when the element is not much larger
+  than the provision. New example `drawing-definition-file.vim.json` and
+  negative examples `term-reference-without-target`, `definition-bad-language`;
+  `reference-external-without-identifier` is renamed to
+  `reference-external-without-identifier-and-title`.
+
 - **VIM name**: VIM is the *Layered Information Model* (Czech original
   *Vrstvený Informační Model*) in `README.md`, `contract/README.md` and
   `docs/GLOSSARY.md`; the former expansion "Versatile Information Model" is no
