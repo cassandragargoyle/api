@@ -2,7 +2,7 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: Open
+**Status**: Implemented
 **Created**: 2026-10-26
 **GitHub**: #64
 **Component**: contract
