@@ -8,6 +8,7 @@ package org.cassandragargoyle.api.entity;
 /**
  * Interface Parser
  * @author Zdenek
+ * @since 2026-07-19
  */
 public interface Parser
 {
