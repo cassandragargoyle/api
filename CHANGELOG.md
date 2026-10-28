@@ -38,6 +38,9 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Added
 
+- **Java `StringUtil.isNullOrBlank` and `StringUtil.notBlank`**: like
+  `isNullOrEmpty` and `notEmpty`, but a string of white space only counts as
+  blank. Java only; the other modules have no `StringUtil`.
 - **VIM book** (`docs/book/vim/`): a book in English and Czech about the
   Layered Information Model, its history, layers, parser, contract and use,
   with figures computed from a real `vim.json` of a synthetic sample invoice
