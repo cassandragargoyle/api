@@ -59,7 +59,7 @@ Historii verzí najdete v [CHANGELOG.md](CHANGELOG.md).
 
 ## Informace o projektu
 
-- **Verze:** 1.1.0-SNAPSHOT
+- **Verze:** 1.2.0-SNAPSHOT
 - **Java:** 21 (Maven, NetBeans Platform)
 - **Python:** ≥ 3.11 (spravováno přes uv)
 - **Go:** ≥ 1.22

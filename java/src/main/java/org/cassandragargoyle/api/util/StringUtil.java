@@ -438,6 +438,34 @@ public class StringUtil
 	}
 
 	/**
+	 * Tests if a string is {@code null}, empty or has only white space
+	 *
+	 * <p>
+	 * Unlike {@link #isNullOrEmpty(String)}, {@code "   "} is blank
+	 *
+	 * @param value string to test, can be {@code null}
+	 * @return {@code true} for {@code null}, {@code ""} and white space only
+	 * @since 1.2.0
+	 */
+	public static boolean isNullOrBlank(final String value)
+	{
+		return value == null || value.isBlank();
+	}
+
+	/**
+	 * Tests if a string has at least one character that is not white space, the opposite of
+	 * {@link #isNullOrBlank(String)}
+	 *
+	 * @param value string to test, can be {@code null}
+	 * @return {@code false} for {@code null}, {@code ""} and white space only
+	 * @since 1.2.0
+	 */
+	public static boolean notBlank(final String value)
+	{
+		return !isNullOrBlank(value);
+	}
+
+	/**
 	 * Returns the string, or an empty string instead of {@code null}
 	 *
 	 * @param value string, can be {@code null}

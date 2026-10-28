@@ -62,7 +62,7 @@ See [CHANGELOG.md](CHANGELOG.md) for the release history.
 
 ## Project Information
 
-- **Version:** 1.1.0-SNAPSHOT
+- **Version:** 1.2.0-SNAPSHOT
 - **Java:** 21 (Maven, NetBeans Platform)
 - **Python:** ≥ 3.11 (uv-managed)
 - **Go:** ≥ 1.22
