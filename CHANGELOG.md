@@ -15,6 +15,9 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Changed
 
+- **Java dependencies**: OpenTelemetry 1.40.0 → 1.62.0, Maven Surefire
+  plugin 3.5.5 → 3.5.6.
+
 - **VIM prescriptive layer** (#64, from a shape test on a design report and a
   drawing; all changes are additive or relax a constraint, `vim_version` stays
   `"2.1"`): `vim-prescriptive.schema.json` 1.1.0 —
