@@ -14,6 +14,7 @@ import { createRequire } from "node:module";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { checkRecoFormResult } from "./reco-form-result-check.mjs";
 import { checkVimIdentifiers } from "./vim-identifier-check.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -58,7 +59,10 @@ const SUFFIX_SCHEMA = [
 ];
 
 // Map schema filename -> extra check. A check returns a list of {path, message}
-const EXTRA_CHECKS = new Map([["vim-document.schema.json", checkVimIdentifiers]]);
+const EXTRA_CHECKS = new Map([
+	["vim-document.schema.json", checkVimIdentifiers],
+	["reco-form-result.schema.json", checkRecoFormResult],
+]);
 
 // Return the problems of the document: schema errors first, then the extra check
 function problemsOf(schemaFile, doc) {

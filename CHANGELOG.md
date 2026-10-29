@@ -48,7 +48,11 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   the run record `run_info` (`$defs/RunInfo`, portunix-reco #71) and `xml_path`.
   A recognition zone has an optional `bbox` that portunix-reco does not write
   yet. Examples from a real run (anonymized), from a result without
-  `run_info`, and from a degraded alignment.
+  `run_info`, and from a degraded alignment. `transform_matrix` has 2 rows for
+  `affine` and 3 for `homography`; the extra check
+  `scripts/reco-form-result-check.mjs` (`checkRecoFormResult()`) compares the
+  marker counts with `marker_details` and the run status with the phase
+  statuses.
 
 - **Java `StringUtil.isNullOrBlank` and `StringUtil.notBlank`**: like
   `isNullOrEmpty` and `notEmpty`, but a string of white space only counts as

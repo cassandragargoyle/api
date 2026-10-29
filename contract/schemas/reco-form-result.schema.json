@@ -3,7 +3,7 @@
 	"$id": "https://cassandragargoyle.org/schemas/reco-form-result.schema.json",
 	"$version": "1.0.0",
 	"title": "RecoFormResult",
-	"description": "JSON result of one form recognition run of portunix-reco: the 'result' object of the task 'reco.match.template'. It holds the template alignment, the identification score, the barcode zone results, the recognition zone values, the run record 'run_info', and the path of the DENS XML file. Positions are pixels with the origin top-left: marker positions in the input image, zone positions in the aligned image. When the alignment is degraded, the task response has the status 'partial' and holds the same object as 'result' next to 'error' (task-response.schema.json). The file '<stem>_result.json' holds this object; whether the file holds the object alone or the whole task response is decided by portunix-reco #57. Files using this format use the '.reco-result.json' filename suffix. The DENS XML file is not described here. Issue: cassandragargoyle/api #69.",
+	"description": "JSON result of one form recognition run of portunix-reco: the 'result' object of the task 'reco.match.template'. It holds the template alignment, the identification score, the barcode zone results, the recognition zone values, the run record 'run_info', and the path of the DENS XML file. Positions are pixels with the origin top-left: marker positions in the input image, zone positions in the aligned image. When the alignment is degraded, the task response has the status 'partial' and holds the same object as 'result' next to 'error' (task-response.schema.json). The file '<stem>_result.json' holds this object; whether the file holds the object alone or the whole task response is decided by portunix-reco #57. Files using this format use the '.reco-result.json' filename suffix. Rules that JSON Schema cannot express (marker counts, run status from the phase statuses) are checked by scripts/reco-form-result-check.mjs. The DENS XML file is not described here. Issue: cassandragargoyle/api #69.",
 	"type": "object",
 	"required": [
 		"aligned_image_path",
@@ -89,6 +89,40 @@
 			"description": "Path of the DENS XML file; only when the XML output is enabled"
 		}
 	},
+	"allOf": [
+		{
+			"if": {
+				"properties": {
+					"transform_type": {
+						"const": "affine"
+					}
+				}
+			},
+			"then": {
+				"properties": {
+					"transform_matrix": {
+						"maxItems": 2
+					}
+				}
+			}
+		},
+		{
+			"if": {
+				"properties": {
+					"transform_type": {
+						"const": "homography"
+					}
+				}
+			},
+			"then": {
+				"properties": {
+					"transform_matrix": {
+						"minItems": 3
+					}
+				}
+			}
+		}
+	],
 	"additionalProperties": false,
 	"$defs": {
 		"Probability": {

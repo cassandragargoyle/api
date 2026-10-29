@@ -297,7 +297,7 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [form-physical-inventory.reco-result.json](examples/form-physical-inventory.reco-result.json) | Result of a real `reco.match.template` run (portunix-reco 0.3.11) on a physical inventory form: 5 of 5 markers, one barcode zone, `trocr` and `tesseract` zones, checkboxes, and `run_info` with all phases. Anonymized: values, paths, and the template name are replaced, and only 7 of the 52 recognition zones are kept. |
 | [form-no-run-info.reco-result.json](examples/form-no-run-info.reco-result.json) | Result of a portunix-reco version before 0.3.11, without `run_info`, with a `homography` transform. |
 | [form-degraded-alignment.reco-result.json](examples/form-degraded-alignment.reco-result.json) | Degraded alignment: one marker missing and one rejected, `partial` phases and run, warnings, a missing required barcode, identification by a barcode pattern, and recognition zones with `bbox` and `suspicious`. |
-| [invalid/](examples/invalid/) | Negative tests with the prefix `form-result-` (for example `form-result-unknown-phase-status`). |
+| [invalid/](examples/invalid/) | Negative tests with the prefix `form-result-`: one small document with one defect, named after it (for example `form-result-unknown-phase-status`, `form-result-affine-matrix-with-three-rows`). The tests `form-result-markers-detected-mismatch`, `form-result-markers-expected-mismatch`, and `form-result-run-status-mismatch` are rejected by the extra check [`scripts/reco-form-result-check.mjs`](../scripts/reco-form-result-check.mjs), not by the schema. |
 
 ### Modeling Examples
 

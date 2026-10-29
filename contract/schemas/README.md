@@ -226,7 +226,8 @@ portunix-architecture ADR-011, decision 6). The schema follows the keys of the r
 - **Root** — the `result` object of the task. A degraded alignment gives a task response with
   the status `partial`, the same `result`, and `error` with the code `ALIGNMENT_DEGRADED`.
   Whether `<stem>_result.json` holds the `result` object alone or the whole task response is
-  decided by portunix-reco #57
+  decided by portunix-reco #57. `ptx-reco task execute` exits with code 1 for every status
+  other than `success`, so a caller reads the status of the response, not only the exit code
 - **Positions** — pixels, origin top-left. Markers are in the input image, zones in the
   aligned image
 - **`bbox` of a recognition zone** — defined by the contract, not yet written by
@@ -236,6 +237,11 @@ portunix-architecture ADR-011, decision 6). The schema follows the keys of the r
   schema lists. `started` and `duration_ms` differ between two runs on the same input
 - **Closed objects** — all other objects reject unknown keys, so a new key in the reco
   output is a contract change
+- **Consistency** — `transform_matrix` has 2 rows for `affine` and 3 rows for `homography`
+  (schema). `markers_expected` is the number of `marker_details`, `markers_detected` the number
+  of them with `detected` true, and `run_info.run.status` is `failed` when a phase failed,
+  `partial` when a phase is partial, otherwise `ok` (extra check, see
+  [Validating examples](#validating-examples))
 
 ## Validating examples
 
@@ -252,6 +258,7 @@ after the schema for these contracts:
 | Schema | Extra check |
 | ------ | ----------- |
 | `vim-document.schema.json` | [`scripts/vim-identifier-check.mjs`](../../scripts/vim-identifier-check.mjs): unique identifiers and existing link targets of the prescriptive layer |
+| `reco-form-result.schema.json` | [`scripts/reco-form-result-check.mjs`](../../scripts/reco-form-result-check.mjs): marker counts match `marker_details`, `run_info.run.status` follows the phase statuses |
 
 A document under `examples/invalid/` passes as a negative test when the schema or the
 extra check rejects it.

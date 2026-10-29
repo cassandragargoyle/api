@@ -294,7 +294,7 @@ synchronizují.
 | [form-physical-inventory.reco-result.json](examples/form-physical-inventory.reco-result.json) | Výsledek skutečného běhu `reco.match.template` (portunix-reco 0.3.11) na formuláři fyzické inventury: 5 z 5 markerů, jedna zóna čárového kódu, zóny `trocr` a `tesseract`, zaškrtávací pole a `run_info` se všemi fázemi. Anonymizováno: hodnoty, cesty a název šablony jsou nahrazené a ponecháno je jen 7 z 52 rozpoznávacích zón. |
 | [form-no-run-info.reco-result.json](examples/form-no-run-info.reco-result.json) | Výsledek verze portunix-reco starší než 0.3.11, bez `run_info`, s transformací `homography`. |
 | [form-degraded-alignment.reco-result.json](examples/form-degraded-alignment.reco-result.json) | Degradované zarovnání: jeden marker chybí a jeden je odmítnutý, fáze a běh `partial`, varování, chybějící povinný čárový kód, identifikace podle vzoru čárového kódu a rozpoznávací zóny s `bbox` a `suspicious`. |
-| [invalid/](examples/invalid/) | Negativní testy s prefixem `form-result-` (například `form-result-unknown-phase-status`). |
+| [invalid/](examples/invalid/) | Negativní testy s prefixem `form-result-`: jeden malý dokument s jednou vadou, pojmenovaný podle ní (například `form-result-unknown-phase-status`, `form-result-affine-matrix-with-three-rows`). Testy `form-result-markers-detected-mismatch`, `form-result-markers-expected-mismatch` a `form-result-run-status-mismatch` neodmítá schéma, ale doplňková kontrola [`scripts/reco-form-result-check.mjs`](../scripts/reco-form-result-check.mjs). |
 
 ### Příklady modelování
 
