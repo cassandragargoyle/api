@@ -52,6 +52,7 @@ const SUFFIX_SCHEMA = [
 	[".vim.json", "vim-document.schema.json"],
 	[".recolab.json", "reco-engine-lab.schema.json"],
 	[".run.json", "reco-run.schema.json"],
+	[".reco-result.json", "reco-form-result.schema.json"],
 	[".samples.jsonl", "reco-run-sample.schema.json"],
 	[".history.jsonl", "reco-run.schema.json#/$defs/HistoryLine"],
 ];

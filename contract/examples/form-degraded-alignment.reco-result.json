@@ -1,0 +1,266 @@
+{
+	"aligned_image_path": "/data/out/form-002_aligned.png",
+	"transform_type": "affine",
+	"transform_matrix": [
+		[
+			0.9982,
+			0.0121,
+			4.31
+		],
+		[
+			-0.0118,
+			0.9979,
+			7.86
+		]
+	],
+	"markers_detected": 3,
+	"markers_expected": 5,
+	"marker_details": [
+		{
+			"id": "marker_001",
+			"detected": true,
+			"detected_position": {
+				"x": 162.4,
+				"y": 75.1
+			},
+			"expected_position": {
+				"x": 159,
+				"y": 69
+			},
+			"offset_px": 6.98,
+			"confidence": 0.7702
+		},
+		{
+			"id": "marker_002",
+			"detected": true,
+			"detected_position": {
+				"x": 2421.2,
+				"y": 47.6
+			},
+			"expected_position": {
+				"x": 2418,
+				"y": 68
+			},
+			"offset_px": 20.65,
+			"confidence": 0.7815
+		},
+		{
+			"id": "marker_003",
+			"detected": false,
+			"detected_position": null,
+			"expected_position": {
+				"x": 154,
+				"y": 3407
+			},
+			"offset_px": 0.0,
+			"confidence": 0.0
+		},
+		{
+			"id": "marker_004",
+			"detected": true,
+			"detected_position": {
+				"x": 2449.8,
+				"y": 3385.9
+			},
+			"expected_position": {
+				"x": 2421,
+				"y": 3406
+			},
+			"offset_px": 35.12,
+			"confidence": 0.7644
+		},
+		{
+			"id": "marker_005",
+			"detected": false,
+			"detected_position": {
+				"x": 1352.7,
+				"y": 3441.3
+			},
+			"expected_position": {
+				"x": 1295,
+				"y": 3407
+			},
+			"offset_px": 67.13,
+			"confidence": 0.6931,
+			"rejected": true,
+			"rejection_reason": "residual 41.8 px to the other markers exceeds 15.0 px"
+		}
+	],
+	"reprojection_error": 1.42,
+	"alignment_quality": "good",
+	"barcodes": [
+		{
+			"zone_id": "barcode_001",
+			"detected": false,
+			"label": "Sheet number",
+			"required": true,
+			"error": "Required barcode not found in zone"
+		},
+		{
+			"zone_id": "barcode_002",
+			"detected": true,
+			"label": "Form code",
+			"type": "CODE128",
+			"data": "FORM-A7",
+			"confidence": 1.0,
+			"position": {
+				"x": 1890,
+				"y": 3150,
+				"width": 420,
+				"height": 64
+			},
+			"backends": [
+				"pyzbar",
+				"zxing"
+			],
+			"match_regex": "^FORM-[A-Z][0-9]$",
+			"regex_matched": true
+		}
+	],
+	"recognition_zones": [
+		{
+			"zone_id": "row_002",
+			"detected": true,
+			"text": "40",
+			"confidence": 0.6214,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"bbox": {
+				"x": 1712,
+				"y": 612,
+				"width": 286,
+				"height": 58
+			},
+			"suspicious": true,
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "row_003",
+			"detected": false,
+			"bbox": {
+				"x": 1712,
+				"y": 676,
+				"width": 286,
+				"height": 58
+			},
+			"filter_applied": "dotted_box",
+			"error": "No content detected in zone"
+		},
+		{
+			"zone_id": "checkbox_001",
+			"detected": true,
+			"text": "checked",
+			"confidence": 0.94,
+			"recognition_type": "checkbox",
+			"engine": "checkbox",
+			"bbox": {
+				"x": 2210,
+				"y": 612,
+				"width": 40,
+				"height": 40
+			}
+		}
+	],
+	"identification": {
+		"score": 1.0,
+		"marker_score": 0.0,
+		"regex_score": 1.0,
+		"regex_zones": [
+			{
+				"zone_id": "barcode_002",
+				"value": "FORM-A7",
+				"regex": "^FORM-[A-Z][0-9]$",
+				"matched": true
+			}
+		]
+	},
+	"run_info": {
+		"tool": {
+			"name": "portunix-reco",
+			"version": "0.3.11"
+		},
+		"run": {
+			"task": "reco.match.template",
+			"started": "2026-10-29T08:02:41Z",
+			"duration_ms": 6120,
+			"status": "partial"
+		},
+		"template": {
+			"name": "PhysicalInventory",
+			"version": "1.1.1",
+			"source": "inline",
+			"selection": "given"
+		},
+		"phases": [
+			{
+				"name": "template_parse",
+				"status": "ok",
+				"duration_ms": 6
+			},
+			{
+				"name": "image_load",
+				"status": "ok",
+				"duration_ms": 91
+			},
+			{
+				"name": "alignment",
+				"status": "partial",
+				"duration_ms": 702,
+				"markers_detected": 3,
+				"markers_expected": 5,
+				"transform_type": "affine",
+				"missing_markers": [
+					"marker_003",
+					"marker_005"
+				],
+				"rejected_markers": [
+					"marker_005"
+				]
+			},
+			{
+				"name": "barcode_zones",
+				"status": "partial",
+				"duration_ms": 48,
+				"zones": 2,
+				"zones_detected": 1,
+				"zones_failed": 1,
+				"strategy": "single"
+			},
+			{
+				"name": "recognition_zones",
+				"status": "ok",
+				"duration_ms": 5203,
+				"engines": [
+					{
+						"layer": "fields",
+						"engine": "trocr",
+						"model": "trocr-small-handwritten-digits-dotted-boxes-v1",
+						"zones": 2
+					},
+					{
+						"layer": "checkboxes",
+						"engine": "checkbox",
+						"zones": 1
+					}
+				],
+				"zones": 3,
+				"zones_detected": 2
+			},
+			{
+				"name": "export",
+				"status": "skipped",
+				"detail": "no file output"
+			}
+		],
+		"warnings": [
+			{
+				"code": "ALIGNMENT_DEGRADED",
+				"message": "2 of 5 markers not detected; alignment computed from 3 markers; rejected as not fitting the other markers: marker_005"
+			},
+			{
+				"code": "BARCODE_ZONE_ERROR",
+				"message": "barcode_001: Required barcode not found in zone"
+			}
+		]
+	}
+}
