@@ -1,0 +1,6 @@
+{
+	"task_type": "image.resize",
+	"title": "Image Resize",
+	"summary": "Resizes images to specified dimensions",
+	"stability": "experimental"
+}

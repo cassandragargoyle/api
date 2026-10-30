@@ -76,6 +76,7 @@ message TaskManifestSummary {
     string category = 4;        // "reco.ocr" — for grouping in UI
     string icon = 5;            // Optional icon identifier for UI
     bool requires_input_file = 6;  // Whether the task needs a file as primary input
+    string stability = 7;       // "stable" or "preview"; empty means "stable"
 }
 
 message GetTaskManifestRequest {
@@ -97,6 +98,10 @@ message TaskManifest {
     bool requires_input_file = 11;
     // Input schema as JSON string (JSON Schema for the input object)
     string input_schema_json = 12;
+    // Maturity of the task: "stable" or "preview"; empty means "stable"
+    // A "preview" task can change its output without a major version
+    // In JSON (task-manifest.schema.json) an empty value is omitted, not written as ""
+    string stability = 13;
 }
 
 message TunableParameter {
