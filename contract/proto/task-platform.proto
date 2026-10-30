@@ -100,6 +100,7 @@ message TaskManifest {
     string input_schema_json = 12;
     // Maturity of the task: "stable" or "preview"; empty means "stable"
     // A "preview" task can change its output without a major version
+    // In JSON (task-manifest.schema.json) an empty value is omitted, not written as ""
     string stability = 13;
 }
 
