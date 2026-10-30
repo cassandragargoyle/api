@@ -256,7 +256,8 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [image-resize-request.json](examples/image-resize-request.json) | Image resize task request |
 | [response-success.json](examples/response-success.json) | Successful task response |
 | [response-error.json](examples/response-error.json) | Error task response |
-| [task-manifest-image-resize.json](examples/task-manifest-image-resize.json) | Task manifest for image resize plugin |
+| [image-resize.task-manifest.json](examples/image-resize.task-manifest.json) | Task manifest for image resize plugin (no `stability`, so `stable`) |
+| [reco-extract-form.task-manifest.json](examples/reco-extract-form.task-manifest.json) | Task manifest of a preview task (`"stability": "preview"`) |
 
 ### VIM Examples
 

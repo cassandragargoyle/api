@@ -1,0 +1,24 @@
+{
+	"task_type": "reco.pipeline.extract_form",
+	"title": "Form Extraction",
+	"summary": "Extracts the filled values of a known form from a scanned page",
+	"stability": "preview",
+	"when_to_use": "When you need the field values of a scanned form whose template is known.",
+	"when_not_to_use": "Do not use the output as a production form result; the output format can still change.",
+	"tunable_parameters": [
+		{
+			"name": "template",
+			"type": "string",
+			"description": "Identifier of the form template",
+			"required": true
+		}
+	],
+	"expected_artifacts": [
+		{
+			"name": "form_result",
+			"type": "application/json",
+			"description": "Extracted field values"
+		}
+	],
+	"result_interpretation": "On success, result contains the extracted field values by field name."
+}

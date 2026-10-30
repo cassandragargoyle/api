@@ -253,7 +253,8 @@ synchronizují.
 | [image-resize-request.json](examples/image-resize-request.json) | Požadavek na úlohu změny velikosti obrázku |
 | [response-success.json](examples/response-success.json) | Úspěšná odpověď na úlohu |
 | [response-error.json](examples/response-error.json) | Chybová odpověď na úlohu |
-| [task-manifest-image-resize.json](examples/task-manifest-image-resize.json) | Manifest úloh pro plugin změny velikosti obrázku |
+| [image-resize.task-manifest.json](examples/image-resize.task-manifest.json) | Manifest úloh pro plugin změny velikosti obrázku (bez `stability`, tedy `stable`) |
+| [reco-extract-form.task-manifest.json](examples/reco-extract-form.task-manifest.json) | Manifest úlohy ve stavu preview (`"stability": "preview"`) |
 
 ### Příklady VIM
 

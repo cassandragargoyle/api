@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/task-manifest.schema.json",
-	"$version": "1.0.0",
+	"$version": "1.1.0",
 	"title": "TaskManifest",
 	"description": "Plugin task capability manifest for Unified AI Plugin Platform",
 	"type": "object",
@@ -18,6 +18,12 @@
 		"summary": {
 			"type": "string",
 			"description": "Brief description of what this task does"
+		},
+		"stability": {
+			"type": "string",
+			"enum": ["stable", "preview"],
+			"default": "stable",
+			"description": "Maturity of the task. A missing value means 'stable'. A 'preview' task can change its output without a major version and is not meant for production results; clients can mark or hide it"
 		},
 		"when_to_use": {
 			"type": "string",

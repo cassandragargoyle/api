@@ -41,6 +41,15 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Added
 
+- **Task manifest stability** (#72): `task-manifest.schema.json` 1.1.0 has
+  a new optional `stability` (`stable` or `preview`, a missing value means
+  `stable`); a `preview` task can change its output without a major version.
+  `task-platform.proto` has a new `string stability` in `TaskManifest` (field
+  13) and `TaskManifestSummary` (field 7), an empty string means `stable`.
+  Task manifest examples now use the file suffix `*.task-manifest.json` and
+  `make validate-contract` checks them: `task-manifest-image-resize.json` is
+  renamed to `image-resize.task-manifest.json`.
+
 - **Reco form result** (#69): new `reco-form-result.schema.json` 1.0.0 for the
   JSON result of a form recognition run of portunix-reco (task
   `reco.match.template`, file suffix `*.reco-result.json`): alignment, marker
