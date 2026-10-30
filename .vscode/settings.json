@@ -2,11 +2,11 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "automatic",
     "java.project.sourcePaths": [
-        "api/src/main/java"
+        "java/src/main/java"
     ],
-    "java.project.outputPath": "api/target/classes",
+    "java.project.outputPath": "java/target/classes",
     "java.project.referencedLibraries": [
-        "api/target/**/*.jar"
+        "java/target/**/*.jar"
     ],
     "maven.executable.path": "mvn",
     "maven.terminal.useJavaHome": true,
