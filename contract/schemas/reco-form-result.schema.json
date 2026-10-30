@@ -1,0 +1,592 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/reco-form-result.schema.json",
+	"$version": "1.0.0",
+	"title": "RecoFormResult",
+	"description": "JSON result of one form recognition run of portunix-reco: the 'result' object of the task 'reco.match.template'. It holds the template alignment, the identification score, the barcode zone results, the recognition zone values, the run record 'run_info', and the path of the DENS XML file. Positions are pixels with the origin top-left: marker positions in the input image, zone positions in the aligned image. When the alignment is degraded, the task response has the status 'partial' and holds the same object as 'result' next to 'error' (task-response.schema.json). The file '<stem>_result.json' holds this object; whether the file holds the object alone or the whole task response is decided by portunix-reco #57. Files using this format use the '.reco-result.json' filename suffix. Rules that JSON Schema cannot express (marker counts, run status from the phase statuses) are checked by scripts/reco-form-result-check.mjs. The DENS XML file is not described here. Issue: cassandragargoyle/api #69.",
+	"type": "object",
+	"required": [
+		"aligned_image_path",
+		"transform_type",
+		"transform_matrix",
+		"markers_detected",
+		"markers_expected",
+		"marker_details",
+		"reprojection_error",
+		"alignment_quality"
+	],
+	"properties": {
+		"aligned_image_path": {
+			"type": "string",
+			"description": "Path of the aligned image written by the run"
+		},
+		"transform_type": {
+			"type": "string",
+			"enum": ["affine", "homography"]
+		},
+		"transform_matrix": {
+			"type": "array",
+			"description": "Transform from the input image to the template: 2 rows for 'affine', 3 rows for 'homography', 3 numbers per row",
+			"minItems": 2,
+			"maxItems": 3,
+			"items": {
+				"type": "array",
+				"minItems": 3,
+				"maxItems": 3,
+				"items": {
+					"type": "number"
+				}
+			}
+		},
+		"markers_detected": {
+			"type": "integer",
+			"minimum": 0,
+			"description": "Number of markers used for the transform"
+		},
+		"markers_expected": {
+			"type": "integer",
+			"minimum": 0,
+			"description": "Number of markers in the template"
+		},
+		"marker_details": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/MarkerDetail"
+			}
+		},
+		"reprojection_error": {
+			"type": "number",
+			"minimum": 0,
+			"description": "Mean reprojection error of the markers in pixels"
+		},
+		"alignment_quality": {
+			"type": "string",
+			"enum": ["excellent", "good", "acceptable", "poor", "unknown"],
+			"description": "Label of the reprojection error: below 1 px 'excellent', below 3 px 'good', below 5 px 'acceptable', otherwise 'poor'"
+		},
+		"barcodes": {
+			"type": "array",
+			"description": "Results of the barcode zones; left out when the template has no barcode zones",
+			"items": {
+				"$ref": "#/$defs/BarcodeZoneResult"
+			}
+		},
+		"recognition_zones": {
+			"type": "array",
+			"description": "Results of the recognition zones (layers 'fields', 'text_zones', 'checkboxes'); left out when the template has none",
+			"items": {
+				"$ref": "#/$defs/RecognitionZoneResult"
+			}
+		},
+		"identification": {
+			"$ref": "#/$defs/Identification"
+		},
+		"run_info": {
+			"$ref": "#/$defs/RunInfo"
+		},
+		"xml_path": {
+			"type": "string",
+			"description": "Path of the DENS XML file; only when the XML output is enabled"
+		}
+	},
+	"allOf": [
+		{
+			"if": {
+				"properties": {
+					"transform_type": {
+						"const": "affine"
+					}
+				}
+			},
+			"then": {
+				"properties": {
+					"transform_matrix": {
+						"maxItems": 2
+					}
+				}
+			}
+		},
+		{
+			"if": {
+				"properties": {
+					"transform_type": {
+						"const": "homography"
+					}
+				}
+			},
+			"then": {
+				"properties": {
+					"transform_matrix": {
+						"minItems": 3
+					}
+				}
+			}
+		}
+	],
+	"additionalProperties": false,
+	"$defs": {
+		"Probability": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 1
+		},
+		"Point": {
+			"type": "object",
+			"required": ["x", "y"],
+			"properties": {
+				"x": {
+					"type": "number"
+				},
+				"y": {
+					"type": "number"
+				}
+			},
+			"additionalProperties": false
+		},
+		"BBox": {
+			"type": "object",
+			"description": "Rectangle in pixels, origin top-left",
+			"required": ["x", "y", "width", "height"],
+			"properties": {
+				"x": {
+					"type": "integer"
+				},
+				"y": {
+					"type": "integer"
+				},
+				"width": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"height": {
+					"type": "integer",
+					"minimum": 0
+				}
+			},
+			"additionalProperties": false
+		},
+		"MarkerDetail": {
+			"type": "object",
+			"description": "Detection result of one marker. A rejected marker was found but does not fit the other markers: 'detected' is false and 'detected_position' keeps the found position",
+			"required": ["id", "detected", "detected_position", "expected_position", "offset_px", "confidence"],
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"detected": {
+					"type": "boolean",
+					"description": "Whether the marker is used for the transform"
+				},
+				"detected_position": {
+					"description": "Found position; null when the marker was not found",
+					"oneOf": [
+						{
+							"$ref": "#/$defs/Point"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"expected_position": {
+					"$ref": "#/$defs/Point"
+				},
+				"offset_px": {
+					"type": "number",
+					"minimum": 0,
+					"description": "Distance between the found and the expected position"
+				},
+				"confidence": {
+					"$ref": "#/$defs/Probability"
+				},
+				"rejected": {
+					"const": true
+				},
+				"rejection_reason": {
+					"type": "string"
+				}
+			},
+			"dependentRequired": {
+				"rejected": ["rejection_reason"]
+			},
+			"additionalProperties": false
+		},
+		"Barcode": {
+			"type": "object",
+			"description": "One barcode found in a zone that holds more than one barcode",
+			"required": ["type", "data", "position", "confidence"],
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "Symbology, for example 'CODE128', 'CODE39', 'QRCODE'"
+				},
+				"data": {
+					"type": "string"
+				},
+				"position": {
+					"$ref": "#/$defs/BBox"
+				},
+				"confidence": {
+					"$ref": "#/$defs/Probability"
+				},
+				"detected_by": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"strategy_used": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		},
+		"BarcodeZoneResult": {
+			"type": "object",
+			"description": "Result of one barcode zone. A detected zone with one barcode has 'type', 'data', 'confidence' and 'position'; a zone with more barcodes has 'barcodes' instead",
+			"required": ["zone_id", "detected"],
+			"properties": {
+				"zone_id": {
+					"type": "string"
+				},
+				"detected": {
+					"type": "boolean"
+				},
+				"label": {
+					"type": "string"
+				},
+				"type": {
+					"type": ["string", "null"]
+				},
+				"data": {
+					"type": ["string", "null"]
+				},
+				"confidence": {
+					"$ref": "#/$defs/Probability"
+				},
+				"position": {
+					"$ref": "#/$defs/BBox"
+				},
+				"backends": {
+					"type": "array",
+					"description": "Decoders that found the barcode",
+					"items": {
+						"type": "string"
+					}
+				},
+				"barcodes": {
+					"type": "array",
+					"minItems": 2,
+					"items": {
+						"$ref": "#/$defs/Barcode"
+					}
+				},
+				"required": {
+					"const": true,
+					"description": "Written only when a required zone has no barcode"
+				},
+				"error": {
+					"type": "string"
+				},
+				"match_regex": {
+					"type": "string",
+					"description": "Pattern of a zone used for identification"
+				},
+				"regex_matched": {
+					"type": ["boolean", "null"]
+				}
+			},
+			"dependentRequired": {
+				"match_regex": ["regex_matched"]
+			},
+			"additionalProperties": false
+		},
+		"RecognitionZoneResult": {
+			"type": "object",
+			"description": "Value of one recognition zone. A detected zone has 'confidence', 'recognition_type' and 'engine'. A zone without content has 'detected' false and the error 'No content detected in zone'",
+			"required": ["zone_id", "detected"],
+			"properties": {
+				"zone_id": {
+					"type": "string"
+				},
+				"detected": {
+					"type": "boolean"
+				},
+				"text": {
+					"type": "string",
+					"description": "Recognized text, after the filter by the allowed characters of the zone"
+				},
+				"confidence": {
+					"$ref": "#/$defs/Probability"
+				},
+				"recognition_type": {
+					"type": "string",
+					"description": "Recognition of the zone in the template, for example 'handwritten', 'printed', 'checkbox'"
+				},
+				"engine": {
+					"type": "string",
+					"description": "Engine that recognized the zone, for example 'trocr', 'tesseract', 'checkbox'"
+				},
+				"bbox": {
+					"$ref": "#/$defs/BBox",
+					"description": "Region of the zone in the aligned image, after the adjustment by the marker residuals. Not yet written by portunix-reco 0.3.11"
+				},
+				"suspicious": {
+					"const": true,
+					"description": "Written only when the value needs a check by a person"
+				},
+				"filter_applied": {
+					"type": "string",
+					"description": "Filter applied before the recognition, for example 'dotted_box'"
+				},
+				"error": {
+					"type": "string"
+				}
+			},
+			"if": {
+				"properties": {
+					"detected": {
+						"const": true
+					}
+				}
+			},
+			"then": {
+				"required": ["confidence", "recognition_type", "engine"]
+			},
+			"additionalProperties": false
+		},
+		"Identification": {
+			"type": "object",
+			"description": "Score of how well the image fits the template: the share of the identification markers found, and the share of the identification barcode zones whose value matches the pattern (weights 0.7 and 0.3 when both exist). Left out when the template has no identification markers and no identification zones",
+			"required": ["score", "marker_score"],
+			"properties": {
+				"score": {
+					"$ref": "#/$defs/Probability"
+				},
+				"marker_score": {
+					"$ref": "#/$defs/Probability"
+				},
+				"regex_score": {
+					"$ref": "#/$defs/Probability"
+				},
+				"regex_zones": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": ["zone_id", "value", "regex", "matched"],
+						"properties": {
+							"zone_id": {
+								"type": "string"
+							},
+							"value": {
+								"type": ["string", "null"]
+							},
+							"regex": {
+								"type": "string"
+							},
+							"matched": {
+								"type": ["boolean", "null"]
+							}
+						},
+						"additionalProperties": false
+					}
+				}
+			},
+			"dependentRequired": {
+				"regex_score": ["regex_zones"]
+			},
+			"additionalProperties": false
+		},
+		"RunInfo": {
+			"type": "object",
+			"description": "Record of the run (portunix-reco #71): tool, run, template, phases, warnings. The DENS XML file holds the same record. Left out by portunix-reco versions before 0.3.11. 'started' and 'duration_ms' differ between two runs on the same input",
+			"required": ["tool", "run", "phases", "warnings"],
+			"properties": {
+				"tool": {
+					"type": "object",
+					"required": ["name", "version"],
+					"properties": {
+						"name": {
+							"type": "string",
+							"description": "Tool that wrote the result, for example 'portunix-reco'"
+						},
+						"version": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": false
+				},
+				"run": {
+					"type": "object",
+					"required": ["task", "started"],
+					"properties": {
+						"task": {
+							"type": "string",
+							"description": "Task type, for example 'reco.match.template'"
+						},
+						"started": {
+							"type": "string",
+							"format": "date-time"
+						},
+						"duration_ms": {
+							"type": "integer",
+							"minimum": 0
+						},
+						"status": {
+							"type": "string",
+							"enum": ["ok", "partial", "failed"],
+							"description": "'failed' when a phase failed, 'partial' when a phase is partial, otherwise 'ok'"
+						}
+					},
+					"additionalProperties": false
+				},
+				"template": {
+					"type": "object",
+					"required": ["name", "selection"],
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"version": {
+							"type": "string",
+							"description": "'metadata.version' of the template"
+						},
+						"source": {
+							"type": "string",
+							"description": "Where the template came from, 'inline' when it is part of the request"
+						},
+						"selection": {
+							"type": "string",
+							"enum": ["given", "identified"],
+							"description": "'given': the request names the template; 'identified': form identification chose it (reserved)"
+						}
+					},
+					"additionalProperties": false
+				},
+				"phases": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/Phase"
+					}
+				},
+				"warnings": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/Warning"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"Phase": {
+			"type": "object",
+			"description": "One phase of the run, for example 'template_parse', 'image_load', 'alignment', 'barcode_zones', 'recognition_zones', 'export'. The properties after 'detail' are details of the phase; a phase can add other details",
+			"required": ["name", "status"],
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": ["ok", "partial", "skipped", "failed"],
+					"description": "'partial': degraded result, for example missing markers or zones with an error; 'skipped': the phase did not run; 'failed': the phase raised an error and the run ended there"
+				},
+				"duration_ms": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"detail": {
+					"type": "string"
+				},
+				"markers_detected": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"markers_expected": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"transform_type": {
+					"type": "string"
+				},
+				"missing_markers": {
+					"type": "array",
+					"description": "Markers not used for the transform, missing and rejected",
+					"items": {
+						"type": "string"
+					}
+				},
+				"rejected_markers": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"reprojection_error": {
+					"type": "number",
+					"minimum": 0,
+					"description": "Written when the error exceeds the limit"
+				},
+				"zones": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"zones_detected": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"zones_failed": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"strategy": {
+					"type": "string",
+					"description": "Barcode detection strategy"
+				},
+				"engines": {
+					"type": "array",
+					"description": "Engines and models of the recognition zones, one entry per layer, engine and model",
+					"items": {
+						"$ref": "#/$defs/EngineUse"
+					}
+				}
+			},
+			"additionalProperties": true
+		},
+		"EngineUse": {
+			"type": "object",
+			"required": ["layer", "engine", "zones"],
+			"properties": {
+				"layer": {
+					"type": "string"
+				},
+				"engine": {
+					"type": "string"
+				},
+				"model": {
+					"type": "string",
+					"description": "Model of the engine; left out when the engine has no model"
+				},
+				"zones": {
+					"type": "integer",
+					"minimum": 1
+				}
+			},
+			"additionalProperties": false
+		},
+		"Warning": {
+			"type": "object",
+			"required": ["code", "message"],
+			"properties": {
+				"code": {
+					"type": "string",
+					"description": "Error code, for example 'ALIGNMENT_DEGRADED', 'ALIGNMENT_FAILED', 'BARCODE_ZONE_ERROR', 'RECOGNITION_ZONE_ERROR'"
+				},
+				"message": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

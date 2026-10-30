@@ -1,0 +1,122 @@
+{
+	"aligned_image_path": "/data/out/form-004_aligned.png",
+	"transform_type": "affine",
+	"transform_matrix": [
+		[
+			1.0,
+			0.0,
+			0.4
+		],
+		[
+			0.0,
+			1.0,
+			0.2
+		]
+	],
+	"markers_detected": 2,
+	"markers_expected": 3,
+	"marker_details": [
+		{
+			"id": "marker_001",
+			"detected": true,
+			"detected_position": {
+				"x": 100.4,
+				"y": 50.2
+			},
+			"expected_position": {
+				"x": 100,
+				"y": 50
+			},
+			"offset_px": 0.45,
+			"confidence": 0.78
+		},
+		{
+			"id": "marker_002",
+			"detected": true,
+			"detected_position": {
+				"x": 200.8,
+				"y": 50.2
+			},
+			"expected_position": {
+				"x": 200,
+				"y": 50
+			},
+			"offset_px": 0.45,
+			"confidence": 0.78
+		},
+		{
+			"id": "marker_003",
+			"detected": true,
+			"detected_position": {
+				"x": 301.20000000000005,
+				"y": 50.2
+			},
+			"expected_position": {
+				"x": 300,
+				"y": 50
+			},
+			"offset_px": 0.45,
+			"confidence": 0.78
+		}
+	],
+	"reprojection_error": 0.2,
+	"alignment_quality": "excellent",
+	"barcodes": [
+		{
+			"zone_id": "barcode_001",
+			"detected": true,
+			"type": "CODE128",
+			"data": "FORM-A7",
+			"confidence": 1.0,
+			"position": {
+				"x": 1890,
+				"y": 3150,
+				"width": 420,
+				"height": 64
+			},
+			"backends": [
+				"pyzbar"
+			],
+			"match_regex": "^FORM-[A-Z][0-9]$",
+			"regex_matched": true
+		}
+	],
+	"recognition_zones": [
+		{
+			"zone_id": "row_002",
+			"detected": true,
+			"text": "7",
+			"confidence": 0.99,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"filter_applied": "dotted_box"
+		}
+	],
+	"run_info": {
+		"tool": {
+			"name": "portunix-reco",
+			"version": "0.3.11"
+		},
+		"run": {
+			"task": "reco.match.template",
+			"started": "2026-10-29T08:10:00Z",
+			"duration_ms": 900,
+			"status": "ok"
+		},
+		"phases": [
+			{
+				"name": "alignment",
+				"status": "ok",
+				"duration_ms": 300,
+				"markers_detected": 3,
+				"markers_expected": 3
+			},
+			{
+				"name": "export",
+				"status": "skipped",
+				"detail": "no file output"
+			}
+		],
+		"warnings": []
+	}
+}

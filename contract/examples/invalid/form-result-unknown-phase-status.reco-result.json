@@ -1,0 +1,39 @@
+{
+	"aligned_image_path": "/data/out/form-004_aligned.png",
+	"transform_type": "affine",
+	"transform_matrix": [
+		[
+			1.0,
+			0.0,
+			0.0
+		],
+		[
+			0.0,
+			1.0,
+			0.0
+		]
+	],
+	"markers_detected": 4,
+	"markers_expected": 4,
+	"marker_details": [],
+	"reprojection_error": 0.2,
+	"alignment_quality": "excellent",
+	"run_info": {
+		"tool": {
+			"name": "portunix-reco",
+			"version": "0.3.11"
+		},
+		"run": {
+			"task": "reco.match.template",
+			"started": "2026-10-29T08:10:00Z",
+			"status": "ok"
+		},
+		"phases": [
+			{
+				"name": "alignment",
+				"status": "degraded"
+			}
+		],
+		"warnings": []
+	}
+}

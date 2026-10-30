@@ -212,6 +212,37 @@ A tool compares two runs per sample (`sample`) and field (`field`): **improved**
 correct), **regressed** (correct, then wrong), **changed and still wrong**, **unchanged**. The
 comparison is not stored; a run can name the run it is compared with in `baseline_run`.
 
+## Recognition Form Result
+
+[reco-form-result.schema.json](reco-form-result.schema.json) describes the JSON result of one
+form recognition run of portunix-reco ([issue #69](../../docs/issues/069-reco-form-result-schema.md),
+portunix-architecture ADR-011, decision 6). The schema follows the keys of the reco code
+(`map_alignment_result` in `ptx_reco.worker.task.mapper`), it has no VIM concepts.
+
+| Schema | Suffix | Written by |
+| ------ | ------ | ---------- |
+| [reco-form-result.schema.json](reco-form-result.schema.json) | `*.reco-result.json` | portunix-reco, task `reco.match.template` |
+
+- **Root** — the `result` object of the task. A degraded alignment gives a task response with
+  the status `partial`, the same `result`, and `error` with the code `ALIGNMENT_DEGRADED`.
+  Whether `<stem>_result.json` holds the `result` object alone or the whole task response is
+  decided by portunix-reco #57. `ptx-reco task execute` exits with code 1 for every status
+  other than `success`, so a caller reads the status of the response, not only the exit code
+- **Positions** — pixels, origin top-left. Markers are in the input image, zones in the
+  aligned image
+- **`bbox` of a recognition zone** — defined by the contract, not yet written by
+  portunix-reco 0.3.11; a consumer must accept a zone without it
+- **`run_info`** — optional, older reco versions do not write it. A phase has `name` and
+  `status` (`ok`, `partial`, `skipped`, `failed`) and can add details beyond the ones the
+  schema lists. `started` and `duration_ms` differ between two runs on the same input
+- **Closed objects** — all other objects reject unknown keys, so a new key in the reco
+  output is a contract change
+- **Consistency** — `transform_matrix` has 2 rows for `affine` and 3 rows for `homography`
+  (schema). `markers_expected` is the number of `marker_details`, `markers_detected` the number
+  of them with `detected` true, and `run_info.run.status` is `failed` when a phase failed,
+  `partial` when a phase is partial, otherwise `ok` (extra check, see
+  [Validating examples](#validating-examples))
+
 ## Validating examples
 
 Contract examples under [`../examples/`](../examples/) are validated against these
@@ -227,6 +258,7 @@ after the schema for these contracts:
 | Schema | Extra check |
 | ------ | ----------- |
 | `vim-document.schema.json` | [`scripts/vim-identifier-check.mjs`](../../scripts/vim-identifier-check.mjs): unique identifiers and existing link targets of the prescriptive layer |
+| `reco-form-result.schema.json` | [`scripts/reco-form-result-check.mjs`](../../scripts/reco-form-result-check.mjs): marker counts match `marker_details`, `run_info.run.status` follows the phase statuses |
 
 A document under `examples/invalid/` passes as a negative test when the schema or the
 extra check rejects it.

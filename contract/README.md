@@ -113,6 +113,17 @@ The placeholders of the commands, the dataset checksum, the `prediction_format` 
 comparison of two runs are described in
 [schemas/README.md](schemas/README.md#recognition-engine-lab) (issue #56).
 
+### Recognition Form Result
+
+| Schema | Description |
+| ------ | ----------- |
+| [reco-form-result.schema.json](schemas/reco-form-result.schema.json) | JSON result of one form recognition run of portunix-reco (task `reco.match.template`): alignment, marker details, identification score, barcode zone results, recognition zone values with confidence and bbox, the run record `run_info` (`$defs/RunInfo`), and `xml_path` |
+
+Result files use the **`*.reco-result.json`** suffix. The JSON result and the DENS XML are the
+output of reco form runs (portunix-architecture ADR-011, decision 6); the DENS XML is not
+described here. Details in [schemas/README.md](schemas/README.md#recognition-form-result)
+(issue #69).
+
 ### Modeling
 
 Building model of the Portunix Modeler (`ptx-modeler`, portunix-plugins #116): a flat entity
@@ -278,6 +289,15 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [reco-engine-lab/stock-count.recolab.json](examples/reco-engine-lab/stock-count.recolab.json) | Lab document of the stock count form pipeline (`trocr` digits + `tesseract` text, template as `config`), with train, validation, and test datasets, plugin commands of `reco-worker` and an `exec` evaluate command. The samples and the model are not part of the example. Validated by `make validate-contract`. |
 | [reco-engine-lab/runs/](examples/reco-engine-lab/runs/) | A training run with its `*.history.jsonl`, and two test runs with their `*.samples.jsonl`; the second test run has the first one as `baseline_run` and shows improved, regressed, and changed fields. The per-sample results list only some fields to stay short. Validated by `make validate-contract`. |
 | [invalid/](examples/invalid/) | Negative tests with the prefixes `recolab-`, `run-`, `samples-`, and `history-`: one small document with one defect, named after it (for example `recolab-exec-command-without-argv`, `run-succeeded-without-finished`, `samples-line-not-json`). |
+
+### Recognition Form Result Examples
+
+| Example | Description |
+| ------- | ----------- |
+| [form-physical-inventory.reco-result.json](examples/form-physical-inventory.reco-result.json) | Result of a real `reco.match.template` run (portunix-reco 0.3.11) on a physical inventory form: 5 of 5 markers, one barcode zone, `trocr` and `tesseract` zones, checkboxes, and `run_info` with all phases. Anonymized: values, paths, and the template name are replaced, and only 7 of the 52 recognition zones are kept. |
+| [form-no-run-info.reco-result.json](examples/form-no-run-info.reco-result.json) | Result of a portunix-reco version before 0.3.11, without `run_info`, with a `homography` transform. |
+| [form-degraded-alignment.reco-result.json](examples/form-degraded-alignment.reco-result.json) | Degraded alignment: one marker missing and one rejected, `partial` phases and run, warnings, a missing required barcode, identification by a barcode pattern, and recognition zones with `bbox` and `suspicious`. |
+| [invalid/](examples/invalid/) | Negative tests with the prefix `form-result-`: one small document with one defect, named after it (for example `form-result-unknown-phase-status`, `form-result-affine-matrix-with-three-rows`). The tests `form-result-markers-detected-mismatch`, `form-result-markers-expected-mismatch`, and `form-result-run-status-mismatch` are rejected by the extra check [`scripts/reco-form-result-check.mjs`](../scripts/reco-form-result-check.mjs), not by the schema. |
 
 ### Modeling Examples
 

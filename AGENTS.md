@@ -53,7 +53,7 @@ Notes:
 
 - `make lint` does not run `make vet-go`, run it separately for Go changes
 - `make build` does not build Go, the Go module has no build artifact
-- CI (`.github/workflows/build.yml`) runs only the Java and Python tests, so run the Go, TypeScript, and contract checks locally
+- CI (`.github/workflows/build.yml`) runs the Java and Python tests and `make validate-contract`, so run the Go and TypeScript checks locally
 
 ## Before You Finish a Change
 

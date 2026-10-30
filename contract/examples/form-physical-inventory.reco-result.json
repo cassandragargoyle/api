@@ -1,0 +1,249 @@
+{
+	"aligned_image_path": "/data/out/form-001_aligned.png",
+	"transform_type": "affine",
+	"transform_matrix": [
+		[
+			0.9997022191271859,
+			8.548157319152763e-05,
+			0.8727381574222103
+		],
+		[
+			-2.6585362624974404e-05,
+			1.0000234453619419,
+			0.3077232185507431
+		]
+	],
+	"markers_detected": 5,
+	"markers_expected": 5,
+	"marker_details": [
+		{
+			"id": "marker_001",
+			"detected": true,
+			"detected_position": {
+				"x": 158.04,
+				"y": 68.45
+			},
+			"expected_position": {
+				"x": 159,
+				"y": 69
+			},
+			"offset_px": 1.1,
+			"confidence": 0.7778
+		},
+		{
+			"id": "marker_002",
+			"detected": true,
+			"detected_position": {
+				"x": 2417.97,
+				"y": 68.0
+			},
+			"expected_position": {
+				"x": 2418,
+				"y": 68
+			},
+			"offset_px": 0.03,
+			"confidence": 0.7912
+		},
+		{
+			"id": "marker_004",
+			"detected": true,
+			"detected_position": {
+				"x": 153.07,
+				"y": 3406.71
+			},
+			"expected_position": {
+				"x": 154,
+				"y": 3407
+			},
+			"offset_px": 0.97,
+			"confidence": 0.7756
+		},
+		{
+			"id": "marker_005",
+			"detected": true,
+			"detected_position": {
+				"x": 2420.49,
+				"y": 3405.28
+			},
+			"expected_position": {
+				"x": 2421,
+				"y": 3406
+			},
+			"offset_px": 0.88,
+			"confidence": 0.7763
+		},
+		{
+			"id": "marker_006",
+			"detected": true,
+			"detected_position": {
+				"x": 1294.1,
+				"y": 3406.95
+			},
+			"expected_position": {
+				"x": 1295,
+				"y": 3407
+			},
+			"offset_px": 0.9,
+			"confidence": 0.7407
+		}
+	],
+	"reprojection_error": 0.3,
+	"alignment_quality": "excellent",
+	"barcodes": [
+		{
+			"zone_id": "barcode_001",
+			"detected": true,
+			"type": "CODE39",
+			"data": "XX0001",
+			"confidence": 1.0,
+			"position": {
+				"x": 1888,
+				"y": 3156,
+				"width": 417,
+				"height": 60
+			},
+			"backends": [
+				"pyzbar"
+			]
+		}
+	],
+	"recognition_zones": [
+		{
+			"zone_id": "row_002",
+			"detected": true,
+			"text": "12345678",
+			"confidence": 0.7362,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "row_003",
+			"detected": true,
+			"text": "518",
+			"confidence": 0.9981,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "row_004",
+			"detected": false,
+			"filter_applied": "dotted_box",
+			"error": "No content detected in zone"
+		},
+		{
+			"zone_id": "row_005",
+			"detected": true,
+			"text": "3",
+			"confidence": 1.0,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "checkbox_001",
+			"detected": false,
+			"error": "No content detected in zone"
+		},
+		{
+			"zone_id": "text_zone_018",
+			"detected": false,
+			"filter_applied": "dotted_box",
+			"error": "No content detected in zone"
+		},
+		{
+			"zone_id": "note_001",
+			"detected": false,
+			"filter_applied": "dotted_box",
+			"error": "No content detected in zone"
+		}
+	],
+	"identification": {
+		"score": 1.0,
+		"marker_score": 1.0
+	},
+	"run_info": {
+		"tool": {
+			"name": "portunix-reco",
+			"version": "0.3.11"
+		},
+		"run": {
+			"task": "reco.match.template",
+			"started": "2026-10-29T08:03:55Z",
+			"duration_ms": 3245,
+			"status": "ok"
+		},
+		"template": {
+			"name": "PhysicalInventory",
+			"version": "1.1.1",
+			"source": "inline",
+			"selection": "given"
+		},
+		"phases": [
+			{
+				"name": "template_parse",
+				"status": "ok",
+				"duration_ms": 7
+			},
+			{
+				"name": "image_load",
+				"status": "ok",
+				"duration_ms": 23
+			},
+			{
+				"name": "alignment",
+				"status": "ok",
+				"duration_ms": 211,
+				"markers_detected": 5,
+				"markers_expected": 5,
+				"transform_type": "affine"
+			},
+			{
+				"name": "barcode_zones",
+				"status": "ok",
+				"duration_ms": 14,
+				"zones": 1,
+				"zones_detected": 1,
+				"strategy": "single"
+			},
+			{
+				"name": "recognition_zones",
+				"status": "ok",
+				"duration_ms": 2989,
+				"engines": [
+					{
+						"layer": "fields",
+						"engine": "trocr",
+						"model": "trocr-small-handwritten-digits-dotted-boxes-v1",
+						"zones": 23
+					},
+					{
+						"layer": "checkboxes",
+						"engine": "checkbox",
+						"zones": 20
+					},
+					{
+						"layer": "text_zones",
+						"engine": "tesseract",
+						"zones": 8
+					},
+					{
+						"layer": "fields",
+						"engine": "tesseract",
+						"zones": 1
+					}
+				],
+				"zones": 52,
+				"zones_detected": 10
+			},
+			{
+				"name": "export",
+				"status": "ok",
+				"detail": "xml"
+			}
+		],
+		"warnings": []
+	},
+	"xml_path": "/data/out/form-001.xml"
+}
