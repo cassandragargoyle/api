@@ -215,7 +215,7 @@ comparison is not stored; a run can name the run it is compared with in `baselin
 ## Recognition Form Result
 
 [reco-form-result.schema.json](reco-form-result.schema.json) describes the JSON result of one
-form recognition run of portunix-reco ([issue #69](../../docs/issues/069-reco-form-result-schema.md),
+form recognition run of portunix-reco ([issue #69](../../docs/issues/done/069-reco-form-result-schema.md),
 portunix-architecture ADR-011, decision 6). The schema follows the keys of the reco code
 (`map_alignment_result` in `ptx_reco.worker.task.mapper`), it has no VIM concepts.
 

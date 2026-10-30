@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: Open
+**Status**: ✅ Implemented (PR #73, 2026-10-30)
 **Created**: 2026-10-29
+**Closed**: 2026-10-30
 **GitHub**: #69
 **Component**: contract
 **Related**: #56 (reco Engine Lab contract), portunix-architecture ADR-011 (decision 6),
