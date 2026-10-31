@@ -125,7 +125,8 @@ ideas / use-cases / epics; links = relations (`inspired-by`, `duplicate`,
 `split-into`, `merged-with`) **plus** the `implements` edge (use-case → idea).
 `link.rel` is a free-form string, so `implements` needs **no schema change**. The
 `*.backlog.json` file holds the backlog's metadata + membership; the graph is a
-derived `*.glens.json`.
+derived `*.glens.json`. A projection can also use the optional node groups of
+schema 1.1.0 (`node.group`, `meta.groups`, #78).
 
 ### Design decisions (from #015 open questions)
 
