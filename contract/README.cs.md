@@ -81,6 +81,8 @@ ukazuje na neexistující článek, a identifikátory vrstvy `extraction`.
 
 Dokumenty graph-view mají příponu souboru **`*.glens.json`** (vázanou na graphlens / `ptx-graphlens`), takže nástroje, editory a prohlížeče poznají typ bez čtení obsahu.
 
+Skupiny uzlů jsou nepovinné rozšíření (schéma 1.1.0, #78). `node.group` je klíč skupiny uzlu a `meta.groups` mapuje klíč skupiny na nepovinný `label` a nepovinnou `color` (`#RRGGBB`). Dokumenty mohou skupiny vynechat a čtenáři je mohou ignorovat. Klíč skupiny bez definice používá výchozí styl čtenáře. Čtenář, který validuje proti schématu 1.0.0, `node.group` odmítne.
+
 > **Liší se od 2D formátu `*.graph.json`.** 2D formát Graph Canvas (`GraphFile`: `nodes` + `edges` + `metadata`, Cytoscape, portunix-vscode #030) je jiný kontrakt. Tento 3D formát graph-view používá `links` (ne `edges`) a `meta` (ne `metadata`) a nesmí použít příponu `*.graph.json`.
 
 ### Přepis
@@ -279,6 +281,8 @@ synchronizují.
 | Příklad | Popis |
 | ------- | ----- |
 | [voices.glens.json](examples/voices.glens.json) | Malý graf hlasů pro 3D prohlížeč graphlens |
+| [manifests-by-language.glens.json](examples/manifests-by-language.glens.json) | Malý graf se skupinami uzlů a barvami, včetně skupin jen s popiskem nebo jen s barvou, skupiny bez definice a uzlu bez skupiny |
+| [invalid/](examples/invalid/) | Negativní testy s prefixem `graph-view-`: jeden malý dokument s jednou vadou, pojmenovaný podle ní (například `graph-view-group-color-not-hex`, `graph-view-node-empty-group`). |
 
 ### Příklady Recognition Engine Lab
 

@@ -81,6 +81,8 @@ and run it after its own schema check. Not checked: a `reference` with the scope
 
 Graph-view documents use the **`*.glens.json`** filename suffix (tied to graphlens / `ptx-graphlens`) so tools, editors, and viewers recognize the type without inspecting contents.
 
+Node groups are an optional extension (schema 1.1.0, #78). `node.group` is the group key of a node, and `meta.groups` maps a group key to an optional `label` and an optional `color` (`#RRGGBB`). Documents can leave out groups, and readers can ignore them. A group key without a definition uses the default styling of the reader. A reader that validates against schema 1.0.0 rejects `node.group`.
+
 > **Distinct from the 2D `*.graph.json` format.** The 2D Graph Canvas format (`GraphFile`: `nodes` + `edges` + `metadata`, Cytoscape, portunix-vscode #030) is a different contract. This 3D graph-view format uses `links` (not `edges`) and `meta` (not `metadata`), and must not reuse the `*.graph.json` suffix.
 
 ### Transcription
@@ -282,6 +284,8 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | Example | Description |
 | ------- | ----------- |
 | [voices.glens.json](examples/voices.glens.json) | Small voices graph for the graphlens 3D viewer |
+| [manifests-by-language.glens.json](examples/manifests-by-language.glens.json) | Small graph with node groups and colors, including groups with only a label or only a color, a group without a definition, and a node without a group |
+| [invalid/](examples/invalid/) | Negative tests with the prefix `graph-view-`: one small document with one defect, named after it (for example `graph-view-group-color-not-hex`, `graph-view-node-empty-group`). |
 
 ### Recognition Engine Lab Examples
 

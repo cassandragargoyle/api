@@ -29,10 +29,10 @@ schema changes. Schema `$version` goes from 1.0.0 to 1.1.0.
 
 | Field | Type | Required | Description |
 | ----- | ---- | -------- | ----------- |
-| `node.group` | string | no | Group key of the node. When missing, readers use their default grouping |
+| `node.group` | string | no | Group key of the node, not empty. When missing, readers use their default grouping |
 | `meta.groups` | object | no | Map of group key to group definition |
 | `meta.groups.<key>.label` | string | no | Legend and filter label. When missing, the key is shown |
-| `meta.groups.<key>.color` | string | no | Color as `#RRGGBB`. When missing, readers use their default color |
+| `meta.groups.<key>.color` | string | no | Color as `#RRGGBB`, 7 characters. When missing, readers use their default color |
 
 ```json
 {
@@ -67,14 +67,15 @@ This is an optional extension. Nothing in the contract requires the new fields.
 ## Scope
 
 - Update `contract/schemas/graph-view.schema.json`
-- Add a valid example with groups in `contract/examples/`, and a negative example with a wrong color format
+- Add a valid example with groups in `contract/examples/`, and negative examples for a wrong color format, a line end
+  in a color, an unknown group key, and an empty `node.group`
 - Update the graph-view row in `contract/README.md` and `docs/GLOSSARY.md` if needed
 
 Out of scope: per-node colors, link colors, and automatic palettes.
 
 ## Acceptance Criteria
 
-- The new example passes `make validate-contract`, and the negative example fails it
+- The new example passes `make validate-contract`, and the negative examples fail it
 - All existing `*.glens.json` examples still pass without changes
 
 ## Follow-up

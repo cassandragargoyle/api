@@ -158,6 +158,7 @@ yet tested on real definition files.
 | **graphlens** | The 3D force-directed graph viewer (`ptx-graphlens`) that reads graph-view documents |
 | **Link** | An edge in a graph-view document. The 2D `*.graph.json` format uses the word `edges` and is a different contract |
 | **Graph projection** | A graph-view document derived from other data, for example from a backlog |
+| **Node group** | An optional group of nodes in a graph-view document. `node.group` is the key, and `meta.groups` can give the group a label and a color |
 | **Transcript** | The working document of a video or audio transcript: `media`, `speakers`, `segments`, and flags. The contract is provisional |
 | **scribe** | The transcript correction backend (`ptx-scribe`) |
 | **Segment** | One timed part of a transcript |

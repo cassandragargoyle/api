@@ -1,0 +1,18 @@
+{
+	"meta": {
+		"groups": {
+			"language": {
+				"color": "#d29922\n"
+			}
+		}
+	},
+	"nodes": [
+		{
+			"id": "language:c",
+			"type": "language",
+			"label": "C",
+			"group": "language"
+		}
+	],
+	"links": []
+}

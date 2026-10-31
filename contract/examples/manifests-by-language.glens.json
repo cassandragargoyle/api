@@ -1,0 +1,94 @@
+{
+	"version": "1.0.0",
+	"meta": {
+		"title": "Software manifests by programming language",
+		"groups": {
+			"language": {
+				"label": "Programming language",
+				"color": "#d29922"
+			},
+			"manifest": {
+				"label": "Manifest",
+				"color": "#58a6ff"
+			},
+			"tool": {
+				"label": "Tool"
+			},
+			"library": {
+				"color": "#3fb950"
+			}
+		}
+	},
+	"nodes": [
+		{
+			"id": "language:c",
+			"type": "language",
+			"label": "C",
+			"group": "language"
+		},
+		{
+			"id": "language:go",
+			"type": "language",
+			"label": "Go",
+			"group": "language"
+		},
+		{
+			"id": "manifest:curl",
+			"type": "manifest",
+			"label": "curl",
+			"group": "tool"
+		},
+		{
+			"id": "manifest:zlib",
+			"type": "manifest",
+			"label": "zlib",
+			"group": "library"
+		},
+		{
+			"id": "manifest:hugo",
+			"type": "manifest",
+			"label": "Hugo",
+			"group": "manifest"
+		},
+		{
+			"id": "manifest:terraform",
+			"type": "manifest",
+			"label": "Terraform",
+			"description": "The group has no definition in meta.groups, so readers use their default styling",
+			"group": "infrastructure"
+		},
+		{
+			"id": "manifest:sqlite",
+			"type": "manifest",
+			"label": "SQLite",
+			"description": "No group, so readers use their default grouping"
+		}
+	],
+	"links": [
+		{
+			"source": "manifest:curl",
+			"target": "language:c",
+			"rel": "written-in"
+		},
+		{
+			"source": "manifest:zlib",
+			"target": "language:c",
+			"rel": "written-in"
+		},
+		{
+			"source": "manifest:sqlite",
+			"target": "language:c",
+			"rel": "written-in"
+		},
+		{
+			"source": "manifest:hugo",
+			"target": "language:go",
+			"rel": "written-in"
+		},
+		{
+			"source": "manifest:terraform",
+			"target": "language:go",
+			"rel": "written-in"
+		}
+	]
+}

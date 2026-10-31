@@ -41,6 +41,13 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Added
 
+- **Graph view node groups** (#78): `graph-view.schema.json` 1.1.0 has an
+  optional `node.group` and an optional `meta.groups` map with `label` and
+  `color` (`#RRGGBB`) for each group. Documents can leave out groups, and
+  readers can ignore them. A reader that validates against schema 1.0.0
+  rejects `node.group`. A document that already uses `meta.groups` for other
+  data must rename the key.
+
 - **Task manifest stability** (#72): `task-manifest.schema.json` 1.1.0 has
   a new optional `stability` (`stable` or `preview`, a missing value means
   `stable`); a `preview` task can change its output without a major version.
