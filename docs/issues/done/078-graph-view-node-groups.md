@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: Open
+**Status**: ✅ Implemented (PR #80, 2026-10-31)
 **Created**: 2026-10-31
+**Closed**: 2026-10-31
 **GitHub**: #78
 **Component**: contract
 **Related**: react-components #7, portunix-vscode #140, portunix-plugins #210
