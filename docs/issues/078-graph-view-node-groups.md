@@ -11,8 +11,8 @@
 ## Summary
 
 The GraphView contract has no way to say how nodes are grouped or colored. Colors are hard-coded in the
-GraphLens3D component for `tag` and `voice` nodes, and any other node type is grey. This issue adds optional,
-backward-compatible group definitions to `graph-view.schema.json`.
+GraphLens3D component for `tag` and `voice` nodes, and any other node type is grey. This issue adds optional group
+definitions to `graph-view.schema.json`. It is an optional extension: no document, writer, or reader has to use it.
 
 ## Problem
 
@@ -24,7 +24,8 @@ read colors from `meta` or `node.meta`.
 
 ## Proposal
 
-Add one optional node field and define one optional `meta` key. Schema `$version` goes from 1.0.0 to 1.1.0.
+Add one optional node field and define one optional `meta` key. No field becomes required, and nothing else in the
+schema changes. Schema `$version` goes from 1.0.0 to 1.1.0.
 
 | Field | Type | Required | Description |
 | ----- | ---- | -------- | ----------- |
@@ -54,10 +55,14 @@ diagram can color manifests by category without changing their type.
 
 ## Compatibility
 
-- Existing documents stay valid and look the same
-- A document that uses `node.group` fails validation against schema 1.0.0, so readers with strict validation must
-  update
+This is an optional extension. Nothing in the contract requires the new fields.
+
+- Documents without groups stay valid and look the same
+- Writers can leave out groups, and readers can ignore them and use their default styling
+- A writer that uses `node.group` needs readers with schema 1.1.0, because schema 1.0.0 rejects the field
 - A group key in `node.group` that is not in `meta.groups` is valid and uses default styling
+- `meta.groups` becomes a defined key. `meta` still allows other keys, but a document that already uses `groups` for
+  other data must rename it. No `*.glens.json` document in this repository does this
 
 ## Scope
 
@@ -70,9 +75,10 @@ Out of scope: per-node colors, link colors, and automatic palettes.
 ## Acceptance Criteria
 
 - The new example passes `make validate-contract`, and the negative example fails it
-- All existing `*.glens.json` examples still pass
+- All existing `*.glens.json` examples still pass without changes
 
 ## Follow-up
 
 Implementation order: this issue, react-components #7, portunix-vscode #140, portunix-plugins #210. Then the
-`manifest-diagrams` generator in `portunix-architecture` starts to write groups.
+`manifest-diagrams` generator in `portunix-architecture` starts to write groups. The contract change does not depend
+on this follow-up work.
