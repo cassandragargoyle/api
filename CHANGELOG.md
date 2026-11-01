@@ -89,9 +89,13 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 - **Reco form result** (#82): `reco-form-result.schema.json` 1.1.0 allows `null` in
   the required `aligned_image_path`. portunix-reco writes no aligned image
   without `output_path`, and the schema rejected these results (portunix-reco
-  #116). A document that was valid stays valid; a reader that expects a string
-  must handle `null`. New example `form-no-aligned-image` and negative example
-  `form-result-missing-aligned-image-path`.
+  #116). The schema now rejects an empty string in this property, so a run
+  without an image has one form. Every other document that was valid stays
+  valid; a reader that expects a string must handle `null`. New example
+  `form-no-aligned-image` and negative examples
+  `form-result-missing-aligned-image-path`,
+  `form-result-aligned-image-path-wrong-type`, and
+  `form-result-aligned-image-path-empty`.
 
 ## [1.1.0] - 2026-10-24
 

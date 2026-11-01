@@ -32,7 +32,9 @@ all 283 results of real scans without an error had the value `null`. The validat
 ### In scope
 
 - `"type": ["string", "null"]` for `aligned_image_path`, with a description of the meaning of `null`
+- `"minLength": 1` for `aligned_image_path`, so a run without an image has one form: `null`
 - A valid example without an aligned image
+- Negative examples for a wrong type and an empty string
 
 ### Out of scope (follow-up issues)
 
@@ -44,13 +46,21 @@ all 283 results of real scans without an error had the value `null`. The validat
 1. A result with `aligned_image_path: null` passes the schema check
 2. A result without the property still fails the schema check
 3. A result with a string path still passes the schema check
+4. A result with a type other than string or null fails the schema check
+5. A result with an empty string fails the schema check
 
 ## Compatibility
 
-This relaxes the type of a required property. A document that was valid stays valid. A consumer that
-expects a string must handle `null`; this is the behavior of portunix-reco since #107, not a new one.
+This relaxes the type of a required property. A consumer that expects a string must handle `null`;
+this is the behavior of portunix-reco since #107, not a new one.
+
+The new `minLength` also tightens the property: a document with an empty string was valid and is now
+rejected. All other documents that were valid stay valid. portunix-reco does not produce an empty
+string, because it maps an empty `output_path` to `null`.
 
 ## Testing
 
 - `make validate-contract` with the new example `form-no-aligned-image.reco-result.json`
-- The negative example `form-result-missing-aligned-image-path.reco-result.json`
+- The negative examples `form-result-missing-aligned-image-path.reco-result.json`,
+  `form-result-aligned-image-path-wrong-type.reco-result.json`, and
+  `form-result-aligned-image-path-empty.reco-result.json`
