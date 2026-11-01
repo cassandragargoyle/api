@@ -2,8 +2,9 @@
 
 **Type**: Bug Fix
 **Priority**: Medium
-**Status**: Open
+**Status**: Implemented (PR #83, 2026-11-01)
 **Created**: 2026-11-01
+**Closed**: 2026-11-01
 **GitHub**: #82
 **Component**: contract
 **Related**: #69, portunix-reco #107, portunix-reco #115, portunix-reco #116
