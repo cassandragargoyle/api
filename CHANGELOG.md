@@ -84,6 +84,15 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   and the Makefile targets `book` and `book-figures`.
 - `book-chapter` skill for writing chapters of these books.
 
+### Fixed
+
+- **Reco form result** (#82): `reco-form-result.schema.json` 1.1.0 allows `null` in
+  the required `aligned_image_path`. portunix-reco writes no aligned image
+  without `output_path`, and the schema rejected these results (portunix-reco
+  #116). A document that was valid stays valid; a reader that expects a string
+  must handle `null`. New example `form-no-aligned-image` and negative example
+  `form-result-missing-aligned-image-path`.
+
 ## [1.1.0] - 2026-10-24
 
 ### Changed
