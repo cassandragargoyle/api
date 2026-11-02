@@ -2,8 +2,9 @@
 
 **Type**: Task
 **Priority**: Low
-**Status**: Open
+**Status**: Implemented (PR #88, 2026-11-02)
 **Created**: 2026-11-02
+**Closed**: 2026-11-02
 **GitHub**: #85
 **Component**: java
 **Related**: ADR-006
