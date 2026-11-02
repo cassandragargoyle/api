@@ -34,7 +34,9 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 - **Java build**: the unused `lombok.version` property is removed from
   `java/pom.xml` (#85). The library does not use Lombok, see the null check
-  rule in `docs/contributing/CODE-STYLE-JAVA.md`.
+  rule in `docs/contributing/CODE-STYLE-JAVA.md`. `mvn verify` and the new
+  `make coverage-java` write a JaCoCo coverage report to
+  `java/target/site/jacoco/`.
 
 - **Java dependencies**: OpenTelemetry 1.40.0 → 1.62.0, Maven Surefire
   plugin 3.5.5 → 3.5.6.

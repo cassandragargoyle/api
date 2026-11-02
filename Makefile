@@ -4,7 +4,7 @@
 .PHONY: all build clean compile package test install deploy verify \
         install-local install-skip-tests \
         clean-install clean-package \
-        build-java test-java clean-java \
+        build-java test-java coverage-java clean-java \
         lint lint-java lint-md lint-python \
         validate-contract book book-figures \
         venv test-python build-python install-python lock \
@@ -17,6 +17,7 @@ MVN = mvn -f java/pom.xml
 GO = go
 NPM = npm --prefix typescript
 MARKDOWNLINT = typescript/node_modules/.bin/markdownlint-cli2
+JACOCO_REPORT = java/target/site/jacoco
 
 # Default target
 all: package
@@ -53,6 +54,11 @@ build-java:
 ## Run Java tests
 test-java:
 	$(MVN) test
+
+## Run Java tests, write the JaCoCo coverage report to java/target/site/jacoco/, and print the totals
+coverage-java:
+	$(MVN) test jacoco:report
+	@node scripts/coverage-summary.mjs $(JACOCO_REPORT)
 
 ## Clean Java build artifacts
 clean-java:
@@ -276,6 +282,7 @@ help:
 	@echo "Java:"
 	@echo "  make build-java        - Build JAR (skip tests)"
 	@echo "  make test-java         - Run Java tests"
+	@echo "  make coverage-java     - Run Java tests with JaCoCo report (java/target/site/jacoco/)"
 	@echo "  make clean-java        - Clean Java build artifacts"
 	@echo ""
 	@echo "Installation (Local Repository):"

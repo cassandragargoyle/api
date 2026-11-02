@@ -93,6 +93,9 @@ public void setName(String name)
 
 - Lombok in other repositories that depend on this library
 - Static null analysis annotations (JSpecify, JetBrains annotations)
+- Null checks in `fuzzy`, `log`, and `telemetry`, because these features
+  must behave the same in every language module
+- The defect in `DiagramEntity` found during testing, see Test Results
 
 ## Acceptance Criteria
 
@@ -105,6 +108,10 @@ public void setName(String name)
    `Objects.requireNonNull(value, "parameterName")` check, and each check
    has a unit test
 6. Breaking changes from new null checks are listed in `CHANGELOG.md`
+7. A test fails when any one null check is removed (mutation test), except
+   when the method calls another method with the same check first
+8. `make coverage-java` and `mvn -f java/pom.xml verify` write a JaCoCo
+   coverage report to `java/target/site/jacoco/`
 
 ## Testing
 
@@ -113,3 +120,55 @@ public void setName(String name)
 - Build one dependent project against the new `SNAPSHOT` to check that no
   project uses `${lombok.version}` from this POM. The POM is not a parent
   POM, so no project should be affected
+- Remove each null check one at a time and run the `*NullCheckTest`
+  classes. Each change must make a test fail
+- Remove all null checks at the same time. All negative tests must fail and
+  the tests for methods that accept null must still pass
+
+## Test Results
+
+Results on 2026-11-02, branch `fix/85-remove-lombok-property`:
+
+| Check | Result |
+| ----- | ------ |
+| `mvn -f java/pom.xml clean verify` | 58 tests before, 143 tests after (1 skipped), 0 failures |
+| `make lint-java`, `make lint-md` | 0 violations |
+| Python, TypeScript, Go tests, `make validate-contract` | Pass after the version change to 1.2.1 |
+| `grep -ri lombok java/` | No result |
+| Each null check has a test | 83 of 83 |
+| Mutation test, one check removed at a time | 82 of 83 failed a test |
+
+The one mutant that does not fail a test is `DateUtil.isToday`. Its first
+statement calls `DateUtil.toMidnight(date)`, which has the same check, so
+the behavior without the check is the same. The check stays because it
+documents the contract.
+
+The first mutation run found a gap: `StringUtil.appendToHtml(null, "a")`
+reached the check in `appendHtmlEscaped`, which has the same parameter
+name. A test for the HTML branch closes the gap.
+
+JaCoCo line coverage of the Java module was 20.1% (branch coverage 13.6%).
+New behavior tests for `StringUtil` (`StringUtilTest`, based on its
+Javadoc) raise the coverage of `StringUtil` from 7.9% to 97.3% of lines
+(92.8% of branches), and of the module to 42.4% of lines (40.1% of
+branches). This is still below the 80% target, so the build does not
+enforce a minimum yet.
+
+The `StringUtil` tests found one defect: `abbreviateHtmlString` cuts the
+text one visible character before `maxLength`, for example `"abcdef"` with
+`maxLength` 3 gives `"ab..."` and not `"abc..."` as the Javadoc says. The
+test for the documented behavior is disabled until the defect is fixed.
+
+### Follow-up
+
+- `DiagramEntity.getNodes()`, `getEdges()`, and `getDiagrams()` fail with
+  `ClassCastException` on the second call on the same diagram, because
+  `getProperty()` returns the `Property` wrapper and not the `Set`. This
+  defect existed before this issue
+- Raise the Java test coverage to 80%, then enforce the minimum with the
+  JaCoCo `check` goal
+- Add PIT mutation testing to replace the one-time mutation script
+- Fix the off-by-one cut in `StringUtil.abbreviateHtmlString` and enable
+  `StringUtilTest.abbreviateHtmlStringKeepsMaxLengthVisibleCharacters`
+- Fix `StringUtil.stringPart`, which finds only part 0 (documented in its
+  Javadoc as a known defect)

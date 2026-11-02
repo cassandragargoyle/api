@@ -46,6 +46,7 @@ Other targets:
 - `make validate-contract` - validate `contract/examples/` against `contract/schemas/`
 - `make lint-md` - Markdown lint (`markdownlint-cli2`), also part of `make lint`
 - `make venv` - create `python/.venv` and install the dev dependencies
+- `make coverage-java` - run the Java tests and write the JaCoCo coverage report to `java/target/site/jacoco/`
 - `make lock` - refresh `python/uv.lock` after a dependency change in `python/pyproject.toml`
 - `make book` - build the PDF books in `docs/book/` (needs `uv`, Pango, and for diagrams Node.js and Chrome)
 

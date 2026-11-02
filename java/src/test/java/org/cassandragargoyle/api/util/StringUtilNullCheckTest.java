@@ -50,6 +50,8 @@ public class StringUtilNullCheckTest
 	{
 		StringBuilder sb = new StringBuilder();
 		assertRejectsNull("sb", () -> StringUtil.appendToHtml(null, "a"));
+		// The HTML branch appends to sb directly, so only the check in appendToHtml names the parameter
+		assertRejectsNull("sb", () -> StringUtil.appendToHtml(null, "<html>a</html>"));
 		assertRejectsNull("value", () -> StringUtil.appendToHtml(sb, null));
 		assertRejectsNull("sb", () -> StringUtil.appendHtmlEscaped(null, "a"));
 		assertRejectsNull("value", () -> StringUtil.appendHtmlEscaped(sb, null));
