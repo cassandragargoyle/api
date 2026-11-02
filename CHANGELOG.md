@@ -119,6 +119,11 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   `form-result-missing-aligned-image-path`,
   `form-result-aligned-image-path-wrong-type`, and
   `form-result-aligned-image-path-empty`.
+- **Java `DiagramEntity`** (#90): `getNodes()`, `getEdges()` and
+  `getDiagrams()` failed with `ClassCastException` on the second call on the
+  same diagram, because they cast the `Property` wrapper instead of the stored
+  set. Now `addNode`, `addEdge`, `addDiagram`, `getNode`, `getAllNodes` and
+  `getAllEdges` work when they are called more than once.
 
 ## [1.1.0] - 2026-10-24
 
