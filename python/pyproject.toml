@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cassandragargoyle-api"
-version = "1.2.1"
+version = "1.2.2"
 description = "CassandraGargoyle API shared modules for Python components"
 requires-python = ">=3.11"
 license = "MIT"

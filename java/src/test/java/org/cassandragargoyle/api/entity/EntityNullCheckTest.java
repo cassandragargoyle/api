@@ -32,8 +32,6 @@ public class EntityNullCheckTest
 		assertEquals("a-b", edge.getName());
 	}
 
-	// Each call uses a new diagram, because a second call of getNodes, getEdges or getDiagrams on one diagram
-	// fails with ClassCastException (getProperty returns the Property wrapper), which is a separate defect
 	@Test
 	public void diagramRejectsNullNode()
 	{

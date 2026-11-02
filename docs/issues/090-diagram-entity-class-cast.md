@@ -45,23 +45,24 @@ diagram.getNodes(); // ClassCastException: Property cannot be cast to Set
 2. Unit tests for repeated access and for `getAllNodes`, `getAllEdges`, and
    `getNode(String)`
 3. Remove the workaround comment in `EntityNullCheckTest`
+4. `EdgeEntity.getNode1()` and `getNode2()`, the only other callers of
+   `getProperty()` that cast the result, with tests in `EdgeEntityTest`
 
 ### Out of scope (follow-up issues)
 
 - A change of the `AbstractEntity.getProperty()` contract (it returns the
   wrapper on purpose, see its Javadoc)
-- Other callers of `getProperty()` that cast the result; review them in a
-  separate issue if needed
 
 ## Acceptance Criteria
 
 1. Two calls of each getter on the same diagram return the same collection
 2. `addNode`, `addEdge`, and `addDiagram` can be called more than once
 3. `getAllNodes()` and `getAllEdges()` include the items of sub-diagrams
-4. `mvn -f java/pom.xml clean verify` passes
+4. `getNode1()` and `getNode2()` of `EdgeEntity` return the stored nodes
+5. `mvn -f java/pom.xml clean verify` passes
 
 ## Testing
 
-- New unit tests in `DiagramEntityTest` for the cases above
+- New unit tests in `DiagramEntityTest` and `EdgeEntityTest` for the cases above
 - Run `make coverage-java` and check that `DiagramEntity` line coverage rises
   from 14.3%

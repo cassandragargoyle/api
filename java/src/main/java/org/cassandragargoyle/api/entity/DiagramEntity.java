@@ -62,6 +62,17 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 		return null;
 	}
 
+	/**
+	 * Add an existing edge to the direct edges of this diagram
+	 *
+	 * <p>
+	 * The edges are kept in a set, so a second call with the same edge instance
+	 * has no effect. The nodes of the edge are not checked and are not added to
+	 * this diagram, call {@link #addNode(Entity)} for them.
+	 *
+	 * @param edge edge to add
+	 * @throws NullPointerException if {@code edge} is {@code null}
+	 */
 	@Override
 	public void addEdge(Edge edge)
 	{
@@ -69,6 +80,20 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 		getEdges().add(edge);
 	}
 
+	/**
+	 * Create a new {@link EdgeEntity} between two nodes and add it to the direct
+	 * edges of this diagram
+	 *
+	 * <p>
+	 * The edge is named {@code "node1Name-node2Name"}. Every call creates a new
+	 * edge instance, so two calls with the same nodes add two edges. The nodes
+	 * are not checked and are not added to this diagram, call
+	 * {@link #addNode(Entity)} for them.
+	 *
+	 * @param node1 first node of the edge
+	 * @param node2 second node of the edge
+	 * @throws NullPointerException if {@code node1} or {@code node2} is {@code null}
+	 */
 	@Override
 	public void addEdge(Entity node1, Entity node2)
 	{
@@ -77,10 +102,11 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 
 	// Lazy-init pattern shared by getNodes/getEdges/getDiagrams: the unchecked cast
 	// is safe because nothing outside this class writes these property keys.
+	// properties.getValue returns the stored set, getProperty would return the Property wrapper.
 	@Override
 	public Set<Entity> getNodes()
 	{
-		Set<Entity> nodes = (Set<Entity>) getProperty("nodes");
+		Set<Entity> nodes = (Set<Entity>) properties.getValue("nodes");
 		if (nodes == null)
 		{
 			nodes = new HashSet<>();
@@ -92,7 +118,7 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 	@Override
 	public Set<Edge> getEdges()
 	{
-		Set<Edge> edges = (Set<Edge>) getProperty("edges");
+		Set<Edge> edges = (Set<Edge>) properties.getValue("edges");
 		if (edges == null)
 		{
 			edges = new HashSet<>();
@@ -104,7 +130,7 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 	@Override
 	public Set<Diagram> getDiagrams()
 	{
-		Set<Diagram> diagrams = (Set<Diagram>) getProperty("diagrams");
+		Set<Diagram> diagrams = (Set<Diagram>) properties.getValue("diagrams");
 		if (diagrams == null)
 		{
 			diagrams = new HashSet<Diagram>();
