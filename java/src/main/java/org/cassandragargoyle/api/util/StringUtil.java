@@ -1009,188 +1009,40 @@ public class StringUtil
 	 * Shortens an HTML fragment to a maximum number of visible characters, keeping the tags valid
 	 *
 	 * <p>
-	 * First {@code <br>}, {@code <br/>}, {@code <br />}, and new lines become spaces. Text that
-	 * is then not longer than {@code maxLength} is returned. Otherwise only the visible
-	 * characters are counted: tags do not count, and an entity such as {@code &amp;} counts as
-	 * one character. The text is cut at {@code maxLength} visible characters and {@code "..."}
-	 * is appended. Tags that are open at the cut are closed when the rest of the text contains
-	 * their closing tag
+	 * First {@code <br>}, {@code <br/>}, {@code <br />}, and new lines in the text become spaces;
+	 * tags, comments, and the content of {@code <script>} and {@code <style>} stay as they are.
+	 * Text that is then not longer than {@code maxLength} is returned. Otherwise only the visible
+	 * characters are counted: tags, comments, and the content of {@code <script>} and
+	 * {@code <style>} do not count. An entity of any length such as {@code &amp;} or
+	 * {@code &eacute;} and a grapheme such as an emoji or a letter with a combining mark count
+	 * as one character and are never split. The rules for graphemes come from the Java runtime,
+	 * so the count for some scripts can change with the Java version. An {@code &} that does not
+	 * start an entity and a {@code <} that does not start a tag, also a {@code <} without a
+	 * later {@code >}, are one visible character. The text is cut at
+	 * {@code maxLength} visible characters and {@code "..."} is appended. When only markup and
+	 * white space follow the cut, no text is lost, so they are kept and {@code "..."} is not
+	 * appended. As in a browser, {@code <script/>} and {@code <style/>} do not end the element,
+	 * so all text up to the closing tag is not visible.
+	 * Tags that are open at the cut are closed in the correct order when the rest of the text
+	 * contains their closing tag, tag names are compared without regard to case
 	 *
 	 * <p>
-	 * With {@code intelligent}, the cut moves back to the last word delimiter, but at most 9
-	 * characters, so a word is not split in the middle when possible
+	 * With {@code intelligent}, the cut moves back to the last word delimiter in the last 10
+	 * visible characters, so a word is not split in the middle when possible. Without a
+	 * delimiter there, the cut moves back 10 visible characters. Delimiters directly before the
+	 * cut are removed. An entity is compared as the character that it stands for, so
+	 * {@code &nbsp;} is a delimiter only when {@code wordDelimeters} contains U+00A0
 	 *
 	 * @param str            HTML fragment, can be {@code null}
 	 * @param maxLength      maximum number of visible characters
 	 * @param intelligent    {@code true} to cut at a word delimiter
-	 * @param wordDelimeters characters that end a word, used only when {@code intelligent}
+	 * @param wordDelimeters characters that end a word, must not be {@code null} when
+	 *                       {@code intelligent} and {@code str} is not {@code null}
 	 * @return the shortened fragment, {@code null} for {@code null}
 	 */
-	@SuppressWarnings("java:S3776")
 	public static String abbreviateHtmlString(String str, int maxLength, boolean intelligent, char[] wordDelimeters)
 	{
-		if (str == null)
-		{
-			return str;
-		}
-
-		str = str.replace("<br>", " ");
-		str = str.replace("<br/>", " ");
-		str = str.replace("<br />", " ");
-		str = str.replace("\n", " ");
-
-		if (str.length() <= maxLength)
-		{
-			return str;
-		}
-
-		int sz = str.length();
-		StringBuilder buffer = new StringBuilder(sz);
-
-		boolean inTag = false;
-		boolean inTagName = false;
-		boolean endingTag = false;
-		int count = 0;
-		boolean chopped = false;
-		int entityChars = 0;
-
-		StringBuilder currentTag = new StringBuilder(5);
-		List<String> openTags = new ArrayList<>(5);
-		int i;
-		for (i = 0; i < sz; i++)
-		{
-			if (count >= maxLength)
-			{
-				if (intelligent)
-				{
-					for (int j = i - 1; j > 0 && j > i - 10; j--)
-					{
-						boolean find = false;
-						int c2 = str.charAt(j);
-						for (int d : wordDelimeters)
-						{
-							if (c2 == d)
-							{
-								find = true;
-							}
-						}
-						if (find)
-						{
-							break;
-						}
-						else
-						{
-							buffer.setLength(buffer.length() - 1);
-						}
-					}
-				}
-				chopped = true;
-				break;
-			}
-
-			char c = str.charAt(i);
-			if (c == '<')
-			{
-				inTag = true;
-				inTagName = true;
-			}
-			else if (inTag)
-			{
-				if (inTagName && c == '/')
-				{
-
-					if (currentTag.length() == 0)
-					{
-						endingTag = true;
-					}
-					else
-					{
-						inTagName = false;
-					}
-					currentTag.setLength(0);
-				}
-				else if (inTagName && (c == ' ' || c == '>'))
-				{
-					inTagName = false;
-
-					if (!endingTag)
-					{
-						openTags.add(currentTag.toString());
-					}
-					else
-					{
-						openTags.remove(currentTag.toString());
-					}
-					currentTag.setLength(0);
-					if (c == '>')
-					{
-						inTag = false;
-					}
-				}
-				else if (c == '>')
-				{
-					inTag = false;
-				}
-				else if (inTagName)
-				{
-					currentTag.append(c);
-				}
-
-			}
-			else
-			{
-				if (c == '&')
-				{
-					entityChars = 1;
-				}
-				else if (entityChars == 0)
-				{
-					count++;
-				}
-				else
-				{
-					if (entityChars > 0 && c == ';')
-					{
-						entityChars = 0;
-						count++;
-					}
-					else
-					{
-						entityChars++;
-					}
-					if (entityChars > 5)
-					{
-						count += entityChars;
-						entityChars = 0;
-					}
-				}
-			}
-
-			if (inTag || count < maxLength)
-			{
-				buffer.append(c);
-			}
-		}
-
-		if (chopped)
-		{
-			buffer.append("...");
-		}
-
-		if (!openTags.isEmpty())
-		{
-			String remainingToken = str.substring(i);
-			for (int j = openTags.size() - 1; j >= 0; j--)
-			{
-				String closingTag = "</" + openTags.get(j) + ">";
-				if (remainingToken.contains(closingTag))
-				{
-					buffer.append(closingTag);
-				}
-			}
-		}
-
-		return buffer.toString();
+		return HtmlAbbreviator.abbreviate(str, maxLength, intelligent, wordDelimeters);
 	}
 
 	/**
