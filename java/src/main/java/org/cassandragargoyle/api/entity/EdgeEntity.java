@@ -44,7 +44,7 @@ public class EdgeEntity extends AbstractEntity implements Edge
 	@Override
 	public Entity getNode1()
 	{
-		return (Entity) getProperty("node1");
+		return (Entity) properties.getValue("node1");
 	}
 
 	@Override
@@ -56,6 +56,6 @@ public class EdgeEntity extends AbstractEntity implements Edge
 	@Override
 	public Entity getNode2()
 	{
-		return (Entity) getProperty("node2");
+		return (Entity) properties.getValue("node2");
 	}
 }

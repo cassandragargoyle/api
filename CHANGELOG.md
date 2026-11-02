@@ -123,7 +123,9 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   `getDiagrams()` failed with `ClassCastException` on the second call on the
   same diagram, because they cast the `Property` wrapper instead of the stored
   set. Now `addNode`, `addEdge`, `addDiagram`, `getNode`, `getAllNodes` and
-  `getAllEdges` work when they are called more than once.
+  `getAllEdges` work when they are called more than once. `EdgeEntity.getNode1()`
+  and `getNode2()` had the same defect and failed on every call after the node
+  was set; they now return the stored node.
 
 ## [1.1.0] - 2026-10-24
 
