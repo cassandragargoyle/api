@@ -11,6 +11,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -38,7 +39,7 @@ import org.apache.commons.text.WordUtils;
 public class StringUtil
 {
 	/** Lower-case hexadecimal digits, indexed by the value of one nibble (0 to 15) */
-	private static final char[] HEXDIGITS = "0123456789abcdef".toCharArray();
+	private static final HexFormat HEX_FORMAT = HexFormat.of();
 
 	/** Prevents instances, the class has only static methods */
 	private StringUtil()
@@ -66,11 +67,9 @@ public class StringUtil
 		StringBuilder sb = new StringBuilder(bytes.length * 3);
 		int len = 0;
 
-		for (int b : bytes)
+		for (byte b : bytes)
 		{
-			b &= 0xff;
-			sb.append(HEXDIGITS[b >> 4]);
-			sb.append(HEXDIGITS[b & 15]);
+			HEX_FORMAT.toHexDigits(sb, b);
 			sb.append(cDelim);
 
 			if (nLineLen > 0)

@@ -233,18 +233,18 @@ A byte has 8 bits, a value from 0 to 255. **Hexadecimal** (base 16) writes it wi
 `0123456789abcdef`. Each digit stands for 4 bits, a **nibble**.
 
 ```java
-for (int b : bytes)
+for (byte b : bytes)
 {
-	b &= 0xff;
-	sb.append(HEXDIGITS[b >> 4]);
-	sb.append(HEXDIGITS[b & 15]);
+	HEX_FORMAT.toHexDigits(sb, b);
 	sb.append(cDelim);
 ```
 
-- `b &= 0xff` fixes the sign. A Java `byte` is from -128 to 127, so the byte `0xCA` arrives as `-54`.
-  `& 0xff` keeps only the lowest 8 bits and gives `202` again
-- `b >> 4` moves the bits 4 places to the right: the high nibble. For `202` (`1100 1010`) it is `12`, `c`
-- `b & 15` keeps the lowest 4 bits: the low nibble. For `202` it is `10`, `a`
+- `HEX_FORMAT` is `HexFormat.of()`, a class of the Java standard library since Java 17
+- `toHexDigits` writes the two digits of one byte to `sb`, first the high nibble, then the low nibble.
+  The byte `0xCA` is `1100 1010`: the high nibble is `12`, `c`, and the low nibble is `10`, `a`
+- A Java `byte` is from -128 to 127, so `0xCA` is stored as `-54`. `toHexDigits` still writes `ca`
+- `HexFormat` can also write a whole array with `formatHex`, but it does not write a delimiter after
+  the last byte and it does not break lines. This is why the method has its own loop
 
 `bytesToHexString(new byte[] {(byte) 0xCA, (byte) 0xFE, 0x0A, (byte) 255}, ' ', 0)` returns
 `"ca fe 0a ff "`. With a line length above 0, it adds one more delimiter after every 8 bytes and a

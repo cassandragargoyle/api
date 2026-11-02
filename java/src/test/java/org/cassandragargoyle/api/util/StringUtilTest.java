@@ -37,6 +37,19 @@ public class StringUtilTest
 	}
 
 	@Test
+	public void bytesToHexStringWritesEveryByteValueInLowerCase()
+	{
+		StringBuilder expected = new StringBuilder();
+		byte[] bytes = new byte[256];
+		for (int i = 0; i < bytes.length; i++)
+		{
+			bytes[i] = (byte) i;
+			expected.append(String.format("%02x:", i));
+		}
+		assertEquals(expected.toString(), StringUtil.bytesToHexString(bytes, ':', 0));
+	}
+
+	@Test
 	public void bytesToHexStringAddsDelimiterAfterEightBytesAndNewLineAfterLineLength()
 	{
 		byte[] bytes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
