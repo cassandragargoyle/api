@@ -2,8 +2,9 @@
 
 **Type**: Bug Fix
 **Priority**: Medium
-**Status**: Open
+**Status**: Implemented (PR #93, 2026-11-02)
 **Created**: 2026-11-02
+**Closed**: 2026-11-02
 **GitHub**: #90
 **Component**: java
 **Related**: #85
