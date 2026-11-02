@@ -15,6 +15,7 @@ An Architecture Decision Record (ADR) captures an important architectural decisi
 | [ADR-003](003-remove-persistence-module.md) | Remove Persistence Module | Accepted | 2026-03-19 |
 | [ADR-004](004-user-preferences-storage.md) | User Preferences Storage Interface | Proposed | 2026-07-05 |
 | [ADR-005](005-semantic-versioning.md) | Semantic Versioning for All Modules | Accepted | 2026-10-24 |
+| [ADR-006](006-maven-coordinates.md) | Maven Coordinates of the Java Library | Accepted | 2026-11-02 |
 
 ## Status Legend
 
@@ -56,12 +57,12 @@ An Architecture Decision Record (ADR) captures an important architectural decisi
 ## Creating a New ADR
 
 1. Copy the template above
-2. Use next sequential number (currently: 002)
+2. Use next sequential number (currently: 007)
 3. Create file: `XXX-short-title.md`
 4. Update this README with new entry
 5. Link to related issues
 
 ---
 
-**Last Updated**: 2026-03-19
+**Last Updated**: 2026-11-02
 
