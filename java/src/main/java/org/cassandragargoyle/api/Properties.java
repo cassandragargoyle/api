@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import org.cassandragargoyle.api.entity.Entity;
 import org.cassandragargoyle.api.util.StringUtil;
 
@@ -294,13 +295,15 @@ public class Properties
 	 * Retrieves a property from the given map and casts it to the specified target type.
 	 *
 	 * @param name       the key to look up the property in the map
-	 * @param targetType the class of the target type to cast to
+	 * @param targetType the class of the target type to cast to, must not be {@code null}
 	 * @param <T>        the type to cast to
 	 * @return the casted property value, or null if the property does not exist
 	 * @throws ClassCastException if the property cannot be cast to the target type
+	 * @throws NullPointerException if {@code targetType} is {@code null}
 	 */
 	public <T> T getTypedProperty(String name, Class<T> targetType)
 	{
+		Objects.requireNonNull(targetType, "targetType");
 		Property property = properties.get(name);
 
 		if (property == null)
@@ -322,14 +325,16 @@ public class Properties
 	 * Retrieves a property from the map and casts it to a list of the specified element type.
 	 *
 	 * @param name        the key to look up the property in the map
-	 * @param elementType the class of the list's element type to cast to
+	 * @param elementType the class of the list's element type to cast to, must not be {@code null}
 	 * @param <T>         the type of the elements in the list
 	 * @return the casted list, or null if the property does not exist
 	 * @throws ClassCastException if the property is not a list or contains elements of a different type
+	 * @throws NullPointerException if {@code elementType} is {@code null}
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getTypedListProperty(String name, Class<T> elementType)
 	{
+		Objects.requireNonNull(elementType, "elementType");
 		Property property = properties.get(name);
 
 		if (property == null)
@@ -413,15 +418,17 @@ public class Properties
 	 * The method is {@code synchronized} to make begin/commit pairing safe
 	 * across threads.
 	 *
-	 * @param updateObject opaque tag identifying the originator of the batch
+	 * @param updateObject opaque tag identifying the originator of the batch, must not be {@code null}
 	 * @param force        if {@code true}, applies recorded changes even when
 	 *                     the target properties already hold a non-empty value;
 	 *                     if {@code false}, the entire batch is silently
 	 *                     skipped at commit time when any target is non-empty
 	 * @throws IllegalArgumentException if a batch is already active
+	 * @throws NullPointerException if {@code updateObject} is {@code null}
 	 */
 	public synchronized void beginUpdate(Object updateObject, boolean force)
 	{
+		Objects.requireNonNull(updateObject, "updateObject");
 		if (propertyUpdateManager != null)
 		{
 			throw new IllegalArgumentException("Update cannot be started because another object is currently being updated.");

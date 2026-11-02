@@ -44,6 +44,8 @@ public class PreferencesUtil
 	 */
 	public static List<String> getStringList(Preferences prefs, String key)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		int size = prefs.getInt(key, 0);
 		List<String> list = new ArrayList<>(size);
 		for (int pos = 0; pos < size; pos++)
@@ -74,6 +76,9 @@ public class PreferencesUtil
 	 */
 	public static void putStringList(Preferences prefs, String key, List<String> values, int count)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
+		Objects.requireNonNull(values, "values");
 		int pos = 0;
 		for (String value : values)
 		{
@@ -98,6 +103,9 @@ public class PreferencesUtil
 	 */
 	public static void putDimension(Preferences prefs, String key, Dimension dim)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
+		Objects.requireNonNull(dim, "dim");
 		prefs.putInt(key + DIMENSION_WIDTH, dim.width);
 		prefs.putInt(key + DIMENSION_HEIGHT, dim.height);
 	}
@@ -110,6 +118,8 @@ public class PreferencesUtil
 	 */
 	public static Dimension getDimension(Preferences prefs, String key)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		int width = prefs.getInt(key + DIMENSION_WIDTH, -1);
 		int height = prefs.getInt(key + DIMENSION_HEIGHT, -1);
 
@@ -131,6 +141,9 @@ public class PreferencesUtil
 	 */
 	public static void putBounds(Preferences prefs, String key, Rectangle rect)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
+		Objects.requireNonNull(rect, "rect");
 		prefs.putInt(key + BOUNDS_X, rect.x);
 		prefs.putInt(key + BOUNDS_Y, rect.y);
 		prefs.putInt(key + BOUNDS_WIDTH, rect.width);
@@ -145,6 +158,8 @@ public class PreferencesUtil
 	 */
 	public static Rectangle getBounds(Preferences prefs, String key)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		int x = prefs.getInt(key + BOUNDS_X, -1);
 		int y = prefs.getInt(key + BOUNDS_Y, -1);
 		int width = prefs.getInt(key + BOUNDS_WIDTH, -1);
@@ -162,6 +177,8 @@ public class PreferencesUtil
 
 	public static void putValue(Preferences prefs, String key, String value, String defaultValue)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		String old = prefs.get(key, null);
 		if (!Objects.equals(value, defaultValue))
 		{
@@ -175,6 +192,8 @@ public class PreferencesUtil
 
 	public static void putIntValue(Preferences prefs, String key, int value, int defaultValue)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		String old = prefs.get(key, null);
 		if (value != defaultValue)
 		{
@@ -188,6 +207,8 @@ public class PreferencesUtil
 
 	public static void putBooleanValue(Preferences prefs, String key, boolean value, boolean defaultValue)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		String old = prefs.get(key, null);
 		if (value != defaultValue)
 		{
@@ -201,6 +222,8 @@ public class PreferencesUtil
 
 	public static void putDoubleValue(Preferences prefs, String key, double value, double defaultValue)
 	{
+		Objects.requireNonNull(prefs, "prefs");
+		Objects.requireNonNull(key, "key");
 		String old = prefs.get(key, null);
 		if (value != defaultValue)
 		{

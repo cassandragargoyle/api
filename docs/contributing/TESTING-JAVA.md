@@ -67,7 +67,7 @@ class UserServiceTest {
 - Test individual components
 - Use mocks for dependencies
 - Fast execution
-- High coverage
+- High coverage, the target is 80%. `make coverage-java` writes the JaCoCo report to `java/target/site/jacoco/index.html`
 
 ### Integration Tests
 

@@ -5,6 +5,8 @@
  */
 package org.cassandragargoyle.api.util;
 
+import java.util.Objects;
+
 /*
  * Base64 encoder and decoder with the standard alphabet of RFC 4648
  *
@@ -87,6 +89,7 @@ public class Base64Encoder
 	 */
 	public static String encodeString(String s)
 	{
+		Objects.requireNonNull(s, "s");
 		return new String(encode(s.getBytes()));
 	}
 
@@ -99,6 +102,7 @@ public class Base64Encoder
 	 */
 	public static char[] encode(byte[] in)
 	{
+		Objects.requireNonNull(in, "in");
 		return encode(in, in.length);
 	}
 
@@ -112,6 +116,7 @@ public class Base64Encoder
 	 */
 	public static char[] encode(byte[] in, int iLen)
 	{
+		Objects.requireNonNull(in, "in");
 		int oDataLen = (iLen * 4 + 2) / 3;       // output length without padding
 		int oLen = ((iLen + 2) / 3) * 4;         // output length including padding
 		char[] out = new char[oLen];
@@ -167,6 +172,7 @@ public class Base64Encoder
 	 */
 	public static byte[] decode(String s)
 	{
+		Objects.requireNonNull(s, "s");
 		return decode(s.toCharArray());
 	}
 
@@ -185,6 +191,7 @@ public class Base64Encoder
 	 */
 	public static byte[] decode(char[] in)
 	{
+		Objects.requireNonNull(in, "in");
 		int iLen = in.length;
 		if (iLen % 4 != 0)
 		{

@@ -6,6 +6,7 @@
 package org.cassandragargoyle.api.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -31,12 +32,14 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 	@Override
 	public void addDiagram(Diagram diagram)
 	{
+		Objects.requireNonNull(diagram, "diagram");
 		getDiagrams().add(diagram);
 	}
 
 	@Override
 	public void addNode(Entity node)
 	{
+		Objects.requireNonNull(node, "node");
 		getNodes().add(node);
 	}
 
@@ -62,6 +65,7 @@ public class DiagramEntity extends AbstractEntity implements Diagram
 	@Override
 	public void addEdge(Edge edge)
 	{
+		Objects.requireNonNull(edge, "edge");
 		getEdges().add(edge);
 	}
 

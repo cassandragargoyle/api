@@ -5,6 +5,7 @@
  */
 package org.cassandragargoyle.api;
 
+import java.util.Objects;
 import java.util.Properties;
 import org.cassandragargoyle.api.util.OsDetector;
 
@@ -96,6 +97,7 @@ public class OsInfo
 	 */
 	public String getProperty(String key)
 	{
+		Objects.requireNonNull(key, "key");
 		return properties.getProperty(key);
 	}
 }

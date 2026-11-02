@@ -15,6 +15,29 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Changed
 
+- **Java null checks** (#85): parameters that must not be null are checked
+  with `Objects.requireNonNull(value, "parameterName")` in `StringUtil`,
+  `PreferencesUtil`, `Base64Encoder`, `DateUtil`, `SystemUtil`, `Properties`,
+  `BaseClass`, `OsInfo`, `SoftwareEntity`, `EdgeEntity` and `DiagramEntity`.
+  Most of these calls failed before with a later `NullPointerException`, now
+  the exception comes first and names the parameter. **Breaking** for code
+  that passed `null` where it was accepted before:
+  `DiagramEntity.addNode`, `addEdge(Edge)` and `addDiagram` (`null` was added
+  to the set), `Properties.beginUpdate` (`null` update object),
+  `Properties.getTypedProperty` / `getTypedListProperty` (`null` type for a
+  missing or empty property), `PreferencesUtil.putDimension`, `getDimension`,
+  `putBounds` and `getBounds` (`null` key was written as the text `"null"`),
+  and edge cases with an empty input such as `Base64Encoder.encode(null, 0)`,
+  `StringUtil.endsIgnoreCase(null, null)` and
+  `StringUtil.saveCollatorCompare(null, ...)` with a `null` string. The
+  `fuzzy`, `log` and `telemetry` packages do not change.
+
+- **Java build**: the unused `lombok.version` property is removed from
+  `java/pom.xml` (#85). The library does not use Lombok, see the null check
+  rule in `docs/contributing/CODE-STYLE-JAVA.md`. `mvn verify` and the new
+  `make coverage-java` write a JaCoCo coverage report to
+  `java/target/site/jacoco/`.
+
 - **Java dependencies**: OpenTelemetry 1.40.0 → 1.62.0, Maven Surefire
   plugin 3.5.5 → 3.5.6.
 

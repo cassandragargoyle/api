@@ -342,6 +342,29 @@ public Configuration loadConfiguration(String configPath) throws ConfigurationEx
 }
 ```
 
+### Null Checks
+
+The library does not use Lombok. When a parameter must not be null, write
+the check directly in code at the start of the constructor or method:
+
+```java
+public Speaker(String name)
+{
+	this.name = Objects.requireNonNull(name, "name");
+}
+
+public void setName(String name)
+{
+	this.name = Objects.requireNonNull(name, "name");
+}
+```
+
+1. Use `java.util.Objects.requireNonNull(value, "parameterName")`, the message is the parameter name
+2. The behavior is the same as Lombok `@NonNull`: a `NullPointerException` with the parameter name in the message
+3. Add the check when the method dereferences the parameter, or when it stores the parameter and other code uses it without a null check
+4. Do not add the check to a method that accepts null on purpose, and write `can be {@code null}` in its Javadoc
+5. Do not add Lombok or a replacement library (for example a different annotation processor) for this
+
 ### Custom Exceptions
 
 Create domain-specific exception classes:
