@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.text.WordUtils;
@@ -61,6 +62,7 @@ public class StringUtil
 	 */
 	public static String bytesToHexString(byte[] bytes, char cDelim, int nLineLen)
 	{
+		Objects.requireNonNull(bytes, "bytes");
 		StringBuilder sb = new StringBuilder(bytes.length * 3);
 		int len = 0;
 
@@ -98,6 +100,8 @@ public class StringUtil
 	 */
 	public static boolean startsIgnoreCase(String str, String prefix)
 	{
+		Objects.requireNonNull(str, "str");
+		Objects.requireNonNull(prefix, "prefix");
 		return str.length() >= prefix.length() && prefix.equalsIgnoreCase(str.substring(0, prefix.length()));
 	}
 
@@ -114,6 +118,8 @@ public class StringUtil
 	 */
 	public static boolean containsIgnoreCase(String str, String sub)
 	{
+		Objects.requireNonNull(str, "str");
+		Objects.requireNonNull(sub, "sub");
 		return str.length() >= sub.length() && str.toLowerCase().contains(sub.toLowerCase());
 	}
 
@@ -127,6 +133,7 @@ public class StringUtil
 	 */
 	public static boolean endsIgnoreCase(String str, String suffix)
 	{
+		Objects.requireNonNull(suffix, "suffix");
 		return str != null
 			&& str.length() >= suffix.length()
 			&& suffix.equalsIgnoreCase(str.substring(str.length() - suffix.length(), str.length()));
@@ -145,6 +152,8 @@ public class StringUtil
 	 */
 	public static void appendToHtml(StringBuilder sb, String value)
 	{
+		Objects.requireNonNull(sb, "sb");
+		Objects.requireNonNull(value, "value");
 		if (startsIgnoreCase(value, "<html>"))
 		{
 			if (endsIgnoreCase(value, "</html>"))
@@ -174,6 +183,8 @@ public class StringUtil
 	 */
 	public static void appendHtmlEscaped(StringBuilder sb, String value)
 	{
+		Objects.requireNonNull(sb, "sb");
+		Objects.requireNonNull(value, "value");
 		int length = value.length();
 		char c;
 
@@ -231,6 +242,8 @@ public class StringUtil
 	 */
 	public static void appendHtmlEscaped(StringBuilder sb, String value, int maxLineLength, int maxLines)
 	{
+		Objects.requireNonNull(sb, "sb");
+		Objects.requireNonNull(value, "value");
 		int length = value.length();
 		int lineLength = 0;
 		int lastSpaceI = -1;
@@ -484,6 +497,7 @@ public class StringUtil
 	 */
 	public static boolean isAllASCII(final String input)
 	{
+		Objects.requireNonNull(input, "input");
 		boolean isASCII = true;
 		for (int i = 0; i < input.length(); i++)
 		{
@@ -505,6 +519,7 @@ public class StringUtil
 	 */
 	public static boolean isAllASCIILetters(final String input)
 	{
+		Objects.requireNonNull(input, "input");
 		boolean isASCII = true;
 		for (int i = 0; i < input.length(); i++)
 		{
@@ -529,6 +544,7 @@ public class StringUtil
 	 */
 	public static String firstNotEmpty(String... s)
 	{
+		Objects.requireNonNull(s, "s");
 		for (String str : s)
 		{
 			if (str != null && !str.isEmpty())
@@ -567,6 +583,7 @@ public class StringUtil
 	 */
 	public static String toString(final Collection<String> parts, final char sep)
 	{
+		Objects.requireNonNull(parts, "parts");
 		StringBuilder sb = new StringBuilder();
 
 		for (String part : parts)
@@ -614,6 +631,7 @@ public class StringUtil
 	 */
 	public static List<String> fromString(final String value, final char sep)
 	{
+		Objects.requireNonNull(value, "value");
 		List<String> parts = new ArrayList<>();
 
 		StringBuilder sb = new StringBuilder();
@@ -660,6 +678,7 @@ public class StringUtil
 	 */
 	public static String stringPart(final String value, final int partNr, final char sep)
 	{
+		Objects.requireNonNull(value, "value");
 		StringBuilder sb = new StringBuilder();
 		boolean forceNext = false;
 		int length = value.length();
@@ -720,6 +739,7 @@ public class StringUtil
 	 */
 	public static char firstNonWhiteChar(String value, int pos)
 	{
+		Objects.requireNonNull(value, "value");
 		int len = value.length();
 		while (pos < len)
 		{
@@ -785,6 +805,8 @@ public class StringUtil
 	 */
 	public static String removeSuffix(String value, String suffix)
 	{
+		Objects.requireNonNull(value, "value");
+		Objects.requireNonNull(suffix, "suffix");
 		if (value.endsWith(suffix))
 		{
 			return value.substring(0, value.length() - suffix.length());
@@ -801,6 +823,8 @@ public class StringUtil
 	 */
 	public static String removePrefix(String value, String prefix)
 	{
+		Objects.requireNonNull(value, "value");
+		Objects.requireNonNull(prefix, "prefix");
 		if (value.startsWith(prefix))
 		{
 			return value.substring(prefix.length());
@@ -817,6 +841,8 @@ public class StringUtil
 	 */
 	public static boolean endsWith(StringBuilder sb, String suffix)
 	{
+		Objects.requireNonNull(sb, "sb");
+		Objects.requireNonNull(suffix, "suffix");
 		return sb.length() >= suffix.length() && suffix.equals(sb.substring(sb.length() - suffix.length()));
 	}
 
@@ -835,6 +861,7 @@ public class StringUtil
 	 */
 	public static String escapeForXml(String value)
 	{
+		Objects.requireNonNull(value, "value");
 		StringWriter writer = new StringWriter((int) (value.length() * 1.1));
 
 		int len = value.length();
@@ -899,6 +926,8 @@ public class StringUtil
 	 */
 	public static String min(String v1, String v2)
 	{
+		Objects.requireNonNull(v1, "v1");
+		Objects.requireNonNull(v2, "v2");
 		return v1.compareTo(v2) <= 0 ? v1 : v2;
 	}
 
@@ -965,6 +994,7 @@ public class StringUtil
 	 */
 	public static int saveCollatorCompare(Collator collator, String value1, String value2)
 	{
+		Objects.requireNonNull(collator, "collator");
 		if (value1 == null)
 		{
 			return value2 == null ? 0 : -1;
@@ -1177,6 +1207,8 @@ public class StringUtil
 	 */
 	public static int ordinalIndexOf(String str, String substr, int n)
 	{
+		Objects.requireNonNull(str, "str");
+		Objects.requireNonNull(substr, "substr");
 		int pos = str.indexOf(substr);
 		while (--n > 0 && pos != -1)
 		{
@@ -1199,6 +1231,7 @@ public class StringUtil
 	 */
 	public static long longHash(String value)
 	{
+		Objects.requireNonNull(value, "value");
 		long h = 1125899906842597L;
 		int len = value.length();
 		for (int i = 0; i < len; i++)
@@ -1222,6 +1255,7 @@ public class StringUtil
 	 */
 	public static long longHash(String value, long startHash)
 	{
+		Objects.requireNonNull(value, "value");
 		long h = startHash;
 		int len = value.length();
 		for (int i = 0; i < len; i++)
@@ -1247,6 +1281,7 @@ public class StringUtil
 	 */
 	public static String multiLine(String description, int maxLineLength)
 	{
+		Objects.requireNonNull(description, "description");
 		if (description.length() < maxLineLength)
 		{
 			return description;
@@ -1295,6 +1330,8 @@ public class StringUtil
 	 */
 	public static int levenshteinDistance(String val0, String val1)
 	{
+		Objects.requireNonNull(val0, "val0");
+		Objects.requireNonNull(val1, "val1");
 		char[] chars0 = val0.toCharArray();
 		int len0 = val0.length() + 1;
 
@@ -1353,6 +1390,8 @@ public class StringUtil
 	 */
 	public static int levenshteinDistance(String[] val0, String[] val1)
 	{
+		Objects.requireNonNull(val0, "val0");
+		Objects.requireNonNull(val1, "val1");
 		int len0 = val0.length + 1;
 		int len1 = val1.length + 1;
 

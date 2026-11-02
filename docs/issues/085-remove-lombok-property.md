@@ -13,6 +13,8 @@
 `java/pom.xml` defines the property `lombok.version` (1.18.30), but the
 project does not use Lombok. Remove the property and keep the library free
 of Lombok. Null checks such as `@NonNull` are written directly in code.
+Review the Java code, find the parameters that must not be null, and add
+the null check there.
 
 ## Problem Description / Motivation
 
@@ -34,6 +36,35 @@ of Lombok. Null checks such as `@NonNull` are written directly in code.
 1. Remove `<lombok.version>1.18.30</lombok.version>` from `java/pom.xml`
 2. Document the rule for null checks without Lombok in
    `docs/contributing/CODE-STYLE-JAVA.md`
+3. Review the public and protected constructors and methods in
+   `java/src/main/java`, find the parameters that must not be null, and add
+   the null check from the rule below
+
+### Code review for null parameters
+
+A parameter must not be null when one of these is true:
+
+- The code dereferences the parameter (calls a method on it, reads its
+  length, unboxes it), so null causes a `NullPointerException` later in the
+  call, often with an unclear message
+- The constructor or setter stores the parameter in a field, and other code
+  uses the field without a null check
+
+Rules for the review:
+
+- Do not change methods that accept null on purpose. Examples:
+  `StringUtil.isNullOrEmpty`, `BaseClass.toString(Object)`,
+  `DateUtil` compare methods, and `Levenshtein`, which handles null
+  arguments already
+- Do not change the behavior of features that exist in more than one
+  module (`fuzzy`, `log`, `telemetry`) unless the other modules change too
+  (see Cross-Language Parity in `AGENTS.md`)
+- A new check that only replaces a later `NullPointerException` with an
+  earlier one is not a breaking change
+- A new check where null was accepted and stored before is a breaking
+  change. List every such place in the PR description and in `CHANGELOG.md`
+- Add a unit test for every new null check that asserts the
+  `NullPointerException` and the parameter name in the message
 
 ### Rule for null checks
 
@@ -70,6 +101,10 @@ public void setName(String name)
 3. `mvn -f java/pom.xml clean verify` passes with the same test results as
    before the change
 4. The null check rule is in `docs/contributing/CODE-STYLE-JAVA.md`
+5. The parameters that must not be null have a
+   `Objects.requireNonNull(value, "parameterName")` check, and each check
+   has a unit test
+6. Breaking changes from new null checks are listed in `CHANGELOG.md`
 
 ## Testing
 

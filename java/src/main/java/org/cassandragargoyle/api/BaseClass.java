@@ -7,6 +7,7 @@ package org.cassandragargoyle.api;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,6 +89,7 @@ public class BaseClass
 	 */
 	protected Properties asProperties(String propertiesString, String separator)
 	{
+		Objects.requireNonNull(propertiesString, "propertiesString");
 		if (separator != null && "=".equals(separator))
 		{
 			propertiesString = propertiesString.replace(":", "=");
@@ -207,6 +209,7 @@ public class BaseClass
 	 */
 	protected void printf(String formatString, String... arguments)
 	{
+		Objects.requireNonNull(formatString, "formatString");
 		System.out.printf(formatString, arguments);
 	}
 }

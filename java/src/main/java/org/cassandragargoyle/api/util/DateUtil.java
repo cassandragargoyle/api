@@ -7,6 +7,7 @@ package org.cassandragargoyle.api.util;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
@@ -100,6 +101,7 @@ public class DateUtil
 
 	public static int toDayCount(Date date)
 	{
+		Objects.requireNonNull(date, "date");
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 
@@ -175,6 +177,7 @@ public class DateUtil
 
 	public static boolean atMidnight(Date date)
 	{
+		Objects.requireNonNull(date, "date");
 		if ((date.getTime() % 3600000) == 0)
 		{
 			synchronized (CALENDAR)
@@ -191,6 +194,7 @@ public class DateUtil
 
 	public static Date toMidnight(Date date)
 	{
+		Objects.requireNonNull(date, "date");
 		synchronized (CALENDAR)
 		{
 			CALENDAR.setTime(date);
@@ -204,6 +208,7 @@ public class DateUtil
 
 	public static boolean isToday(Date date)
 	{
+		Objects.requireNonNull(date, "date");
 		date = toMidnight(date);
 		return date.equals(toMidnight(new Date()));
 	}

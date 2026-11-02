@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Objects;
 import org.cassandragargoyle.api.entity.Platform;
 import org.cassandragargoyle.api.util.OsDetector;
 import org.springframework.stereotype.Component;
@@ -99,6 +100,7 @@ public class SoftwareEntity extends AbstractEntity implements Software
 
 	protected final boolean isInstalledByWhere(String name)
 	{
+		Objects.requireNonNull(name, "name");
 		try
 		{
 			String command = OsDetector.isWindows() ? "where" : "which";

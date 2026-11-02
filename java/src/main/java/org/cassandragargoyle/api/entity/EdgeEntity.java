@@ -5,6 +5,8 @@
  */
 package org.cassandragargoyle.api.entity;
 
+import java.util.Objects;
+
 /**
  * Concrete implementation of a graph edge connecting two Entity nodes
  *
@@ -28,7 +30,7 @@ public class EdgeEntity extends AbstractEntity implements Edge
 
 	public EdgeEntity(Entity node1, Entity node2)
 	{
-		super(node1.getName() + "-" + node2.getName());
+		super(Objects.requireNonNull(node1, "node1").getName() + "-" + Objects.requireNonNull(node2, "node2").getName());
 		setNode1(node1);
 		setNode2(node2);
 	}

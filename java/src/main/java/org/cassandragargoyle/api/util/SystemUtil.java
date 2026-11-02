@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Objects;
 import org.cassandragargoyle.api.log.LogFactory;
 import org.openide.util.Exceptions;
 
@@ -58,6 +59,7 @@ public class SystemUtil
 	 */
 	public static double getDouble(String propertyName, double dflt)
 	{
+		Objects.requireNonNull(propertyName, "propertyName");
 		String property = System.getProperty(propertyName);
 		if (property != null && !property.isEmpty())
 		{
