@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.text.Collator;
 import java.util.List;
 import java.util.Locale;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * The null checks are tested in {@link StringUtilNullCheckTest}, the blank checks in {@link StringUtilBlankTest}
  *
  * @author Zdenek
- * @since 1.2.1
+ * @since 2026-11-02
  */
 public class StringUtilTest
 {
@@ -35,6 +34,19 @@ public class StringUtilTest
 	{
 		assertEquals("ca fe ", StringUtil.bytesToHexString(new byte[] { (byte) 0xCA, (byte) 0xFE }, ' ', 0));
 		assertEquals("", StringUtil.bytesToHexString(new byte[0], ' ', 0));
+	}
+
+	@Test
+	public void bytesToHexStringWritesEveryByteValueInLowerCase()
+	{
+		StringBuilder expected = new StringBuilder();
+		byte[] bytes = new byte[256];
+		for (int i = 0; i < bytes.length; i++)
+		{
+			bytes[i] = (byte) i;
+			expected.append(String.format("%02x:", i));
+		}
+		assertEquals(expected.toString(), StringUtil.bytesToHexString(bytes, ':', 0));
 	}
 
 	@Test
@@ -202,7 +214,6 @@ public class StringUtilTest
 	}
 
 	@Test
-	@Disabled("Defect: the text is cut one visible character before maxLength, \"abcdef\" with 3 gives \"ab...\"")
 	public void abbreviateHtmlStringKeepsMaxLengthVisibleCharacters()
 	{
 		assertEquals("abc...", StringUtil.abbreviateHtmlString("abcdef", 3, false, null));
@@ -212,9 +223,19 @@ public class StringUtilTest
 	@Test
 	public void abbreviateHtmlStringCountsEntityAsOneCharacter()
 	{
-		String result = StringUtil.abbreviateHtmlString("a&amp;bcdefgh", 4, false, null);
-		assertTrue(result.startsWith("a&amp;b"), result);
-		assertTrue(result.endsWith("..."), result);
+		assertEquals("a&amp;bc...", StringUtil.abbreviateHtmlString("a&amp;bcdefgh", 4, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringKeepsWholeEntityAtTheCut()
+	{
+		assertEquals("a&amp;...", StringUtil.abbreviateHtmlString("a&amp;bcdefgh", 2, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringKeepsLastCharacterAtEndOfText()
+	{
+		assertEquals("<b>abc", StringUtil.abbreviateHtmlString("<b>abc", 3, false, null));
 	}
 
 	@Test
@@ -222,6 +243,278 @@ public class StringUtilTest
 	{
 		String result = StringUtil.abbreviateHtmlString("one two three four", 10, true, new char[] { ' ' });
 		assertEquals("one two...", result);
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentRemovesDelimiterAtTheCut()
+	{
+		String result = StringUtil.abbreviateHtmlString("one two three four", 8, true, new char[] { ' ' });
+		assertEquals("one two...", result);
+	}
+
+	@Test
+	public void abbreviateHtmlStringCountsLongEntityAsOneCharacter()
+	{
+		assertEquals("&ndash;...", StringUtil.abbreviateHtmlString("&ndash;abcdef", 1, false, null));
+		assertEquals("a&eacute;bc...", StringUtil.abbreviateHtmlString("a&eacute;bcdefghijkl", 4, false, null));
+		assertEquals("&#8211;a...", StringUtil.abbreviateHtmlString("&#8211;abcdefgh", 2, false, null));
+		assertEquals("&#x2013;a...", StringUtil.abbreviateHtmlString("&#x2013;abcdefgh", 2, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringCountsBareAmpersandAsOneCharacter()
+	{
+		assertEquals("R&D...", StringUtil.abbreviateHtmlString("R&D department budget", 3, false, null));
+		assertEquals("a &...", StringUtil.abbreviateHtmlString("a & b c d e f", 3, false, null));
+		assertEquals("<i>ab&", StringUtil.abbreviateHtmlString("<i>ab&", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringClosesTagOpenedAfterClosingTag()
+	{
+		assertEquals("<b>a</b><i>bc...</i>", StringUtil.abbreviateHtmlString("<b>a</b><i>bcdefgh</i>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentKeepsTagsValid()
+	{
+		char[] space = { ' ' };
+		assertEquals("one...", StringUtil.abbreviateHtmlString("one <b>two</b> three four", 6, true, space));
+		assertEquals("aa...", StringUtil.abbreviateHtmlString("aa <b>bbbbbbbbbb</b> cc", 6, true, space));
+		assertEquals("<b>one...</b>", StringUtil.abbreviateHtmlString("<b>one two</b> three four", 6, true, space));
+		assertEquals("...", StringUtil.abbreviateHtmlString("<b>abcdefghij</b>", 5, true, space));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentKeepsEntitiesWhole()
+	{
+		char[] space = { ' ' };
+		assertEquals("...", StringUtil.abbreviateHtmlString("&amp;c&amp;bbab", 2, true, space));
+		assertEquals("one &amp;...", StringUtil.abbreviateHtmlString("one &amp; two three", 7, true, space));
+		assertEquals("abcd...", StringUtil.abbreviateHtmlString("abcdefghijkl&amp;mnopqrstuv", 14, true, space));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentMovesBackTenCharactersWithoutDelimiter()
+	{
+		char[] space = { ' ' };
+		assertEquals("...", StringUtil.abbreviateHtmlString("one two three four", 3, true, space));
+		assertEquals("ab...", StringUtil.abbreviateHtmlString("abcdefghijklmnopqrst", 12, true, space));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentFindsDelimiterAtWindowStart()
+	{
+		assertEquals("ab...", StringUtil.abbreviateHtmlString("ab cdefghijklmnop", 12, true, new char[] { ' ' }));
+		assertEquals("ab c...", StringUtil.abbreviateHtmlString("ab cdefghijklmnop", 14, true, new char[] { ' ' }));
+	}
+
+	@Test
+	public void abbreviateHtmlStringClosesNestedSameTagsInCorrectOrder()
+	{
+		assertEquals("<b><i><b>x</b>yy...</i></b>",
+			StringUtil.abbreviateHtmlString("<b><i><b>x</b>yyyy</i></b>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringComparesTagNamesWithoutCase()
+	{
+		assertEquals("<B>abc...</B>", StringUtil.abbreviateHtmlString("<B>abcdef</b>", 3, false, null));
+		assertEquals("<B>a</b><i>bc...</i>", StringUtil.abbreviateHtmlString("<B>a</b><i>bcdef</i>", 3, false, null));
+		assertEquals("<B>a</b>bc...", StringUtil.abbreviateHtmlString("<B>a</b>bcdefg</b>", 3, false, null));
+		assertEquals("<b>abc...</b>", StringUtil.abbreviateHtmlString("<b>abcdef</B>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringHandlesMalformedClosingTag()
+	{
+		assertEquals("<b>a</b/><i>bc...</i>", StringUtil.abbreviateHtmlString("<b>a</b/><i>bcdefgh</i>", 3, false, null));
+		assertEquals("</b/><i>abc...</i>", StringUtil.abbreviateHtmlString("</b/><i>abcdefgh</i>", 3, false, null));
+		assertEquals("<b>a</b/>bc...", StringUtil.abbreviateHtmlString("<b>a</b/>bcdefgh</b>", 3, false, null));
+		assertEquals("</<b>abc...", StringUtil.abbreviateHtmlString("</<b>abcdef</b>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringCountsBareLessThanAsOneCharacter()
+	{
+		assertEquals("1 <...", StringUtil.abbreviateHtmlString("1 < 2 and more text here", 3, false, null));
+		assertEquals("a<3...", StringUtil.abbreviateHtmlString("a<3 and more", 3, false, null));
+		assertEquals("<i>ab<", StringUtil.abbreviateHtmlString("<i>ab<", 3, false, null));
+		assertEquals("<\u010D ...", StringUtil.abbreviateHtmlString("<\u010D and more", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringRecognizesTagStart()
+	{
+		assertEquals("<!-- x -->abc...", StringUtil.abbreviateHtmlString("<!-- x -->abcdefgh", 3, false, null));
+		assertEquals("<i>ab<c>", StringUtil.abbreviateHtmlString("<i>ab<c>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringCountsLessThanWithoutTagEndAsText()
+	{
+		assertEquals("if a<b...", StringUtil.abbreviateHtmlString("if a<b then c and more text", 6, false, null));
+		assertEquals("x<y...", StringUtil.abbreviateHtmlString("x<y and more text", 3, false, null));
+		assertEquals("<i>ab<...", StringUtil.abbreviateHtmlString("<i>ab<c", 3, false, null));
+		assertEquals("a<b c<d", StringUtil.abbreviateHtmlString("a<b\nc<d", 10, false, null));
+		assertEquals("a<b...", StringUtil.abbreviateHtmlString("a<b\nc<d\nmore text here", 3, false, null));
+		assertEquals("if...", StringUtil.abbreviateHtmlString("if a<b then c and more text", 6, true, new char[] { ' ' }));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIgnoresTagCharactersInQuotedAttribute()
+	{
+		assertEquals("<a title='a>b'>abc...</a>", StringUtil.abbreviateHtmlString("<a title='a>b'>abcdef</a>", 3, false, null));
+		assertEquals("<a title=\"<b>\">abc...</a>", StringUtil.abbreviateHtmlString("<a title=\"<b>\">abcdef</a>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringCountsSurrogatePairAsOneCharacter()
+	{
+		String emoji = "\uD83D\uDE00";
+		assertEquals("a" + emoji + "...", StringUtil.abbreviateHtmlString("a" + emoji + "bcdef", 2, false, null));
+		assertEquals("a" + emoji, StringUtil.abbreviateHtmlString("a" + emoji, 2, false, null));
+		assertEquals("a\uD83D...", StringUtil.abbreviateHtmlString("a\uD83Dbcdef", 2, false, null));
+		assertEquals("<i>a\uD83D", StringUtil.abbreviateHtmlString("<i>a\uD83D", 2, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentRemovesAllDelimitersAtTheCut()
+	{
+		char[] space = { ' ' };
+		assertEquals("one...", StringUtil.abbreviateHtmlString("one  two three", 5, true, space));
+		assertEquals("ab...", StringUtil.abbreviateHtmlString("ab cdefghijklmnop", 13, true, space));
+		assertEquals("...", StringUtil.abbreviateHtmlString("   abcdefgh", 2, true, space));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentDoesNotMatchDelimiterInEntity()
+	{
+		assertEquals("...", StringUtil.abbreviateHtmlString("ab&amp;cdefgh", 4, true, new char[] { ';', 'a', '\0' }));
+		assertEquals("a...", StringUtil.abbreviateHtmlString("a\0bcdefghij", 4, true, new char[] { '\0' }));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentComparesEntityAsItsCharacter()
+	{
+		String text = "one&nbsp;two&nbsp;three";
+		assertEquals("...", StringUtil.abbreviateHtmlString(text, 6, true, new char[] { ' ' }));
+		assertEquals("one...", StringUtil.abbreviateHtmlString(text, 6, true, new char[] { '\u00A0' }));
+		assertEquals("ab...", StringUtil.abbreviateHtmlString("ab&amp;cdefgh", 4, true, new char[] { '&' }));
+		assertEquals("ab...", StringUtil.abbreviateHtmlString("ab&#32;cdefgh", 4, true, new char[] { ' ' }));
+		assertEquals("...", StringUtil.abbreviateHtmlString("ab&foo;cdefgh", 4, true, new char[] { ' ' }));
+	}
+
+	@Test
+	public void abbreviateHtmlStringAddsNoEllipsisWhenOnlyTagsFollow()
+	{
+		assertEquals("<b>abc</b>", StringUtil.abbreviateHtmlString("<b>abc</b>", 3, false, null));
+		assertEquals("<i><b>abc</b></i><!-- x -->", StringUtil.abbreviateHtmlString("<i><b>abc</b></i><!-- x -->", 3, false, null));
+		assertEquals("<b>abc def</b>", StringUtil.abbreviateHtmlString("<b>abc def</b>", 7, true, new char[] { ' ' }));
+		assertEquals("<b></b>", StringUtil.abbreviateHtmlString("<b></b>", 0, false, null));
+		assertEquals("<b>abc...</b>", StringUtil.abbreviateHtmlString("<b>abc</b>d", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringCountsGraphemeAsOneCharacter()
+	{
+		String family = "\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67";
+		String flag = "\uD83C\uDDE8\uD83C\uDDFF";
+		assertEquals("e\u0301a...", StringUtil.abbreviateHtmlString("e\u0301abcdef", 2, false, null));
+		assertEquals("a" + family + "...", StringUtil.abbreviateHtmlString("a" + family + "bcdef", 2, false, null));
+		assertEquals(flag + "a...", StringUtil.abbreviateHtmlString(flag + "abcdef", 2, false, null));
+		assertEquals("\u010Dau...", StringUtil.abbreviateHtmlString("\u010Daute svete", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringSkipsComments()
+	{
+		assertEquals("<!-- a > b <i> -->abc...", StringUtil.abbreviateHtmlString("<!-- a > b <i> -->abcdef", 3, false, null));
+		assertEquals("<!-->abc...", StringUtil.abbreviateHtmlString("<!-->abcdef", 3, false, null));
+		assertEquals("abc<!-- x", StringUtil.abbreviateHtmlString("abc<!-- x", 3, false, null));
+		assertEquals("<?xml version='1.0'?>abc...", StringUtil.abbreviateHtmlString("<?xml version='1.0'?>abcdef", 3, false, null));
+		assertEquals("<b>abc...", StringUtil.abbreviateHtmlString("<b>abcdef<!-- </b> -->", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringDoesNotCountScriptAndStyleContent()
+	{
+		assertEquals("<script>if (a<b) x='</b>';</script>abc...",
+			StringUtil.abbreviateHtmlString("<script>if (a<b) x='</b>';</script>abcdef", 3, false, null));
+		assertEquals("<STYLE>b > i { }</style>abc...",
+			StringUtil.abbreviateHtmlString("<STYLE>b > i { }</style>abcdef", 3, false, null));
+		assertEquals("abc<script>x", StringUtil.abbreviateHtmlString("abc<script>x", 3, false, null));
+		assertEquals("<b>abc...", StringUtil.abbreviateHtmlString("<b>abcdef<script>'</b>'</script>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringFindsClosingTagWithSpace()
+	{
+		assertEquals("<b>abc...</b>", StringUtil.abbreviateHtmlString("<b>abcdef</b >", 3, false, null));
+		assertEquals("<b>a</b >bc...", StringUtil.abbreviateHtmlString("<b>a</b >bcdef</b>", 3, false, null));
+		assertEquals("<b>abc...", StringUtil.abbreviateHtmlString("<b>abcdef</b", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringOpensQuotesOnlyForAttributeValues()
+	{
+		assertEquals("<a b=c'd>abc...</a>", StringUtil.abbreviateHtmlString("<a b=c'd>abcdef</a>", 3, false, null));
+		assertEquals("<a b= 'c>d'>abc...</a>", StringUtil.abbreviateHtmlString("<a b= 'c>d'>abcdef</a>", 3, false, null));
+		assertEquals("<a b='c>abc...", StringUtil.abbreviateHtmlString("<a b='c>abcdef", 3, false, null));
+		assertEquals("<a b=\"c>abc...", StringUtil.abbreviateHtmlString("<a b=\"c>abcdef", 3, false, null));
+		assertEquals("<a b='x>y' c=\"z>abc...", StringUtil.abbreviateHtmlString("<a b='x>y' c=\"z>abcdef", 3, false, null));
+		assertEquals("<hr/>abc...", StringUtil.abbreviateHtmlString("<hr/>abcdef</hr>", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentAcceptsEntityOutsideUnicode()
+	{
+		char[] space = { ' ' };
+		assertEquals("...", StringUtil.abbreviateHtmlString("abc&#1114111;defghijklmnop", 5, true, space));
+		assertEquals("...", StringUtil.abbreviateHtmlString("abc&#1114112;defghijklmnop", 5, true, space));
+		assertEquals("...", StringUtil.abbreviateHtmlString("abc&#x110000;defghijklmnop", 5, true, space));
+		assertEquals("...", StringUtil.abbreviateHtmlString("abc&#xFFFFFFF;defghijklmnop", 5, true, space));
+		assertEquals("...", StringUtil.abbreviateHtmlString("abc&#99999999999999;defghijklmnop", 5, true, space));
+		assertEquals("abc&#1114112;d...", StringUtil.abbreviateHtmlString("abc&#1114112;defghijklmnop", 5, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringReplacesLineBreaksOnlyInText()
+	{
+		assertEquals("<script>// c\nalert(1)</script>abc...",
+			StringUtil.abbreviateHtmlString("<script>// c\nalert(1)</script>abcdef", 3, false, null));
+		assertEquals("<script>a='<br>'</script>abc...",
+			StringUtil.abbreviateHtmlString("<script>a='<br>'</script>abcdef", 3, false, null));
+		assertEquals("<a title='x<br>y'>abc...</a>", StringUtil.abbreviateHtmlString("<a title='x<br>y'>abcdef</a>", 3, false, null));
+		assertEquals("<!-- a\nb -->abc...", StringUtil.abbreviateHtmlString("<!-- a\nb -->abcdef", 3, false, null));
+		assertEquals("<a\nb='c'>abc...</a>", StringUtil.abbreviateHtmlString("<a\nb='c'>abcdef</a>", 3, false, null));
+		assertEquals("a b...", StringUtil.abbreviateHtmlString("a\nb<br />cdefgh", 3, false, null));
+		assertEquals("a b...", StringUtil.abbreviateHtmlString("a<br />bcdefgh", 3, false, null));
+		assertEquals("<i>a b", StringUtil.abbreviateHtmlString("<i>a<br/>b", 10, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringAddsNoEllipsisWhenOnlyWhiteSpaceFollows()
+	{
+		assertEquals("<b>abc</b>   ", StringUtil.abbreviateHtmlString("<b>abc</b>   ", 3, false, null));
+		assertEquals("abc  \t", StringUtil.abbreviateHtmlString("abc  \t", 3, false, null));
+		assertEquals("abc   ", StringUtil.abbreviateHtmlString("abc\n<br> ", 3, false, null));
+		assertEquals("one two   ", StringUtil.abbreviateHtmlString("one two   ", 7, true, new char[] { ' ' }));
+		assertEquals("abc...", StringUtil.abbreviateHtmlString("abc  d", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringKeepsTextAfterSelfClosedScript()
+	{
+		assertEquals("<script src='x'/>abcdef", StringUtil.abbreviateHtmlString("<script src='x'/>abcdef", 3, false, null));
+		assertEquals("<style/>abc</style>def...",
+			StringUtil.abbreviateHtmlString("<style/>abc</style>defghi", 3, false, null));
+	}
+
+	@Test
+	public void abbreviateHtmlStringIntelligentKeepsTextEndingAtMaxLength()
+	{
+		assertEquals("<b>abc", StringUtil.abbreviateHtmlString("<b>abc", 3, true, new char[] { ' ' }));
 	}
 
 	// --- Number and boolean parsing

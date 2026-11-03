@@ -235,18 +235,19 @@ Bajt má 8 bitů, hodnotu od 0 do 255. **Šestnáctková soustava** (hexadecimá
 číslicemi z `0123456789abcdef`. Každá číslice zastupuje 4 bity, tzv. **nibble**.
 
 ```java
-for (int b : bytes)
+for (byte b : bytes)
 {
-	b &= 0xff;
-	sb.append(HEXDIGITS[b >> 4]);
-	sb.append(HEXDIGITS[b & 15]);
+	HEX_FORMAT.toHexDigits(sb, b);
 	sb.append(cDelim);
 ```
 
-- `b &= 0xff` opraví znaménko. Javovský `byte` má rozsah -128 až 127, takže bajt `0xCA` přijde jako
-  `-54`. `& 0xff` ponechá jen nejnižších 8 bitů a dá znovu `202`
-- `b >> 4` posune bity o 4 místa doprava: horní nibble. Pro `202` (`1100 1010`) je to `12`, tedy `c`
-- `b & 15` ponechá nejnižší 4 bity: dolní nibble. Pro `202` je to `10`, tedy `a`
+- `HEX_FORMAT` je `HexFormat.of()`, třída ze standardní knihovny Javy od verze 17
+- `toHexDigits` zapíše do `sb` dvě číslice jednoho bajtu, nejdřív horní nibble, potom dolní nibble.
+  Bajt `0xCA` je `1100 1010`: horní nibble je `12`, tedy `c`, a dolní nibble je `10`, tedy `a`
+- Javovský `byte` má rozsah -128 až 127, takže `0xCA` je uložen jako `-54`. `toHexDigits` přesto
+  zapíše `ca`
+- `HexFormat` umí zapsat i celé pole metodou `formatHex`, ale nezapíše oddělovač za poslední bajt a
+  nezalamuje řádky. Proto má metoda vlastní smyčku
 
 `bytesToHexString(new byte[] {(byte) 0xCA, (byte) 0xFE, 0x0A, (byte) 255}, ' ', 0)` vrátí
 `"ca fe 0a ff "`. Když je délka řádku větší než 0, přidá po každých 8 bajtech ještě jeden oddělovač a

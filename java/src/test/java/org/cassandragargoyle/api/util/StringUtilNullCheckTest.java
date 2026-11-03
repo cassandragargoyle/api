@@ -62,6 +62,8 @@ public class StringUtilNullCheckTest
 		assertRejectsNull("value", () -> StringUtil.escapeForXml(null));
 		assertNull(StringUtil.wrapHTMLFragment(null));
 		assertNull(StringUtil.abbreviateHtmlString(null, 10, false, null));
+		assertNull(StringUtil.abbreviateHtmlString(null, 10, true, null));
+		assertRejectsNull("wordDelimeters", () -> StringUtil.abbreviateHtmlString("abc", 10, true, null));
 	}
 
 	@Test

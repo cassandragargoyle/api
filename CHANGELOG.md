@@ -126,6 +126,36 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   `getAllEdges` work when they are called more than once. `EdgeEntity.getNode1()`
   and `getNode2()` had the same defect and failed on every call after the node
   was set; they now return the stored node.
+- **Java `StringUtil.abbreviateHtmlString`** (#91): the method kept
+  `maxLength - 1` visible characters, `"abcdef"` with `maxLength` 3 gave
+  `"ab..."`. It now keeps `maxLength` characters, so a result can be one
+  character longer than before, and the last character of a text that ends at
+  `maxLength` is no longer lost. The method now reads tags as units:
+  comments, `<?...?>`, and the content of `<script>` and `<style>` are not
+  counted, a `>` in a quoted attribute value does not end the tag, and a
+  closing tag with a space, such as `</b >`, is found. An entity of any length,
+  such as `&eacute;` or `&#8211;`, and a grapheme, such as an emoji, a flag, or
+  a letter with a combining mark, count as one character and are never split.
+  An `&` that does not start an entity and a `<` that does not start a tag,
+  also a `<` without a later `>`, count as one character; before, `&` took the
+  next characters with it and `<` could turn off the cut. **Changed result**: `"..."` is appended only when
+  visible text is removed, so `"<b>abc</b>"` with `maxLength` 3 now gives
+  `"<b>abc</b>"` instead of `"<b>ab...</b>"`; white space after the cut is not
+  visible text for this rule. `<br>` and new lines become spaces only in the
+  text, so script content, comments, and attribute values stay as they are.
+  Tags are closed at the cut in the
+  correct order, also tags that are opened after a closing tag and nested tags
+  with the same name, and tag names are compared without regard to case. With
+  `intelligent`, the search for the word delimiter counts visible characters
+  instead of raw characters, so the cut can no longer split a tag or an entity,
+  and all delimiters directly before the cut are removed. An entity is compared
+  as the character that it stands for, so `&nbsp;` is a delimiter only when
+  `wordDelimeters` contains U+00A0. **Breaking**: with `intelligent`, `null` for
+  `wordDelimeters` now always throws `NullPointerException` for a non-null
+  text; before, it failed only when a cut was needed and `maxLength` was at
+  least 2. The logic moved to the new package-private class `HtmlAbbreviator`.
+  The time for many closing tags no longer grows with the square of the number
+  of open tags.
 
 ## [1.1.0] - 2026-10-24
 
