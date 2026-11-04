@@ -274,7 +274,9 @@ synchronizují.
 | [plugin-manifest-reco.json](examples/plugin-manifest-reco.json) | Manifest pluginu reco (Python, helper) |
 | [plugin-manifest-text-extractor.json](examples/plugin-manifest-text-extractor.json) | Manifest pluginu text-extractor (Java, MCP) |
 | [plugin-health-serving.json](examples/plugin-health-serving.json) | Zdravý plugin s dílčími kontrolami |
-| [help-ai-text-extractor.json](examples/help-ai-text-extractor.json) | Výstup `--help-ai` pro text-extractor (s `supported_extensions` / `supported_mime_types`) |
+| [text-extractor.help-ai.json](examples/text-extractor.help-ai.json) | Výstup `--help-ai` pro text-extractor 1.1.18 (s `supported_extensions` / `supported_mime_types`). Ověřuje ho `make validate-contract`. |
+| [redmine.help-ai.json](examples/redmine.help-ai.json) | Výstup `--help-ai` pro ptx-redmine 1.0.0 (s `global_flags`). Ověřuje ho `make validate-contract`. |
+| [invalid/](examples/invalid/) | Negativní testy s prefixem `help-ai-`: jeden malý dokument `--help-ai` s jednou chybou, pojmenovaný podle ní (například `help-ai-extension-uppercase`, `help-ai-missing-tool`). |
 
 ### Příklady vizualizace
 

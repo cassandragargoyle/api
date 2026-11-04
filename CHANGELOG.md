@@ -15,6 +15,15 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Changed
 
+- **`--help-ai` contract examples** (#98): `make validate-contract` now
+  validates files with the suffix `.help-ai.json` against
+  `help-ai.schema.json`. The example `help-ai-text-extractor.json` is renamed
+  to `text-extractor.help-ai.json` and refreshed from the text-extractor
+  1.1.18 output. The new example `redmine.help-ai.json` covers
+  `global_flags`, and five negative tests with the prefix `help-ai-` are in
+  `contract/examples/invalid/`. No schema change. Consumers that read the
+  example by its old path must use the new name.
+
 - **Java null checks** (#85): parameters that must not be null are checked
   with `Objects.requireNonNull(value, "parameterName")` in `StringUtil`,
   `PreferencesUtil`, `Base64Encoder`, `DateUtil`, `SystemUtil`, `Properties`,

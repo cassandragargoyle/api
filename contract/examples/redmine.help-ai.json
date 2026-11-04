@@ -1,0 +1,119 @@
+{
+  "commands": [
+    {
+      "brief": "List Redmine issues",
+      "name": "issues",
+      "parameters": [
+        {
+          "description": "Filter issues updated in last N hours",
+          "name": "--last-hours",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "description": "Fetch last N issues (default: 10)",
+          "name": "--last",
+          "required": false,
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "brief": "Show a single Redmine issue",
+      "name": "issue",
+      "parameters": [
+        {
+          "description": "Issue ID",
+          "name": "id",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "description": "Include full details",
+          "name": "--details",
+          "required": false,
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "brief": "Export issues to markdown or JSON files",
+      "name": "export",
+      "parameters": [
+        {
+          "description": "Optional issue ID",
+          "name": "issue-id",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "description": "Output directory (default: .)",
+          "name": "--output",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "description": "Output format: markdown, json (default: markdown)",
+          "name": "--format",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "description": "Force regeneration, ignore cache",
+          "name": "--force",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "description": "Batch export issues updated in last N hours",
+          "name": "--last-hours",
+          "required": false,
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "brief": "Manage Redmine configuration",
+      "name": "config"
+    },
+    {
+      "brief": "Test connectivity to Redmine instance",
+      "name": "test"
+    }
+  ],
+  "description": "Redmine issue management and markdown export",
+  "global_flags": [
+    {
+      "description": "Redmine instance name from config",
+      "name": "--instance",
+      "type": "string"
+    },
+    {
+      "description": "Override Redmine URL",
+      "name": "--url",
+      "type": "string"
+    },
+    {
+      "description": "Environment variable name containing API key",
+      "name": "--api-key-env",
+      "type": "string"
+    },
+    {
+      "description": "Disable SSL verification",
+      "name": "--no-verify-ssl",
+      "type": "bool"
+    },
+    {
+      "description": "Verbose output",
+      "name": "--verbose",
+      "type": "bool"
+    },
+    {
+      "description": "Configuration file path",
+      "name": "--config",
+      "type": "string"
+    }
+  ],
+  "tool": "ptx-redmine",
+  "version": "1.0.0"
+}

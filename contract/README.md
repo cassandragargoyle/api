@@ -277,7 +277,9 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [plugin-manifest-reco.json](examples/plugin-manifest-reco.json) | Plugin manifest for reco (Python, helper) |
 | [plugin-manifest-text-extractor.json](examples/plugin-manifest-text-extractor.json) | Plugin manifest for text-extractor (Java, MCP) |
 | [plugin-health-serving.json](examples/plugin-health-serving.json) | Healthy plugin with sub-checks |
-| [help-ai-text-extractor.json](examples/help-ai-text-extractor.json) | `--help-ai` output for text-extractor (with `supported_extensions` / `supported_mime_types`) |
+| [text-extractor.help-ai.json](examples/text-extractor.help-ai.json) | `--help-ai` output for text-extractor 1.1.18 (with `supported_extensions` / `supported_mime_types`). Validated by `make validate-contract`. |
+| [redmine.help-ai.json](examples/redmine.help-ai.json) | `--help-ai` output for ptx-redmine 1.0.0 (with `global_flags`). Validated by `make validate-contract`. |
+| [invalid/](examples/invalid/) | Negative tests with the prefix `help-ai-`: one small `--help-ai` document with one defect, named after it (for example `help-ai-extension-uppercase`, `help-ai-missing-tool`). |
 
 ### Visualization Examples
 
