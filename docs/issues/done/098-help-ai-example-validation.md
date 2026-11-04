@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: Open
+**Status**: Implemented (PR #99, 2026-11-04)
 **Created**: 2026-11-04
+**Closed**: 2026-11-04
 **GitHub**: #98
 **Component**: contract
 **Related**: portunix-plugins #92, portunix-plugins #91, portunix-plugins #60
