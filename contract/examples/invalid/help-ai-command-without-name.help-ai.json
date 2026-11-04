@@ -1,0 +1,22 @@
+{
+  "tool": "text-extractor",
+  "version": "1.1.18",
+  "description": "Extracts text from documents.",
+  "commands": [
+    {
+      "brief": "Convert a document to Markdown",
+      "parameters": [
+        {
+          "name": "input",
+          "type": "string",
+          "required": true,
+          "description": "Input file path"
+        }
+      ],
+      "supported_extensions": [
+        ".pdf",
+        ".docx"
+      ]
+    }
+  ]
+}
