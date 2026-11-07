@@ -25,7 +25,6 @@ Human-oriented documentation: [README.md](README.md), [CONTRIBUTING.md](CONTRIBU
 | `docs/adr/` | Architecture Decision Records |
 | `docs/contributing/` | Code style, testing, Git, and issue guidelines |
 | `docs/issues/` | Issue write-ups named `NNN-short-name.md`; finished ones in `docs/issues/done/` |
-| `docs/book/` | PDF books from Markdown chapters (EN and CS), for example the VIM book; see [docs/book/README.md](docs/book/README.md) |
 | `scripts/` | Helper scripts (for example `validate-contracts.mjs`) |
 | `.claude/` | Claude Code roles, commands, and skills |
 
@@ -48,7 +47,6 @@ Other targets:
 - `make venv` - create `python/.venv` and install the dev dependencies
 - `make coverage-java` - run the Java tests and write the JaCoCo coverage report to `java/target/site/jacoco/`
 - `make lock` - refresh `python/uv.lock` after a dependency change in `python/pyproject.toml`
-- `make book` - build the PDF books in `docs/book/` (needs `uv`, Pango, and for diagrams Node.js and Chrome)
 
 Notes:
 
@@ -146,3 +144,19 @@ Notes:
 - [BUG-REPORTING.md](docs/contributing/BUG-REPORTING.md) - bug report format
 - [GITIGNORE.md](docs/contributing/GITIGNORE.md) - rules for `.gitignore`
 - [TOOLS-RECOMMENDATIONS.md](docs/contributing/TOOLS-RECOMMENDATIONS.md) - recommended tools
+
+## VIM Reference
+
+The most precise and most complete description of VIM (the Layered Information Model) is the
+VIM book of [portunix-vim](https://github.com/cassandragargoyle/portunix-vim), in
+`docs/book/vim/` (local checkout: `../portunix/portunix-vim/docs/book/vim/`). The chapters
+are in `chapters/` (`NN-name.md` in English, `NN-name.cs.md` in Czech) and the built books
+are `vim-book-en.pdf` and `vim-book-cs.pdf`.
+
+- Draw on the book when you need the principles of VIM, the meaning of its layers, the
+  structure of a `vim.json`, provenance and confidence, or the history of the format
+- When a description of VIM in this project differs from the book, the book wins
+- Do not write a separate full description of VIM here; link to the book and propose
+  corrections or new chapters in portunix-vim
+- The VIM book lives in portunix-vim; write new or changed VIM chapters there. The JSON
+  Schema contract of VIM (`contract/schemas/`) stays in this repository
