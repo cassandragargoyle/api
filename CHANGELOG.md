@@ -135,6 +135,15 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   and the Makefile targets `book` and `book-figures`.
 - `book-chapter` skill for writing chapters of these books.
 
+### Removed
+
+- **VIM book** moved to
+  [portunix-vim](https://github.com/cassandragargoyle/portunix-vim)
+  (`docs/book/vim/`), where it is built and continued: `docs/book/`, the
+  scripts `build-book-pdf.py` and `generate-book-vim-figures.py`, the Makefile
+  targets `book` and `book-figures`, and the `book-chapter` skill are removed
+  from this repository. The VIM contract (`contract/schemas/`) stays here.
+
 ### Fixed
 
 - **Reco form result** (#82): `reco-form-result.schema.json` 1.1.0 allows `null` in
