@@ -271,12 +271,13 @@ synchronizují.
 
 | Příklad | Popis |
 | ------- | ----- |
-| [plugin-manifest-reco.json](examples/plugin-manifest-reco.json) | Manifest pluginu reco (Python, helper) |
-| [plugin-manifest-text-extractor.json](examples/plugin-manifest-text-extractor.json) | Manifest pluginu text-extractor (Java, MCP) |
+| [reco.plugin-manifest.json](examples/reco.plugin-manifest.json) | Manifest pluginu reco (Python, helper). Ověřuje ho `make validate-contract`. |
+| [text-extractor.plugin-manifest.json](examples/text-extractor.plugin-manifest.json) | Manifest pluginu text-extractor (Java, MCP). Ověřuje ho `make validate-contract`. |
+| [python-wheel.plugin-manifest.json](examples/python-wheel.plugin-manifest.json) | Distribuční manifest Python wheel pluginu (s `wheel` a `extra_wheels`). Ověřuje ho `make validate-contract`. |
 | [plugin-health-serving.json](examples/plugin-health-serving.json) | Zdravý plugin s dílčími kontrolami |
 | [text-extractor.help-ai.json](examples/text-extractor.help-ai.json) | Výstup `--help-ai` pro text-extractor 1.1.18 (s `supported_extensions` / `supported_mime_types`). Ověřuje ho `make validate-contract`. |
 | [redmine.help-ai.json](examples/redmine.help-ai.json) | Výstup `--help-ai` pro ptx-redmine 1.0.0 (s `global_flags`). Ověřuje ho `make validate-contract`. |
-| [invalid/](examples/invalid/) | Negativní testy s prefixem `help-ai-`: jeden malý dokument `--help-ai` s jednou chybou, pojmenovaný podle ní (například `help-ai-extension-uppercase`, `help-ai-missing-tool`). |
+| [invalid/](examples/invalid/) | Negativní testy s prefixem `help-ai-`: jeden malý dokument `--help-ai` s jednou chybou, pojmenovaný podle ní (například `help-ai-extension-uppercase`, `help-ai-missing-tool`). Negativní testy s prefixem `plugin-manifest-`: jeden malý manifest pluginu s jednou chybou v `plugin.wheel` nebo `plugin.extra_wheels` (například `plugin-manifest-wheel-with-path`, `plugin-manifest-wheel-for-java`). |
 
 ### Příklady vizualizace
 

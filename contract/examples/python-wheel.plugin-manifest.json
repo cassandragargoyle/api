@@ -1,0 +1,26 @@
+{
+	"name": "bmi",
+	"version": "1.0.0",
+	"description": "Body mass index calculator, distributed as a Python wheel plugin",
+	"author": "CassandraGargoyle",
+	"license": "MIT",
+	"plugin": {
+		"type": "helper",
+		"binary": "ptx-bmi",
+		"runtime": "python",
+		"python_version": "3.13",
+		"wheel": "ptx_bmi-1.0.0-py3-none-any.whl",
+		"extra_wheels": ["wheels/*.whl"]
+	},
+	"dependencies": {
+		"portunix_min_version": "2.0.0",
+		"os_support": ["linux", "windows", "darwin"]
+	},
+	"commands": [
+		{
+			"name": "ptx-bmi",
+			"description": "Calculate the body mass index",
+			"usage": "portunix bmi <weight-kg> <height-cm>"
+		}
+	]
+}

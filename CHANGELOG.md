@@ -15,6 +15,17 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Changed
 
+- **Plugin manifest examples** (#101): `make validate-contract` now validates
+  files with the suffix `.plugin-manifest.json` against
+  `plugin-manifest.schema.json`; before, the plugin manifest examples were not
+  validated. The examples `plugin-manifest-reco.json` and
+  `plugin-manifest-text-extractor.json` are renamed to
+  `reco.plugin-manifest.json` and `text-extractor.plugin-manifest.json`. The
+  new example `python-wheel.plugin-manifest.json` covers `wheel` and
+  `extra_wheels`, and six negative tests with the prefix `plugin-manifest-`
+  are in `contract/examples/invalid/`. Consumers that read an example by its
+  old path must use the new name.
+
 - **`--help-ai` contract examples** (#98): `make validate-contract` now
   validates files with the suffix `.help-ai.json` against
   `help-ai.schema.json`. The example `help-ai-text-extractor.json` is renamed
@@ -72,6 +83,14 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   longer used. Documentation only, the schemas do not change.
 
 ### Added
+
+- `wheel` and `extra_wheels` in the `plugin` object of
+  **`plugin-manifest.schema.json`** (`$version` 1.2.0 → 1.3.0) (#101): the file
+  name of the plugin's Python wheel and the glob patterns of its dependency
+  wheels, read by the Portunix plugin installer. `wheel` must be a file name
+  ending in `.whl`; both keys are allowed only with `runtime: python`, and
+  `extra_wheels` only together with `wheel`.
+  Additive: the distribution manifest of a Python wheel plugin now validates.
 
 - **Graph view node groups** (#78): `graph-view.schema.json` 1.1.0 has an
   optional `node.group` and an optional `meta.groups` map with `label` and
