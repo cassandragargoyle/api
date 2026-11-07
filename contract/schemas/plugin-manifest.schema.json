@@ -68,7 +68,7 @@
 				},
 				"extra_wheels": {
 					"type": "array",
-					"description": "Glob patterns, relative to the distribution directory, of dependency wheels installed into the plugin venv before the plugin wheel (added in schema v1.3.0). Only for runtime python. A pattern that matches no file fails the installation.",
+					"description": "Glob patterns, relative to the distribution directory, of dependency wheels installed into the plugin venv before the plugin wheel (added in schema v1.3.0). Only for runtime python and only together with wheel. A pattern that matches no file fails the installation.",
 					"items": {
 						"type": "string",
 						"minLength": 1
@@ -108,6 +108,9 @@
 					"minItems": 1,
 					"examples": [["cli"], ["grpc"], ["cli", "grpc"]]
 				}
+			},
+			"dependentRequired": {
+				"extra_wheels": ["wheel"]
 			},
 			"if": {
 				"not": {

@@ -22,7 +22,7 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   `plugin-manifest-text-extractor.json` are renamed to
   `reco.plugin-manifest.json` and `text-extractor.plugin-manifest.json`. The
   new example `python-wheel.plugin-manifest.json` covers `wheel` and
-  `extra_wheels`, and four negative tests with the prefix `plugin-manifest-`
+  `extra_wheels`, and six negative tests with the prefix `plugin-manifest-`
   are in `contract/examples/invalid/`. Consumers that read an example by its
   old path must use the new name.
 
@@ -88,7 +88,8 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   **`plugin-manifest.schema.json`** (`$version` 1.2.0 → 1.3.0) (#101): the file
   name of the plugin's Python wheel and the glob patterns of its dependency
   wheels, read by the Portunix plugin installer. `wheel` must be a file name
-  ending in `.whl`; both keys are allowed only with `runtime: python`.
+  ending in `.whl`; both keys are allowed only with `runtime: python`, and
+  `extra_wheels` only together with `wheel`.
   Additive: the distribution manifest of a Python wheel plugin now validates.
 
 - **Graph view node groups** (#78): `graph-view.schema.json` 1.1.0 has an

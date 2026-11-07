@@ -257,7 +257,8 @@ more keys in the `plugin` object (schema v1.3.0):
   wheels installed before the plugin wheel. A pattern that matches no file fails the
   installation
 
-Both keys are allowed only with `runtime: python`.
+Both keys are allowed only with `runtime: python`, and `extra_wheels` only together with
+`wheel`.
 
 ## Validating examples
 
