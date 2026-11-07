@@ -1,0 +1,6 @@
+{
+	"name": "bmi",
+	"version": "1.0.0",
+	"description": "Python wheel plugin with one defect in the plugin object",
+	"plugin": {"type": "helper", "binary": "bmi-1.0.0.jar", "runtime": "java", "wheel": "ptx_bmi-1.0.0-py3-none-any.whl"}
+}

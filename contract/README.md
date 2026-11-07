@@ -274,12 +274,13 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 
 | Example | Description |
 | ------- | ----------- |
-| [plugin-manifest-reco.json](examples/plugin-manifest-reco.json) | Plugin manifest for reco (Python, helper) |
-| [plugin-manifest-text-extractor.json](examples/plugin-manifest-text-extractor.json) | Plugin manifest for text-extractor (Java, MCP) |
+| [reco.plugin-manifest.json](examples/reco.plugin-manifest.json) | Plugin manifest for reco (Python, helper). Validated by `make validate-contract`. |
+| [text-extractor.plugin-manifest.json](examples/text-extractor.plugin-manifest.json) | Plugin manifest for text-extractor (Java, MCP). Validated by `make validate-contract`. |
+| [python-wheel.plugin-manifest.json](examples/python-wheel.plugin-manifest.json) | Distribution manifest of a Python wheel plugin (with `wheel` and `extra_wheels`). Validated by `make validate-contract`. |
 | [plugin-health-serving.json](examples/plugin-health-serving.json) | Healthy plugin with sub-checks |
 | [text-extractor.help-ai.json](examples/text-extractor.help-ai.json) | `--help-ai` output for text-extractor 1.1.18 (with `supported_extensions` / `supported_mime_types`). Validated by `make validate-contract`. |
 | [redmine.help-ai.json](examples/redmine.help-ai.json) | `--help-ai` output for ptx-redmine 1.0.0 (with `global_flags`). Validated by `make validate-contract`. |
-| [invalid/](examples/invalid/) | Negative tests with the prefix `help-ai-`: one small `--help-ai` document with one defect, named after it (for example `help-ai-extension-uppercase`, `help-ai-missing-tool`). |
+| [invalid/](examples/invalid/) | Negative tests with the prefix `help-ai-`: one small `--help-ai` document with one defect, named after it (for example `help-ai-extension-uppercase`, `help-ai-missing-tool`). Negative tests with the prefix `plugin-manifest-`: one small plugin manifest with one defect in `plugin.wheel` or `plugin.extra_wheels` (for example `plugin-manifest-wheel-with-path`, `plugin-manifest-wheel-for-java`). |
 
 ### Visualization Examples
 

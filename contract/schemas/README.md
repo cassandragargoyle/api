@@ -244,6 +244,21 @@ portunix-architecture ADR-011, decision 6). The schema follows the keys of the r
   `partial` when a phase is partial, otherwise `ok` (extra check, see
   [Validating examples](#validating-examples))
 
+## Plugin manifest
+
+[plugin-manifest.schema.json](plugin-manifest.schema.json) (`*.plugin-manifest.json`) describes
+the `plugin.json` of a Portunix plugin. A Python plugin that is distributed as a wheel uses two
+more keys in the `plugin` object (schema v1.3.0):
+
+- **`wheel`** — file name (not a path) of the plugin wheel in the distribution directory, it
+  must end in `.whl`. The installer creates a venv in the plugin directory, installs the wheel
+  and runs `binary` as the entry point script from the venv
+- **`extra_wheels`** — glob patterns, relative to the distribution directory, of dependency
+  wheels installed before the plugin wheel. A pattern that matches no file fails the
+  installation
+
+Both keys are allowed only with `runtime: python`.
+
 ## Validating examples
 
 Contract examples under [`../examples/`](../examples/) are validated against these

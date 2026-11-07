@@ -1,9 +1,9 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://cassandragargoyle.org/schemas/plugin-manifest.schema.json",
-	"$version": "1.2.0",
+	"$version": "1.3.0",
 	"title": "PluginManifest",
-	"description": "Plugin registration manifest for the Unified AI Plugin Platform. Describes plugin identity, runtime requirements, capabilities, commands, AI integration, optional supported_platforms declaration (v1.1.0+) and optional contract identity (v1.2.0+) used by hosting platforms such as Portunix Synapse to discover and embed extension plugins. This is the JSON Schema equivalent of the core PluginService.GetInfo gRPC response (portunix/src/app/plugins/proto/plugin.proto).",
+	"description": "Plugin registration manifest for the Unified AI Plugin Platform. Describes plugin identity, runtime requirements, capabilities, commands, AI integration, optional supported_platforms declaration (v1.1.0+) and optional contract identity (v1.2.0+) and Python wheel installation keys (v1.3.0+) used by hosting platforms such as Portunix Synapse to discover and embed extension plugins. This is the JSON Schema equivalent of the core PluginService.GetInfo gRPC response (portunix/src/app/plugins/proto/plugin.proto).",
 	"type": "object",
 	"required": ["name", "version", "description", "plugin"],
 	"properties": {
@@ -60,6 +60,22 @@
 					"type": "string",
 					"description": "Exact Python interpreter minor the plugin was built for, e.g. '3.13'. Required for bytecode-only wheels whose .pyc is tied to a specific minor. When set, the host provisions this exact interpreter (via uv) for the plugin venv; distinct from python_min_version, which is only a compatibility floor."
 				},
+				"wheel": {
+					"type": "string",
+					"description": "File name of the plugin's Python wheel in the distribution directory (added in schema v1.3.0). Only for runtime python. When set, the installer creates a venv in the plugin directory, installs this wheel into it and runs binary as the entry point script from the venv. A file name, not a path.",
+					"pattern": "^[^/\\\\]+\\.whl$",
+					"examples": ["ptx_bmi-1.0.0-py3-none-any.whl"]
+				},
+				"extra_wheels": {
+					"type": "array",
+					"description": "Glob patterns, relative to the distribution directory, of dependency wheels installed into the plugin venv before the plugin wheel (added in schema v1.3.0). Only for runtime python. A pattern that matches no file fails the installation.",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					},
+					"uniqueItems": true,
+					"examples": [["wheels/*.whl"]]
+				},
 				"jvm_args": {
 					"type": "array",
 					"items": {"type": "string"},
@@ -91,6 +107,18 @@
 					"uniqueItems": true,
 					"minItems": 1,
 					"examples": [["cli"], ["grpc"], ["cli", "grpc"]]
+				}
+			},
+			"if": {
+				"not": {
+					"properties": {"runtime": {"const": "python"}},
+					"required": ["runtime"]
+				}
+			},
+			"then": {
+				"properties": {
+					"wheel": false,
+					"extra_wheels": false
 				}
 			},
 			"additionalProperties": false

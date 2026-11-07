@@ -58,6 +58,7 @@ const SUFFIX_SCHEMA = [
 	[".history.jsonl", "reco-run.schema.json#/$defs/HistoryLine"],
 	[".task-manifest.json", "task-manifest.schema.json"],
 	[".help-ai.json", "help-ai.schema.json"],
+	[".plugin-manifest.json", "plugin-manifest.schema.json"],
 ];
 
 // Map schema filename -> extra check. A check returns a list of {path, message}
