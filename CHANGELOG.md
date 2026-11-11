@@ -13,6 +13,13 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ## [Unreleased]
 
+### Added
+
+- **Brand mark**: the CassandraGargoyle mark in `brand/` with its generator
+  `brand/mark.py`, the SVG on the dark background and PNG files from 16 to
+  1024 px, for use as the icon of the organization and as the base of project
+  icons.
+
 ### Changed
 
 - **Plugin manifest examples** (#101): `make validate-contract` now validates

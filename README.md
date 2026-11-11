@@ -8,6 +8,7 @@ The repository has a second role: it is the home of the **language-independent c
 
 - [docs/contributing/](docs/contributing/) - development guidelines
 - [contract/README.md](contract/README.md) - reference of all contracts
+- [brand/README.md](brand/README.md) - the CassandraGargoyle mark and colors
 - [docs/adr/](docs/adr/) - Architecture Decision Records
 
 ## Learning to Program
