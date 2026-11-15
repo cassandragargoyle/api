@@ -236,6 +236,13 @@ portunix-architecture ADR-011, decision 6). The schema follows the keys of the r
 - **`run_info`** — optional, older reco versions do not write it. A phase has `name` and
   `status` (`ok`, `partial`, `skipped`, `failed`) and can add details beyond the ones the
   schema lists. `started` and `duration_ms` differ between two runs on the same input
+- **Confidence per character** — a detected zone can have `char_confidences` (one
+  `Probability` per character of `text`), `unrecognized_chars` (positions of the characters below
+  the threshold `unrecognized_char_confidence`, replaced by a placeholder, default `*`, or only
+  marked), and `suspicious_chars` (positions that need a check; only with `suspicious`, and left
+  out when the whole value needs a check). The schema does not check that the lengths and
+  positions fit `text`; portunix-reco tests them ([#107](../../docs/issues/done/107-reco-result-char-confidences.md),
+  portunix-reco #125)
 - **Closed objects** — all other objects reject unknown keys, so a new key in the reco
   output is a contract change
 - **Consistency** — `transform_matrix` has 2 rows for `affine` and 3 rows for `homography`

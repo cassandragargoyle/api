@@ -1,0 +1,81 @@
+{
+	"aligned_image_path": "/data/out/form-005_aligned.png",
+	"transform_type": "affine",
+	"transform_matrix": [
+		[
+			1.0,
+			0.0,
+			0.0
+		],
+		[
+			0.0,
+			1.0,
+			0.0
+		]
+	],
+	"markers_detected": 4,
+	"markers_expected": 4,
+	"marker_details": [],
+	"reprojection_error": 0.2,
+	"alignment_quality": "excellent",
+	"recognition_zones": [
+		{
+			"zone_id": "row_003",
+			"detected": true,
+			"text": "518",
+			"confidence": 0.9981,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"char_confidences": [
+				0.999,
+				0.9978,
+				0.9975
+			],
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "row_005",
+			"detected": true,
+			"text": "1*0",
+			"confidence": 0.8123,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"char_confidences": [
+				0.9512,
+				0.3105,
+				0.9704
+			],
+			"unrecognized_chars": [
+				1
+			],
+			"suspicious": true,
+			"suspicious_chars": [
+				1
+			],
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "row_006",
+			"detected": true,
+			"text": "4*",
+			"confidence": 0.415,
+			"recognition_type": "handwritten",
+			"engine": "trocr",
+			"char_confidences": [
+				0.62,
+				0.21
+			],
+			"unrecognized_chars": [
+				1
+			],
+			"suspicious": true,
+			"filter_applied": "dotted_box"
+		},
+		{
+			"zone_id": "row_007",
+			"detected": false,
+			"filter_applied": "dotted_box",
+			"error": "No content detected in zone"
+		}
+	]
+}

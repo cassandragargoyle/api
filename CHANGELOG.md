@@ -22,6 +22,21 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Changed
 
+- **Reco form result** (#107): `reco-form-result.schema.json` 1.2.0 allows the
+  optional properties `char_confidences`, `unrecognized_chars`, and
+  `suspicious_chars` in a recognition zone result, the confidence per character
+  of portunix-reco #125. `suspicious_chars` requires `suspicious`. Before, every
+  result with a `trocr` zone from portunix-reco #125 failed the schema check.
+  The change only adds optional properties, so every document that was valid
+  stays valid. New example `form-char-confidences` and negative examples
+  `form-result-char-confidence-above-one`,
+  `form-result-unrecognized-char-negative-position`,
+  `form-result-suspicious-char-not-integer`,
+  `form-result-suspicious-char-negative-position`,
+  `form-result-unrecognized-char-not-integer`,
+  `form-result-unrecognized-chars-duplicate`, and
+  `form-result-suspicious-chars-without-suspicious`.
+
 - **Plugin manifest examples** (#101): `make validate-contract` now validates
   files with the suffix `.plugin-manifest.json` against
   `plugin-manifest.schema.json`; before, the plugin manifest examples were not
