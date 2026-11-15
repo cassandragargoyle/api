@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: High
-**Status**: Open
+**Status**: ✅ Implemented (PR #108, 2026-11-15)
 **Created**: 2026-11-15
+**Closed**: 2026-11-15
 **GitHub**: #107
 **Component**: contract
 **Related**: #82, portunix-reco #125

@@ -241,7 +241,7 @@ portunix-architecture ADR-011, decision 6). The schema follows the keys of the r
   the threshold `unrecognized_char_confidence`, replaced by a placeholder, default `*`, or only
   marked), and `suspicious_chars` (positions that need a check; only with `suspicious`, and left
   out when the whole value needs a check). The schema does not check that the lengths and
-  positions fit `text`; portunix-reco tests them ([#107](../../docs/issues/107-reco-result-char-confidences.md),
+  positions fit `text`; portunix-reco tests them ([#107](../../docs/issues/done/107-reco-result-char-confidences.md),
   portunix-reco #125)
 - **Closed objects** — all other objects reject unknown keys, so a new key in the reco
   output is a contract change
