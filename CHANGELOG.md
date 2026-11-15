@@ -31,7 +31,10 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
   stays valid. New example `form-char-confidences` and negative examples
   `form-result-char-confidence-above-one`,
   `form-result-unrecognized-char-negative-position`,
-  `form-result-suspicious-char-not-integer`, and
+  `form-result-suspicious-char-not-integer`,
+  `form-result-suspicious-char-negative-position`,
+  `form-result-unrecognized-char-not-integer`,
+  `form-result-unrecognized-chars-duplicate`, and
   `form-result-suspicious-chars-without-suspicious`.
 
 - **Plugin manifest examples** (#101): `make validate-contract` now validates
