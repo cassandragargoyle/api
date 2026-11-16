@@ -6,7 +6,8 @@
 **Created**: 2026-11-16
 **GitHub**: #109
 **Component**: contract
-**Related**: portunix-architecture brainstorming `cgproject` (session BS-CGPROJECT-20261115-01)
+**Related**: portunix-architecture [ADR-012](https://github.com/cassandragargoyle/portunix-architecture/blob/main/docs/adr/ADR-012-cgproject-project-manifest.md)
+(accepted 2026-11-16), brainstorming `cgproject` (session BS-CGPROJECT-20261115-01)
 
 ## Summary
 
@@ -23,28 +24,34 @@ a person keeps this knowledge in their head or in scripts.
 A project manifest gives one place for this. Portunix and its plugins can read it, install what the project needs,
 and run its steps (goals) in the right order.
 
-## Design So Far
+## Design
 
-The design comes from the brainstorming in portunix-architecture
-(`docs/architecture/brainstorming/cgproject/`). The first example is
-`examples/epbd-od-dvorak.cgproject.jsonc`, an EPBD energy assessment of a department store.
+The design is decided in portunix-architecture
+[ADR-012](https://github.com/cassandragargoyle/portunix-architecture/blob/main/docs/adr/ADR-012-cgproject-project-manifest.md).
+The examples are in `docs/architecture/brainstorming/cgproject/examples/` of portunix-architecture:
+`epbd-od-dvorak.cgproject.jsonc` (a building energy assessment) and `portunix-reco.cgproject.jsonc` (a software
+project).
 
-### Accepted
+The rules that the schema must follow:
 
-- The file name is `<name>.cgproject.jsonc`
-- JSONC is the authoring format; JSON or BSON is the storage format
-- A project is a general unit of work, not only a software project
+- One schema for `<name>.cgproject.jsonc` (`kind: Project`) and `<name>.cgworkspace.jsonc` (`kind: Workspace`)
+- The envelope is `apiVersion` (`portunix.ai/v1`), `kind`, `metadata`, `spec`
+- `metadata`: `id`, `name`, `description`, `version` or `versionFrom` (the id of a `build-descriptor` artifact),
+  `language`, `repository`, `product` (the id of a `product` contract); no `tenantId` or `workspaceId`
+- `spec.type` is a string label with no rules per type
+- `spec.requires`: items with `plugin` or `package`, optional `version` and `optional`
+- `spec.artifacts[]`: fixed core fields `id`, `type`, `path`, `url`, `title`, `layer`, `template`, `contract`,
+  `derivedFrom`, `optional`; extra fields are allowed. `type` is an open kebab-case string; the description lists
+  the known values `source`, `vim-document`, `modeler-model`, `build-descriptor`, `source-tree`, `test-tree`,
+  `plugin-manifest`, `task-manifest`, `dataset`, `model`, `package`, `document`, `assessment`
+- `spec.dependencies[]`: `project` (a `metadata.id`), optional `url`, `use`, `artifacts`; no versions in version 1
+- `spec.goals{}`: each goal has exactly one of `run` (a command) or `task` (a task type), and optional
+  `description`, `forEach` (an artifact filter), `inputs`, `outputs` (artifact ids), `dependsOn` (goal names)
+- Placeholders in strings are only `{artifact.<field>}` and `{metadata.<field>}`; the schema describes them but
+  does not parse them
 
-### Proposed
-
-- The structure follows `.ptxbook` and the ptx-installer packages: `apiVersion`, `kind`, `metadata`, `spec`
-- `kind` is the document kind (`Project`, later maybe `Workspace`); `spec.type` is the project type, for example
-  `building-energy` or `software`
-- `spec.requires` lists the plugins and packages that the goals need
-- `spec.artifacts` holds typed references, not data. Each artifact has `id`, `type`, `path`, and optional `url`,
-  `title`, `layer`, `derivedFrom`, `optional`
-- `spec.goals` is a map of named goals. A goal has either `run` (a command) or `task` (a plugin task type), and
-  optional `forEach` (an artifact filter), `inputs`, `outputs`, `dependsOn`
+Building facts are not part of this contract. They are a VIM document with the `extraction` layer and a
+`building-facts` template (ADR-012, decision 5).
 
 Short example:
 
@@ -78,40 +85,29 @@ Short example:
 
 - `contract/schemas/cgproject.schema.json` (JSON Schema draft 2020-12) for the structure above
 - `cgproject.schema.md` with the description of the fields
-- Examples in `contract/examples/`: the EPBD project and a software project
+- Examples in `contract/examples/`: the EPBD project and the portunix-reco project from ADR-012
 - Negative examples for the validation tests
 - An entry in `contract/schemas/README.md`
 
 ### Out of scope
 
 - A runner that executes goals (Portunix side)
-- A contract for building facts (see open questions)
-- Workspaces and inheritance
+- A contract for building facts (a VIM `extraction` document, ADR-012)
+- The `spec` of a workspace (the list of projects, shared settings); the schema accepts `kind: Workspace` with the
+  same envelope
+- Inheritance between projects (rejected in ADR-012)
 
 ## Open Questions
 
-These come from the brainstorming. The schema should not start before the first four have an answer.
+All open questions of the brainstorming are answered in ADR-012. Questions left for later, not for this issue:
 
-1. Does `spec.type` prescribe required artifacts, or is it only a label?
-2. Project and workspace: one file type with `kind`, or two extensions?
-3. Placeholder syntax in goals (`{artifact.path}`): is a simple template enough for version 1?
-4. Is the closed list of artifact types part of the schema, or an open string with known values?
-5. Is the file the source of truth, with a database (Synapse Project Registry) only as an index?
-6. How does the manifest relate to Synapse ADR-002 (Tenant, Project, Artifact) and to the `product` and `team`
-   contracts?
-7. Which contract holds building facts with provenance per value: a new `building-facts` schema, or a VIM extraction
-   document?
+- Profiles per project type (a schema per type that extends cgproject)
+- Versions of project dependencies
 
 ## Acceptance Criteria
 
-- [ ] Open questions 1–4 are answered in the portunix-architecture ADR
+- [x] The open questions are answered in portunix-architecture ADR-012
 - [ ] `cgproject.schema.json` and `cgproject.schema.md` exist
 - [ ] Both examples (building energy and software) pass the schema check
 - [ ] Negative examples fail the schema check
 - [ ] The schema README lists the new contract
-
-## Next Steps in portunix-architecture
-
-1. Write the second example (a software project, for example portunix-reco)
-2. Compare both examples and answer the open questions
-3. Write the ADR
