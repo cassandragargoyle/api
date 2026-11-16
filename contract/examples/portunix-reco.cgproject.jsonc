@@ -1,0 +1,104 @@
+// Software project with its own native build files (portunix-architecture ADR-012, example 2)
+// The manifest does not repeat pyproject.toml or the Makefile, it references them and runs their targets
+{
+  "$schema": "https://cassandragargoyle.org/schemas/cgproject.schema.json",
+  "apiVersion": "portunix.ai/v1",
+  "kind": "Project",
+
+  "metadata": {
+    "id": "portunix-reco",
+    "name": "Portunix Reco",
+    "description": "Recognition and processing framework: OCR, barcodes, form templates, VIM extraction",
+    // The version is not copied, tools read it from the pyproject artifact
+    "versionFrom": "pyproject",
+    "language": "en",
+    "repository": "https://github.com/cassandragargoyle/portunix-reco"
+  },
+
+  "spec": {
+    "type": "software",
+
+    // Tools that portunix installs before the goals run; the Python dependencies stay in pyproject.toml
+    "requires": [
+      { "package": "python", "version": ">=3.12" },
+      { "package": "uv" },
+      { "package": "poppler" },
+      { "package": "tesseract", "optional": true }
+    ],
+
+    "artifacts": [
+      // Native build descriptors, the source of truth for dependencies and build targets
+      { "id": "pyproject", "type": "build-descriptor", "format": "pyproject", "path": "pyproject.toml" },
+      { "id": "makefile", "type": "build-descriptor", "format": "make", "path": "Makefile" },
+
+      // Code and tests
+      { "id": "src", "type": "source-tree", "language": "python", "path": "src/ptx_reco" },
+      { "id": "tests", "type": "test-tree", "path": "tests" },
+
+      // Plugin manifests, each one checked against an api contract
+      {
+        "id": "plugin-worker",
+        "type": "plugin-manifest",
+        "path": "plugin-worker.json",
+        "contract": "plugin-manifest"
+      },
+      {
+        "id": "plugin-watcher",
+        "type": "plugin-manifest",
+        "path": "plugin-watcher.json",
+        "contract": "plugin-manifest"
+      },
+      {
+        "id": "task-manifest",
+        "type": "task-manifest",
+        "path": "task-manifest.yaml",
+        "contract": "task-manifest"
+      },
+
+      // Data that the project uses but does not build
+      { "id": "forms", "type": "dataset", "path": "data/forms" },
+      { "id": "samples", "type": "dataset", "path": "samples" },
+      { "id": "trocr-digits-v3", "type": "model", "path": "data/models/trocr-small-handwritten-digits-dotted-boxes-v3" },
+
+      // Outputs
+      { "id": "wheel", "type": "package", "path": "dist/ptx_reco-{metadata.version}-py3-none-any.whl" },
+      {
+        "id": "book",
+        "type": "document",
+        "path": "docs/book/portunix-reco-book-en.pdf",
+        "derivedFrom": ["book-sources"]
+      },
+      { "id": "book-sources", "type": "source-tree", "language": "markdown", "path": "docs/book/chapters" }
+    ],
+
+    // Another project that this one depends on, like a Maven dependency
+    // The workspace resolves the id to a local path, the url is for use outside the workspace
+    "dependencies": [
+      {
+        "project": "api",
+        "url": "https://github.com/cassandragargoyle/api",
+        "use": "contracts",
+        "artifacts": ["plugin-manifest", "task-manifest", "reco-form-result"]
+      }
+    ],
+
+    // Goals call the Makefile, so the project still builds without portunix
+    "goals": {
+      "setup": { "run": "make setup" },
+      "lint": { "run": "make lint", "dependsOn": ["setup"] },
+      "test": { "run": "make test", "inputs": ["src", "tests"], "dependsOn": ["setup"] },
+      "validate-manifests": {
+        "description": "Check the plugin and task manifests against the api contracts",
+        // Planned task type, today this check runs only in the api repository
+        "task": "contract.validate",
+        "forEach": { "contract": "*" }
+      },
+      "dist": {
+        "run": "make dist",
+        "outputs": ["wheel"],
+        "dependsOn": ["lint", "test", "validate-manifests"]
+      },
+      "book": { "run": "make book", "inputs": ["book-sources"], "outputs": ["book"] }
+    }
+  }
+}

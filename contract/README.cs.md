@@ -73,6 +73,14 @@ ukazuje na neexistující článek, a identifikátory vrstvy `extraction`.
 | [plugin-health.schema.json](schemas/plugin-health.schema.json) | Odpověď kontroly stavu pluginu (stav, metriky, dílčí kontroly) |
 | [help-ai.schema.json](schemas/help-ai.schema.json) | Strojově čitelný výstup `--help-ai` (identita nástroje, příkazy, parametry, nepovinné `supported_extensions` / `supported_mime_types` pro každý příkaz) |
 
+### Manifest projektu
+
+| Schéma | Popis |
+| ------ | ----- |
+| [cgproject.schema.json](schemas/cgproject.schema.json) | Manifest projektu `<name>.cgproject.jsonc` (`kind: Project`) a manifest workspace `<name>.cgworkspace.jsonc` (`kind: Workspace`) podle ADR-012 v portunix-architecture: `metadata` a ve `spec` typ projektu `type`, `requires`, typované odkazy `artifacts`, závislosti na jiných projektech `dependencies` a pojmenované cíle `goals` (`run` nebo `task`, `forEach`, `inputs`, `outputs`, `dependsOn`). Popis polí: [cgproject.schema.md](schemas/cgproject.schema.md) |
+
+Manifesty jsou soubory JSONC. `make validate-contract` před kontrolou schématu odstraní komentáře.
+
 ### Vizualizace
 
 | Schéma | Popis |
@@ -278,6 +286,15 @@ synchronizují.
 | [text-extractor.help-ai.json](examples/text-extractor.help-ai.json) | Výstup `--help-ai` pro text-extractor 1.1.18 (s `supported_extensions` / `supported_mime_types`). Ověřuje ho `make validate-contract`. |
 | [redmine.help-ai.json](examples/redmine.help-ai.json) | Výstup `--help-ai` pro ptx-redmine 1.0.0 (s `global_flags`). Ověřuje ho `make validate-contract`. |
 | [invalid/](examples/invalid/) | Negativní testy s prefixem `help-ai-`: jeden malý dokument `--help-ai` s jednou chybou, pojmenovaný podle ní (například `help-ai-extension-uppercase`, `help-ai-missing-tool`). Negativní testy s prefixem `plugin-manifest-`: jeden malý manifest pluginu s jednou chybou v `plugin.wheel` nebo `plugin.extra_wheels` (například `plugin-manifest-wheel-with-path`, `plugin-manifest-wheel-for-java`). |
+
+### Příklady manifestu projektu
+
+| Příklad | Popis |
+| ------- | ----- |
+| [epbd-od-dvorak.cgproject.jsonc](examples/epbd-od-dvorak.cgproject.jsonc) | Energetické posouzení budovy (ADR-012, příklad 1): zdroje, předpisové dokumenty VIM, fakta o budově jako dokument VIM s vrstvou `extraction`, výsledek posouzení. Ověřuje ho `make validate-contract`. |
+| [portunix-reco.cgproject.jsonc](examples/portunix-reco.cgproject.jsonc) | Softwarový projekt (ADR-012, příklad 2): `versionFrom` z `pyproject.toml`, cíle volají `Makefile`, závislost na kontraktech api. Ověřuje ho `make validate-contract`. |
+| [cassandragargoyle.cgworkspace.jsonc](examples/cassandragargoyle.cgworkspace.jsonc) | Manifest workspace s prázdným `spec`. Ověřuje ho `make validate-contract`. |
+| [invalid/](examples/invalid/) | Negativní testy s předponou `cgproject-`: malý projekt s jednou chybou, pojmenovaný podle ní (například `cgproject-goal-run-and-task`, `cgproject-metadata-tenant-id`). |
 
 ### Příklady vizualizace
 

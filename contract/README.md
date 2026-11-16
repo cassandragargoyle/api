@@ -73,6 +73,14 @@ and run it after its own schema check. Not checked: a `reference` with the scope
 | [plugin-health.schema.json](schemas/plugin-health.schema.json) | Plugin health check response (status, metrics, sub-checks) |
 | [help-ai.schema.json](schemas/help-ai.schema.json) | Machine-readable `--help-ai` output (tool identity, commands, parameters, optional per-command `supported_extensions` / `supported_mime_types`) |
 
+### Project Manifest
+
+| Schema | Description |
+| ------ | ----------- |
+| [cgproject.schema.json](schemas/cgproject.schema.json) | Project manifest `<name>.cgproject.jsonc` (`kind: Project`) and workspace manifest `<name>.cgworkspace.jsonc` (`kind: Workspace`) of portunix-architecture ADR-012: `metadata`, and in `spec` the project `type`, `requires`, typed `artifacts` references, `dependencies` on other projects, and named `goals` (`run` or `task`, `forEach`, `inputs`, `outputs`, `dependsOn`). Field reference: [cgproject.schema.md](schemas/cgproject.schema.md) |
+
+The manifests are JSONC files. `make validate-contract` removes the comments before the schema check.
+
 ### Visualization
 
 | Schema | Description |
@@ -281,6 +289,15 @@ into their own tree rather than hand-writing the wire format, and re-sync when t
 | [text-extractor.help-ai.json](examples/text-extractor.help-ai.json) | `--help-ai` output for text-extractor 1.1.18 (with `supported_extensions` / `supported_mime_types`). Validated by `make validate-contract`. |
 | [redmine.help-ai.json](examples/redmine.help-ai.json) | `--help-ai` output for ptx-redmine 1.0.0 (with `global_flags`). Validated by `make validate-contract`. |
 | [invalid/](examples/invalid/) | Negative tests with the prefix `help-ai-`: one small `--help-ai` document with one defect, named after it (for example `help-ai-extension-uppercase`, `help-ai-missing-tool`). Negative tests with the prefix `plugin-manifest-`: one small plugin manifest with one defect in `plugin.wheel` or `plugin.extra_wheels` (for example `plugin-manifest-wheel-with-path`, `plugin-manifest-wheel-for-java`). |
+
+### Project Manifest Examples
+
+| Example | Description |
+| ------- | ----------- |
+| [epbd-od-dvorak.cgproject.jsonc](examples/epbd-od-dvorak.cgproject.jsonc) | Building energy assessment (ADR-012, example 1): sources, VIM prescriptive documents, building facts as a VIM `extraction` document, an assessment result. Validated by `make validate-contract`. |
+| [portunix-reco.cgproject.jsonc](examples/portunix-reco.cgproject.jsonc) | Software project (ADR-012, example 2): `versionFrom` a `pyproject.toml` build descriptor, goals that call the `Makefile`, a dependency on the api contracts. Validated by `make validate-contract`. |
+| [cassandragargoyle.cgworkspace.jsonc](examples/cassandragargoyle.cgworkspace.jsonc) | Workspace manifest with an empty `spec`. Validated by `make validate-contract`. |
+| [invalid/](examples/invalid/) | Negative tests with the prefix `cgproject-`: one small project with one defect, named after it (for example `cgproject-goal-run-and-task`, `cgproject-metadata-tenant-id`). |
 
 ### Visualization Examples
 

@@ -15,6 +15,14 @@ to `1.0.0.9` used the four-part scheme `MAJOR.MINOR.PATCH.BUILD`.
 
 ### Added
 
+- **Project manifest** (#109): `cgproject.schema.json` 1.0.0 for the project
+  manifest `<name>.cgproject.jsonc` and the workspace manifest
+  `<name>.cgworkspace.jsonc` of portunix-architecture ADR-012: `metadata`, and in
+  `spec` the project `type`, `requires`, typed `artifacts` references,
+  `dependencies` on other projects, and named `goals` (`run` or `task`). With the
+  field reference `cgproject.schema.md`, the EPBD and portunix-reco examples, a
+  workspace example, and negative examples. `make validate-contract` now reads
+  `.jsonc` files: it removes the comments before the schema check.
 - **Brand mark**: the CassandraGargoyle mark in `brand/` with its generator
   `brand/mark.py`, the SVG on the dark background and PNG files from 16 to
   1024 px, for use as the icon of the organization and as the base of project

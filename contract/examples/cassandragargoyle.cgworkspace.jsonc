@@ -1,0 +1,13 @@
+// Workspace manifest: the same envelope as a project, kind Workspace
+// The spec of a workspace is not defined in version 1 of the contract
+{
+  "$schema": "https://cassandragargoyle.org/schemas/cgproject.schema.json",
+  "apiVersion": "portunix.ai/v1",
+  "kind": "Workspace",
+  "metadata": {
+    "id": "cassandragargoyle",
+    "name": "CassandraGargoyle",
+    "description": "Workspace of the CassandraGargoyle projects"
+  },
+  "spec": {}
+}

@@ -1,0 +1,50 @@
+// Negative test: metadata has the deployment field tenantId
+{
+  "apiVersion": "portunix.ai/v1",
+  "kind": "Project",
+  "metadata": {
+    "id": "demo",
+    "name": "Demo",
+    "version": "0.1.0",
+    "tenantId": "t-1"
+  },
+  "spec": {
+    "type": "software",
+    "requires": [
+      {
+        "plugin": "crawler"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": "src",
+        "type": "source",
+        "path": "sources/a.md"
+      },
+      {
+        "id": "doc",
+        "type": "document",
+        "path": "out/a.pdf",
+        "derivedFrom": [
+          "src"
+        ]
+      }
+    ],
+    "dependencies": [
+      {
+        "project": "api"
+      }
+    ],
+    "goals": {
+      "build": {
+        "run": "make build",
+        "inputs": [
+          "src"
+        ],
+        "outputs": [
+          "doc"
+        ]
+      }
+    }
+  }
+}
