@@ -1,0 +1,124 @@
+// Building energy project, not a software project (portunix-architecture ADR-012, example 1)
+{
+  "$schema": "https://cassandragargoyle.org/schemas/cgproject.schema.json",
+  "apiVersion": "portunix.ai/v1",
+  "kind": "Project",
+
+  // Identity, stable and independent of the directory path
+  "metadata": {
+    "id": "epbd-od-dvorak",
+    "name": "EPBD – Obchodní dům Dvořák",
+    "description": "Energetické povinnosti OD Dvořák v Táboře podle EPBD a zákona č. 406/2000 Sb.",
+    "version": "0.1.0",
+    "language": "cs-CZ"
+  },
+
+  "spec": {
+    // Project type, a label only, it prescribes no required artifacts
+    "type": "building-energy",
+
+    // Plugins and packages that the goals need, installed by portunix
+    "requires": [
+      { "plugin": "crawler" },
+      { "plugin": "vim-parser" }
+    ],
+
+    // Typed references only, the data stays in its own files
+    "artifacts": [
+      // Downloaded sources, the path is the local copy made by the fetch-sources goal
+      {
+        "id": "src-eu-2024-1275",
+        "type": "source",
+        "title": "Směrnice (EU) 2024/1275 o energetické náročnosti budov (přepracované znění)",
+        "url": "https://eur-lex.europa.eu/eli/dir/2024/1275/oj",
+        "path": "sources/eu-2024-1275.md"
+      },
+      {
+        "id": "src-cz-406-2000",
+        "type": "source",
+        "title": "Zákon č. 406/2000 Sb., o hospodaření energií",
+        "path": "sources/cz-406-2000.md"
+      },
+      {
+        "id": "src-mpo-novela",
+        "type": "source",
+        "title": "MPO: Novela zákona o hospodaření energií nastaví předvídatelná pravidla pro budoucnost",
+        "published": "2026-09-23",
+        "path": "sources/mpo-novela.md"
+      },
+      {
+        "id": "src-dvorak-history",
+        "type": "source",
+        "title": "Czech-Tábor: Historie OD Dvořák",
+        "path": "sources/dvorak-history.md"
+      },
+
+      // Legislation as VIM prescriptive documents, made from the sources
+      {
+        "id": "law-eu-2024-1275",
+        "type": "vim-document",
+        "layer": "prescriptive",
+        "path": "vim/eu-2024-1275.vim.json",
+        "derivedFrom": ["src-eu-2024-1275"]
+      },
+      {
+        "id": "law-cz-406-2000",
+        "type": "vim-document",
+        "layer": "prescriptive",
+        "path": "vim/cz-406-2000.vim.json",
+        "derivedFrom": ["src-cz-406-2000"]
+      },
+
+      // Building facts (address, operator, areas, PENB, consumption) as a VIM extraction layer
+      // The template defines the fields, provenance and confidence are per field
+      // Planned template, it does not exist yet
+      {
+        "id": "building-od-dvorak",
+        "type": "vim-document",
+        "layer": "extraction",
+        "template": "building-facts",
+        "path": "buildings/od-dvorak.vim.json",
+        "derivedFrom": ["src-dvorak-history"]
+      },
+
+      // Optional floor plan geometry from the Modeler, not needed for the first assessment
+      {
+        "id": "model-od-dvorak",
+        "type": "modeler-model",
+        "path": "buildings/od-dvorak.model.json",
+        "optional": true
+      },
+
+      // Result of the assessment
+      {
+        "id": "assessment-result",
+        "type": "assessment",
+        "path": "results/assessment.json"
+      }
+    ],
+
+    // Operations of the project, each one runs a plugin task or a command
+    "goals": {
+      "fetch-sources": {
+        "description": "Download every source with a URL",
+        "run": "portunix crawler scrape --output {artifact.path} {artifact.url}",
+        "forEach": { "type": "source" }
+      },
+      "extract-provisions": {
+        "description": "Make VIM prescriptive documents from the legislation sources",
+        // Planned task type, the vim-parser has no prescriptive task for web sources yet
+        "task": "vim-parser.prescriptive",
+        "forEach": { "type": "vim-document", "layer": "prescriptive" },
+        "dependsOn": ["fetch-sources"]
+      },
+      "assess": {
+        "description": "Check the building facts against the provisions",
+        // Planned task type, no plugin exists yet
+        "task": "energy.assess",
+        "inputs": ["law-eu-2024-1275", "law-cz-406-2000", "building-od-dvorak"],
+        "outputs": ["assessment-result"],
+        "dependsOn": ["extract-provisions"]
+      }
+    }
+  }
+}

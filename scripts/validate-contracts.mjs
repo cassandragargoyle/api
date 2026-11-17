@@ -7,6 +7,7 @@
 // Some contracts have rules that JSON Schema cannot express; their extra checks
 // (see EXTRA_CHECKS below) run after the schema check on every accepted document.
 // A JSON Lines file ('.jsonl') is validated line by line: every line is one document.
+// A JSONC file ('.jsonc') is validated after its comments are removed.
 //
 // Run: npm --prefix typescript run validate:contracts   (or: make validate-contract)
 
@@ -16,6 +17,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { checkRecoFormResult } from "./reco-form-result-check.mjs";
 import { checkVimIdentifiers } from "./vim-identifier-check.mjs";
+import { stripJsonComments } from "./jsonc.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
@@ -59,6 +61,8 @@ const SUFFIX_SCHEMA = [
 	[".task-manifest.json", "task-manifest.schema.json"],
 	[".help-ai.json", "help-ai.schema.json"],
 	[".plugin-manifest.json", "plugin-manifest.schema.json"],
+	[".cgproject.jsonc", "cgproject.schema.json"],
+	[".cgworkspace.jsonc", "cgproject.schema.json"],
 ];
 
 // Map schema filename -> extra check. A check returns a list of {path, message}
@@ -78,9 +82,11 @@ function problemsOf(schemaFile, doc) {
 }
 
 const readJson = (p) => JSON.parse(readFileSync(p, "utf8"));
+const readJsonc = (p) => JSON.parse(stripJsonComments(readFileSync(p, "utf8")));
 
 // Return the problems of the file; a '.jsonl' file is checked line by line
 function problemsOfFile(schemaFile, file) {
+	if (file.endsWith(".jsonc")) return problemsOf(schemaFile, readJsonc(file));
 	if (!file.endsWith(".jsonl")) return problemsOf(schemaFile, readJson(file));
 	const lines = readFileSync(file, "utf8").split(/\r?\n/);
 	if (lines.at(-1) === "") lines.pop();
@@ -104,7 +110,7 @@ function walk(dir) {
 	for (const name of readdirSync(dir)) {
 		const full = path.join(dir, name);
 		if (statSync(full).isDirectory()) out.push(...walk(full));
-		else if (name.endsWith(".json") || name.endsWith(".jsonl")) out.push(full);
+		else if (/\.(json|jsonl|jsonc)$/.test(name)) out.push(full);
 	}
 	return out;
 }

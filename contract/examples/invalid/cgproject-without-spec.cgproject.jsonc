@@ -1,0 +1,10 @@
+// Negative test: the spec is missing
+{
+  "apiVersion": "portunix.ai/v1",
+  "kind": "Project",
+  "metadata": {
+    "id": "demo",
+    "name": "Demo",
+    "version": "0.1.0"
+  }
+}

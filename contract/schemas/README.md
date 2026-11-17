@@ -267,6 +267,22 @@ more keys in the `plugin` object (schema v1.3.0):
 Both keys are allowed only with `runtime: python`, and `extra_wheels` only together with
 `wheel`.
 
+## Project manifest
+
+[cgproject.schema.json](cgproject.schema.json) (`*.cgproject.jsonc`, `*.cgworkspace.jsonc`) describes the project
+manifest of portunix-architecture ADR-012: typed references to the artifacts of a project and the named goals that
+plugins or commands run on them. One schema covers `kind: Project` and `kind: Workspace`; the `spec` of a workspace
+is not defined in version 1. The field reference is in [cgproject.schema.md](cgproject.schema.md).
+
+- **Open where the ADR wants it open** — `artifact.type` is any kebab-case name (the known values are in the
+  description), an artifact can have extra fields, and `spec.type` is a label without rules
+- **Closed everywhere else** — `metadata` rejects `tenantId` and `workspaceId`; `requires` items, dependencies and
+  goals reject unknown keys, so a dependency `version` is rejected
+- **Exactly one** — a `requires` item has `plugin` or `package`, a goal has `run` or `task`, and `metadata` has at
+  most one of `version` and `versionFrom`
+- **Not checked** — unique artifact ids and the targets of `derivedFrom`, `inputs`, `outputs`, `dependsOn`, and
+  `versionFrom`
+
 ## Validating examples
 
 Contract examples under [`../examples/`](../examples/) are validated against these
@@ -290,3 +306,6 @@ extra check rejects it.
 A `.jsonl` file is checked line by line, and an error names the line (`line 2: /fields/0 ...`).
 A negative `.jsonl` test passes when at least one line is rejected. A suffix can map to a part
 of a schema (`*.history.jsonl` to `reco-run.schema.json#/$defs/HistoryLine`).
+
+A `.jsonc` file is checked after its `//` and `/* */` comments are removed
+([`scripts/jsonc.mjs`](../../scripts/jsonc.mjs)); trailing commas are not allowed.

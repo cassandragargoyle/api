@@ -1,0 +1,285 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://cassandragargoyle.org/schemas/cgproject.schema.json",
+	"$version": "1.0.0",
+	"title": "CgProject",
+	"description": "Project manifest '<name>.cgproject.jsonc' (kind Project) or workspace manifest '<name>.cgworkspace.jsonc' (kind Workspace), see portunix-architecture ADR-012. A project file holds typed references to the artifacts of a unit of work and the named goals that plugins or commands run on them. The data stays in its own files and contracts. JSONC is the authoring format; the schema checks the document after the comments are removed. Placeholders in strings are only '{artifact.<field>}' (inside a goal with forEach) and '{metadata.<field>}'; the schema does not parse them. '{metadata.version}' is resolved through metadata.versionFrom when there is no metadata.version",
+	"type": "object",
+	"required": ["apiVersion", "kind", "metadata", "spec"],
+	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "URI of this schema, for editors",
+			"format": "uri"
+		},
+		"apiVersion": {
+			"const": "portunix.ai/v1",
+			"description": "Version of the manifest format"
+		},
+		"kind": {
+			"enum": ["Project", "Workspace"],
+			"description": "'Project' for a '*.cgproject.jsonc' file, 'Workspace' for a '*.cgworkspace.jsonc' file"
+		},
+		"metadata": { "$ref": "#/$defs/Metadata" },
+		"spec": {
+			"type": "object",
+			"description": "Content of the manifest. For kind Project it is a ProjectSpec. The spec of a workspace is not defined in version 1 of the contract"
+		}
+	},
+	"additionalProperties": false,
+	"if": {
+		"properties": { "kind": { "const": "Project" } },
+		"required": ["kind"]
+	},
+	"then": {
+		"properties": { "spec": { "$ref": "#/$defs/ProjectSpec" } }
+	},
+	"$defs": {
+		"Id": {
+			"type": "string",
+			"description": "Identifier of a project, an artifact or a goal: letters, digits, '.', '_' and '-', starting with a letter or a digit",
+			"pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+		},
+		"KebabName": {
+			"type": "string",
+			"description": "Lowercase kebab-case name (for example 'vim-document')",
+			"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+		},
+		"IdList": {
+			"type": "array",
+			"items": { "$ref": "#/$defs/Id" },
+			"uniqueItems": true
+		},
+		"Metadata": {
+			"type": "object",
+			"description": "Identity of the project, stable and independent of the directory path. Deployment fields such as tenantId and workspaceId are not allowed, so the file stays portable between tenants",
+			"required": ["id", "name"],
+			"properties": {
+				"id": {
+					"$ref": "#/$defs/Id",
+					"description": "Stable id of the project; other projects refer to it in spec.dependencies[].project. The recommended file name is '<id>.cgproject.jsonc'"
+				},
+				"name": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Human-readable name"
+				},
+				"description": {
+					"type": "string",
+					"description": "Short description of the project"
+				},
+				"version": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Version of the project. Not allowed together with versionFrom"
+				},
+				"versionFrom": {
+					"$ref": "#/$defs/Id",
+					"description": "Id of a 'build-descriptor' artifact that holds the version (for example pyproject.toml), so the version is not copied. Not allowed together with version"
+				},
+				"language": {
+					"type": "string",
+					"description": "BCP 47 language tag of the project content (for example 'cs-CZ', 'en')",
+					"pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$"
+				},
+				"repository": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the source repository"
+				},
+				"product": {
+					"$ref": "#/$defs/Id",
+					"description": "Id of a product document (product.schema.json) that the project belongs to"
+				}
+			},
+			"additionalProperties": false,
+			"not": { "required": ["version", "versionFrom"] }
+		},
+		"ProjectSpec": {
+			"type": "object",
+			"description": "Content of a project",
+			"properties": {
+				"type": {
+					"$ref": "#/$defs/KebabName",
+					"description": "Label of the project kind (for example 'building-energy', 'software'). It prescribes no required artifacts in version 1"
+				},
+				"requires": {
+					"type": "array",
+					"description": "Plugins and packages that portunix installs before the goals run. Dependencies that a native build file already lists are not repeated here",
+					"items": { "$ref": "#/$defs/Requirement" }
+				},
+				"artifacts": {
+					"type": "array",
+					"description": "Typed references to the parts of the project. Artifact ids are unique in the project (not checked by the schema)",
+					"items": { "$ref": "#/$defs/Artifact" }
+				},
+				"dependencies": {
+					"type": "array",
+					"description": "Other projects that this project uses",
+					"items": { "$ref": "#/$defs/Dependency" }
+				},
+				"goals": {
+					"type": "object",
+					"description": "Named operations of the project, keyed by goal name",
+					"propertyNames": { "$ref": "#/$defs/Id" },
+					"additionalProperties": { "$ref": "#/$defs/Goal" }
+				}
+			},
+			"additionalProperties": false
+		},
+		"Requirement": {
+			"type": "object",
+			"description": "One plugin or one package that the project needs; exactly one of plugin or package",
+			"properties": {
+				"plugin": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Name of a Portunix plugin (for example 'crawler')"
+				},
+				"package": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Name of a package that portunix installs (for example 'python', 'uv')"
+				},
+				"version": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Version or version range (for example '>=3.12')"
+				},
+				"optional": {
+					"type": "boolean",
+					"default": false,
+					"description": "True when the goals can run without it"
+				}
+			},
+			"additionalProperties": false,
+			"oneOf": [
+				{ "required": ["plugin"] },
+				{ "required": ["package"] }
+			]
+		},
+		"Artifact": {
+			"type": "object",
+			"description": "Typed reference to one part of the project. The core fields below are fixed; extra fields per type are allowed (for example 'format', 'language', 'published'). A tool ignores a type it does not know",
+			"required": ["id", "type"],
+			"properties": {
+				"id": {
+					"$ref": "#/$defs/Id",
+					"description": "Id of the artifact, unique in the project"
+				},
+				"type": {
+					"$ref": "#/$defs/KebabName",
+					"description": "Open kebab-case type. Known values: source, vim-document, modeler-model, build-descriptor, source-tree, test-tree, plugin-manifest, task-manifest, dataset, model, package, document, assessment"
+				},
+				"path": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Path of the file or directory, relative to the manifest; can contain '{metadata.<field>}'"
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"description": "Remote location (for example the origin of a downloaded source)"
+				},
+				"title": {
+					"type": "string",
+					"description": "Human-readable title"
+				},
+				"layer": {
+					"$ref": "#/$defs/KebabName",
+					"description": "VIM layer of a 'vim-document' artifact (for example 'prescriptive', 'extraction')"
+				},
+				"template": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Template of the artifact (for example the VIM extraction template 'building-facts')"
+				},
+				"contract": {
+					"$ref": "#/$defs/KebabName",
+					"description": "Name of an api contract that the artifact follows (for example 'plugin-manifest' for plugin-manifest.schema.json)"
+				},
+				"derivedFrom": {
+					"$ref": "#/$defs/IdList",
+					"minItems": 1,
+					"description": "Ids of the artifacts that this artifact is made from"
+				},
+				"optional": {
+					"type": "boolean",
+					"default": false,
+					"description": "True when the project is complete without this artifact"
+				}
+			}
+		},
+		"Dependency": {
+			"type": "object",
+			"description": "Another project that this project uses. The workspace resolves the id to a local path. Versions of dependencies are not part of version 1",
+			"required": ["project"],
+			"properties": {
+				"project": {
+					"$ref": "#/$defs/Id",
+					"description": "metadata.id of the other project"
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"description": "Location of the project outside the workspace"
+				},
+				"use": {
+					"type": "string",
+					"minLength": 1,
+					"description": "What this project uses from the other one (for example 'contracts')"
+				},
+				"artifacts": {
+					"type": "array",
+					"description": "Names of the parts that are used (for example artifact ids or contract names)",
+					"items": { "type": "string", "minLength": 1 },
+					"uniqueItems": true
+				}
+			},
+			"additionalProperties": false
+		},
+		"Goal": {
+			"type": "object",
+			"description": "Named operation; exactly one of run (a command) or task (a task type of the Task Platform)",
+			"properties": {
+				"description": {
+					"type": "string",
+					"description": "Human-readable description"
+				},
+				"run": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Command line to run; can contain '{artifact.<field>}' (with forEach) and '{metadata.<field>}'"
+				},
+				"task": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Task type of the Task Platform (task-manifest task_type, for example 'vim-parser.prescriptive'). The task gets its artifacts as structured input"
+				},
+				"forEach": {
+					"type": "object",
+					"description": "Artifact filter: the goal runs once per artifact whose fields equal all the given values; '*' matches any value of a field that the artifact has",
+					"minProperties": 1,
+					"additionalProperties": { "type": ["string", "boolean", "number"] }
+				},
+				"inputs": {
+					"$ref": "#/$defs/IdList",
+					"description": "Ids of the artifacts that the goal reads"
+				},
+				"outputs": {
+					"$ref": "#/$defs/IdList",
+					"description": "Ids of the artifacts that the goal writes"
+				},
+				"dependsOn": {
+					"$ref": "#/$defs/IdList",
+					"description": "Names of the goals that run before this goal"
+				}
+			},
+			"additionalProperties": false,
+			"oneOf": [
+				{ "required": ["run"] },
+				{ "required": ["task"] }
+			]
+		}
+	}
+}
