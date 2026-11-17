@@ -2,8 +2,9 @@
 
 **Type**: Enhancement
 **Priority**: Medium
-**Status**: 📋 Open
+**Status**: ✅ Implemented (PR #112, 2026-11-17)
 **Created**: 2026-11-16
+**Closed**: 2026-11-17
 **GitHub**: #109
 **Component**: contract
 **Related**: portunix-architecture [ADR-012](https://github.com/cassandragargoyle/portunix-architecture/blob/main/docs/adr/ADR-012-cgproject-project-manifest.md)
@@ -107,7 +108,7 @@ All open questions of the brainstorming are answered in ADR-012. Questions left 
 ## Acceptance Criteria
 
 - [x] The open questions are answered in portunix-architecture ADR-012
-- [ ] `cgproject.schema.json` and `cgproject.schema.md` exist
-- [ ] Both examples (building energy and software) pass the schema check
-- [ ] Negative examples fail the schema check
-- [ ] The schema README lists the new contract
+- [x] `cgproject.schema.json` and `cgproject.schema.md` exist
+- [x] Both examples (building energy and software) pass the schema check
+- [x] Negative examples fail the schema check
+- [x] The schema README lists the new contract

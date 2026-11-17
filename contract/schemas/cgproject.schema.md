@@ -3,7 +3,7 @@
 Description of [`cgproject.schema.json`](cgproject.schema.json) (`$version` 1.0.0). The design is decided in
 portunix-architecture
 [ADR-012](https://github.com/cassandragargoyle/portunix-architecture/blob/main/docs/adr/ADR-012-cgproject-project-manifest.md),
-the contract is issue [#109](../../docs/issues/109-cgproject-schema.md).
+the contract is issue [#109](../../docs/issues/done/109-cgproject-schema.md).
 
 A project manifest `<name>.cgproject.jsonc` says what belongs to a project and what can be done with it, similar
 to a Visual Studio project or a Maven POM. A project is a general unit of work: a building energy assessment is a
